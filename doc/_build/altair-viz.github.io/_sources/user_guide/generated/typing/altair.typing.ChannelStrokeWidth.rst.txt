@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelStrokeWidth
+================================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelStrokeWidth

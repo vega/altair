@@ -1,0 +1,30 @@
+﻿altair.MarkType
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: MarkType
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MarkType.__init__
+      ~MarkType.copy
+      ~MarkType.from_dict
+      ~MarkType.from_json
+      ~MarkType.resolve_references
+      ~MarkType.to_dict
+      ~MarkType.to_json
+      ~MarkType.validate
+      ~MarkType.validate_property
+   
+   
+
+   
+   
+   

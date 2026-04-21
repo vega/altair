@@ -1,0 +1,30 @@
+﻿altair.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull
+=========================================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull.__init__
+      ~FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull.copy
+      ~FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull.from_dict
+      ~FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull.from_json
+      ~FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull.resolve_references
+      ~FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull.to_dict
+      ~FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull.to_json
+      ~FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull.validate
+      ~FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.JsonDataFormat
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: JsonDataFormat
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~JsonDataFormat.__init__
+      ~JsonDataFormat.copy
+      ~JsonDataFormat.from_dict
+      ~JsonDataFormat.from_json
+      ~JsonDataFormat.resolve_references
+      ~JsonDataFormat.to_dict
+      ~JsonDataFormat.to_json
+      ~JsonDataFormat.validate
+      ~JsonDataFormat.validate_property
+   
+   
+
+   
+   
+   

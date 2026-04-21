@@ -1,0 +1,36 @@
+﻿altair.XValue
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: XValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~XValue.__init__
+      ~XValue.copy
+      ~XValue.from_dict
+      ~XValue.from_json
+      ~XValue.resolve_references
+      ~XValue.to_dict
+      ~XValue.to_json
+      ~XValue.validate
+      ~XValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~XValue.value
+   
+   

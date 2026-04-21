@@ -1,0 +1,41 @@
+﻿altair.XError
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: XError
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~XError.__init__
+      ~XError.copy
+      ~XError.from_dict
+      ~XError.from_json
+      ~XError.resolve_references
+      ~XError.to_dict
+      ~XError.to_json
+      ~XError.validate
+      ~XError.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~XError.aggregate
+      ~XError.bandPosition
+      ~XError.bin
+      ~XError.field
+      ~XError.timeUnit
+      ~XError.title
+   
+   

@@ -1,0 +1,6 @@
+﻿altair.value
+============
+
+.. currentmodule:: altair
+
+.. autofunction:: value

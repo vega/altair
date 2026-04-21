@@ -1,0 +1,30 @@
+﻿altair.BaseTitleNoValueRefs
+===========================
+
+.. currentmodule:: altair
+
+.. autoclass:: BaseTitleNoValueRefs
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BaseTitleNoValueRefs.__init__
+      ~BaseTitleNoValueRefs.copy
+      ~BaseTitleNoValueRefs.from_dict
+      ~BaseTitleNoValueRefs.from_json
+      ~BaseTitleNoValueRefs.resolve_references
+      ~BaseTitleNoValueRefs.to_dict
+      ~BaseTitleNoValueRefs.to_json
+      ~BaseTitleNoValueRefs.validate
+      ~BaseTitleNoValueRefs.validate_property
+   
+   
+
+   
+   
+   

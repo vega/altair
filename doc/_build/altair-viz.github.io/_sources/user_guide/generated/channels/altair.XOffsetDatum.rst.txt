@@ -1,0 +1,40 @@
+﻿altair.XOffsetDatum
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: XOffsetDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~XOffsetDatum.__init__
+      ~XOffsetDatum.copy
+      ~XOffsetDatum.from_dict
+      ~XOffsetDatum.from_json
+      ~XOffsetDatum.resolve_references
+      ~XOffsetDatum.to_dict
+      ~XOffsetDatum.to_json
+      ~XOffsetDatum.validate
+      ~XOffsetDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~XOffsetDatum.bandPosition
+      ~XOffsetDatum.datum
+      ~XOffsetDatum.scale
+      ~XOffsetDatum.title
+      ~XOffsetDatum.type
+   
+   

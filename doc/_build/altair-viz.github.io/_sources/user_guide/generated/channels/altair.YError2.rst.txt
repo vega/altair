@@ -1,0 +1,41 @@
+﻿altair.YError2
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: YError2
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~YError2.__init__
+      ~YError2.copy
+      ~YError2.from_dict
+      ~YError2.from_json
+      ~YError2.resolve_references
+      ~YError2.to_dict
+      ~YError2.to_json
+      ~YError2.validate
+      ~YError2.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~YError2.aggregate
+      ~YError2.bandPosition
+      ~YError2.bin
+      ~YError2.field
+      ~YError2.timeUnit
+      ~YError2.title
+   
+   

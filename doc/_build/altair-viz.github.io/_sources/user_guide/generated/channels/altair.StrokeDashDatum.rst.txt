@@ -1,0 +1,40 @@
+﻿altair.StrokeDashDatum
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeDashDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeDashDatum.__init__
+      ~StrokeDashDatum.copy
+      ~StrokeDashDatum.from_dict
+      ~StrokeDashDatum.from_json
+      ~StrokeDashDatum.resolve_references
+      ~StrokeDashDatum.to_dict
+      ~StrokeDashDatum.to_json
+      ~StrokeDashDatum.validate
+      ~StrokeDashDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StrokeDashDatum.bandPosition
+      ~StrokeDashDatum.condition
+      ~StrokeDashDatum.datum
+      ~StrokeDashDatum.title
+      ~StrokeDashDatum.type
+   
+   

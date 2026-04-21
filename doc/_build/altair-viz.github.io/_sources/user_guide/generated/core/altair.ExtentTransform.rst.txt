@@ -1,0 +1,30 @@
+﻿altair.ExtentTransform
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: ExtentTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ExtentTransform.__init__
+      ~ExtentTransform.copy
+      ~ExtentTransform.from_dict
+      ~ExtentTransform.from_json
+      ~ExtentTransform.resolve_references
+      ~ExtentTransform.to_dict
+      ~ExtentTransform.to_json
+      ~ExtentTransform.validate
+      ~ExtentTransform.validate_property
+   
+   
+
+   
+   
+   

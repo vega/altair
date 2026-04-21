@@ -1,0 +1,30 @@
+﻿altair.LogicalNotPredicate
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: LogicalNotPredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LogicalNotPredicate.__init__
+      ~LogicalNotPredicate.copy
+      ~LogicalNotPredicate.from_dict
+      ~LogicalNotPredicate.from_json
+      ~LogicalNotPredicate.resolve_references
+      ~LogicalNotPredicate.to_dict
+      ~LogicalNotPredicate.to_json
+      ~LogicalNotPredicate.validate
+      ~LogicalNotPredicate.validate_property
+   
+   
+
+   
+   
+   

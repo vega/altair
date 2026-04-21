@@ -1,0 +1,37 @@
+﻿altair.FillValue
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: FillValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FillValue.__init__
+      ~FillValue.copy
+      ~FillValue.from_dict
+      ~FillValue.from_json
+      ~FillValue.resolve_references
+      ~FillValue.to_dict
+      ~FillValue.to_json
+      ~FillValue.validate
+      ~FillValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~FillValue.condition
+      ~FillValue.value
+   
+   

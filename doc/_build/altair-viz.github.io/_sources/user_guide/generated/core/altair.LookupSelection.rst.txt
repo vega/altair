@@ -1,0 +1,30 @@
+﻿altair.LookupSelection
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: LookupSelection
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LookupSelection.__init__
+      ~LookupSelection.copy
+      ~LookupSelection.from_dict
+      ~LookupSelection.from_json
+      ~LookupSelection.resolve_references
+      ~LookupSelection.to_dict
+      ~LookupSelection.to_json
+      ~LookupSelection.validate
+      ~LookupSelection.validate_property
+   
+   
+
+   
+   
+   

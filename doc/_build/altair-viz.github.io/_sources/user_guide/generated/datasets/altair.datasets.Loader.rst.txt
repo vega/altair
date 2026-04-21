@@ -1,0 +1,31 @@
+﻿altair.datasets.Loader
+======================
+
+.. currentmodule:: altair.datasets
+
+.. autoclass:: Loader
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Loader.__init__
+      ~Loader.from_backend
+      ~Loader.from_reader
+      ~Loader.url
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Loader.cache
+   
+   

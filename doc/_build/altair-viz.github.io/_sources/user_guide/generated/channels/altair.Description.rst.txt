@@ -1,0 +1,45 @@
+﻿altair.Description
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: Description
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Description.__init__
+      ~Description.copy
+      ~Description.from_dict
+      ~Description.from_json
+      ~Description.resolve_references
+      ~Description.to_dict
+      ~Description.to_json
+      ~Description.validate
+      ~Description.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Description.aggregate
+      ~Description.bandPosition
+      ~Description.bin
+      ~Description.condition
+      ~Description.field
+      ~Description.format
+      ~Description.formatType
+      ~Description.timeUnit
+      ~Description.title
+      ~Description.type
+   
+   

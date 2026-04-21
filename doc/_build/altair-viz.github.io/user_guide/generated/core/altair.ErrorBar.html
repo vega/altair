@@ -1,0 +1,1342 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>altair.ErrorBar &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/generated/core/altair.ErrorBar';</script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="altair.ErrorBarConfig" href="altair.ErrorBarConfig.html" />
+    <link rel="prev" title="altair.ErrorBandDef" href="altair.ErrorBandDef.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../../../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../../../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../toplevel/altair.Chart.html">altair.Chart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toplevel/altair.ConcatChart.html">altair.ConcatChart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toplevel/altair.FacetChart.html">altair.FacetChart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toplevel/altair.HConcatChart.html">altair.HConcatChart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toplevel/altair.LayerChart.html">altair.LayerChart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toplevel/altair.RepeatChart.html">altair.RepeatChart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toplevel/altair.TopLevelMixin.html">altair.TopLevelMixin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../toplevel/altair.VConcatChart.html">altair.VConcatChart</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Angle.html">altair.Angle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.AngleDatum.html">altair.AngleDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.AngleValue.html">altair.AngleValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Color.html">altair.Color</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.ColorDatum.html">altair.ColorDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.ColorValue.html">altair.ColorValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Column.html">altair.Column</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Description.html">altair.Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.DescriptionValue.html">altair.DescriptionValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Detail.html">altair.Detail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Facet.html">altair.Facet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Fill.html">altair.Fill</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.FillDatum.html">altair.FillDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.FillOpacity.html">altair.FillOpacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.FillOpacityDatum.html">altair.FillOpacityDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.FillOpacityValue.html">altair.FillOpacityValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.FillValue.html">altair.FillValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Href.html">altair.Href</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.HrefValue.html">altair.HrefValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Key.html">altair.Key</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Latitude.html">altair.Latitude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Latitude2.html">altair.Latitude2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Latitude2Datum.html">altair.Latitude2Datum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Latitude2Value.html">altair.Latitude2Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.LatitudeDatum.html">altair.LatitudeDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Longitude.html">altair.Longitude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Longitude2.html">altair.Longitude2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Longitude2Datum.html">altair.Longitude2Datum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Longitude2Value.html">altair.Longitude2Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.LongitudeDatum.html">altair.LongitudeDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Opacity.html">altair.Opacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.OpacityDatum.html">altair.OpacityDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.OpacityValue.html">altair.OpacityValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Order.html">altair.Order</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.OrderValue.html">altair.OrderValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Radius.html">altair.Radius</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Radius2.html">altair.Radius2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Radius2Datum.html">altair.Radius2Datum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Radius2Value.html">altair.Radius2Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.RadiusDatum.html">altair.RadiusDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.RadiusValue.html">altair.RadiusValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Row.html">altair.Row</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Shape.html">altair.Shape</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.ShapeDatum.html">altair.ShapeDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.ShapeValue.html">altair.ShapeValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Size.html">altair.Size</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.SizeDatum.html">altair.SizeDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.SizeValue.html">altair.SizeValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Stroke.html">altair.Stroke</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.StrokeDash.html">altair.StrokeDash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.StrokeDashDatum.html">altair.StrokeDashDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.StrokeDashValue.html">altair.StrokeDashValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.StrokeDatum.html">altair.StrokeDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.StrokeOpacity.html">altair.StrokeOpacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.StrokeOpacityDatum.html">altair.StrokeOpacityDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.StrokeOpacityValue.html">altair.StrokeOpacityValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.StrokeValue.html">altair.StrokeValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.StrokeWidth.html">altair.StrokeWidth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.StrokeWidthDatum.html">altair.StrokeWidthDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.StrokeWidthValue.html">altair.StrokeWidthValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Text.html">altair.Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.TextDatum.html">altair.TextDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.TextValue.html">altair.TextValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Theta.html">altair.Theta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Theta2.html">altair.Theta2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Theta2Datum.html">altair.Theta2Datum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Theta2Value.html">altair.Theta2Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.ThetaDatum.html">altair.ThetaDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.ThetaValue.html">altair.ThetaValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Time.html">altair.Time</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Tooltip.html">altair.Tooltip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.TooltipValue.html">altair.TooltipValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Url.html">altair.Url</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.UrlValue.html">altair.UrlValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.X.html">altair.X</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.X2.html">altair.X2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.X2Datum.html">altair.X2Datum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.X2Value.html">altair.X2Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.XDatum.html">altair.XDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.XError.html">altair.XError</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.XError2.html">altair.XError2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.XError2Value.html">altair.XError2Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.XErrorValue.html">altair.XErrorValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.XOffset.html">altair.XOffset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.XOffsetDatum.html">altair.XOffsetDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.XOffsetValue.html">altair.XOffsetValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.XValue.html">altair.XValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Y.html">altair.Y</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Y2.html">altair.Y2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Y2Datum.html">altair.Y2Datum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.Y2Value.html">altair.Y2Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.YDatum.html">altair.YDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.YError.html">altair.YError</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.YError2.html">altair.YError2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.YError2Value.html">altair.YError2Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.YErrorValue.html">altair.YErrorValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.YOffset.html">altair.YOffset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.YOffsetDatum.html">altair.YOffsetDatum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.YOffsetValue.html">altair.YOffsetValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../channels/altair.YValue.html">altair.YValue</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.binding.html">altair.binding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.binding_checkbox.html">altair.binding_checkbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.binding_radio.html">altair.binding_radio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.binding_range.html">altair.binding_range</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.binding_select.html">altair.binding_select</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.check_fields_and_encodings.html">altair.check_fields_and_encodings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.concat.html">altair.concat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.condition.html">altair.condition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.graticule.html">altair.graticule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.hconcat.html">altair.hconcat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.layer.html">altair.layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.param.html">altair.param</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.repeat.html">altair.repeat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.selection_interval.html">altair.selection_interval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.selection_point.html">altair.selection_point</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.sequence.html">altair.sequence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.sphere.html">altair.sphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.topo_feature.html">altair.topo_feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.value.html">altair.value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.vconcat.html">altair.vconcat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/altair.when.html">altair.when</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.active.html">altair.theme.active</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.enable.html">altair.theme.enable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.get.html">altair.theme.get</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.names.html">altair.theme.names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.options.html">altair.theme.options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.register.html">altair.theme.register</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.unregister.html">altair.theme.unregister</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ThemeConfig.html">altair.theme.ThemeConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.AreaConfigKwds.html">altair.theme.AreaConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.AutoSizeParamsKwds.html">altair.theme.AutoSizeParamsKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.AxisConfigKwds.html">altair.theme.AxisConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.AxisResolveMapKwds.html">altair.theme.AxisResolveMapKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.BarConfigKwds.html">altair.theme.BarConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.BindCheckboxKwds.html">altair.theme.BindCheckboxKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.BindDirectKwds.html">altair.theme.BindDirectKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.BindInputKwds.html">altair.theme.BindInputKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.BindRadioSelectKwds.html">altair.theme.BindRadioSelectKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.BindRangeKwds.html">altair.theme.BindRangeKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.BoxPlotConfigKwds.html">altair.theme.BoxPlotConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.BrushConfigKwds.html">altair.theme.BrushConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.CompositionConfigKwds.html">altair.theme.CompositionConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ConfigKwds.html">altair.theme.ConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.DateTimeKwds.html">altair.theme.DateTimeKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.DerivedStreamKwds.html">altair.theme.DerivedStreamKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ErrorBandConfigKwds.html">altair.theme.ErrorBandConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ErrorBarConfigKwds.html">altair.theme.ErrorBarConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.FeatureGeometryGeoJsonPropertiesKwds.html">altair.theme.FeatureGeometryGeoJsonPropertiesKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.FormatConfigKwds.html">altair.theme.FormatConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.GeoJsonFeatureCollectionKwds.html">altair.theme.GeoJsonFeatureCollectionKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.GeoJsonFeatureKwds.html">altair.theme.GeoJsonFeatureKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.GeometryCollectionKwds.html">altair.theme.GeometryCollectionKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.GradientStopKwds.html">altair.theme.GradientStopKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.HeaderConfigKwds.html">altair.theme.HeaderConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.IntervalSelectionConfigKwds.html">altair.theme.IntervalSelectionConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.IntervalSelectionConfigWithoutTypeKwds.html">altair.theme.IntervalSelectionConfigWithoutTypeKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.LegendConfigKwds.html">altair.theme.LegendConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.LegendResolveMapKwds.html">altair.theme.LegendResolveMapKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.LegendStreamBindingKwds.html">altair.theme.LegendStreamBindingKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.LineConfigKwds.html">altair.theme.LineConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.LineStringKwds.html">altair.theme.LineStringKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.LinearGradientKwds.html">altair.theme.LinearGradientKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.LocaleKwds.html">altair.theme.LocaleKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.MarkConfigKwds.html">altair.theme.MarkConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.MergedStreamKwds.html">altair.theme.MergedStreamKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.MultiLineStringKwds.html">altair.theme.MultiLineStringKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.MultiPointKwds.html">altair.theme.MultiPointKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.MultiPolygonKwds.html">altair.theme.MultiPolygonKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.NumberLocaleKwds.html">altair.theme.NumberLocaleKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.OverlayMarkDefKwds.html">altair.theme.OverlayMarkDefKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.PaddingKwds.html">altair.theme.PaddingKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.PointKwds.html">altair.theme.PointKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.PointSelectionConfigKwds.html">altair.theme.PointSelectionConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.PointSelectionConfigWithoutTypeKwds.html">altair.theme.PointSelectionConfigWithoutTypeKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.PolygonKwds.html">altair.theme.PolygonKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ProjectionConfigKwds.html">altair.theme.ProjectionConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ProjectionKwds.html">altair.theme.ProjectionKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.RadialGradientKwds.html">altair.theme.RadialGradientKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.RangeConfigKwds.html">altair.theme.RangeConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.RectConfigKwds.html">altair.theme.RectConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ResolveKwds.html">altair.theme.ResolveKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.RowColKwds.html">altair.theme.RowColKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ScaleConfigKwds.html">altair.theme.ScaleConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ScaleInvalidDataConfigKwds.html">altair.theme.ScaleInvalidDataConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ScaleResolveMapKwds.html">altair.theme.ScaleResolveMapKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.SelectionConfigKwds.html">altair.theme.SelectionConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.StepKwds.html">altair.theme.StepKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.StyleConfigIndexKwds.html">altair.theme.StyleConfigIndexKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.TickConfigKwds.html">altair.theme.TickConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.TimeIntervalStepKwds.html">altair.theme.TimeIntervalStepKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.TimeLocaleKwds.html">altair.theme.TimeLocaleKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.TitleConfigKwds.html">altair.theme.TitleConfigKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.TitleParamsKwds.html">altair.theme.TitleParamsKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.TooltipContentKwds.html">altair.theme.TooltipContentKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.TopLevelSelectionParameterKwds.html">altair.theme.TopLevelSelectionParameterKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.VariableParameterKwds.html">altair.theme.VariableParameterKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ViewBackgroundKwds.html">altair.theme.ViewBackgroundKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theme/altair.theme.ViewConfigKwds.html">altair.theme.ViewConfigKwds</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="altair.Aggregate.html">altair.Aggregate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AggregateOp.html">altair.AggregateOp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AggregateTransform.html">altair.AggregateTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AggregatedFieldDef.html">altair.AggregatedFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Align.html">altair.Align</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AllSortString.html">altair.AllSortString</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AnyMark.html">altair.AnyMark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AnyMarkConfig.html">altair.AnyMarkConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AreaConfig.html">altair.AreaConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ArgmaxDef.html">altair.ArgmaxDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ArgminDef.html">altair.ArgminDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AutoSizeParams.html">altair.AutoSizeParams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AutosizeType.html">altair.AutosizeType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Axis.html">altair.Axis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AxisConfig.html">altair.AxisConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AxisOrient.html">altair.AxisOrient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.AxisResolveMap.html">altair.AxisResolveMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BBox.html">altair.BBox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BarConfig.html">altair.BarConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BaseTitleNoValueRefs.html">altair.BaseTitleNoValueRefs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Baseline.html">altair.Baseline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BinExtent.html">altair.BinExtent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BinParams.html">altair.BinParams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BinTransform.html">altair.BinTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BindCheckbox.html">altair.BindCheckbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BindDirect.html">altair.BindDirect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BindInput.html">altair.BindInput</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BindRadioSelect.html">altair.BindRadioSelect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BindRange.html">altair.BindRange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Binding.html">altair.Binding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BinnedTimeUnit.html">altair.BinnedTimeUnit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Blend.html">altair.Blend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BoxPlot.html">altair.BoxPlot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BoxPlotConfig.html">altair.BoxPlotConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BoxPlotDef.html">altair.BoxPlotDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.BrushConfig.html">altair.BrushConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.CalculateTransform.html">altair.CalculateTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Categorical.html">altair.Categorical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ColorDef.html">altair.ColorDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ColorName.html">altair.ColorName</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ColorScheme.html">altair.ColorScheme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.CompositeMark.html">altair.CompositeMark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.CompositeMarkDef.html">altair.CompositeMarkDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.CompositionConfig.html">altair.CompositionConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConcatSpecGenericSpec.html">altair.ConcatSpecGenericSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisColor.html">altair.ConditionalAxisColor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisLabelAlign.html">altair.ConditionalAxisLabelAlign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisLabelBaseline.html">altair.ConditionalAxisLabelBaseline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisLabelFontStyle.html">altair.ConditionalAxisLabelFontStyle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisLabelFontWeight.html">altair.ConditionalAxisLabelFontWeight</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisNumber.html">altair.ConditionalAxisNumber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisNumberArray.html">altair.ConditionalAxisNumberArray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisPropertyAlignnull.html">altair.ConditionalAxisPropertyAlignnull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisPropertyColornull.html">altair.ConditionalAxisPropertyColornull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisPropertyFontStylenull.html">altair.ConditionalAxisPropertyFontStylenull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisPropertyFontWeightnull.html">altair.ConditionalAxisPropertyFontWeightnull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisPropertyTextBaselinenull.html">altair.ConditionalAxisPropertyTextBaselinenull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisPropertynumberArraynull.html">altair.ConditionalAxisPropertynumberArraynull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisPropertynumbernull.html">altair.ConditionalAxisPropertynumbernull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisPropertystringnull.html">altair.ConditionalAxisPropertystringnull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalAxisString.html">altair.ConditionalAxisString</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalMarkPropFieldOrDatumDef.html">altair.ConditionalMarkPropFieldOrDatumDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalMarkPropFieldOrDatumDefTypeForShape.html">altair.ConditionalMarkPropFieldOrDatumDefTypeForShape</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalParameterMarkPropFieldOrDatumDef.html">altair.ConditionalParameterMarkPropFieldOrDatumDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalParameterMarkPropFieldOrDatumDefTypeForShape.html">altair.ConditionalParameterMarkPropFieldOrDatumDefTypeForShape</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalParameterStringFieldDef.html">altair.ConditionalParameterStringFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalParameterValueDefGradientstringnullExprRef.html">altair.ConditionalParameterValueDefGradientstringnullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalParameterValueDefTextExprRef.html">altair.ConditionalParameterValueDefTextExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalParameterValueDefnumber.html">altair.ConditionalParameterValueDefnumber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalParameterValueDefnumberArrayExprRef.html">altair.ConditionalParameterValueDefnumberArrayExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalParameterValueDefnumberExprRef.html">altair.ConditionalParameterValueDefnumberExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalParameterValueDefstringExprRef.html">altair.ConditionalParameterValueDefstringExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalParameterValueDefstringnullExprRef.html">altair.ConditionalParameterValueDefstringnullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateMarkPropFieldOrDatumDef.html">altair.ConditionalPredicateMarkPropFieldOrDatumDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape.html">altair.ConditionalPredicateMarkPropFieldOrDatumDefTypeForShape</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateStringFieldDef.html">altair.ConditionalPredicateStringFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefAlignnullExprRef.html">altair.ConditionalPredicateValueDefAlignnullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefColornullExprRef.html">altair.ConditionalPredicateValueDefColornullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefFontStylenullExprRef.html">altair.ConditionalPredicateValueDefFontStylenullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefFontWeightnullExprRef.html">altair.ConditionalPredicateValueDefFontWeightnullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefGradientstringnullExprRef.html">altair.ConditionalPredicateValueDefGradientstringnullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefTextBaselinenullExprRef.html">altair.ConditionalPredicateValueDefTextBaselinenullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefTextExprRef.html">altair.ConditionalPredicateValueDefTextExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefnumber.html">altair.ConditionalPredicateValueDefnumber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefnumberArrayExprRef.html">altair.ConditionalPredicateValueDefnumberArrayExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefnumberArraynullExprRef.html">altair.ConditionalPredicateValueDefnumberArraynullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefnumberExprRef.html">altair.ConditionalPredicateValueDefnumberExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefnumbernullExprRef.html">altair.ConditionalPredicateValueDefnumbernullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefstringExprRef.html">altair.ConditionalPredicateValueDefstringExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalPredicateValueDefstringnullExprRef.html">altair.ConditionalPredicateValueDefstringnullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalStringFieldDef.html">altair.ConditionalStringFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalValueDefGradientstringnullExprRef.html">altair.ConditionalValueDefGradientstringnullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalValueDefTextExprRef.html">altair.ConditionalValueDefTextExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalValueDefnumber.html">altair.ConditionalValueDefnumber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalValueDefnumberArrayExprRef.html">altair.ConditionalValueDefnumberArrayExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalValueDefnumberExprRef.html">altair.ConditionalValueDefnumberExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalValueDefstringExprRef.html">altair.ConditionalValueDefstringExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ConditionalValueDefstringnullExprRef.html">altair.ConditionalValueDefstringnullExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Config.html">altair.Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.CsvDataFormat.html">altair.CsvDataFormat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Cursor.html">altair.Cursor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Cyclical.html">altair.Cyclical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Data.html">altair.Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.DataFormat.html">altair.DataFormat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.DataSource.html">altair.DataSource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Datasets.html">altair.Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.DateTime.html">altair.DateTime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.DatumDef.html">altair.DatumDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Day.html">altair.Day</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.DensityTransform.html">altair.DensityTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.DerivedStream.html">altair.DerivedStream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Dict.html">altair.Dict</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.DictInlineDataset.html">altair.DictInlineDataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.DictSelectionInit.html">altair.DictSelectionInit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.DictSelectionInitInterval.html">altair.DictSelectionInitInterval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Diverging.html">altair.Diverging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.DomainUnionWith.html">altair.DomainUnionWith</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.DsvDataFormat.html">altair.DsvDataFormat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Element.html">altair.Element</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Encoding.html">altair.Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.EncodingSortField.html">altair.EncodingSortField</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ErrorBand.html">altair.ErrorBand</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ErrorBandConfig.html">altair.ErrorBandConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ErrorBandDef.html">altair.ErrorBandDef</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">altair.ErrorBar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ErrorBarConfig.html">altair.ErrorBarConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ErrorBarDef.html">altair.ErrorBarDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ErrorBarExtent.html">altair.ErrorBarExtent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.EventStream.html">altair.EventStream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.EventType.html">altair.EventType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Expr.html">altair.Expr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ExprRef.html">altair.ExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ExtentTransform.html">altair.ExtentTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FacetEncodingFieldDef.html">altair.FacetEncodingFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FacetFieldDef.html">altair.FacetFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FacetMapping.html">altair.FacetMapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FacetSpec.html">altair.FacetSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FacetedEncoding.html">altair.FacetedEncoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FacetedUnitSpec.html">altair.FacetedUnitSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Feature.html">altair.Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FeatureCollection.html">altair.FeatureCollection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FeatureGeometryGeoJsonProperties.html">altair.FeatureGeometryGeoJsonProperties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Field.html">altair.Field</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldDefWithoutScale.html">altair.FieldDefWithoutScale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldEqualPredicate.html">altair.FieldEqualPredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldGTEPredicate.html">altair.FieldGTEPredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldGTPredicate.html">altair.FieldGTPredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldLTEPredicate.html">altair.FieldLTEPredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldLTPredicate.html">altair.FieldLTPredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldName.html">altair.FieldName</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOneOfPredicate.html">altair.FieldOneOfPredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOrDatumDefWithConditionDatumDefGradientstringnull.html">altair.FieldOrDatumDefWithConditionDatumDefGradientstringnull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOrDatumDefWithConditionDatumDefnumber.html">altair.FieldOrDatumDefWithConditionDatumDefnumber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOrDatumDefWithConditionDatumDefnumberArray.html">altair.FieldOrDatumDefWithConditionDatumDefnumberArray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOrDatumDefWithConditionDatumDefstringnull.html">altair.FieldOrDatumDefWithConditionDatumDefstringnull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull.html">altair.FieldOrDatumDefWithConditionMarkPropFieldDefGradientstringnull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull.html">altair.FieldOrDatumDefWithConditionMarkPropFieldDefTypeForShapestringnull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumber.html">altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray.html">altair.FieldOrDatumDefWithConditionMarkPropFieldDefnumberArray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOrDatumDefWithConditionStringDatumDefText.html">altair.FieldOrDatumDefWithConditionStringDatumDefText</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOrDatumDefWithConditionStringFieldDefText.html">altair.FieldOrDatumDefWithConditionStringFieldDefText</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldOrDatumDefWithConditionStringFieldDefstring.html">altair.FieldOrDatumDefWithConditionStringFieldDefstring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldRange.html">altair.FieldRange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldRangePredicate.html">altair.FieldRangePredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FieldValidPredicate.html">altair.FieldValidPredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FilterTransform.html">altair.FilterTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Fit.html">altair.Fit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FlattenTransform.html">altair.FlattenTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FoldTransform.html">altair.FoldTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FontStyle.html">altair.FontStyle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FontWeight.html">altair.FontWeight</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Format.html">altair.Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.FormatConfig.html">altair.FormatConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Generator.html">altair.Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.GenericUnitSpecEncodingAnyMark.html">altair.GenericUnitSpecEncodingAnyMark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.GeoJsonFeature.html">altair.GeoJsonFeature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.GeoJsonFeatureCollection.html">altair.GeoJsonFeatureCollection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.GeoJsonProperties.html">altair.GeoJsonProperties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Geometry.html">altair.Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.GeometryCollection.html">altair.GeometryCollection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Gradient.html">altair.Gradient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.GradientStop.html">altair.GradientStop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.GraticuleGenerator.html">altair.GraticuleGenerator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.GraticuleParams.html">altair.GraticuleParams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.HConcatSpecGenericSpec.html">altair.HConcatSpecGenericSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Header.html">altair.Header</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.HeaderConfig.html">altair.HeaderConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.HexColor.html">altair.HexColor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ImputeMethod.html">altair.ImputeMethod</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ImputeParams.html">altair.ImputeParams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ImputeSequence.html">altair.ImputeSequence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ImputeTransform.html">altair.ImputeTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.InlineData.html">altair.InlineData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.InlineDataset.html">altair.InlineDataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Interpolate.html">altair.Interpolate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.IntervalSelectionConfig.html">altair.IntervalSelectionConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.IntervalSelectionConfigWithoutType.html">altair.IntervalSelectionConfigWithoutType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.JoinAggregateFieldDef.html">altair.JoinAggregateFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.JoinAggregateTransform.html">altair.JoinAggregateTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.JsonDataFormat.html">altair.JsonDataFormat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LabelOverlap.html">altair.LabelOverlap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LatLongDef.html">altair.LatLongDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LatLongFieldDef.html">altair.LatLongFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LayerRepeatMapping.html">altair.LayerRepeatMapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LayerRepeatSpec.html">altair.LayerRepeatSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LayerSpec.html">altair.LayerSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LayoutAlign.html">altair.LayoutAlign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Legend.html">altair.Legend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LegendBinding.html">altair.LegendBinding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LegendConfig.html">altair.LegendConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LegendOrient.html">altair.LegendOrient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LegendResolveMap.html">altair.LegendResolveMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LegendStreamBinding.html">altair.LegendStreamBinding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LineConfig.html">altair.LineConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LineString.html">altair.LineString</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LinearGradient.html">altair.LinearGradient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LocalMultiTimeUnit.html">altair.LocalMultiTimeUnit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LocalSingleTimeUnit.html">altair.LocalSingleTimeUnit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Locale.html">altair.Locale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LoessTransform.html">altair.LoessTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LogicalAndPredicate.html">altair.LogicalAndPredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LogicalNotPredicate.html">altair.LogicalNotPredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LogicalOrPredicate.html">altair.LogicalOrPredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LookupData.html">altair.LookupData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LookupSelection.html">altair.LookupSelection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.LookupTransform.html">altair.LookupTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Mark.html">altair.Mark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MarkConfig.html">altair.MarkConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MarkDef.html">altair.MarkDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MarkInvalidDataMode.html">altair.MarkInvalidDataMode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MarkPropDefGradientstringnull.html">altair.MarkPropDefGradientstringnull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MarkPropDefnumber.html">altair.MarkPropDefnumber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MarkPropDefnumberArray.html">altair.MarkPropDefnumberArray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MarkPropDefstringnullTypeForShape.html">altair.MarkPropDefstringnullTypeForShape</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MarkType.html">altair.MarkType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MergedStream.html">altair.MergedStream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Month.html">altair.Month</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MultiLineString.html">altair.MultiLineString</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MultiPoint.html">altair.MultiPoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MultiPolygon.html">altair.MultiPolygon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.MultiTimeUnit.html">altair.MultiTimeUnit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.NamedData.html">altair.NamedData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.NonArgAggregateOp.html">altair.NonArgAggregateOp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.NonLayerRepeatSpec.html">altair.NonLayerRepeatSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.NonNormalizedSpec.html">altair.NonNormalizedSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.NumberLocale.html">altair.NumberLocale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.NumericArrayMarkPropDef.html">altair.NumericArrayMarkPropDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.NumericMarkPropDef.html">altair.NumericMarkPropDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.OffsetDef.html">altair.OffsetDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.OrderFieldDef.html">altair.OrderFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.OrderOnlyDef.html">altair.OrderOnlyDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.OrderValueDef.html">altair.OrderValueDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Orient.html">altair.Orient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Orientation.html">altair.Orientation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.OverlayMarkDef.html">altair.OverlayMarkDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Padding.html">altair.Padding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ParameterExtent.html">altair.ParameterExtent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ParameterName.html">altair.ParameterName</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ParameterPredicate.html">altair.ParameterPredicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Parse.html">altair.Parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ParseValue.html">altair.ParseValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PivotTransform.html">altair.PivotTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Point.html">altair.Point</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PointSelectionConfig.html">altair.PointSelectionConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PointSelectionConfigWithoutType.html">altair.PointSelectionConfigWithoutType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PolarDef.html">altair.PolarDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Polygon.html">altair.Polygon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Position.html">altair.Position</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Position2Def.html">altair.Position2Def</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PositionDatumDef.html">altair.PositionDatumDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PositionDatumDefBase.html">altair.PositionDatumDefBase</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PositionDef.html">altair.PositionDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PositionFieldDef.html">altair.PositionFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PositionFieldDefBase.html">altair.PositionFieldDefBase</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PositionValueDef.html">altair.PositionValueDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Predicate.html">altair.Predicate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PredicateComposition.html">altair.PredicateComposition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.PrimitiveValue.html">altair.PrimitiveValue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Projection.html">altair.Projection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ProjectionConfig.html">altair.ProjectionConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ProjectionType.html">altair.ProjectionType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.QuantileTransform.html">altair.QuantileTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RadialGradient.html">altair.RadialGradient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RangeConfig.html">altair.RangeConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RangeEnum.html">altair.RangeEnum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RangeRaw.html">altair.RangeRaw</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RangeRawArray.html">altair.RangeRawArray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RangeScheme.html">altair.RangeScheme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RectConfig.html">altair.RectConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RegressionTransform.html">altair.RegressionTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RelativeBandSize.html">altair.RelativeBandSize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RepeatMapping.html">altair.RepeatMapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RepeatRef.html">altair.RepeatRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RepeatSpec.html">altair.RepeatSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Resolve.html">altair.Resolve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ResolveMode.html">altair.ResolveMode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Root.html">altair.Root</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RowColLayoutAlign.html">altair.RowColLayoutAlign</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RowColboolean.html">altair.RowColboolean</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RowColnumber.html">altair.RowColnumber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.RowColumnEncodingFieldDef.html">altair.RowColumnEncodingFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SampleTransform.html">altair.SampleTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Scale.html">altair.Scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleBinParams.html">altair.ScaleBinParams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleBins.html">altair.ScaleBins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleConfig.html">altair.ScaleConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleDatumDef.html">altair.ScaleDatumDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleFieldDef.html">altair.ScaleFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInterpolateEnum.html">altair.ScaleInterpolateEnum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInterpolateParams.html">altair.ScaleInterpolateParams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataConfig.html">altair.ScaleInvalidDataConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValueangle.html">altair.ScaleInvalidDataShowAsValueangle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuecolor.html">altair.ScaleInvalidDataShowAsValuecolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuefill.html">altair.ScaleInvalidDataShowAsValuefill</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuefillOpacity.html">altair.ScaleInvalidDataShowAsValuefillOpacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValueopacity.html">altair.ScaleInvalidDataShowAsValueopacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValueradius.html">altair.ScaleInvalidDataShowAsValueradius</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValueshape.html">altair.ScaleInvalidDataShowAsValueshape</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuesize.html">altair.ScaleInvalidDataShowAsValuesize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuestroke.html">altair.ScaleInvalidDataShowAsValuestroke</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuestrokeDash.html">altair.ScaleInvalidDataShowAsValuestrokeDash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuestrokeOpacity.html">altair.ScaleInvalidDataShowAsValuestrokeOpacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuestrokeWidth.html">altair.ScaleInvalidDataShowAsValuestrokeWidth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuetheta.html">altair.ScaleInvalidDataShowAsValuetheta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuetime.html">altair.ScaleInvalidDataShowAsValuetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuex.html">altair.ScaleInvalidDataShowAsValuex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuexOffset.html">altair.ScaleInvalidDataShowAsValuexOffset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValuey.html">altair.ScaleInvalidDataShowAsValuey</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsValueyOffset.html">altair.ScaleInvalidDataShowAsValueyOffset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsangle.html">altair.ScaleInvalidDataShowAsangle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAscolor.html">altair.ScaleInvalidDataShowAscolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsfill.html">altair.ScaleInvalidDataShowAsfill</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsfillOpacity.html">altair.ScaleInvalidDataShowAsfillOpacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsopacity.html">altair.ScaleInvalidDataShowAsopacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsradius.html">altair.ScaleInvalidDataShowAsradius</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsshape.html">altair.ScaleInvalidDataShowAsshape</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAssize.html">altair.ScaleInvalidDataShowAssize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsstroke.html">altair.ScaleInvalidDataShowAsstroke</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsstrokeDash.html">altair.ScaleInvalidDataShowAsstrokeDash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsstrokeOpacity.html">altair.ScaleInvalidDataShowAsstrokeOpacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsstrokeWidth.html">altair.ScaleInvalidDataShowAsstrokeWidth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAstheta.html">altair.ScaleInvalidDataShowAstheta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAstime.html">altair.ScaleInvalidDataShowAstime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsx.html">altair.ScaleInvalidDataShowAsx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsxOffset.html">altair.ScaleInvalidDataShowAsxOffset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsy.html">altair.ScaleInvalidDataShowAsy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleInvalidDataShowAsyOffset.html">altair.ScaleInvalidDataShowAsyOffset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleResolveMap.html">altair.ScaleResolveMap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ScaleType.html">altair.ScaleType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SchemaBase.html">altair.SchemaBase</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SchemeParams.html">altair.SchemeParams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SecondaryFieldDef.html">altair.SecondaryFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SelectionConfig.html">altair.SelectionConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SelectionInit.html">altair.SelectionInit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SelectionInitInterval.html">altair.SelectionInitInterval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SelectionInitIntervalMapping.html">altair.SelectionInitIntervalMapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SelectionInitMapping.html">altair.SelectionInitMapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SelectionParameter.html">altair.SelectionParameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SelectionResolution.html">altair.SelectionResolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SelectionType.html">altair.SelectionType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SequenceGenerator.html">altair.SequenceGenerator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SequenceParams.html">altair.SequenceParams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SequentialMultiHue.html">altair.SequentialMultiHue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SequentialSingleHue.html">altair.SequentialSingleHue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ShapeDef.html">altair.ShapeDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SharedEncoding.html">altair.SharedEncoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SingleDefUnitChannel.html">altair.SingleDefUnitChannel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SingleTimeUnit.html">altair.SingleTimeUnit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Sort.html">altair.Sort</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SortArray.html">altair.SortArray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SortByChannel.html">altair.SortByChannel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SortByChannelDesc.html">altair.SortByChannelDesc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SortByEncoding.html">altair.SortByEncoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SortField.html">altair.SortField</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SortOrder.html">altair.SortOrder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Spec.html">altair.Spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SphereGenerator.html">altair.SphereGenerator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.StackOffset.html">altair.StackOffset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.StackTransform.html">altair.StackTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.StandardType.html">altair.StandardType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Step.html">altair.Step</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.StepFor.html">altair.StepFor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Stream.html">altair.Stream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.StringFieldDef.html">altair.StringFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.StringFieldDefWithCondition.html">altair.StringFieldDefWithCondition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.StringValueDefWithCondition.html">altair.StringValueDefWithCondition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.StrokeCap.html">altair.StrokeCap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.StrokeJoin.html">altair.StrokeJoin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.StyleConfigIndex.html">altair.StyleConfigIndex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.SymbolShape.html">altair.SymbolShape</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TextBaseline.html">altair.TextBaseline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TextDef.html">altair.TextDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TextDirection.html">altair.TextDirection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TickConfig.html">altair.TickConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TickCount.html">altair.TickCount</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TimeDef.html">altair.TimeDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TimeFieldDef.html">altair.TimeFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TimeFormatSpecifier.html">altair.TimeFormatSpecifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TimeInterval.html">altair.TimeInterval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TimeIntervalStep.html">altair.TimeIntervalStep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TimeLocale.html">altair.TimeLocale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TimeUnit.html">altair.TimeUnit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TimeUnitParams.html">altair.TimeUnitParams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TimeUnitTransform.html">altair.TimeUnitTransform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TimeUnitTransformParams.html">altair.TimeUnitTransformParams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TitleAnchor.html">altair.TitleAnchor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TitleConfig.html">altair.TitleConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TitleFrame.html">altair.TitleFrame</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TitleOrient.html">altair.TitleOrient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TitleParams.html">altair.TitleParams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TooltipContent.html">altair.TooltipContent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TopLevelConcatSpec.html">altair.TopLevelConcatSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TopLevelFacetSpec.html">altair.TopLevelFacetSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TopLevelHConcatSpec.html">altair.TopLevelHConcatSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TopLevelLayerSpec.html">altair.TopLevelLayerSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TopLevelParameter.html">altair.TopLevelParameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TopLevelRepeatSpec.html">altair.TopLevelRepeatSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TopLevelSelectionParameter.html">altair.TopLevelSelectionParameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TopLevelSpec.html">altair.TopLevelSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TopLevelUnitSpec.html">altair.TopLevelUnitSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TopLevelVConcatSpec.html">altair.TopLevelVConcatSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TopoDataFormat.html">altair.TopoDataFormat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Transform.html">altair.Transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Type.html">altair.Type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TypeForShape.html">altair.TypeForShape</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.TypedFieldDef.html">altair.TypedFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.URI.html">altair.URI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.UnitSpec.html">altair.UnitSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.UnitSpecWithFrame.html">altair.UnitSpecWithFrame</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.UrlData.html">altair.UrlData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.UtcMultiTimeUnit.html">altair.UtcMultiTimeUnit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.UtcSingleTimeUnit.html">altair.UtcSingleTimeUnit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.VConcatSpecGenericSpec.html">altair.VConcatSpecGenericSpec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull.html">altair.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull.html">altair.ValueDefWithConditionMarkPropFieldOrDatumDefTypeForShapestringnull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ValueDefWithConditionMarkPropFieldOrDatumDefnumber.html">altair.ValueDefWithConditionMarkPropFieldOrDatumDefnumber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray.html">altair.ValueDefWithConditionMarkPropFieldOrDatumDefnumberArray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ValueDefWithConditionMarkPropFieldOrDatumDefstringnull.html">altair.ValueDefWithConditionMarkPropFieldOrDatumDefstringnull</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ValueDefWithConditionStringFieldDefText.html">altair.ValueDefWithConditionStringFieldDefText</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ValueDefnumber.html">altair.ValueDefnumber</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ValueDefnumberwidthheightExprRef.html">altair.ValueDefnumberwidthheightExprRef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.VariableParameter.html">altair.VariableParameter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Vector10string.html">altair.Vector10string</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Vector12string.html">altair.Vector12string</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Vector2DateTime.html">altair.Vector2DateTime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Vector2Vector2number.html">altair.Vector2Vector2number</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Vector2boolean.html">altair.Vector2boolean</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Vector2number.html">altair.Vector2number</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Vector2string.html">altair.Vector2string</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Vector3number.html">altair.Vector3number</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.Vector7string.html">altair.Vector7string</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.VegaLiteSchema.html">altair.VegaLiteSchema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ViewBackground.html">altair.ViewBackground</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.ViewConfig.html">altair.ViewConfig</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.WindowEventType.html">altair.WindowEventType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.WindowFieldDef.html">altair.WindowFieldDef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.WindowOnlyOp.html">altair.WindowOnlyOp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="altair.WindowTransform.html">altair.WindowTransform</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api-cls/altair.expr.html">altair.expr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-cls/altair.When.html">altair.When</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-cls/altair.Then.html">altair.Then</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-cls/altair.ChainedWhen.html">altair.ChainedWhen</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelAngle.html">altair.typing.ChannelAngle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelColor.html">altair.typing.ChannelColor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelColumn.html">altair.typing.ChannelColumn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelDescription.html">altair.typing.ChannelDescription</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelDetail.html">altair.typing.ChannelDetail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelFacet.html">altair.typing.ChannelFacet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelFill.html">altair.typing.ChannelFill</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelFillOpacity.html">altair.typing.ChannelFillOpacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelHref.html">altair.typing.ChannelHref</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelKey.html">altair.typing.ChannelKey</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelLatitude.html">altair.typing.ChannelLatitude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelLatitude2.html">altair.typing.ChannelLatitude2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelLongitude.html">altair.typing.ChannelLongitude</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelLongitude2.html">altair.typing.ChannelLongitude2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelOpacity.html">altair.typing.ChannelOpacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelOrder.html">altair.typing.ChannelOrder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelRadius.html">altair.typing.ChannelRadius</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelRadius2.html">altair.typing.ChannelRadius2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelRow.html">altair.typing.ChannelRow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelShape.html">altair.typing.ChannelShape</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelSize.html">altair.typing.ChannelSize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelStroke.html">altair.typing.ChannelStroke</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelStrokeDash.html">altair.typing.ChannelStrokeDash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelStrokeOpacity.html">altair.typing.ChannelStrokeOpacity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelStrokeWidth.html">altair.typing.ChannelStrokeWidth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelText.html">altair.typing.ChannelText</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelTheta.html">altair.typing.ChannelTheta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelTheta2.html">altair.typing.ChannelTheta2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelTooltip.html">altair.typing.ChannelTooltip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelUrl.html">altair.typing.ChannelUrl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelX.html">altair.typing.ChannelX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelX2.html">altair.typing.ChannelX2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelXError.html">altair.typing.ChannelXError</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelXError2.html">altair.typing.ChannelXError2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelXOffset.html">altair.typing.ChannelXOffset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelY.html">altair.typing.ChannelY</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelY2.html">altair.typing.ChannelY2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelYError.html">altair.typing.ChannelYError</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelYError2.html">altair.typing.ChannelYError2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChannelYOffset.html">altair.typing.ChannelYOffset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.ChartType.html">altair.typing.ChartType</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.EncodeKwds.html">altair.typing.EncodeKwds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.Optional.html">altair.typing.Optional</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/altair.typing.is_chart_type.html">altair.typing.is_chart_type</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../datasets/altair.datasets.Loader.html">altair.datasets.Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datasets/altair.datasets.data.html">altair.datasets.data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datasets/altair.datasets.load.html">altair.datasets.load</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datasets/altair.datasets.url.html">altair.datasets.url</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../api.html" class="nav-link">API Reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">altair.ErrorBar</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="altair-errorbar">
+<h1>altair.ErrorBar<a class="headerlink" href="#altair-errorbar" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="altair.ErrorBar">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">altair.</span></span><span class="sig-name descname"><span class="pre">ErrorBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#altair.ErrorBar" title="Link to this definition">#</a></dt>
+<dd><p>ErrorBar schema wrapper.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="altair.ErrorBar.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#altair.ErrorBar.__init__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#altair.ErrorBar.__init__" title="altair.ErrorBar.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code>([deep, ignore])</p></td>
+<td><p>Return a copy of the object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code>(dct[, validate])</p></td>
+<td><p>Construct class from a dictionary representation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code>(json_string[, validate])</p></td>
+<td><p>Instantiate the object from a valid JSON string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">resolve_references</span></code>([schema])</p></td>
+<td><p>Resolve references in the context of this object's schema or root schema.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code>([validate, ignore, context])</p></td>
+<td><p>Return a dictionary representation of the object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code>([validate, indent, sort_keys, ...])</p></td>
+<td><p>Emit the JSON representation for this object as a string.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate</span></code>(instance[, schema])</p></td>
+<td><p>Validate the instance against the class schema in the context of the rootschema.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_property</span></code>(name, value[, schema])</p></td>
+<td><p>Validate a property against property schema in the context of the rootschema.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="altair.ErrorBandDef.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">altair.ErrorBandDef</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="altair.ErrorBarConfig.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">altair.ErrorBarConfig</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#altair.ErrorBar"><code class="docutils literal notranslate"><span class="pre">ErrorBar</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#altair.ErrorBar.__init__"><code class="docutils literal notranslate"><span class="pre">ErrorBar.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

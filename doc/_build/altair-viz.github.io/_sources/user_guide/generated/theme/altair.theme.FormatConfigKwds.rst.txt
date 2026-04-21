@@ -1,0 +1,44 @@
+﻿altair.theme.FormatConfigKwds
+=============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: FormatConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FormatConfigKwds.__init__
+      ~FormatConfigKwds.clear
+      ~FormatConfigKwds.copy
+      ~FormatConfigKwds.fromkeys
+      ~FormatConfigKwds.get
+      ~FormatConfigKwds.items
+      ~FormatConfigKwds.keys
+      ~FormatConfigKwds.pop
+      ~FormatConfigKwds.popitem
+      ~FormatConfigKwds.setdefault
+      ~FormatConfigKwds.update
+      ~FormatConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~FormatConfigKwds.normalizedNumberFormat
+      ~FormatConfigKwds.normalizedNumberFormatType
+      ~FormatConfigKwds.numberFormat
+      ~FormatConfigKwds.numberFormatType
+      ~FormatConfigKwds.timeFormat
+      ~FormatConfigKwds.timeFormatType
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.ParameterExtent
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: ParameterExtent
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ParameterExtent.__init__
+      ~ParameterExtent.copy
+      ~ParameterExtent.from_dict
+      ~ParameterExtent.from_json
+      ~ParameterExtent.resolve_references
+      ~ParameterExtent.to_dict
+      ~ParameterExtent.to_json
+      ~ParameterExtent.validate
+      ~ParameterExtent.validate_property
+   
+   
+
+   
+   
+   

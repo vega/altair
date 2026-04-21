@@ -1,0 +1,30 @@
+﻿altair.ValueDefnumberwidthheightExprRef
+=======================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ValueDefnumberwidthheightExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ValueDefnumberwidthheightExprRef.__init__
+      ~ValueDefnumberwidthheightExprRef.copy
+      ~ValueDefnumberwidthheightExprRef.from_dict
+      ~ValueDefnumberwidthheightExprRef.from_json
+      ~ValueDefnumberwidthheightExprRef.resolve_references
+      ~ValueDefnumberwidthheightExprRef.to_dict
+      ~ValueDefnumberwidthheightExprRef.to_json
+      ~ValueDefnumberwidthheightExprRef.validate
+      ~ValueDefnumberwidthheightExprRef.validate_property
+   
+   
+
+   
+   
+   

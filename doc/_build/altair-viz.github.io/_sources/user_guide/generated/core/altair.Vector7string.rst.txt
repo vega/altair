@@ -1,0 +1,30 @@
+﻿altair.Vector7string
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: Vector7string
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Vector7string.__init__
+      ~Vector7string.copy
+      ~Vector7string.from_dict
+      ~Vector7string.from_json
+      ~Vector7string.resolve_references
+      ~Vector7string.to_dict
+      ~Vector7string.to_json
+      ~Vector7string.validate
+      ~Vector7string.validate_property
+   
+   
+
+   
+   
+   

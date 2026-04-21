@@ -1,0 +1,6 @@
+﻿altair.binding\_select
+======================
+
+.. currentmodule:: altair
+
+.. autofunction:: binding_select

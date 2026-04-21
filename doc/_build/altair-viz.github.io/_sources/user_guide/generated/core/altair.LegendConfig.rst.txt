@@ -1,0 +1,30 @@
+﻿altair.LegendConfig
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: LegendConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LegendConfig.__init__
+      ~LegendConfig.copy
+      ~LegendConfig.from_dict
+      ~LegendConfig.from_json
+      ~LegendConfig.resolve_references
+      ~LegendConfig.to_dict
+      ~LegendConfig.to_json
+      ~LegendConfig.validate
+      ~LegendConfig.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.CompositeMark
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: CompositeMark
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CompositeMark.__init__
+      ~CompositeMark.copy
+      ~CompositeMark.from_dict
+      ~CompositeMark.from_json
+      ~CompositeMark.resolve_references
+      ~CompositeMark.to_dict
+      ~CompositeMark.to_json
+      ~CompositeMark.validate
+      ~CompositeMark.validate_property
+   
+   
+
+   
+   
+   

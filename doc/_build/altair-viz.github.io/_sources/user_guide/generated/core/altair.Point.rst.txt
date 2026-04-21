@@ -1,0 +1,30 @@
+﻿altair.Point
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Point
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Point.__init__
+      ~Point.copy
+      ~Point.from_dict
+      ~Point.from_json
+      ~Point.resolve_references
+      ~Point.to_dict
+      ~Point.to_json
+      ~Point.validate
+      ~Point.validate_property
+   
+   
+
+   
+   
+   

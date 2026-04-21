@@ -1,0 +1,46 @@
+﻿altair.StrokeOpacity
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeOpacity
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeOpacity.__init__
+      ~StrokeOpacity.copy
+      ~StrokeOpacity.from_dict
+      ~StrokeOpacity.from_json
+      ~StrokeOpacity.resolve_references
+      ~StrokeOpacity.to_dict
+      ~StrokeOpacity.to_json
+      ~StrokeOpacity.validate
+      ~StrokeOpacity.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StrokeOpacity.aggregate
+      ~StrokeOpacity.bandPosition
+      ~StrokeOpacity.bin
+      ~StrokeOpacity.condition
+      ~StrokeOpacity.field
+      ~StrokeOpacity.legend
+      ~StrokeOpacity.scale
+      ~StrokeOpacity.sort
+      ~StrokeOpacity.timeUnit
+      ~StrokeOpacity.title
+      ~StrokeOpacity.type
+   
+   

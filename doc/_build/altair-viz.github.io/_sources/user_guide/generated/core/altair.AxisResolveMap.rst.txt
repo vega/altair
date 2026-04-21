@@ -1,0 +1,30 @@
+﻿altair.AxisResolveMap
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: AxisResolveMap
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AxisResolveMap.__init__
+      ~AxisResolveMap.copy
+      ~AxisResolveMap.from_dict
+      ~AxisResolveMap.from_json
+      ~AxisResolveMap.resolve_references
+      ~AxisResolveMap.to_dict
+      ~AxisResolveMap.to_json
+      ~AxisResolveMap.validate
+      ~AxisResolveMap.validate_property
+   
+   
+
+   
+   
+   

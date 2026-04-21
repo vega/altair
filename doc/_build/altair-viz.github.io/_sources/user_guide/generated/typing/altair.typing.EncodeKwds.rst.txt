@@ -1,0 +1,79 @@
+﻿altair.typing.EncodeKwds
+========================
+
+.. currentmodule:: altair.typing
+
+.. autoclass:: EncodeKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~EncodeKwds.__init__
+      ~EncodeKwds.clear
+      ~EncodeKwds.copy
+      ~EncodeKwds.fromkeys
+      ~EncodeKwds.get
+      ~EncodeKwds.items
+      ~EncodeKwds.keys
+      ~EncodeKwds.pop
+      ~EncodeKwds.popitem
+      ~EncodeKwds.setdefault
+      ~EncodeKwds.update
+      ~EncodeKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~EncodeKwds.angle
+      ~EncodeKwds.color
+      ~EncodeKwds.column
+      ~EncodeKwds.description
+      ~EncodeKwds.detail
+      ~EncodeKwds.facet
+      ~EncodeKwds.fill
+      ~EncodeKwds.fillOpacity
+      ~EncodeKwds.href
+      ~EncodeKwds.key
+      ~EncodeKwds.latitude
+      ~EncodeKwds.latitude2
+      ~EncodeKwds.longitude
+      ~EncodeKwds.longitude2
+      ~EncodeKwds.opacity
+      ~EncodeKwds.order
+      ~EncodeKwds.radius
+      ~EncodeKwds.radius2
+      ~EncodeKwds.row
+      ~EncodeKwds.shape
+      ~EncodeKwds.size
+      ~EncodeKwds.stroke
+      ~EncodeKwds.strokeDash
+      ~EncodeKwds.strokeOpacity
+      ~EncodeKwds.strokeWidth
+      ~EncodeKwds.text
+      ~EncodeKwds.theta
+      ~EncodeKwds.theta2
+      ~EncodeKwds.time
+      ~EncodeKwds.tooltip
+      ~EncodeKwds.url
+      ~EncodeKwds.x
+      ~EncodeKwds.x2
+      ~EncodeKwds.xError
+      ~EncodeKwds.xError2
+      ~EncodeKwds.xOffset
+      ~EncodeKwds.y
+      ~EncodeKwds.y2
+      ~EncodeKwds.yError
+      ~EncodeKwds.yError2
+      ~EncodeKwds.yOffset
+   
+   

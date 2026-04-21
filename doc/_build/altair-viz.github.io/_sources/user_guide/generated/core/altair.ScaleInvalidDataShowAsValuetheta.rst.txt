@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsValuetheta
+=======================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsValuetheta
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsValuetheta.__init__
+      ~ScaleInvalidDataShowAsValuetheta.copy
+      ~ScaleInvalidDataShowAsValuetheta.from_dict
+      ~ScaleInvalidDataShowAsValuetheta.from_json
+      ~ScaleInvalidDataShowAsValuetheta.resolve_references
+      ~ScaleInvalidDataShowAsValuetheta.to_dict
+      ~ScaleInvalidDataShowAsValuetheta.to_json
+      ~ScaleInvalidDataShowAsValuetheta.validate
+      ~ScaleInvalidDataShowAsValuetheta.validate_property
+   
+   
+
+   
+   
+   

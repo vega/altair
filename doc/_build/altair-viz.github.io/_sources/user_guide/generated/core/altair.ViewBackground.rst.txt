@@ -1,0 +1,30 @@
+﻿altair.ViewBackground
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: ViewBackground
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ViewBackground.__init__
+      ~ViewBackground.copy
+      ~ViewBackground.from_dict
+      ~ViewBackground.from_json
+      ~ViewBackground.resolve_references
+      ~ViewBackground.to_dict
+      ~ViewBackground.to_json
+      ~ViewBackground.validate
+      ~ViewBackground.validate_property
+   
+   
+
+   
+   
+   

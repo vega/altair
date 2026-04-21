@@ -1,0 +1,117 @@
+﻿altair.TopLevelMixin
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: TopLevelMixin
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TopLevelMixin.__init__
+      ~TopLevelMixin.configure
+      ~TopLevelMixin.configure_arc
+      ~TopLevelMixin.configure_area
+      ~TopLevelMixin.configure_axis
+      ~TopLevelMixin.configure_axisBand
+      ~TopLevelMixin.configure_axisBottom
+      ~TopLevelMixin.configure_axisDiscrete
+      ~TopLevelMixin.configure_axisLeft
+      ~TopLevelMixin.configure_axisPoint
+      ~TopLevelMixin.configure_axisQuantitative
+      ~TopLevelMixin.configure_axisRight
+      ~TopLevelMixin.configure_axisTemporal
+      ~TopLevelMixin.configure_axisTop
+      ~TopLevelMixin.configure_axisX
+      ~TopLevelMixin.configure_axisXBand
+      ~TopLevelMixin.configure_axisXDiscrete
+      ~TopLevelMixin.configure_axisXPoint
+      ~TopLevelMixin.configure_axisXQuantitative
+      ~TopLevelMixin.configure_axisXTemporal
+      ~TopLevelMixin.configure_axisY
+      ~TopLevelMixin.configure_axisYBand
+      ~TopLevelMixin.configure_axisYDiscrete
+      ~TopLevelMixin.configure_axisYPoint
+      ~TopLevelMixin.configure_axisYQuantitative
+      ~TopLevelMixin.configure_axisYTemporal
+      ~TopLevelMixin.configure_bar
+      ~TopLevelMixin.configure_boxplot
+      ~TopLevelMixin.configure_circle
+      ~TopLevelMixin.configure_concat
+      ~TopLevelMixin.configure_errorband
+      ~TopLevelMixin.configure_errorbar
+      ~TopLevelMixin.configure_facet
+      ~TopLevelMixin.configure_geoshape
+      ~TopLevelMixin.configure_header
+      ~TopLevelMixin.configure_headerColumn
+      ~TopLevelMixin.configure_headerFacet
+      ~TopLevelMixin.configure_headerRow
+      ~TopLevelMixin.configure_image
+      ~TopLevelMixin.configure_legend
+      ~TopLevelMixin.configure_line
+      ~TopLevelMixin.configure_mark
+      ~TopLevelMixin.configure_point
+      ~TopLevelMixin.configure_projection
+      ~TopLevelMixin.configure_range
+      ~TopLevelMixin.configure_rect
+      ~TopLevelMixin.configure_rule
+      ~TopLevelMixin.configure_scale
+      ~TopLevelMixin.configure_selection
+      ~TopLevelMixin.configure_square
+      ~TopLevelMixin.configure_text
+      ~TopLevelMixin.configure_tick
+      ~TopLevelMixin.configure_title
+      ~TopLevelMixin.configure_tooltipFormat
+      ~TopLevelMixin.configure_trail
+      ~TopLevelMixin.configure_view
+      ~TopLevelMixin.display
+      ~TopLevelMixin.open_editor
+      ~TopLevelMixin.project
+      ~TopLevelMixin.properties
+      ~TopLevelMixin.repeat
+      ~TopLevelMixin.resolve_axis
+      ~TopLevelMixin.resolve_legend
+      ~TopLevelMixin.resolve_scale
+      ~TopLevelMixin.save
+      ~TopLevelMixin.serve
+      ~TopLevelMixin.show
+      ~TopLevelMixin.to_dict
+      ~TopLevelMixin.to_html
+      ~TopLevelMixin.to_json
+      ~TopLevelMixin.to_url
+      ~TopLevelMixin.transform_aggregate
+      ~TopLevelMixin.transform_bin
+      ~TopLevelMixin.transform_calculate
+      ~TopLevelMixin.transform_density
+      ~TopLevelMixin.transform_extent
+      ~TopLevelMixin.transform_filter
+      ~TopLevelMixin.transform_flatten
+      ~TopLevelMixin.transform_fold
+      ~TopLevelMixin.transform_impute
+      ~TopLevelMixin.transform_joinaggregate
+      ~TopLevelMixin.transform_loess
+      ~TopLevelMixin.transform_lookup
+      ~TopLevelMixin.transform_pivot
+      ~TopLevelMixin.transform_quantile
+      ~TopLevelMixin.transform_regression
+      ~TopLevelMixin.transform_sample
+      ~TopLevelMixin.transform_stack
+      ~TopLevelMixin.transform_timeunit
+      ~TopLevelMixin.transform_window
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TopLevelMixin.data
+   
+   

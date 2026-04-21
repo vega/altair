@@ -1,0 +1,108 @@
+﻿altair.theme.MarkConfigKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: MarkConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MarkConfigKwds.__init__
+      ~MarkConfigKwds.clear
+      ~MarkConfigKwds.copy
+      ~MarkConfigKwds.fromkeys
+      ~MarkConfigKwds.get
+      ~MarkConfigKwds.items
+      ~MarkConfigKwds.keys
+      ~MarkConfigKwds.pop
+      ~MarkConfigKwds.popitem
+      ~MarkConfigKwds.setdefault
+      ~MarkConfigKwds.update
+      ~MarkConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~MarkConfigKwds.align
+      ~MarkConfigKwds.angle
+      ~MarkConfigKwds.aria
+      ~MarkConfigKwds.ariaRole
+      ~MarkConfigKwds.ariaRoleDescription
+      ~MarkConfigKwds.aspect
+      ~MarkConfigKwds.baseline
+      ~MarkConfigKwds.blend
+      ~MarkConfigKwds.color
+      ~MarkConfigKwds.cornerRadius
+      ~MarkConfigKwds.cornerRadiusBottomLeft
+      ~MarkConfigKwds.cornerRadiusBottomRight
+      ~MarkConfigKwds.cornerRadiusTopLeft
+      ~MarkConfigKwds.cornerRadiusTopRight
+      ~MarkConfigKwds.cursor
+      ~MarkConfigKwds.description
+      ~MarkConfigKwds.dir
+      ~MarkConfigKwds.dx
+      ~MarkConfigKwds.dy
+      ~MarkConfigKwds.ellipsis
+      ~MarkConfigKwds.endAngle
+      ~MarkConfigKwds.fill
+      ~MarkConfigKwds.fillOpacity
+      ~MarkConfigKwds.filled
+      ~MarkConfigKwds.font
+      ~MarkConfigKwds.fontSize
+      ~MarkConfigKwds.fontStyle
+      ~MarkConfigKwds.fontWeight
+      ~MarkConfigKwds.height
+      ~MarkConfigKwds.href
+      ~MarkConfigKwds.innerRadius
+      ~MarkConfigKwds.interpolate
+      ~MarkConfigKwds.invalid
+      ~MarkConfigKwds.limit
+      ~MarkConfigKwds.lineBreak
+      ~MarkConfigKwds.lineHeight
+      ~MarkConfigKwds.opacity
+      ~MarkConfigKwds.order
+      ~MarkConfigKwds.orient
+      ~MarkConfigKwds.outerRadius
+      ~MarkConfigKwds.padAngle
+      ~MarkConfigKwds.radius
+      ~MarkConfigKwds.radius2
+      ~MarkConfigKwds.shape
+      ~MarkConfigKwds.size
+      ~MarkConfigKwds.smooth
+      ~MarkConfigKwds.startAngle
+      ~MarkConfigKwds.stroke
+      ~MarkConfigKwds.strokeCap
+      ~MarkConfigKwds.strokeDash
+      ~MarkConfigKwds.strokeDashOffset
+      ~MarkConfigKwds.strokeJoin
+      ~MarkConfigKwds.strokeMiterLimit
+      ~MarkConfigKwds.strokeOffset
+      ~MarkConfigKwds.strokeOpacity
+      ~MarkConfigKwds.strokeWidth
+      ~MarkConfigKwds.tension
+      ~MarkConfigKwds.text
+      ~MarkConfigKwds.theta
+      ~MarkConfigKwds.theta2
+      ~MarkConfigKwds.time
+      ~MarkConfigKwds.timeUnitBandPosition
+      ~MarkConfigKwds.timeUnitBandSize
+      ~MarkConfigKwds.tooltip
+      ~MarkConfigKwds.url
+      ~MarkConfigKwds.width
+      ~MarkConfigKwds.x
+      ~MarkConfigKwds.x2
+      ~MarkConfigKwds.y
+      ~MarkConfigKwds.y2
+   
+   

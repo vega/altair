@@ -1,0 +1,46 @@
+﻿altair.Shape
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Shape
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Shape.__init__
+      ~Shape.copy
+      ~Shape.from_dict
+      ~Shape.from_json
+      ~Shape.resolve_references
+      ~Shape.to_dict
+      ~Shape.to_json
+      ~Shape.validate
+      ~Shape.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Shape.aggregate
+      ~Shape.bandPosition
+      ~Shape.bin
+      ~Shape.condition
+      ~Shape.field
+      ~Shape.legend
+      ~Shape.scale
+      ~Shape.sort
+      ~Shape.timeUnit
+      ~Shape.title
+      ~Shape.type
+   
+   

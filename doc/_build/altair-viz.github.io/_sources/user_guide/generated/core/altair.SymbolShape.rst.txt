@@ -1,0 +1,30 @@
+﻿altair.SymbolShape
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: SymbolShape
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SymbolShape.__init__
+      ~SymbolShape.copy
+      ~SymbolShape.from_dict
+      ~SymbolShape.from_json
+      ~SymbolShape.resolve_references
+      ~SymbolShape.to_dict
+      ~SymbolShape.to_json
+      ~SymbolShape.validate
+      ~SymbolShape.validate_property
+   
+   
+
+   
+   
+   

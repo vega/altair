@@ -1,0 +1,37 @@
+﻿altair.AngleValue
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: AngleValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AngleValue.__init__
+      ~AngleValue.copy
+      ~AngleValue.from_dict
+      ~AngleValue.from_json
+      ~AngleValue.resolve_references
+      ~AngleValue.to_dict
+      ~AngleValue.to_json
+      ~AngleValue.validate
+      ~AngleValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AngleValue.condition
+      ~AngleValue.value
+   
+   

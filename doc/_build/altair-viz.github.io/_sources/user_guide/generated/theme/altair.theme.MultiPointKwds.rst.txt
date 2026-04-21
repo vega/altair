@@ -1,0 +1,41 @@
+﻿altair.theme.MultiPointKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: MultiPointKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MultiPointKwds.__init__
+      ~MultiPointKwds.clear
+      ~MultiPointKwds.copy
+      ~MultiPointKwds.fromkeys
+      ~MultiPointKwds.get
+      ~MultiPointKwds.items
+      ~MultiPointKwds.keys
+      ~MultiPointKwds.pop
+      ~MultiPointKwds.popitem
+      ~MultiPointKwds.setdefault
+      ~MultiPointKwds.update
+      ~MultiPointKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~MultiPointKwds.coordinates
+      ~MultiPointKwds.type
+      ~MultiPointKwds.bbox
+   
+   

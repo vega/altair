@@ -1,0 +1,604 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Faceted Line Chart with Cumulative Sum &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/line_chart_with_cumsum_faceted';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Faceted Line Chart with Cumulative Sum</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="faceted-line-chart-with-cumulative-sum">
+<span id="gallery-line-chart-with-cumsum-faceted"></span><h1>Faceted Line Chart with Cumulative Sum<a class="headerlink" href="#faceted-line-chart-with-cumulative-sum" title="Link to this heading">#</a></h1>
+<p>This chart creates one facet per natural disaster and shows the cumulative number of deaths for that category.
+Note the use of different predicates to filter based on both a list and a range.</p>
+
+<div id="line_chart_with_cumsum_faceted-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-a72cbf30928ec3bff30bcf9bb28b2c55"}, "facet": {"field": "Entity", "header": {"labelAnchor": "start", "labelFontStyle": "italic"}, "sort": ["Drought", "Epidemic", "Earthquake", "Flood"], "title": null, "type": "nominal"}, "spec": {"mark": {"type": "line"}, "encoding": {"color": {"field": "Entity", "legend": null, "type": "nominal"}, "x": {"axis": {"format": "d"}, "field": "Year", "title": null, "type": "quantitative"}, "y": {"field": "cumulative_deaths", "title": null, "type": "quantitative"}}, "height": 150, "transform": [{"filter": {"and": [{"field": "Entity", "oneOf": ["Drought", "Epidemic", "Earthquake", "Flood"]}, {"field": "Year", "range": [1900, 2000]}]}}, {"window": [{"op": "sum", "field": "Deaths", "as": "cumulative_deaths"}], "groupby": ["Entity"]}], "width": 300}, "columns": 2, "resolve": {"axis": {"x": "independent", "y": "independent"}}, "title": {"text": ["Cumulative casualties by type of disaster", "in the 20th century"], "anchor": "middle"}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-a72cbf30928ec3bff30bcf9bb28b2c55": [{"Entity": "All natural disasters", "Year": 1900, "Deaths": 1267360}, {"Entity": "All natural disasters", "Year": 1901, "Deaths": 200018}, {"Entity": "All natural disasters", "Year": 1902, "Deaths": 46037}, {"Entity": "All natural disasters", "Year": 1903, "Deaths": 6506}, {"Entity": "All natural disasters", "Year": 1905, "Deaths": 22758}, {"Entity": "All natural disasters", "Year": 1906, "Deaths": 42970}, {"Entity": "All natural disasters", "Year": 1907, "Deaths": 1325641}, {"Entity": "All natural disasters", "Year": 1908, "Deaths": 75033}, {"Entity": "All natural disasters", "Year": 1909, "Deaths": 1511524}, {"Entity": "All natural disasters", "Year": 1910, "Deaths": 148233}, {"Entity": "All natural disasters", "Year": 1911, "Deaths": 102408}, {"Entity": "All natural disasters", "Year": 1912, "Deaths": 52093}, {"Entity": "All natural disasters", "Year": 1913, "Deaths": 882}, {"Entity": "All natural disasters", "Year": 1914, "Deaths": 289}, {"Entity": "All natural disasters", "Year": 1915, "Deaths": 32167}, {"Entity": "All natural disasters", "Year": 1916, "Deaths": 300}, {"Entity": "All natural disasters", "Year": 1917, "Deaths": 2523507}, {"Entity": "All natural disasters", "Year": 1918, "Deaths": 461113}, {"Entity": "All natural disasters", "Year": 1919, "Deaths": 5500}, {"Entity": "All natural disasters", "Year": 1920, "Deaths": 3204224}, {"Entity": "All natural disasters", "Year": 1921, "Deaths": 1200000}, {"Entity": "All natural disasters", "Year": 1922, "Deaths": 101243}, {"Entity": "All natural disasters", "Year": 1923, "Deaths": 255701}, {"Entity": "All natural disasters", "Year": 1924, "Deaths": 303009}, {"Entity": "All natural disasters", "Year": 1925, "Deaths": 5832}, {"Entity": "All natural disasters", "Year": 1926, "Deaths": 427852}, {"Entity": "All natural disasters", "Year": 1927, "Deaths": 215160}, {"Entity": "All natural disasters", "Year": 1928, "Deaths": 3004895}, {"Entity": "All natural disasters", "Year": 1929, "Deaths": 8377}, {"Entity": "All natural disasters", "Year": 1930, "Deaths": 10572}, {"Entity": "All natural disasters", "Year": 1931, "Deaths": 3706227}, {"Entity": "All natural disasters", "Year": 1932, "Deaths": 73296}, {"Entity": "All natural disasters", "Year": 1933, "Deaths": 34296}, {"Entity": "All natural disasters", "Year": 1934, "Deaths": 21087}, {"Entity": "All natural disasters", "Year": 1935, "Deaths": 272817}, {"Entity": "All natural disasters", "Year": 1936, "Deaths": 5301}, {"Entity": "All natural disasters", "Year": 1937, "Deaths": 12025}, {"Entity": "All natural disasters", "Year": 1938, "Deaths": 2225}, {"Entity": "All natural disasters", "Year": 1939, "Deaths": 563178}, {"Entity": "All natural disasters", "Year": 1940, "Deaths": 23023}, {"Entity": "All natural disasters", "Year": 1941, "Deaths": 10195}, {"Entity": "All natural disasters", "Year": 1942, "Deaths": 1608235}, {"Entity": "All natural disasters", "Year": 1943, "Deaths": 1910322}, {"Entity": "All natural disasters", "Year": 1944, "Deaths": 15906}, {"Entity": "All natural disasters", "Year": 1945, "Deaths": 10376}, {"Entity": "All natural disasters", "Year": 1946, "Deaths": 35490}, {"Entity": "All natural disasters", "Year": 1947, "Deaths": 17647}, {"Entity": "All natural disasters", "Year": 1948, "Deaths": 120131}, {"Entity": "All natural disasters", "Year": 1949, "Deaths": 120370}, {"Entity": "All natural disasters", "Year": 1950, "Deaths": 6728}, {"Entity": "All natural disasters", "Year": 1951, "Deaths": 15042}, {"Entity": "All natural disasters", "Year": 1952, "Deaths": 8965}, {"Entity": "All natural disasters", "Year": 1953, "Deaths": 12956}, {"Entity": "All natural disasters", "Year": 1954, "Deaths": 41872}, {"Entity": "All natural disasters", "Year": 1955, "Deaths": 6026}, {"Entity": "All natural disasters", "Year": 1956, "Deaths": 7737}, {"Entity": "All natural disasters", "Year": 1957, "Deaths": 10603}, {"Entity": "All natural disasters", "Year": 1958, "Deaths": 3950}, {"Entity": "All natural disasters", "Year": 1959, "Deaths": 2013242}, {"Entity": "All natural disasters", "Year": 1960, "Deaths": 39188}, {"Entity": "All natural disasters", "Year": 1961, "Deaths": 17341}, {"Entity": "All natural disasters", "Year": 1962, "Deaths": 17370}, {"Entity": "All natural disasters", "Year": 1963, "Deaths": 37746}, {"Entity": "All natural disasters", "Year": 1964, "Deaths": 12892}, {"Entity": "All natural disasters", "Year": 1965, "Deaths": 1565517}, {"Entity": "All natural disasters", "Year": 1966, "Deaths": 17181}, {"Entity": "All natural disasters", "Year": 1967, "Deaths": 10103}, {"Entity": "All natural disasters", "Year": 1968, "Deaths": 21461}, {"Entity": "All natural disasters", "Year": 1969, "Deaths": 11687}, {"Entity": "All natural disasters", "Year": 1970, "Deaths": 387507}, {"Entity": "All natural disasters", "Year": 1971, "Deaths": 18086}, {"Entity": "All natural disasters", "Year": 1972, "Deaths": 20045}, {"Entity": "All natural disasters", "Year": 1973, "Deaths": 110555}, {"Entity": "All natural disasters", "Year": 1974, "Deaths": 87504}, {"Entity": "All natural disasters", "Year": 1975, "Deaths": 14858}, {"Entity": "All natural disasters", "Year": 1976, "Deaths": 280469}, {"Entity": "All natural disasters", "Year": 1977, "Deaths": 22406}, {"Entity": "All natural disasters", "Year": 1978, "Deaths": 38096}, {"Entity": "All natural disasters", "Year": 1979, "Deaths": 7341}, {"Entity": "All natural disasters", "Year": 1980, "Deaths": 23089}, {"Entity": "All natural disasters", "Year": 1981, "Deaths": 119697}, {"Entity": "All natural disasters", "Year": 1982, "Deaths": 13973}, {"Entity": "All natural disasters", "Year": 1983, "Deaths": 461561}, {"Entity": "All natural disasters", "Year": 1984, "Deaths": 16273}, {"Entity": "All natural disasters", "Year": 1985, "Deaths": 60232}, {"Entity": "All natural disasters", "Year": 1986, "Deaths": 10349}, {"Entity": "All natural disasters", "Year": 1987, "Deaths": 21533}, {"Entity": "All natural disasters", "Year": 1988, "Deaths": 57464}, {"Entity": "All natural disasters", "Year": 1989, "Deaths": 12611}, {"Entity": "All natural disasters", "Year": 1990, "Deaths": 53141}, {"Entity": "All natural disasters", "Year": 1991, "Deaths": 189707}, {"Entity": "All natural disasters", "Year": 1992, "Deaths": 18911}, {"Entity": "All natural disasters", "Year": 1993, "Deaths": 21821}, {"Entity": "All natural disasters", "Year": 1994, "Deaths": 15590}, {"Entity": "All natural disasters", "Year": 1995, "Deaths": 27166}, {"Entity": "All natural disasters", "Year": 1996, "Deaths": 31595}, {"Entity": "All natural disasters", "Year": 1997, "Deaths": 30124}, {"Entity": "All natural disasters", "Year": 1998, "Deaths": 62672}, {"Entity": "All natural disasters", "Year": 1999, "Deaths": 76886}, {"Entity": "All natural disasters", "Year": 2000, "Deaths": 16667}, {"Entity": "All natural disasters", "Year": 2001, "Deaths": 39493}, {"Entity": "All natural disasters", "Year": 2002, "Deaths": 21342}, {"Entity": "All natural disasters", "Year": 2003, "Deaths": 113558}, {"Entity": "All natural disasters", "Year": 2004, "Deaths": 244772}, {"Entity": "All natural disasters", "Year": 2005, "Deaths": 93566}, {"Entity": "All natural disasters", "Year": 2006, "Deaths": 29893}, {"Entity": "All natural disasters", "Year": 2007, "Deaths": 22422}, {"Entity": "All natural disasters", "Year": 2008, "Deaths": 242236}, {"Entity": "All natural disasters", "Year": 2009, "Deaths": 16037}, {"Entity": "All natural disasters", "Year": 2010, "Deaths": 329900}, {"Entity": "All natural disasters", "Year": 2011, "Deaths": 34143}, {"Entity": "All natural disasters", "Year": 2012, "Deaths": 11619}, {"Entity": "All natural disasters", "Year": 2013, "Deaths": 22225}, {"Entity": "All natural disasters", "Year": 2014, "Deaths": 20882}, {"Entity": "All natural disasters", "Year": 2015, "Deaths": 23893}, {"Entity": "All natural disasters", "Year": 2016, "Deaths": 10201}, {"Entity": "All natural disasters", "Year": 2017, "Deaths": 2087}, {"Entity": "Drought", "Year": 1900, "Deaths": 1261000}, {"Entity": "Drought", "Year": 1910, "Deaths": 85000}, {"Entity": "Drought", "Year": 1920, "Deaths": 524000}, {"Entity": "Drought", "Year": 1921, "Deaths": 1200000}, {"Entity": "Drought", "Year": 1928, "Deaths": 3000000}, {"Entity": "Drought", "Year": 1940, "Deaths": 20000}, {"Entity": "Drought", "Year": 1942, "Deaths": 1500000}, {"Entity": "Drought", "Year": 1943, "Deaths": 1900000}, {"Entity": "Drought", "Year": 1946, "Deaths": 30000}, {"Entity": "Drought", "Year": 1964, "Deaths": 50}, {"Entity": "Drought", "Year": 1965, "Deaths": 1502000}, {"Entity": "Drought", "Year": 1966, "Deaths": 8000}, {"Entity": "Drought", "Year": 1967, "Deaths": 600}, {"Entity": "Drought", "Year": 1973, "Deaths": 100000}, {"Entity": "Drought", "Year": 1974, "Deaths": 19000}, {"Entity": "Drought", "Year": 1978, "Deaths": 63}, {"Entity": "Drought", "Year": 1979, "Deaths": 18}, {"Entity": "Drought", "Year": 1981, "Deaths": 103000}, {"Entity": "Drought", "Year": 1982, "Deaths": 280}, {"Entity": "Drought", "Year": 1983, "Deaths": 450520}, {"Entity": "Drought", "Year": 1984, "Deaths": 230}, {"Entity": "Drought", "Year": 1986, "Deaths": 84}, {"Entity": "Drought", "Year": 1987, "Deaths": 1317}, {"Entity": "Drought", "Year": 1988, "Deaths": 1600}, {"Entity": "Drought", "Year": 1989, "Deaths": 237}, {"Entity": "Drought", "Year": 1991, "Deaths": 2000}, {"Entity": "Drought", "Year": 1997, "Deaths": 732}, {"Entity": "Drought", "Year": 1998, "Deaths": 20}, {"Entity": "Drought", "Year": 1999, "Deaths": 361}, {"Entity": "Drought", "Year": 2000, "Deaths": 80}, {"Entity": "Drought", "Year": 2001, "Deaths": 99}, {"Entity": "Drought", "Year": 2002, "Deaths": 588}, {"Entity": "Drought", "Year": 2003, "Deaths": 9}, {"Entity": "Drought", "Year": 2004, "Deaths": 80}, {"Entity": "Drought", "Year": 2005, "Deaths": 149}, {"Entity": "Drought", "Year": 2006, "Deaths": 134}, {"Entity": "Drought", "Year": 2008, "Deaths": 8}, {"Entity": "Drought", "Year": 2010, "Deaths": 20000}, {"Entity": "Drought", "Year": 2015, "Deaths": 35}, {"Entity": "Earthquake", "Year": 1901, "Deaths": 18}, {"Entity": "Earthquake", "Year": 1902, "Deaths": 6747}, {"Entity": "Earthquake", "Year": 1903, "Deaths": 6000}, {"Entity": "Earthquake", "Year": 1905, "Deaths": 22500}, {"Entity": "Earthquake", "Year": 1906, "Deaths": 31966}, {"Entity": "Earthquake", "Year": 1907, "Deaths": 25641}, {"Entity": "Earthquake", "Year": 1908, "Deaths": 75000}, {"Entity": "Earthquake", "Year": 1909, "Deaths": 5146}, {"Entity": "Earthquake", "Year": 1910, "Deaths": 1762}, {"Entity": "Earthquake", "Year": 1912, "Deaths": 923}, {"Entity": "Earthquake", "Year": 1913, "Deaths": 150}, {"Entity": "Earthquake", "Year": 1914, "Deaths": 149}, {"Entity": "Earthquake", "Year": 1915, "Deaths": 29986}, {"Entity": "Earthquake", "Year": 1917, "Deaths": 19450}, {"Entity": "Earthquake", "Year": 1918, "Deaths": 10379}, {"Entity": "Earthquake", "Year": 1920, "Deaths": 180000}, {"Entity": "Earthquake", "Year": 1922, "Deaths": 1100}, {"Entity": "Earthquake", "Year": 1923, "Deaths": 152362}, {"Entity": "Earthquake", "Year": 1924, "Deaths": 767}, {"Entity": "Earthquake", "Year": 1925, "Deaths": 5013}, {"Entity": "Earthquake", "Year": 1926, "Deaths": 12}, {"Entity": "Earthquake", "Year": 1927, "Deaths": 206142}, {"Entity": "Earthquake", "Year": 1928, "Deaths": 635}, {"Entity": "Earthquake", "Year": 1929, "Deaths": 3317}, {"Entity": "Earthquake", "Year": 1930, "Deaths": 5081}, {"Entity": "Earthquake", "Year": 1931, "Deaths": 1537}, {"Entity": "Earthquake", "Year": 1932, "Deaths": 70006}, {"Entity": "Earthquake", "Year": 1933, "Deaths": 16180}, {"Entity": "Earthquake", "Year": 1934, "Deaths": 15496}, {"Entity": "Earthquake", "Year": 1935, "Deaths": 66110}, {"Entity": "Earthquake", "Year": 1936, "Deaths": 26}, {"Entity": "Earthquake", "Year": 1938, "Deaths": 166}, {"Entity": "Earthquake", "Year": 1939, "Deaths": 63094}, {"Entity": "Earthquake", "Year": 1940, "Deaths": 1275}, {"Entity": "Earthquake", "Year": 1941, "Deaths": 189}, {"Entity": "Earthquake", "Year": 1942, "Deaths": 7235}, {"Entity": "Earthquake", "Year": 1943, "Deaths": 4332}, {"Entity": "Earthquake", "Year": 1944, "Deaths": 14984}, {"Entity": "Earthquake", "Year": 1945, "Deaths": 5961}, {"Entity": "Earthquake", "Year": 1946, "Deaths": 5153}, {"Entity": "Earthquake", "Year": 1947, "Deaths": 633}, {"Entity": "Earthquake", "Year": 1948, "Deaths": 115618}, {"Entity": "Earthquake", "Year": 1949, "Deaths": 6486}, {"Entity": "Earthquake", "Year": 1950, "Deaths": 1833}, {"Entity": "Earthquake", "Year": 1951, "Deaths": 1554}, {"Entity": "Earthquake", "Year": 1952, "Deaths": 2432}, {"Entity": "Earthquake", "Year": 1953, "Deaths": 2717}, {"Entity": "Earthquake", "Year": 1954, "Deaths": 3344}, {"Entity": "Earthquake", "Year": 1955, "Deaths": 959}, {"Entity": "Earthquake", "Year": 1956, "Deaths": 763}, {"Entity": "Earthquake", "Year": 1957, "Deaths": 6993}, {"Entity": "Earthquake", "Year": 1958, "Deaths": 227}, {"Entity": "Earthquake", "Year": 1959, "Deaths": 103}, {"Entity": "Earthquake", "Year": 1960, "Deaths": 19395}, {"Entity": "Earthquake", "Year": 1961, "Deaths": 60}, {"Entity": "Earthquake", "Year": 1962, "Deaths": 12209}, {"Entity": "Earthquake", "Year": 1963, "Deaths": 1700}, {"Entity": "Earthquake", "Year": 1964, "Deaths": 335}, {"Entity": "Earthquake", "Year": 1965, "Deaths": 683}, {"Entity": "Earthquake", "Year": 1966, "Deaths": 2752}, {"Entity": "Earthquake", "Year": 1967, "Deaths": 1013}, {"Entity": "Earthquake", "Year": 1968, "Deaths": 10858}, {"Entity": "Earthquake", "Year": 1969, "Deaths": 3353}, {"Entity": "Earthquake", "Year": 1970, "Deaths": 78599}, {"Entity": "Earthquake", "Year": 1971, "Deaths": 1107}, {"Entity": "Earthquake", "Year": 1972, "Deaths": 15170}, {"Entity": "Earthquake", "Year": 1973, "Deaths": 552}, {"Entity": "Earthquake", "Year": 1974, "Deaths": 24808}, {"Entity": "Earthquake", "Year": 1975, "Deaths": 12632}, {"Entity": "Earthquake", "Year": 1976, "Deaths": 276994}, {"Entity": "Earthquake", "Year": 1977, "Deaths": 3098}, {"Entity": "Earthquake", "Year": 1978, "Deaths": 25162}, {"Entity": "Earthquake", "Year": 1979, "Deaths": 2100}, {"Entity": "Earthquake", "Year": 1980, "Deaths": 7730}, {"Entity": "Earthquake", "Year": 1981, "Deaths": 4206}, {"Entity": "Earthquake", "Year": 1982, "Deaths": 2120}, {"Entity": "Earthquake", "Year": 1983, "Deaths": 2148}, {"Entity": "Earthquake", "Year": 1984, "Deaths": 57}, {"Entity": "Earthquake", "Year": 1985, "Deaths": 9853}, {"Entity": "Earthquake", "Year": 1986, "Deaths": 1181}, {"Entity": "Earthquake", "Year": 1987, "Deaths": 5160}, {"Entity": "Earthquake", "Year": 1988, "Deaths": 27049}, {"Entity": "Earthquake", "Year": 1989, "Deaths": 650}, {"Entity": "Earthquake", "Year": 1990, "Deaths": 42853}, {"Entity": "Earthquake", "Year": 1991, "Deaths": 2454}, {"Entity": "Earthquake", "Year": 1992, "Deaths": 4033}, {"Entity": "Earthquake", "Year": 1993, "Deaths": 10088}, {"Entity": "Earthquake", "Year": 1994, "Deaths": 1242}, {"Entity": "Earthquake", "Year": 1995, "Deaths": 7739}, {"Entity": "Earthquake", "Year": 1996, "Deaths": 576}, {"Entity": "Earthquake", "Year": 1997, "Deaths": 3159}, {"Entity": "Earthquake", "Year": 1998, "Deaths": 9573}, {"Entity": "Earthquake", "Year": 1999, "Deaths": 21869}, {"Entity": "Earthquake", "Year": 2000, "Deaths": 217}, {"Entity": "Earthquake", "Year": 2001, "Deaths": 21348}, {"Entity": "Earthquake", "Year": 2002, "Deaths": 1639}, {"Entity": "Earthquake", "Year": 2003, "Deaths": 29617}, {"Entity": "Earthquake", "Year": 2004, "Deaths": 227290}, {"Entity": "Earthquake", "Year": 2005, "Deaths": 76241}, {"Entity": "Earthquake", "Year": 2006, "Deaths": 6692}, {"Entity": "Earthquake", "Year": 2007, "Deaths": 780}, {"Entity": "Earthquake", "Year": 2008, "Deaths": 87918}, {"Entity": "Earthquake", "Year": 2009, "Deaths": 1893}, {"Entity": "Earthquake", "Year": 2010, "Deaths": 226733}, {"Entity": "Earthquake", "Year": 2011, "Deaths": 20946}, {"Entity": "Earthquake", "Year": 2012, "Deaths": 711}, {"Entity": "Earthquake", "Year": 2013, "Deaths": 1120}, {"Entity": "Earthquake", "Year": 2014, "Deaths": 774}, {"Entity": "Earthquake", "Year": 2015, "Deaths": 9550}, {"Entity": "Earthquake", "Year": 2016, "Deaths": 1311}, {"Entity": "Earthquake", "Year": 2017, "Deaths": 49}, {"Entity": "Epidemic", "Year": 1900, "Deaths": 30}, {"Entity": "Epidemic", "Year": 1901, "Deaths": 200000}, {"Entity": "Epidemic", "Year": 1907, "Deaths": 1300000}, {"Entity": "Epidemic", "Year": 1909, "Deaths": 1500040}, {"Entity": "Epidemic", "Year": 1910, "Deaths": 60000}, {"Entity": "Epidemic", "Year": 1917, "Deaths": 2500000}, {"Entity": "Epidemic", "Year": 1918, "Deaths": 449700}, {"Entity": "Epidemic", "Year": 1920, "Deaths": 2500000}, {"Entity": "Epidemic", "Year": 1923, "Deaths": 100000}, {"Entity": "Epidemic", "Year": 1924, "Deaths": 300000}, {"Entity": "Epidemic", "Year": 1926, "Deaths": 423000}, {"Entity": "Epidemic", "Year": 1932, "Deaths": 16}, {"Entity": "Epidemic", "Year": 1935, "Deaths": 2000}, {"Entity": "Epidemic", "Year": 1940, "Deaths": 1500}, {"Entity": "Epidemic", "Year": 1947, "Deaths": 10276}, {"Entity": "Epidemic", "Year": 1953, "Deaths": 481}, {"Entity": "Epidemic", "Year": 1963, "Deaths": 1000}, {"Entity": "Epidemic", "Year": 1964, "Deaths": 617}, {"Entity": "Epidemic", "Year": 1965, "Deaths": 816}, {"Entity": "Epidemic", "Year": 1966, "Deaths": 200}, {"Entity": "Epidemic", "Year": 1967, "Deaths": 3137}, {"Entity": "Epidemic", "Year": 1968, "Deaths": 177}, {"Entity": "Epidemic", "Year": 1969, "Deaths": 3520}, {"Entity": "Epidemic", "Year": 1970, "Deaths": 939}, {"Entity": "Epidemic", "Year": 1971, "Deaths": 2313}, {"Entity": "Epidemic", "Year": 1972, "Deaths": 35}, {"Entity": "Epidemic", "Year": 1974, "Deaths": 1500}, {"Entity": "Epidemic", "Year": 1976, "Deaths": 396}, {"Entity": "Epidemic", "Year": 1977, "Deaths": 1184}, {"Entity": "Epidemic", "Year": 1978, "Deaths": 3060}, {"Entity": "Epidemic", "Year": 1979, "Deaths": 486}, {"Entity": "Epidemic", "Year": 1980, "Deaths": 1685}, {"Entity": "Epidemic", "Year": 1981, "Deaths": 2497}, {"Entity": "Epidemic", "Year": 1982, "Deaths": 2912}, {"Entity": "Epidemic", "Year": 1983, "Deaths": 1219}, {"Entity": "Epidemic", "Year": 1984, "Deaths": 7016}, {"Entity": "Epidemic", "Year": 1985, "Deaths": 5854}, {"Entity": "Epidemic", "Year": 1986, "Deaths": 3046}, {"Entity": "Epidemic", "Year": 1987, "Deaths": 2592}, {"Entity": "Epidemic", "Year": 1988, "Deaths": 15216}, {"Entity": "Epidemic", "Year": 1989, "Deaths": 1870}, {"Entity": "Epidemic", "Year": 1990, "Deaths": 2207}, {"Entity": "Epidemic", "Year": 1991, "Deaths": 30682}, {"Entity": "Epidemic", "Year": 1992, "Deaths": 6675}, {"Entity": "Epidemic", "Year": 1993, "Deaths": 651}, {"Entity": "Epidemic", "Year": 1994, "Deaths": 2505}, {"Entity": "Epidemic", "Year": 1995, "Deaths": 4428}, {"Entity": "Epidemic", "Year": 1996, "Deaths": 16887}, {"Entity": "Epidemic", "Year": 1997, "Deaths": 10674}, {"Entity": "Epidemic", "Year": 1998, "Deaths": 12931}, {"Entity": "Epidemic", "Year": 1999, "Deaths": 6293}, {"Entity": "Epidemic", "Year": 2000, "Deaths": 6980}, {"Entity": "Epidemic", "Year": 2001, "Deaths": 8515}, {"Entity": "Epidemic", "Year": 2002, "Deaths": 8762}, {"Entity": "Epidemic", "Year": 2003, "Deaths": 3522}, {"Entity": "Epidemic", "Year": 2004, "Deaths": 3245}, {"Entity": "Epidemic", "Year": 2005, "Deaths": 3909}, {"Entity": "Epidemic", "Year": 2006, "Deaths": 6402}, {"Entity": "Epidemic", "Year": 2007, "Deaths": 5484}, {"Entity": "Epidemic", "Year": 2008, "Deaths": 6904}, {"Entity": "Epidemic", "Year": 2009, "Deaths": 4895}, {"Entity": "Epidemic", "Year": 2010, "Deaths": 12143}, {"Entity": "Epidemic", "Year": 2011, "Deaths": 3174}, {"Entity": "Epidemic", "Year": 2012, "Deaths": 1887}, {"Entity": "Epidemic", "Year": 2013, "Deaths": 529}, {"Entity": "Epidemic", "Year": 2014, "Deaths": 12911}, {"Entity": "Epidemic", "Year": 2015, "Deaths": 1032}, {"Entity": "Epidemic", "Year": 2016, "Deaths": 1520}, {"Entity": "Epidemic", "Year": 2017, "Deaths": 386}, {"Entity": "Extreme temperature", "Year": 1936, "Deaths": 1693}, {"Entity": "Extreme temperature", "Year": 1951, "Deaths": 69}, {"Entity": "Extreme temperature", "Year": 1953, "Deaths": 669}, {"Entity": "Extreme temperature", "Year": 1955, "Deaths": 107}, {"Entity": "Extreme temperature", "Year": 1958, "Deaths": 651}, {"Entity": "Extreme temperature", "Year": 1961, "Deaths": 400}, {"Entity": "Extreme temperature", "Year": 1962, "Deaths": 50}, {"Entity": "Extreme temperature", "Year": 1963, "Deaths": 162}, {"Entity": "Extreme temperature", "Year": 1965, "Deaths": 100}, {"Entity": "Extreme temperature", "Year": 1966, "Deaths": 262}, {"Entity": "Extreme temperature", "Year": 1968, "Deaths": 153}, {"Entity": "Extreme temperature", "Year": 1971, "Deaths": 400}, {"Entity": "Extreme temperature", "Year": 1972, "Deaths": 110}, {"Entity": "Extreme temperature", "Year": 1973, "Deaths": 283}, {"Entity": "Extreme temperature", "Year": 1975, "Deaths": 140}, {"Entity": "Extreme temperature", "Year": 1978, "Deaths": 150}, {"Entity": "Extreme temperature", "Year": 1979, "Deaths": 470}, {"Entity": "Extreme temperature", "Year": 1980, "Deaths": 1389}, {"Entity": "Extreme temperature", "Year": 1981, "Deaths": 300}, {"Entity": "Extreme temperature", "Year": 1982, "Deaths": 400}, {"Entity": "Extreme temperature", "Year": 1983, "Deaths": 205}, {"Entity": "Extreme temperature", "Year": 1984, "Deaths": 290}, {"Entity": "Extreme temperature", "Year": 1985, "Deaths": 456}, {"Entity": "Extreme temperature", "Year": 1986, "Deaths": 50}, {"Entity": "Extreme temperature", "Year": 1987, "Deaths": 1220}, {"Entity": "Extreme temperature", "Year": 1988, "Deaths": 644}, {"Entity": "Extreme temperature", "Year": 1989, "Deaths": 381}, {"Entity": "Extreme temperature", "Year": 1990, "Deaths": 979}, {"Entity": "Extreme temperature", "Year": 1991, "Deaths": 835}, {"Entity": "Extreme temperature", "Year": 1992, "Deaths": 388}, {"Entity": "Extreme temperature", "Year": 1993, "Deaths": 106}, {"Entity": "Extreme temperature", "Year": 1994, "Deaths": 341}, {"Entity": "Extreme temperature", "Year": 1995, "Deaths": 1730}, {"Entity": "Extreme temperature", "Year": 1996, "Deaths": 300}, {"Entity": "Extreme temperature", "Year": 1997, "Deaths": 604}, {"Entity": "Extreme temperature", "Year": 1998, "Deaths": 3269}, {"Entity": "Extreme temperature", "Year": 1999, "Deaths": 771}, {"Entity": "Extreme temperature", "Year": 2000, "Deaths": 941}, {"Entity": "Extreme temperature", "Year": 2001, "Deaths": 1787}, {"Entity": "Extreme temperature", "Year": 2002, "Deaths": 3369}, {"Entity": "Extreme temperature", "Year": 2003, "Deaths": 74698}, {"Entity": "Extreme temperature", "Year": 2004, "Deaths": 255}, {"Entity": "Extreme temperature", "Year": 2005, "Deaths": 1550}, {"Entity": "Extreme temperature", "Year": 2006, "Deaths": 4826}, {"Entity": "Extreme temperature", "Year": 2007, "Deaths": 1086}, {"Entity": "Extreme temperature", "Year": 2008, "Deaths": 1688}, {"Entity": "Extreme temperature", "Year": 2009, "Deaths": 1386}, {"Entity": "Extreme temperature", "Year": 2010, "Deaths": 57188}, {"Entity": "Extreme temperature", "Year": 2011, "Deaths": 435}, {"Entity": "Extreme temperature", "Year": 2012, "Deaths": 1834}, {"Entity": "Extreme temperature", "Year": 2013, "Deaths": 1821}, {"Entity": "Extreme temperature", "Year": 2014, "Deaths": 1168}, {"Entity": "Extreme temperature", "Year": 2015, "Deaths": 7425}, {"Entity": "Extreme temperature", "Year": 2016, "Deaths": 490}, {"Entity": "Extreme temperature", "Year": 2017, "Deaths": 130}, {"Entity": "Extreme weather", "Year": 1900, "Deaths": 6000}, {"Entity": "Extreme weather", "Year": 1902, "Deaths": 600}, {"Entity": "Extreme weather", "Year": 1903, "Deaths": 163}, {"Entity": "Extreme weather", "Year": 1905, "Deaths": 240}, {"Entity": "Extreme weather", "Year": 1906, "Deaths": 10298}, {"Entity": "Extreme weather", "Year": 1909, "Deaths": 713}, {"Entity": "Extreme weather", "Year": 1910, "Deaths": 30}, {"Entity": "Extreme weather", "Year": 1911, "Deaths": 1000}, {"Entity": "Extreme weather", "Year": 1912, "Deaths": 51170}, {"Entity": "Extreme weather", "Year": 1913, "Deaths": 732}, {"Entity": "Extreme weather", "Year": 1915, "Deaths": 2125}, {"Entity": "Extreme weather", "Year": 1916, "Deaths": 300}, {"Entity": "Extreme weather", "Year": 1917, "Deaths": 4057}, {"Entity": "Extreme weather", "Year": 1918, "Deaths": 34}, {"Entity": "Extreme weather", "Year": 1919, "Deaths": 500}, {"Entity": "Extreme weather", "Year": 1920, "Deaths": 224}, {"Entity": "Extreme weather", "Year": 1922, "Deaths": 100000}, {"Entity": "Extreme weather", "Year": 1923, "Deaths": 3139}, {"Entity": "Extreme weather", "Year": 1924, "Deaths": 2242}, {"Entity": "Extreme weather", "Year": 1925, "Deaths": 819}, {"Entity": "Extreme weather", "Year": 1926, "Deaths": 3568}, {"Entity": "Extreme weather", "Year": 1927, "Deaths": 5772}, {"Entity": "Extreme weather", "Year": 1928, "Deaths": 4224}, {"Entity": "Extreme weather", "Year": 1930, "Deaths": 4082}, {"Entity": "Extreme weather", "Year": 1931, "Deaths": 3200}, {"Entity": "Extreme weather", "Year": 1932, "Deaths": 3244}, {"Entity": "Extreme weather", "Year": 1933, "Deaths": 63}, {"Entity": "Extreme weather", "Year": 1934, "Deaths": 5091}, {"Entity": "Extreme weather", "Year": 1935, "Deaths": 62707}, {"Entity": "Extreme weather", "Year": 1936, "Deaths": 3309}, {"Entity": "Extreme weather", "Year": 1937, "Deaths": 11231}, {"Entity": "Extreme weather", "Year": 1938, "Deaths": 905}, {"Entity": "Extreme weather", "Year": 1939, "Deaths": 3}, {"Entity": "Extreme weather", "Year": 1940, "Deaths": 123}, {"Entity": "Extreme weather", "Year": 1941, "Deaths": 5006}, {"Entity": "Extreme weather", "Year": 1942, "Deaths": 101000}, {"Entity": "Extreme weather", "Year": 1943, "Deaths": 5000}, {"Entity": "Extreme weather", "Year": 1944, "Deaths": 726}, {"Entity": "Extreme weather", "Year": 1945, "Deaths": 4415}, {"Entity": "Extreme weather", "Year": 1946, "Deaths": 337}, {"Entity": "Extreme weather", "Year": 1947, "Deaths": 4738}, {"Entity": "Extreme weather", "Year": 1948, "Deaths": 2971}, {"Entity": "Extreme weather", "Year": 1949, "Deaths": 2804}, {"Entity": "Extreme weather", "Year": 1950, "Deaths": 873}, {"Entity": "Extreme weather", "Year": 1951, "Deaths": 2861}, {"Entity": "Extreme weather", "Year": 1952, "Deaths": 6277}, {"Entity": "Extreme weather", "Year": 1953, "Deaths": 1814}, {"Entity": "Extreme weather", "Year": 1954, "Deaths": 2969}, {"Entity": "Extreme weather", "Year": 1955, "Deaths": 3895}, {"Entity": "Extreme weather", "Year": 1956, "Deaths": 3114}, {"Entity": "Extreme weather", "Year": 1957, "Deaths": 1139}, {"Entity": "Extreme weather", "Year": 1958, "Deaths": 2620}, {"Entity": "Extreme weather", "Year": 1959, "Deaths": 9695}, {"Entity": "Extreme weather", "Year": 1960, "Deaths": 9164}, {"Entity": "Extreme weather", "Year": 1961, "Deaths": 12852}, {"Entity": "Extreme weather", "Year": 1962, "Deaths": 1860}, {"Entity": "Extreme weather", "Year": 1963, "Deaths": 29965}, {"Entity": "Extreme weather", "Year": 1964, "Deaths": 10655}, {"Entity": "Extreme weather", "Year": 1965, "Deaths": 59932}, {"Entity": "Extreme weather", "Year": 1966, "Deaths": 2327}, {"Entity": "Extreme weather", "Year": 1967, "Deaths": 2255}, {"Entity": "Extreme weather", "Year": 1968, "Deaths": 1669}, {"Entity": "Extreme weather", "Year": 1969, "Deaths": 3252}, {"Entity": "Extreme weather", "Year": 1970, "Deaths": 304495}, {"Entity": "Extreme weather", "Year": 1971, "Deaths": 10811}, {"Entity": "Extreme weather", "Year": 1972, "Deaths": 1427}, {"Entity": "Extreme weather", "Year": 1973, "Deaths": 4344}, {"Entity": "Extreme weather", "Year": 1974, "Deaths": 11861}, {"Entity": "Extreme weather", "Year": 1975, "Deaths": 1041}, {"Entity": "Extreme weather", "Year": 1976, "Deaths": 1763}, {"Entity": "Extreme weather", "Year": 1977, "Deaths": 15298}, {"Entity": "Extreme weather", "Year": 1978, "Deaths": 3676}, {"Entity": "Extreme weather", "Year": 1979, "Deaths": 2623}, {"Entity": "Extreme weather", "Year": 1980, "Deaths": 1379}, {"Entity": "Extreme weather", "Year": 1981, "Deaths": 3790}, {"Entity": "Extreme weather", "Year": 1982, "Deaths": 2782}, {"Entity": "Extreme weather", "Year": 1983, "Deaths": 3656}, {"Entity": "Extreme weather", "Year": 1984, "Deaths": 5468}, {"Entity": "Extreme weather", "Year": 1985, "Deaths": 17165}, {"Entity": "Extreme weather", "Year": 1986, "Deaths": 1939}, {"Entity": "Extreme weather", "Year": 1987, "Deaths": 2900}, {"Entity": "Extreme weather", "Year": 1988, "Deaths": 3335}, {"Entity": "Extreme weather", "Year": 1989, "Deaths": 4256}, {"Entity": "Extreme weather", "Year": 1990, "Deaths": 4604}, {"Entity": "Extreme weather", "Year": 1991, "Deaths": 146297}, {"Entity": "Extreme weather", "Year": 1992, "Deaths": 1342}, {"Entity": "Extreme weather", "Year": 1993, "Deaths": 2965}, {"Entity": "Extreme weather", "Year": 1994, "Deaths": 4239}, {"Entity": "Extreme weather", "Year": 1995, "Deaths": 3763}, {"Entity": "Extreme weather", "Year": 1996, "Deaths": 4581}, {"Entity": "Extreme weather", "Year": 1997, "Deaths": 6150}, {"Entity": "Extreme weather", "Year": 1998, "Deaths": 24935}, {"Entity": "Extreme weather", "Year": 1999, "Deaths": 12270}, {"Entity": "Extreme weather", "Year": 2000, "Deaths": 1354}, {"Entity": "Extreme weather", "Year": 2001, "Deaths": 1911}, {"Entity": "Extreme weather", "Year": 2002, "Deaths": 1382}, {"Entity": "Extreme weather", "Year": 2003, "Deaths": 1049}, {"Entity": "Extreme weather", "Year": 2004, "Deaths": 6547}, {"Entity": "Extreme weather", "Year": 2005, "Deaths": 5251}, {"Entity": "Extreme weather", "Year": 2006, "Deaths": 4329}, {"Entity": "Extreme weather", "Year": 2007, "Deaths": 6035}, {"Entity": "Extreme weather", "Year": 2008, "Deaths": 140985}, {"Entity": "Extreme weather", "Year": 2009, "Deaths": 3287}, {"Entity": "Extreme weather", "Year": 2010, "Deaths": 1564}, {"Entity": "Extreme weather", "Year": 2011, "Deaths": 3103}, {"Entity": "Extreme weather", "Year": 2012, "Deaths": 3105}, {"Entity": "Extreme weather", "Year": 2013, "Deaths": 8603}, {"Entity": "Extreme weather", "Year": 2014, "Deaths": 1424}, {"Entity": "Extreme weather", "Year": 2015, "Deaths": 1270}, {"Entity": "Extreme weather", "Year": 2016, "Deaths": 1760}, {"Entity": "Extreme weather", "Year": 2017, "Deaths": 394}, {"Entity": "Flood", "Year": 1900, "Deaths": 300}, {"Entity": "Flood", "Year": 1903, "Deaths": 250}, {"Entity": "Flood", "Year": 1906, "Deaths": 6}, {"Entity": "Flood", "Year": 1909, "Deaths": 72}, {"Entity": "Flood", "Year": 1910, "Deaths": 1379}, {"Entity": "Flood", "Year": 1911, "Deaths": 100000}, {"Entity": "Flood", "Year": 1926, "Deaths": 1000}, {"Entity": "Flood", "Year": 1927, "Deaths": 3246}, {"Entity": "Flood", "Year": 1928, "Deaths": 36}, {"Entity": "Flood", "Year": 1931, "Deaths": 3700000}, {"Entity": "Flood", "Year": 1933, "Deaths": 18053}, {"Entity": "Flood", "Year": 1935, "Deaths": 142000}, {"Entity": "Flood", "Year": 1936, "Deaths": 200}, {"Entity": "Flood", "Year": 1937, "Deaths": 248}, {"Entity": "Flood", "Year": 1938, "Deaths": 954}, {"Entity": "Flood", "Year": 1939, "Deaths": 500010}, {"Entity": "Flood", "Year": 1940, "Deaths": 125}, {"Entity": "Flood", "Year": 1943, "Deaths": 990}, {"Entity": "Flood", "Year": 1947, "Deaths": 2000}, {"Entity": "Flood", "Year": 1948, "Deaths": 917}, {"Entity": "Flood", "Year": 1949, "Deaths": 97000}, {"Entity": "Flood", "Year": 1950, "Deaths": 3808}, {"Entity": "Flood", "Year": 1951, "Deaths": 5666}, {"Entity": "Flood", "Year": 1952, "Deaths": 199}, {"Entity": "Flood", "Year": 1953, "Deaths": 7125}, {"Entity": "Flood", "Year": 1954, "Deaths": 34436}, {"Entity": "Flood", "Year": 1955, "Deaths": 584}, {"Entity": "Flood", "Year": 1956, "Deaths": 3613}, {"Entity": "Flood", "Year": 1957, "Deaths": 2471}, {"Entity": "Flood", "Year": 1958, "Deaths": 400}, {"Entity": "Flood", "Year": 1959, "Deaths": 2003396}, {"Entity": "Flood", "Year": 1960, "Deaths": 10577}, {"Entity": "Flood", "Year": 1961, "Deaths": 3863}, {"Entity": "Flood", "Year": 1962, "Deaths": 1180}, {"Entity": "Flood", "Year": 1963, "Deaths": 1031}, {"Entity": "Flood", "Year": 1964, "Deaths": 1123}, {"Entity": "Flood", "Year": 1965, "Deaths": 1401}, {"Entity": "Flood", "Year": 1966, "Deaths": 1923}, {"Entity": "Flood", "Year": 1967, "Deaths": 2446}, {"Entity": "Flood", "Year": 1968, "Deaths": 7306}, {"Entity": "Flood", "Year": 1969, "Deaths": 1544}, {"Entity": "Flood", "Year": 1970, "Deaths": 3246}, {"Entity": "Flood", "Year": 1971, "Deaths": 2404}, {"Entity": "Flood", "Year": 1972, "Deaths": 2548}, {"Entity": "Flood", "Year": 1973, "Deaths": 1835}, {"Entity": "Flood", "Year": 1974, "Deaths": 29431}, {"Entity": "Flood", "Year": 1975, "Deaths": 848}, {"Entity": "Flood", "Year": 1976, "Deaths": 960}, {"Entity": "Flood", "Year": 1977, "Deaths": 2568}, {"Entity": "Flood", "Year": 1978, "Deaths": 5897}, {"Entity": "Flood", "Year": 1979, "Deaths": 1038}, {"Entity": "Flood", "Year": 1980, "Deaths": 10466}, {"Entity": "Flood", "Year": 1981, "Deaths": 5283}, {"Entity": "Flood", "Year": 1982, "Deaths": 4648}, {"Entity": "Flood", "Year": 1983, "Deaths": 2082}, {"Entity": "Flood", "Year": 1984, "Deaths": 2930}, {"Entity": "Flood", "Year": 1985, "Deaths": 4376}, {"Entity": "Flood", "Year": 1986, "Deaths": 1782}, {"Entity": "Flood", "Year": 1987, "Deaths": 6766}, {"Entity": "Flood", "Year": 1988, "Deaths": 8504}, {"Entity": "Flood", "Year": 1989, "Deaths": 4716}, {"Entity": "Flood", "Year": 1990, "Deaths": 2251}, {"Entity": "Flood", "Year": 1991, "Deaths": 5852}, {"Entity": "Flood", "Year": 1992, "Deaths": 5315}, {"Entity": "Flood", "Year": 1993, "Deaths": 6150}, {"Entity": "Flood", "Year": 1994, "Deaths": 6771}, {"Entity": "Flood", "Year": 1995, "Deaths": 7956}, {"Entity": "Flood", "Year": 1996, "Deaths": 8047}, {"Entity": "Flood", "Year": 1997, "Deaths": 7685}, {"Entity": "Flood", "Year": 1998, "Deaths": 10653}, {"Entity": "Flood", "Year": 1999, "Deaths": 34807}, {"Entity": "Flood", "Year": 2000, "Deaths": 6025}, {"Entity": "Flood", "Year": 2001, "Deaths": 5014}, {"Entity": "Flood", "Year": 2002, "Deaths": 4236}, {"Entity": "Flood", "Year": 2003, "Deaths": 3910}, {"Entity": "Flood", "Year": 2004, "Deaths": 6982}, {"Entity": "Flood", "Year": 2005, "Deaths": 5754}, {"Entity": "Flood", "Year": 2006, "Deaths": 5843}, {"Entity": "Flood", "Year": 2007, "Deaths": 8607}, {"Entity": "Flood", "Year": 2008, "Deaths": 4007}, {"Entity": "Flood", "Year": 2009, "Deaths": 3627}, {"Entity": "Flood", "Year": 2010, "Deaths": 8356}, {"Entity": "Flood", "Year": 2011, "Deaths": 6163}, {"Entity": "Flood", "Year": 2012, "Deaths": 3544}, {"Entity": "Flood", "Year": 2013, "Deaths": 9836}, {"Entity": "Flood", "Year": 2014, "Deaths": 3532}, {"Entity": "Flood", "Year": 2015, "Deaths": 3495}, {"Entity": "Flood", "Year": 2016, "Deaths": 4720}, {"Entity": "Flood", "Year": 2017, "Deaths": 648}, {"Entity": "Landslide", "Year": 1909, "Deaths": 53}, {"Entity": "Landslide", "Year": 1922, "Deaths": 100}, {"Entity": "Landslide", "Year": 1923, "Deaths": 200}, {"Entity": "Landslide", "Year": 1926, "Deaths": 128}, {"Entity": "Landslide", "Year": 1930, "Deaths": 40}, {"Entity": "Landslide", "Year": 1931, "Deaths": 190}, {"Entity": "Landslide", "Year": 1932, "Deaths": 30}, {"Entity": "Landslide", "Year": 1934, "Deaths": 500}, {"Entity": "Landslide", "Year": 1936, "Deaths": 73}, {"Entity": "Landslide", "Year": 1938, "Deaths": 200}, {"Entity": "Landslide", "Year": 1941, "Deaths": 5000}, {"Entity": "Landslide", "Year": 1948, "Deaths": 525}, {"Entity": "Landslide", "Year": 1949, "Deaths": 12000}, {"Entity": "Landslide", "Year": 1950, "Deaths": 130}, {"Entity": "Landslide", "Year": 1951, "Deaths": 92}, {"Entity": "Landslide", "Year": 1952, "Deaths": 28}, {"Entity": "Landslide", "Year": 1954, "Deaths": 1086}, {"Entity": "Landslide", "Year": 1955, "Deaths": 478}, {"Entity": "Landslide", "Year": 1956, "Deaths": 236}, {"Entity": "Landslide", "Year": 1958, "Deaths": 52}, {"Entity": "Landslide", "Year": 1959, "Deaths": 48}, {"Entity": "Landslide", "Year": 1960, "Deaths": 52}, {"Entity": "Landslide", "Year": 1961, "Deaths": 166}, {"Entity": "Landslide", "Year": 1962, "Deaths": 71}, {"Entity": "Landslide", "Year": 1963, "Deaths": 2033}, {"Entity": "Landslide", "Year": 1964, "Deaths": 108}, {"Entity": "Landslide", "Year": 1965, "Deaths": 204}, {"Entity": "Landslide", "Year": 1966, "Deaths": 604}, {"Entity": "Landslide", "Year": 1967, "Deaths": 590}, {"Entity": "Landslide", "Year": 1968, "Deaths": 1196}, {"Entity": "Landslide", "Year": 1969, "Deaths": 18}, {"Entity": "Landslide", "Year": 1970, "Deaths": 186}, {"Entity": "Landslide", "Year": 1971, "Deaths": 1020}, {"Entity": "Landslide", "Year": 1972, "Deaths": 755}, {"Entity": "Landslide", "Year": 1973, "Deaths": 3541}, {"Entity": "Landslide", "Year": 1974, "Deaths": 904}, {"Entity": "Landslide", "Year": 1975, "Deaths": 195}, {"Entity": "Landslide", "Year": 1976, "Deaths": 315}, {"Entity": "Landslide", "Year": 1977, "Deaths": 40}, {"Entity": "Landslide", "Year": 1978, "Deaths": 86}, {"Entity": "Landslide", "Year": 1979, "Deaths": 338}, {"Entity": "Landslide", "Year": 1980, "Deaths": 300}, {"Entity": "Landslide", "Year": 1981, "Deaths": 421}, {"Entity": "Landslide", "Year": 1982, "Deaths": 640}, {"Entity": "Landslide", "Year": 1983, "Deaths": 1159}, {"Entity": "Landslide", "Year": 1984, "Deaths": 228}, {"Entity": "Landslide", "Year": 1985, "Deaths": 377}, {"Entity": "Landslide", "Year": 1986, "Deaths": 501}, {"Entity": "Landslide", "Year": 1987, "Deaths": 1204}, {"Entity": "Landslide", "Year": 1988, "Deaths": 952}, {"Entity": "Landslide", "Year": 1989, "Deaths": 445}, {"Entity": "Landslide", "Year": 1990, "Deaths": 98}, {"Entity": "Landslide", "Year": 1991, "Deaths": 728}, {"Entity": "Landslide", "Year": 1992, "Deaths": 712}, {"Entity": "Landslide", "Year": 1993, "Deaths": 1418}, {"Entity": "Landslide", "Year": 1994, "Deaths": 307}, {"Entity": "Landslide", "Year": 1995, "Deaths": 1521}, {"Entity": "Landslide", "Year": 1996, "Deaths": 1155}, {"Entity": "Landslide", "Year": 1997, "Deaths": 801}, {"Entity": "Landslide", "Year": 1998, "Deaths": 1141}, {"Entity": "Landslide", "Year": 1999, "Deaths": 445}, {"Entity": "Landslide", "Year": 2000, "Deaths": 1012}, {"Entity": "Landslide", "Year": 2001, "Deaths": 786}, {"Entity": "Landslide", "Year": 2002, "Deaths": 1100}, {"Entity": "Landslide", "Year": 2003, "Deaths": 706}, {"Entity": "Landslide", "Year": 2004, "Deaths": 313}, {"Entity": "Landslide", "Year": 2005, "Deaths": 664}, {"Entity": "Landslide", "Year": 2006, "Deaths": 1638}, {"Entity": "Landslide", "Year": 2007, "Deaths": 271}, {"Entity": "Landslide", "Year": 2008, "Deaths": 504}, {"Entity": "Landslide", "Year": 2009, "Deaths": 723}, {"Entity": "Landslide", "Year": 2010, "Deaths": 3427}, {"Entity": "Landslide", "Year": 2011, "Deaths": 309}, {"Entity": "Landslide", "Year": 2012, "Deaths": 501}, {"Entity": "Landslide", "Year": 2013, "Deaths": 235}, {"Entity": "Landslide", "Year": 2014, "Deaths": 943}, {"Entity": "Landslide", "Year": 2015, "Deaths": 1006}, {"Entity": "Landslide", "Year": 2016, "Deaths": 361}, {"Entity": "Landslide", "Year": 2017, "Deaths": 405}, {"Entity": "Mass movement (dry)", "Year": 1903, "Deaths": 76}, {"Entity": "Mass movement (dry)", "Year": 1905, "Deaths": 18}, {"Entity": "Mass movement (dry)", "Year": 1908, "Deaths": 33}, {"Entity": "Mass movement (dry)", "Year": 1910, "Deaths": 62}, {"Entity": "Mass movement (dry)", "Year": 1915, "Deaths": 56}, {"Entity": "Mass movement (dry)", "Year": 1937, "Deaths": 40}, {"Entity": "Mass movement (dry)", "Year": 1955, "Deaths": 3}, {"Entity": "Mass movement (dry)", "Year": 1962, "Deaths": 2000}, {"Entity": "Mass movement (dry)", "Year": 1963, "Deaths": 150}, {"Entity": "Mass movement (dry)", "Year": 1965, "Deaths": 26}, {"Entity": "Mass movement (dry)", "Year": 1970, "Deaths": 42}, {"Entity": "Mass movement (dry)", "Year": 1971, "Deaths": 31}, {"Entity": "Mass movement (dry)", "Year": 1980, "Deaths": 50}, {"Entity": "Mass movement (dry)", "Year": 1982, "Deaths": 59}, {"Entity": "Mass movement (dry)", "Year": 1983, "Deaths": 466}, {"Entity": "Mass movement (dry)", "Year": 1985, "Deaths": 300}, {"Entity": "Mass movement (dry)", "Year": 1987, "Deaths": 183}, {"Entity": "Mass movement (dry)", "Year": 1988, "Deaths": 157}, {"Entity": "Mass movement (dry)", "Year": 1989, "Deaths": 55}, {"Entity": "Mass movement (dry)", "Year": 1990, "Deaths": 116}, {"Entity": "Mass movement (dry)", "Year": 1991, "Deaths": 86}, {"Entity": "Mass movement (dry)", "Year": 1992, "Deaths": 323}, {"Entity": "Mass movement (dry)", "Year": 1993, "Deaths": 341}, {"Entity": "Mass movement (dry)", "Year": 2000, "Deaths": 11}, {"Entity": "Mass movement (dry)", "Year": 2002, "Deaths": 60}, {"Entity": "Mass movement (dry)", "Year": 2004, "Deaths": 44}, {"Entity": "Mass movement (dry)", "Year": 2006, "Deaths": 11}, {"Entity": "Mass movement (dry)", "Year": 2008, "Deaths": 120}, {"Entity": "Mass movement (dry)", "Year": 2009, "Deaths": 36}, {"Entity": "Mass movement (dry)", "Year": 2012, "Deaths": 16}, {"Entity": "Mass movement (dry)", "Year": 2013, "Deaths": 46}, {"Entity": "Mass movement (dry)", "Year": 2015, "Deaths": 13}, {"Entity": "Volcanic activity", "Year": 1900, "Deaths": 30}, {"Entity": "Volcanic activity", "Year": 1902, "Deaths": 38690}, {"Entity": "Volcanic activity", "Year": 1903, "Deaths": 17}, {"Entity": "Volcanic activity", "Year": 1906, "Deaths": 700}, {"Entity": "Volcanic activity", "Year": 1909, "Deaths": 5500}, {"Entity": "Volcanic activity", "Year": 1911, "Deaths": 1335}, {"Entity": "Volcanic activity", "Year": 1914, "Deaths": 140}, {"Entity": "Volcanic activity", "Year": 1919, "Deaths": 5000}, {"Entity": "Volcanic activity", "Year": 1926, "Deaths": 144}, {"Entity": "Volcanic activity", "Year": 1929, "Deaths": 5000}, {"Entity": "Volcanic activity", "Year": 1930, "Deaths": 1369}, {"Entity": "Volcanic activity", "Year": 1931, "Deaths": 1300}, {"Entity": "Volcanic activity", "Year": 1937, "Deaths": 506}, {"Entity": "Volcanic activity", "Year": 1944, "Deaths": 26}, {"Entity": "Volcanic activity", "Year": 1948, "Deaths": 100}, {"Entity": "Volcanic activity", "Year": 1949, "Deaths": 2000}, {"Entity": "Volcanic activity", "Year": 1950, "Deaths": 84}, {"Entity": "Volcanic activity", "Year": 1951, "Deaths": 4800}, {"Entity": "Volcanic activity", "Year": 1952, "Deaths": 29}, {"Entity": "Volcanic activity", "Year": 1953, "Deaths": 150}, {"Entity": "Volcanic activity", "Year": 1954, "Deaths": 37}, {"Entity": "Volcanic activity", "Year": 1963, "Deaths": 1705}, {"Entity": "Volcanic activity", "Year": 1964, "Deaths": 4}, {"Entity": "Volcanic activity", "Year": 1965, "Deaths": 355}, {"Entity": "Volcanic activity", "Year": 1966, "Deaths": 1088}, {"Entity": "Volcanic activity", "Year": 1968, "Deaths": 90}, {"Entity": "Volcanic activity", "Year": 1975, "Deaths": 2}, {"Entity": "Volcanic activity", "Year": 1976, "Deaths": 41}, {"Entity": "Volcanic activity", "Year": 1977, "Deaths": 215}, {"Entity": "Volcanic activity", "Year": 1979, "Deaths": 268}, {"Entity": "Volcanic activity", "Year": 1980, "Deaths": 90}, {"Entity": "Volcanic activity", "Year": 1981, "Deaths": 192}, {"Entity": "Volcanic activity", "Year": 1982, "Deaths": 130}, {"Entity": "Volcanic activity", "Year": 1984, "Deaths": 37}, {"Entity": "Volcanic activity", "Year": 1985, "Deaths": 21800}, {"Entity": "Volcanic activity", "Year": 1986, "Deaths": 1746}, {"Entity": "Volcanic activity", "Year": 1988, "Deaths": 7}, {"Entity": "Volcanic activity", "Year": 1990, "Deaths": 33}, {"Entity": "Volcanic activity", "Year": 1991, "Deaths": 683}, {"Entity": "Volcanic activity", "Year": 1992, "Deaths": 1}, {"Entity": "Volcanic activity", "Year": 1993, "Deaths": 99}, {"Entity": "Volcanic activity", "Year": 1994, "Deaths": 101}, {"Entity": "Volcanic activity", "Year": 1996, "Deaths": 4}, {"Entity": "Volcanic activity", "Year": 1997, "Deaths": 53}, {"Entity": "Volcanic activity", "Year": 2002, "Deaths": 200}, {"Entity": "Volcanic activity", "Year": 2004, "Deaths": 2}, {"Entity": "Volcanic activity", "Year": 2005, "Deaths": 3}, {"Entity": "Volcanic activity", "Year": 2006, "Deaths": 5}, {"Entity": "Volcanic activity", "Year": 2007, "Deaths": 11}, {"Entity": "Volcanic activity", "Year": 2008, "Deaths": 16}, {"Entity": "Volcanic activity", "Year": 2010, "Deaths": 323}, {"Entity": "Volcanic activity", "Year": 2011, "Deaths": 3}, {"Entity": "Volcanic activity", "Year": 2014, "Deaths": 102}, {"Entity": "Wildfire", "Year": 1911, "Deaths": 73}, {"Entity": "Wildfire", "Year": 1918, "Deaths": 1000}, {"Entity": "Wildfire", "Year": 1922, "Deaths": 43}, {"Entity": "Wildfire", "Year": 1929, "Deaths": 60}, {"Entity": "Wildfire", "Year": 1939, "Deaths": 71}, {"Entity": "Wildfire", "Year": 1944, "Deaths": 170}, {"Entity": "Wildfire", "Year": 1949, "Deaths": 80}, {"Entity": "Wildfire", "Year": 1956, "Deaths": 11}, {"Entity": "Wildfire", "Year": 1966, "Deaths": 25}, {"Entity": "Wildfire", "Year": 1967, "Deaths": 62}, {"Entity": "Wildfire", "Year": 1968, "Deaths": 12}, {"Entity": "Wildfire", "Year": 1977, "Deaths": 3}, {"Entity": "Wildfire", "Year": 1978, "Deaths": 2}, {"Entity": "Wildfire", "Year": 1981, "Deaths": 8}, {"Entity": "Wildfire", "Year": 1982, "Deaths": 2}, {"Entity": "Wildfire", "Year": 1983, "Deaths": 106}, {"Entity": "Wildfire", "Year": 1984, "Deaths": 17}, {"Entity": "Wildfire", "Year": 1985, "Deaths": 51}, {"Entity": "Wildfire", "Year": 1986, "Deaths": 20}, {"Entity": "Wildfire", "Year": 1987, "Deaths": 191}, {"Entity": "Wildfire", "Year": 1989, "Deaths": 1}, {"Entity": "Wildfire", "Year": 1991, "Deaths": 90}, {"Entity": "Wildfire", "Year": 1992, "Deaths": 122}, {"Entity": "Wildfire", "Year": 1993, "Deaths": 3}, {"Entity": "Wildfire", "Year": 1994, "Deaths": 84}, {"Entity": "Wildfire", "Year": 1995, "Deaths": 29}, {"Entity": "Wildfire", "Year": 1996, "Deaths": 45}, {"Entity": "Wildfire", "Year": 1997, "Deaths": 266}, {"Entity": "Wildfire", "Year": 1998, "Deaths": 150}, {"Entity": "Wildfire", "Year": 1999, "Deaths": 70}, {"Entity": "Wildfire", "Year": 2000, "Deaths": 47}, {"Entity": "Wildfire", "Year": 2001, "Deaths": 33}, {"Entity": "Wildfire", "Year": 2002, "Deaths": 6}, {"Entity": "Wildfire", "Year": 2003, "Deaths": 47}, {"Entity": "Wildfire", "Year": 2004, "Deaths": 14}, {"Entity": "Wildfire", "Year": 2005, "Deaths": 45}, {"Entity": "Wildfire", "Year": 2006, "Deaths": 13}, {"Entity": "Wildfire", "Year": 2007, "Deaths": 148}, {"Entity": "Wildfire", "Year": 2008, "Deaths": 86}, {"Entity": "Wildfire", "Year": 2009, "Deaths": 190}, {"Entity": "Wildfire", "Year": 2010, "Deaths": 166}, {"Entity": "Wildfire", "Year": 2011, "Deaths": 10}, {"Entity": "Wildfire", "Year": 2012, "Deaths": 21}, {"Entity": "Wildfire", "Year": 2013, "Deaths": 35}, {"Entity": "Wildfire", "Year": 2014, "Deaths": 16}, {"Entity": "Wildfire", "Year": 2015, "Deaths": 67}, {"Entity": "Wildfire", "Year": 2016, "Deaths": 39}, {"Entity": "Wildfire", "Year": 2017, "Deaths": 75}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#line_chart_with_cumsum_faceted-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="method" for="sd-tab-item-0">
+Method syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">disasters</span><span class="p">()</span>
+<span class="n">columns_sorted</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Drought&#39;</span><span class="p">,</span> <span class="s1">&#39;Epidemic&#39;</span><span class="p">,</span> <span class="s1">&#39;Earthquake&#39;</span><span class="p">,</span> <span class="s1">&#39;Flood&#39;</span><span class="p">]</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">FieldOneOfPredicate</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;Entity&#39;</span><span class="p">,</span> <span class="n">oneOf</span><span class="o">=</span><span class="n">columns_sorted</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">FieldRangePredicate</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">2000</span><span class="p">])</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_window</span><span class="p">(</span>
+    <span class="n">cumulative_deaths</span><span class="o">=</span><span class="s1">&#39;sum(Deaths)&#39;</span><span class="p">,</span> <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Entity&#39;</span><span class="p">]</span> <span class="c1"># Calculate cumulative sum of Deaths by Entity</span>
+<span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;Year:Q&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;cumulative_deaths:Q&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s1">&#39;Entity:N&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">150</span>
+<span class="p">)</span><span class="o">.</span><span class="n">facet</span><span class="p">(</span>
+    <span class="n">facet</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Facet</span><span class="p">(</span>
+        <span class="s1">&#39;Entity:N&#39;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">sort</span><span class="o">=</span><span class="n">columns_sorted</span><span class="p">,</span>
+        <span class="n">header</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Header</span><span class="p">(</span><span class="n">labelAnchor</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="n">labelFontStyle</span><span class="o">=</span><span class="s1">&#39;italic&#39;</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">title</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Title</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Cumulative casualties by type of disaster&#39;</span><span class="p">,</span> <span class="s1">&#39;in the 20th century&#39;</span><span class="p">],</span>
+        <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span>
+    <span class="p">),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">resolve_axis</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;independent&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;independent&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="attribute" for="sd-tab-item-1">
+Attribute syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">disasters</span><span class="p">()</span>
+<span class="n">columns_sorted</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Drought&#39;</span><span class="p">,</span> <span class="s1">&#39;Epidemic&#39;</span><span class="p">,</span> <span class="s1">&#39;Earthquake&#39;</span><span class="p">,</span> <span class="s1">&#39;Flood&#39;</span><span class="p">]</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">FieldOneOfPredicate</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;Entity&#39;</span><span class="p">,</span> <span class="n">oneOf</span><span class="o">=</span><span class="n">columns_sorted</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">FieldRangePredicate</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">2000</span><span class="p">])</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_window</span><span class="p">(</span>
+    <span class="n">cumulative_deaths</span><span class="o">=</span><span class="s1">&#39;sum(Deaths)&#39;</span><span class="p">,</span> <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Entity&#39;</span><span class="p">]</span> <span class="c1"># Calculate cumulative sum of Deaths by Entity</span>
+<span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;Year:Q&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Axis</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;cumulative_deaths:Q&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s1">&#39;Entity:N&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">150</span>
+<span class="p">)</span><span class="o">.</span><span class="n">facet</span><span class="p">(</span>
+    <span class="n">facet</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Facet</span><span class="p">(</span>
+        <span class="s1">&#39;Entity:N&#39;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">sort</span><span class="o">=</span><span class="n">columns_sorted</span><span class="p">,</span>
+        <span class="n">header</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Header</span><span class="p">(</span><span class="n">labelAnchor</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="n">labelFontStyle</span><span class="o">=</span><span class="s1">&#39;italic&#39;</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">title</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Title</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Cumulative casualties by type of disaster&#39;</span><span class="p">,</span> <span class="s1">&#39;in the 20th century&#39;</span><span class="p">],</span>
+        <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span>
+    <span class="p">),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">resolve_axis</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;independent&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;independent&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

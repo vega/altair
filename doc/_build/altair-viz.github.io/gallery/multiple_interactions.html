@@ -1,0 +1,704 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Multiple Interactions &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/multiple_interactions';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Multiple Interactions</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="multiple-interactions">
+<span id="gallery-multiple-interactions"></span><h1>Multiple Interactions<a class="headerlink" href="#multiple-interactions" title="Link to this heading">#</a></h1>
+<p>This example shows how multiple user inputs can be layered onto a chart. The four inputs have functionality as follows:</p>
+<ul class="simple">
+<li><p>Dropdown: Filters the movies by genre</p></li>
+<li><p>Radio Buttons: Highlights certain films by Worldwide Gross</p></li>
+<li><p>Mouse Drag and Scroll: Zooms the x and y scales to allow for panning.</p></li>
+</ul>
+
+<div id="multiple_interactions-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "vconcat": [{"hconcat": [{"mark": {"type": "point", "filled": true}, "encoding": {"tooltip": {"field": "Title", "type": "nominal"}, "x": {"field": "Worldwide Gross", "scale": {"clamp": true, "domain": [100000, 1000000000]}, "type": "quantitative"}, "y": {"field": "IMDB Rating", "type": "quantitative"}}, "height": 200, "name": "view_f2dbbdf25ebcf701_0", "title": "Slider Filtering", "transform": [{"calculate": "datum['Production Budget'] > 100000000.0 ? 100 : 10", "as": "Hundred_Million_Production"}, {"calculate": "year(datum['Release Date'])", "as": "Release_Year"}, {"filter": "(datum['IMDB Rating'] > 0)"}, {"filter": {"field": "MPAA Rating", "oneOf": ["G", "NC-17", "PG", "PG-13", "R"]}}, {"filter": {"param": "param_215c8a4b06282ecd"}}], "width": 200}, {"mark": {"type": "point", "filled": true}, "encoding": {"size": {"condition": {"param": "param_b799401cc7607438", "field": "Big Budget Film", "scale": {"range": [25, 150]}, "type": "nominal"}, "value": 25}, "tooltip": {"field": "Title", "type": "nominal"}, "x": {"field": "Worldwide Gross", "scale": {"clamp": true, "domain": [100000, 1000000000]}, "type": "quantitative"}, "y": {"field": "IMDB Rating", "type": "quantitative"}}, "height": 200, "title": "Checkbox Formatting", "transform": [{"calculate": "datum['Production Budget'] > 100000000.0 ? 100 : 10", "as": "Hundred_Million_Production"}, {"calculate": "year(datum['Release Date'])", "as": "Release_Year"}, {"filter": "(datum['IMDB Rating'] > 0)"}, {"filter": {"field": "MPAA Rating", "oneOf": ["G", "NC-17", "PG", "PG-13", "R"]}}], "width": 200}]}, {"hconcat": [{"mark": {"type": "point", "filled": true}, "encoding": {"color": {"condition": {"param": "param_387dee3f96efd0dd", "field": "MPAA Rating", "legend": null, "type": "nominal"}, "value": "lightgray"}, "tooltip": {"field": "Title", "type": "nominal"}, "x": {"field": "Worldwide Gross", "scale": {"clamp": true, "domain": [100000, 1000000000]}, "type": "quantitative"}, "y": {"field": "IMDB Rating", "type": "quantitative"}}, "height": 200, "name": "view_48693ca76da612ee_0", "title": "Radio Button Highlighting", "transform": [{"calculate": "datum['Production Budget'] > 100000000.0 ? 100 : 10", "as": "Hundred_Million_Production"}, {"calculate": "year(datum['Release Date'])", "as": "Release_Year"}, {"filter": "(datum['IMDB Rating'] > 0)"}, {"filter": {"field": "MPAA Rating", "oneOf": ["G", "NC-17", "PG", "PG-13", "R"]}}], "width": 200}, {"mark": {"type": "point", "filled": true}, "encoding": {"tooltip": {"field": "Title", "type": "nominal"}, "x": {"field": "Worldwide Gross", "scale": {"clamp": true, "domain": [100000, 1000000000]}, "type": "quantitative"}, "y": {"field": "IMDB Rating", "type": "quantitative"}}, "height": 200, "name": "view_718a47e5fefc8555_1", "title": "Dropdown Filtering", "transform": [{"calculate": "datum['Production Budget'] > 100000000.0 ? 100 : 10", "as": "Hundred_Million_Production"}, {"calculate": "year(datum['Release Date'])", "as": "Release_Year"}, {"filter": "(datum['IMDB Rating'] > 0)"}, {"filter": {"field": "MPAA Rating", "oneOf": ["G", "NC-17", "PG", "PG-13", "R"]}}, {"filter": {"param": "param_3680f6ad1db2f5e7"}}], "width": 200}]}], "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/movies.json", "format": {"parse": {"Release Date": "date"}}}, "params": [{"name": "param_215c8a4b06282ecd", "select": {"type": "point", "fields": ["Release_Year"]}, "bind": {"input": "range", "max": 2018, "min": 1969, "name": "Release Year", "step": 1}, "views": ["view_f2dbbdf25ebcf701_0"]}, {"name": "param_b799401cc7607438", "bind": {"input": "checkbox", "name": "Big Budget Films "}}, {"name": "param_387dee3f96efd0dd", "select": {"type": "point", "fields": ["MPAA Rating"]}, "bind": {"input": "radio", "options": ["G", "NC-17", "PG", "PG-13", "R"], "name": "Rating"}, "views": ["view_48693ca76da612ee_0"]}, {"name": "param_3680f6ad1db2f5e7", "select": {"type": "point", "fields": ["Major Genre"]}, "bind": {"input": "select", "options": ["Action", "Adventure", "Black Comedy", "Comedy", "Concert/Performance", "Documentary", "Drama", "Horror", "Musical", "Romantic Comedy", "Thriller/Suspense", "Western"], "name": "Genre"}, "views": ["view_718a47e5fefc8555_1"]}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#multiple_interactions-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="method" for="sd-tab-item-0">
+Method syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">movies</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">UrlData</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">movies</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+    <span class="nb">format</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">DataFormat</span><span class="p">(</span><span class="n">parse</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Release Date&#39;</span><span class="p">:</span><span class="s1">&#39;date&#39;</span><span class="p">})</span>
+<span class="p">)</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;NC-17&#39;</span><span class="p">,</span> <span class="s1">&#39;PG&#39;</span><span class="p">,</span> <span class="s1">&#39;PG-13&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">]</span>
+<span class="n">genres</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Action&#39;</span><span class="p">,</span> <span class="s1">&#39;Adventure&#39;</span><span class="p">,</span> <span class="s1">&#39;Black Comedy&#39;</span><span class="p">,</span> <span class="s1">&#39;Comedy&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Concert/Performance&#39;</span><span class="p">,</span> <span class="s1">&#39;Documentary&#39;</span><span class="p">,</span> <span class="s1">&#39;Drama&#39;</span><span class="p">,</span> <span class="s1">&#39;Horror&#39;</span><span class="p">,</span> <span class="s1">&#39;Musical&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Romantic Comedy&#39;</span><span class="p">,</span> <span class="s1">&#39;Thriller/Suspense&#39;</span><span class="p">,</span> <span class="s1">&#39;Western&#39;</span>
+<span class="p">]</span>
+
+<span class="n">base</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">movies</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">(</span><span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
+    <span class="n">Big_Budget_Film</span> <span class="o">=</span> <span class="s2">&quot;datum[&#39;Production Budget&#39;] &gt; 100000000 ? &#39;Yes&#39; : &#39;No&#39;&quot;</span><span class="p">,</span>
+    <span class="n">Release_Year</span> <span class="o">=</span> <span class="s2">&quot;year(datum[&#39;Release Date&#39;])&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="p">[</span><span class="s1">&#39;IMDB Rating&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">FieldOneOfPredicate</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;MPAA Rating&#39;</span><span class="p">,</span> <span class="n">oneOf</span><span class="o">=</span><span class="n">ratings</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;Worldwide Gross:Q&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span><span class="mi">10</span><span class="o">**</span><span class="mi">9</span><span class="p">),</span> <span class="n">clamp</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;IMDB Rating:Q&#39;</span><span class="p">,</span>
+    <span class="n">tooltip</span><span class="o">=</span><span class="s1">&#39;Title:N&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># A slider filter</span>
+<span class="n">year_slider</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_range</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1969</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">2018</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Release Year&#39;</span><span class="p">)</span>
+<span class="n">slider_selection</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">year_slider</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Release_Year&#39;</span><span class="p">])</span>
+
+<span class="n">filter_year</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">slider_selection</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">slider_selection</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Slider Filtering&#39;</span><span class="p">)</span>
+
+<span class="c1"># A dropdown filter</span>
+<span class="n">genre_dropdown</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_select</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">genres</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Genre&#39;</span><span class="p">)</span>
+<span class="n">genre_select</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Major Genre&#39;</span><span class="p">],</span> <span class="n">bind</span><span class="o">=</span><span class="n">genre_dropdown</span><span class="p">)</span>
+
+<span class="n">filter_genres</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">genre_select</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">genre_select</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Dropdown Filtering&#39;</span><span class="p">)</span>
+
+<span class="c1"># Color changing marks</span>
+<span class="n">rating_radio</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_radio</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">ratings</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Rating&#39;</span><span class="p">)</span>
+<span class="n">rating_select</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MPAA Rating&#39;</span><span class="p">],</span> <span class="n">bind</span><span class="o">=</span><span class="n">rating_radio</span><span class="p">)</span>
+
+<span class="n">rating_color</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">rating_select</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s1">&#39;MPAA Rating:N&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;lightgray&#39;</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="n">highlight_ratings</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">rating_select</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">rating_color</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Radio Button Highlighting&#39;</span><span class="p">)</span>
+
+<span class="c1"># Boolean selection for format changes</span>
+<span class="n">input_checkbox</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_checkbox</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Big Budget Films &#39;</span><span class="p">)</span>
+<span class="n">checkbox_selection</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">input_checkbox</span><span class="p">)</span>
+
+<span class="n">size_checkbox</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">checkbox_selection</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span><span class="s1">&#39;Big Budget Film:N&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">150</span><span class="p">]))</span>
+    <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="n">budget_sizing</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">checkbox_selection</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">size</span><span class="o">=</span><span class="n">size_checkbox</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Checkbox Formatting&#39;</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">filter_year</span> <span class="o">|</span> <span class="n">budget_sizing</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">highlight_ratings</span> <span class="o">|</span> <span class="n">filter_genres</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="attribute" for="sd-tab-item-1">
+Attribute syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">movies</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">UrlData</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">movies</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+    <span class="nb">format</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">DataFormat</span><span class="p">(</span><span class="n">parse</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Release Date&#39;</span><span class="p">:</span><span class="s1">&#39;date&#39;</span><span class="p">})</span>
+<span class="p">)</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;NC-17&#39;</span><span class="p">,</span> <span class="s1">&#39;PG&#39;</span><span class="p">,</span> <span class="s1">&#39;PG-13&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">]</span>
+<span class="n">genres</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">,</span> <span class="s1">&#39;Adventure&#39;</span><span class="p">,</span> <span class="s1">&#39;Black Comedy&#39;</span><span class="p">,</span> <span class="s1">&#39;Comedy&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Concert/Performance&#39;</span><span class="p">,</span> <span class="s1">&#39;Documentary&#39;</span><span class="p">,</span> <span class="s1">&#39;Drama&#39;</span><span class="p">,</span> <span class="s1">&#39;Horror&#39;</span><span class="p">,</span> <span class="s1">&#39;Musical&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Romantic Comedy&#39;</span><span class="p">,</span> <span class="s1">&#39;Thriller/Suspense&#39;</span><span class="p">,</span> <span class="s1">&#39;Western&#39;</span><span class="p">]</span>
+
+<span class="n">base</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">movies</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">(</span><span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
+    <span class="n">Hundred_Million_Production</span> <span class="o">=</span> <span class="s2">&quot;datum[&#39;Production Budget&#39;] &gt; 100000000.0 ? 100 : 10&quot;</span><span class="p">,</span>
+    <span class="n">Release_Year</span> <span class="o">=</span> <span class="s2">&quot;year(datum[&#39;Release Date&#39;])&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="p">[</span><span class="s1">&#39;IMDB Rating&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">FieldOneOfPredicate</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="s1">&#39;MPAA Rating&#39;</span><span class="p">,</span> <span class="n">oneOf</span><span class="o">=</span><span class="n">ratings</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;Worldwide Gross:Q&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span><span class="mi">10</span><span class="o">**</span><span class="mi">9</span><span class="p">),</span> <span class="n">clamp</span><span class="o">=</span><span class="kc">True</span><span class="p">)),</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;IMDB Rating:Q&#39;</span><span class="p">,</span>
+    <span class="n">tooltip</span><span class="o">=</span><span class="s1">&#39;Title:N&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># A slider filter</span>
+<span class="n">year_slider</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_range</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1969</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">2018</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Release Year&#39;</span><span class="p">)</span>
+<span class="n">slider_selection</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">year_slider</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Release_Year&#39;</span><span class="p">])</span>
+
+<span class="n">filter_year</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">slider_selection</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">slider_selection</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Slider Filtering&#39;</span><span class="p">)</span>
+
+<span class="c1"># A dropdown filter</span>
+<span class="n">genre_dropdown</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_select</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">genres</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Genre&#39;</span><span class="p">)</span>
+<span class="n">genre_select</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Major Genre&#39;</span><span class="p">],</span> <span class="n">bind</span><span class="o">=</span><span class="n">genre_dropdown</span><span class="p">)</span>
+
+<span class="n">filter_genres</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">genre_select</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">genre_select</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Dropdown Filtering&#39;</span><span class="p">)</span>
+
+<span class="c1">#color changing marks</span>
+<span class="n">rating_radio</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_radio</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">ratings</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Rating&#39;</span><span class="p">)</span>
+<span class="n">rating_select</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MPAA Rating&#39;</span><span class="p">],</span> <span class="n">bind</span><span class="o">=</span><span class="n">rating_radio</span><span class="p">)</span>
+
+<span class="n">rating_color</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">rating_select</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s1">&#39;MPAA Rating:N&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;lightgray&#39;</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="n">highlight_ratings</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">rating_select</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">rating_color</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Radio Button Highlighting&#39;</span><span class="p">)</span>
+
+<span class="c1"># Boolean selection for format changes</span>
+<span class="n">input_checkbox</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_checkbox</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Big Budget Films &#39;</span><span class="p">)</span>
+<span class="n">checkbox_selection</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">input_checkbox</span><span class="p">)</span>
+
+<span class="n">size_checkbox</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">checkbox_selection</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span><span class="s1">&#39;Big Budget Film:N&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">150</span><span class="p">])))</span>
+    <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="n">budget_sizing</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">checkbox_selection</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">size</span><span class="o">=</span><span class="n">size_checkbox</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Checkbox Formatting&#39;</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">filter_year</span> <span class="o">|</span> <span class="n">budget_sizing</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">highlight_ratings</span> <span class="o">|</span> <span class="n">filter_genres</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+﻿altair.XDatum
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: XDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~XDatum.__init__
+      ~XDatum.copy
+      ~XDatum.from_dict
+      ~XDatum.from_json
+      ~XDatum.resolve_references
+      ~XDatum.to_dict
+      ~XDatum.to_json
+      ~XDatum.validate
+      ~XDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~XDatum.axis
+      ~XDatum.bandPosition
+      ~XDatum.datum
+      ~XDatum.impute
+      ~XDatum.scale
+      ~XDatum.stack
+      ~XDatum.title
+      ~XDatum.type
+   
+   

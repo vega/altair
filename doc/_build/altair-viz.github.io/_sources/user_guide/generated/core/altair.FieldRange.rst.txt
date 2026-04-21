@@ -1,0 +1,30 @@
+﻿altair.FieldRange
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldRange
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldRange.__init__
+      ~FieldRange.copy
+      ~FieldRange.from_dict
+      ~FieldRange.from_json
+      ~FieldRange.resolve_references
+      ~FieldRange.to_dict
+      ~FieldRange.to_json
+      ~FieldRange.validate
+      ~FieldRange.validate_property
+   
+   
+
+   
+   
+   

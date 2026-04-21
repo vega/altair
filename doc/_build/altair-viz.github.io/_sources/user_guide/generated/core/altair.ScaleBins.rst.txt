@@ -1,0 +1,30 @@
+﻿altair.ScaleBins
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleBins
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleBins.__init__
+      ~ScaleBins.copy
+      ~ScaleBins.from_dict
+      ~ScaleBins.from_json
+      ~ScaleBins.resolve_references
+      ~ScaleBins.to_dict
+      ~ScaleBins.to_json
+      ~ScaleBins.validate
+      ~ScaleBins.validate_property
+   
+   
+
+   
+   
+   

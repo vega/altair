@@ -1,0 +1,30 @@
+﻿altair.IntervalSelectionConfig
+==============================
+
+.. currentmodule:: altair
+
+.. autoclass:: IntervalSelectionConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~IntervalSelectionConfig.__init__
+      ~IntervalSelectionConfig.copy
+      ~IntervalSelectionConfig.from_dict
+      ~IntervalSelectionConfig.from_json
+      ~IntervalSelectionConfig.resolve_references
+      ~IntervalSelectionConfig.to_dict
+      ~IntervalSelectionConfig.to_json
+      ~IntervalSelectionConfig.validate
+      ~IntervalSelectionConfig.validate_property
+   
+   
+
+   
+   
+   

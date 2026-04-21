@@ -1,0 +1,45 @@
+﻿altair.Tooltip
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: Tooltip
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Tooltip.__init__
+      ~Tooltip.copy
+      ~Tooltip.from_dict
+      ~Tooltip.from_json
+      ~Tooltip.resolve_references
+      ~Tooltip.to_dict
+      ~Tooltip.to_json
+      ~Tooltip.validate
+      ~Tooltip.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Tooltip.aggregate
+      ~Tooltip.bandPosition
+      ~Tooltip.bin
+      ~Tooltip.condition
+      ~Tooltip.field
+      ~Tooltip.format
+      ~Tooltip.formatType
+      ~Tooltip.timeUnit
+      ~Tooltip.title
+      ~Tooltip.type
+   
+   

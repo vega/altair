@@ -1,0 +1,44 @@
+﻿altair.theme.BindRadioSelectKwds
+================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: BindRadioSelectKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BindRadioSelectKwds.__init__
+      ~BindRadioSelectKwds.clear
+      ~BindRadioSelectKwds.copy
+      ~BindRadioSelectKwds.fromkeys
+      ~BindRadioSelectKwds.get
+      ~BindRadioSelectKwds.items
+      ~BindRadioSelectKwds.keys
+      ~BindRadioSelectKwds.pop
+      ~BindRadioSelectKwds.popitem
+      ~BindRadioSelectKwds.setdefault
+      ~BindRadioSelectKwds.update
+      ~BindRadioSelectKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BindRadioSelectKwds.input
+      ~BindRadioSelectKwds.options
+      ~BindRadioSelectKwds.debounce
+      ~BindRadioSelectKwds.element
+      ~BindRadioSelectKwds.labels
+      ~BindRadioSelectKwds.name
+   
+   

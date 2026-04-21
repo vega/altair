@@ -1,0 +1,42 @@
+﻿altair.theme.BindCheckboxKwds
+=============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: BindCheckboxKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BindCheckboxKwds.__init__
+      ~BindCheckboxKwds.clear
+      ~BindCheckboxKwds.copy
+      ~BindCheckboxKwds.fromkeys
+      ~BindCheckboxKwds.get
+      ~BindCheckboxKwds.items
+      ~BindCheckboxKwds.keys
+      ~BindCheckboxKwds.pop
+      ~BindCheckboxKwds.popitem
+      ~BindCheckboxKwds.setdefault
+      ~BindCheckboxKwds.update
+      ~BindCheckboxKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BindCheckboxKwds.input
+      ~BindCheckboxKwds.debounce
+      ~BindCheckboxKwds.element
+      ~BindCheckboxKwds.name
+   
+   

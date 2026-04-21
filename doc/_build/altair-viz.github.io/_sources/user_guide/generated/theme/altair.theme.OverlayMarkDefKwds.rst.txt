@@ -1,0 +1,118 @@
+﻿altair.theme.OverlayMarkDefKwds
+===============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: OverlayMarkDefKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OverlayMarkDefKwds.__init__
+      ~OverlayMarkDefKwds.clear
+      ~OverlayMarkDefKwds.copy
+      ~OverlayMarkDefKwds.fromkeys
+      ~OverlayMarkDefKwds.get
+      ~OverlayMarkDefKwds.items
+      ~OverlayMarkDefKwds.keys
+      ~OverlayMarkDefKwds.pop
+      ~OverlayMarkDefKwds.popitem
+      ~OverlayMarkDefKwds.setdefault
+      ~OverlayMarkDefKwds.update
+      ~OverlayMarkDefKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~OverlayMarkDefKwds.align
+      ~OverlayMarkDefKwds.angle
+      ~OverlayMarkDefKwds.aria
+      ~OverlayMarkDefKwds.ariaRole
+      ~OverlayMarkDefKwds.ariaRoleDescription
+      ~OverlayMarkDefKwds.aspect
+      ~OverlayMarkDefKwds.baseline
+      ~OverlayMarkDefKwds.blend
+      ~OverlayMarkDefKwds.clip
+      ~OverlayMarkDefKwds.color
+      ~OverlayMarkDefKwds.cornerRadius
+      ~OverlayMarkDefKwds.cornerRadiusBottomLeft
+      ~OverlayMarkDefKwds.cornerRadiusBottomRight
+      ~OverlayMarkDefKwds.cornerRadiusTopLeft
+      ~OverlayMarkDefKwds.cornerRadiusTopRight
+      ~OverlayMarkDefKwds.cursor
+      ~OverlayMarkDefKwds.description
+      ~OverlayMarkDefKwds.dir
+      ~OverlayMarkDefKwds.dx
+      ~OverlayMarkDefKwds.dy
+      ~OverlayMarkDefKwds.ellipsis
+      ~OverlayMarkDefKwds.endAngle
+      ~OverlayMarkDefKwds.fill
+      ~OverlayMarkDefKwds.fillOpacity
+      ~OverlayMarkDefKwds.filled
+      ~OverlayMarkDefKwds.font
+      ~OverlayMarkDefKwds.fontSize
+      ~OverlayMarkDefKwds.fontStyle
+      ~OverlayMarkDefKwds.fontWeight
+      ~OverlayMarkDefKwds.height
+      ~OverlayMarkDefKwds.href
+      ~OverlayMarkDefKwds.innerRadius
+      ~OverlayMarkDefKwds.interpolate
+      ~OverlayMarkDefKwds.invalid
+      ~OverlayMarkDefKwds.limit
+      ~OverlayMarkDefKwds.lineBreak
+      ~OverlayMarkDefKwds.lineHeight
+      ~OverlayMarkDefKwds.opacity
+      ~OverlayMarkDefKwds.order
+      ~OverlayMarkDefKwds.orient
+      ~OverlayMarkDefKwds.outerRadius
+      ~OverlayMarkDefKwds.padAngle
+      ~OverlayMarkDefKwds.radius
+      ~OverlayMarkDefKwds.radius2
+      ~OverlayMarkDefKwds.radius2Offset
+      ~OverlayMarkDefKwds.radiusOffset
+      ~OverlayMarkDefKwds.shape
+      ~OverlayMarkDefKwds.size
+      ~OverlayMarkDefKwds.smooth
+      ~OverlayMarkDefKwds.startAngle
+      ~OverlayMarkDefKwds.stroke
+      ~OverlayMarkDefKwds.strokeCap
+      ~OverlayMarkDefKwds.strokeDash
+      ~OverlayMarkDefKwds.strokeDashOffset
+      ~OverlayMarkDefKwds.strokeJoin
+      ~OverlayMarkDefKwds.strokeMiterLimit
+      ~OverlayMarkDefKwds.strokeOffset
+      ~OverlayMarkDefKwds.strokeOpacity
+      ~OverlayMarkDefKwds.strokeWidth
+      ~OverlayMarkDefKwds.style
+      ~OverlayMarkDefKwds.tension
+      ~OverlayMarkDefKwds.text
+      ~OverlayMarkDefKwds.theta
+      ~OverlayMarkDefKwds.theta2
+      ~OverlayMarkDefKwds.theta2Offset
+      ~OverlayMarkDefKwds.thetaOffset
+      ~OverlayMarkDefKwds.time
+      ~OverlayMarkDefKwds.timeUnitBandPosition
+      ~OverlayMarkDefKwds.timeUnitBandSize
+      ~OverlayMarkDefKwds.tooltip
+      ~OverlayMarkDefKwds.url
+      ~OverlayMarkDefKwds.width
+      ~OverlayMarkDefKwds.x
+      ~OverlayMarkDefKwds.x2
+      ~OverlayMarkDefKwds.x2Offset
+      ~OverlayMarkDefKwds.xOffset
+      ~OverlayMarkDefKwds.y
+      ~OverlayMarkDefKwds.y2
+      ~OverlayMarkDefKwds.y2Offset
+      ~OverlayMarkDefKwds.yOffset
+   
+   

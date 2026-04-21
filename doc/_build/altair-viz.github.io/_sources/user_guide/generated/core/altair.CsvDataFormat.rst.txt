@@ -1,0 +1,30 @@
+﻿altair.CsvDataFormat
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: CsvDataFormat
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CsvDataFormat.__init__
+      ~CsvDataFormat.copy
+      ~CsvDataFormat.from_dict
+      ~CsvDataFormat.from_json
+      ~CsvDataFormat.resolve_references
+      ~CsvDataFormat.to_dict
+      ~CsvDataFormat.to_json
+      ~CsvDataFormat.validate
+      ~CsvDataFormat.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,37 @@
+﻿altair.DescriptionValue
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: DescriptionValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DescriptionValue.__init__
+      ~DescriptionValue.copy
+      ~DescriptionValue.from_dict
+      ~DescriptionValue.from_json
+      ~DescriptionValue.resolve_references
+      ~DescriptionValue.to_dict
+      ~DescriptionValue.to_json
+      ~DescriptionValue.validate
+      ~DescriptionValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~DescriptionValue.condition
+      ~DescriptionValue.value
+   
+   

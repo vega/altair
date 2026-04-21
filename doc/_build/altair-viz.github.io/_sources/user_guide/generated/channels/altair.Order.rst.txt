@@ -1,0 +1,43 @@
+﻿altair.Order
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Order
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Order.__init__
+      ~Order.copy
+      ~Order.from_dict
+      ~Order.from_json
+      ~Order.resolve_references
+      ~Order.to_dict
+      ~Order.to_json
+      ~Order.validate
+      ~Order.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Order.aggregate
+      ~Order.bandPosition
+      ~Order.bin
+      ~Order.field
+      ~Order.sort
+      ~Order.timeUnit
+      ~Order.title
+      ~Order.type
+   
+   

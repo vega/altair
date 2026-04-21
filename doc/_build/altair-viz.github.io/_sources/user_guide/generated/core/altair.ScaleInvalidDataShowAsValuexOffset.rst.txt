@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsValuexOffset
+=========================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsValuexOffset
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsValuexOffset.__init__
+      ~ScaleInvalidDataShowAsValuexOffset.copy
+      ~ScaleInvalidDataShowAsValuexOffset.from_dict
+      ~ScaleInvalidDataShowAsValuexOffset.from_json
+      ~ScaleInvalidDataShowAsValuexOffset.resolve_references
+      ~ScaleInvalidDataShowAsValuexOffset.to_dict
+      ~ScaleInvalidDataShowAsValuexOffset.to_json
+      ~ScaleInvalidDataShowAsValuexOffset.validate
+      ~ScaleInvalidDataShowAsValuexOffset.validate_property
+   
+   
+
+   
+   
+   

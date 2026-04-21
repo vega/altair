@@ -1,0 +1,30 @@
+﻿altair.TitleOrient
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: TitleOrient
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TitleOrient.__init__
+      ~TitleOrient.copy
+      ~TitleOrient.from_dict
+      ~TitleOrient.from_json
+      ~TitleOrient.resolve_references
+      ~TitleOrient.to_dict
+      ~TitleOrient.to_json
+      ~TitleOrient.validate
+      ~TitleOrient.validate_property
+   
+   
+
+   
+   
+   

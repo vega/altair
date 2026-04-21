@@ -1,0 +1,30 @@
+﻿altair.Vector2DateTime
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: Vector2DateTime
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Vector2DateTime.__init__
+      ~Vector2DateTime.copy
+      ~Vector2DateTime.from_dict
+      ~Vector2DateTime.from_json
+      ~Vector2DateTime.resolve_references
+      ~Vector2DateTime.to_dict
+      ~Vector2DateTime.to_json
+      ~Vector2DateTime.validate
+      ~Vector2DateTime.validate_property
+   
+   
+
+   
+   
+   

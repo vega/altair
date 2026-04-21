@@ -1,0 +1,30 @@
+﻿altair.ConditionalAxisNumberArray
+=================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalAxisNumberArray
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalAxisNumberArray.__init__
+      ~ConditionalAxisNumberArray.copy
+      ~ConditionalAxisNumberArray.from_dict
+      ~ConditionalAxisNumberArray.from_json
+      ~ConditionalAxisNumberArray.resolve_references
+      ~ConditionalAxisNumberArray.to_dict
+      ~ConditionalAxisNumberArray.to_json
+      ~ConditionalAxisNumberArray.validate
+      ~ConditionalAxisNumberArray.validate_property
+   
+   
+
+   
+   
+   

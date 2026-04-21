@@ -1,0 +1,30 @@
+﻿altair.LegendBinding
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: LegendBinding
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LegendBinding.__init__
+      ~LegendBinding.copy
+      ~LegendBinding.from_dict
+      ~LegendBinding.from_json
+      ~LegendBinding.resolve_references
+      ~LegendBinding.to_dict
+      ~LegendBinding.to_json
+      ~LegendBinding.validate
+      ~LegendBinding.validate_property
+   
+   
+
+   
+   
+   

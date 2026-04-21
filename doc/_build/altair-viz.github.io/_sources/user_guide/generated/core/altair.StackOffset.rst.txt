@@ -1,0 +1,30 @@
+﻿altair.StackOffset
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: StackOffset
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StackOffset.__init__
+      ~StackOffset.copy
+      ~StackOffset.from_dict
+      ~StackOffset.from_json
+      ~StackOffset.resolve_references
+      ~StackOffset.to_dict
+      ~StackOffset.to_json
+      ~StackOffset.validate
+      ~StackOffset.validate_property
+   
+   
+
+   
+   
+   

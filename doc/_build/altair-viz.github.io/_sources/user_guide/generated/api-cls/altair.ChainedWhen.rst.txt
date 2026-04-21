@@ -1,0 +1,23 @@
+﻿altair.ChainedWhen
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: ChainedWhen
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ChainedWhen.__init__
+      ~ChainedWhen.then
+   
+   
+
+   
+   
+   

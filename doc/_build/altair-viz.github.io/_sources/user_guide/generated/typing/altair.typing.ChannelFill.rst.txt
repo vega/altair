@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelFill
+=========================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelFill

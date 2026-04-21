@@ -1,0 +1,30 @@
+﻿altair.HeaderConfig
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: HeaderConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~HeaderConfig.__init__
+      ~HeaderConfig.copy
+      ~HeaderConfig.from_dict
+      ~HeaderConfig.from_json
+      ~HeaderConfig.resolve_references
+      ~HeaderConfig.to_dict
+      ~HeaderConfig.to_json
+      ~HeaderConfig.validate
+      ~HeaderConfig.validate_property
+   
+   
+
+   
+   
+   

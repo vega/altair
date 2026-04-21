@@ -1,0 +1,30 @@
+﻿altair.StandardType
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: StandardType
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StandardType.__init__
+      ~StandardType.copy
+      ~StandardType.from_dict
+      ~StandardType.from_json
+      ~StandardType.resolve_references
+      ~StandardType.to_dict
+      ~StandardType.to_json
+      ~StandardType.validate
+      ~StandardType.validate_property
+   
+   
+
+   
+   
+   

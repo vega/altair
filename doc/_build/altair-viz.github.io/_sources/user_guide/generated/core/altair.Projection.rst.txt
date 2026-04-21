@@ -1,0 +1,30 @@
+﻿altair.Projection
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: Projection
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Projection.__init__
+      ~Projection.copy
+      ~Projection.from_dict
+      ~Projection.from_json
+      ~Projection.resolve_references
+      ~Projection.to_dict
+      ~Projection.to_json
+      ~Projection.validate
+      ~Projection.validate_property
+   
+   
+
+   
+   
+   

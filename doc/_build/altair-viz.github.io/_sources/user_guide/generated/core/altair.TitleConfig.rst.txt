@@ -1,0 +1,30 @@
+﻿altair.TitleConfig
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: TitleConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TitleConfig.__init__
+      ~TitleConfig.copy
+      ~TitleConfig.from_dict
+      ~TitleConfig.from_json
+      ~TitleConfig.resolve_references
+      ~TitleConfig.to_dict
+      ~TitleConfig.to_json
+      ~TitleConfig.validate
+      ~TitleConfig.validate_property
+   
+   
+
+   
+   
+   

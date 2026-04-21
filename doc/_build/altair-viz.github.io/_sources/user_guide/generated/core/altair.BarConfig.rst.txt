@@ -1,0 +1,30 @@
+﻿altair.BarConfig
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: BarConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BarConfig.__init__
+      ~BarConfig.copy
+      ~BarConfig.from_dict
+      ~BarConfig.from_json
+      ~BarConfig.resolve_references
+      ~BarConfig.to_dict
+      ~BarConfig.to_json
+      ~BarConfig.validate
+      ~BarConfig.validate_property
+   
+   
+
+   
+   
+   

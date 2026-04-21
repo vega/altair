@@ -1,0 +1,30 @@
+﻿altair.DatumDef
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: DatumDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DatumDef.__init__
+      ~DatumDef.copy
+      ~DatumDef.from_dict
+      ~DatumDef.from_json
+      ~DatumDef.resolve_references
+      ~DatumDef.to_dict
+      ~DatumDef.to_json
+      ~DatumDef.validate
+      ~DatumDef.validate_property
+   
+   
+
+   
+   
+   

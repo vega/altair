@@ -1,0 +1,30 @@
+﻿altair.Transform
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: Transform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Transform.__init__
+      ~Transform.copy
+      ~Transform.from_dict
+      ~Transform.from_json
+      ~Transform.resolve_references
+      ~Transform.to_dict
+      ~Transform.to_json
+      ~Transform.validate
+      ~Transform.validate_property
+   
+   
+
+   
+   
+   

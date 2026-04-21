@@ -1,0 +1,1048 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>JupyterChart &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/interactions/jupyter_chart';</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Layered &amp; Multi-View Charts" href="../compound_charts.html" />
+    <link rel="prev" title="Expressions" href="expressions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../data.html">Specifying Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../encodings/index.html">Encodings</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../encodings/channels.html">Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../encodings/channel_options.html">Channel Options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../marks/index.html">Marks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../marks/arc.html">Arc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/area.html">Area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/bar.html">Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/boxplot.html">Box Plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/circle.html">Circle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/errorband.html">Error Band</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/errorbar.html">Error Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/geoshape.html">Geoshape</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../marks/image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/line.html">Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/rule.html">Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/square.html">Square</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/text.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/tick.html">Tick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/trail.html">Trail</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../transform/index.html">Data Transformations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../transform/aggregate.html">Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/bin.html">Bin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/calculate.html">Calculate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/density.html">Density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/extent.html">Extent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/filter.html">Filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/flatten.html">Flatten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/fold.html">Fold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/impute.html">Impute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/joinaggregate.html">Join Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/lookup.html">Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/loess.html">LOESS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/pivot.html">Pivot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/quantile.html">Quantile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/sample.html">Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/stack.html">Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/timeunit.html">TimeUnit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/window.html">Window</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Interactive Charts</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="parameters.html">Parameters, Conditions, &amp; Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bindings_widgets.html">Bindings &amp; Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expressions.html">Expressions</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">JupyterChart</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../compound_charts.html">Layered &amp; Multi-View Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scale_resolve.html">Scale &amp; Guide Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../times_and_dates.html">Times &amp; Dates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../customization.html">Customizing Visualizations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Top-Level Chart Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../saving_charts.html">Saving Altair Charts</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../internals.html">Altair Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../display_frontends.html">Displaying Altair Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../custom_renderers.html">Customizing Renderers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_transformers.html">Data Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../large_datasets.html">Large Datasets</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../data.html" class="nav-link">Specifying Data</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Interactive Charts</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">JupyterChart</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="jupyterchart">
+<span id="user-guide-jupyterchart"></span><h1>JupyterChart<a class="headerlink" href="#jupyterchart" title="Link to this heading">#</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> class, introduced in Vega-Altair 5.1, makes it possible to update charts
+after they have been displayed and access the state of <a class="reference internal" href="index.html#user-guide-interactions"><span class="std std-ref">Interactive Charts</span></a> from Python.</p>
+<section id="supported-environments">
+<h2>Supported Environments<a class="headerlink" href="#supported-environments" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> is a <a class="reference external" href="https://ipywidgets.readthedocs.io/en/latest/">Jupyter Widget</a> built
+on the <a class="reference external" href="https://anywidget.dev/">AnyWidget</a> library. As such, it’s compatible with development
+environments and dashboard toolkits that support third party Jupyter Widgets.
+Tested environments include:</p>
+<ul class="simple">
+<li><p>Classic Jupyter Notebook</p></li>
+<li><p>JupyterLab</p></li>
+<li><p>Visual Studio Code</p></li>
+<li><p>Google Colab</p></li>
+<li><p>Voila</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you try <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> in another environment that supports Jupyter Widgets,
+<a class="reference external" href="https://github.com/vega/altair/issues">let us know how it goes</a> so that we can keep
+this list up to date.</p>
+</div>
+</section>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">#</a></h2>
+<p>To create a <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code>, pass a regular <code class="docutils literal notranslate"><span class="pre">Chart</span></code> instance to the <code class="docutils literal notranslate"><span class="pre">alt.JupyterChart</span></code>
+constructor. The chart will be displayed automatically if the last expression in a notebook
+cell evaluates to a <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> instance. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">52</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;b&#39;</span>
+<span class="p">)</span>
+
+<span class="n">jchart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">JupyterChart</span><span class="p">(</span><span class="n">chart</span><span class="p">)</span>
+<span class="n">jchart</span>
+</pre></div>
+</div>
+<img alt="Bar chart with letters A through I on the x-axis" src="../../_images/simple_bar.svg" />
+</section>
+<section id="updating-charts">
+<h2>Updating Charts<a class="headerlink" href="#updating-charts" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code>’s <code class="docutils literal notranslate"><span class="pre">chart</span></code> property can be assigned to a new chart instance, and the new chart
+will immediately be displayed in place of the old one.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">jchart</span><span class="o">.</span><span class="n">chart</span> <span class="o">=</span> <span class="n">chart</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;crimson&quot;</span><span class="p">,</span> <span class="n">cornerRadius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<video controls>
+  <source src="/_static/jupyter_chart/updating_charts.mov">
+  Your browser does not support the video tag.
+</video></section>
+<section id="params-variables-and-selections">
+<h2>Params: Variables and Selections<a class="headerlink" href="#params-variables-and-selections" title="Link to this heading">#</a></h2>
+<p>As described in <a class="reference internal" href="index.html#user-guide-interactions"><span class="std std-ref">Interactive Charts</span></a>, Vega-Altair’s rich grammar of interactivity
+is built on the concept of parameters. In particular, variable parameters (which store a
+simple value) and selection parameters (which map user interactions to data queries).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> class makes both variable and selection parameters available for use
+in Python.</p>
+</section>
+<section id="variable-params">
+<h2>Variable Params<a class="headerlink" href="#variable-params" title="Link to this heading">#</a></h2>
+<p>JupyterChart makes it possible to access, observe, set, and link variable parameters.</p>
+<section id="accessing-variable-params">
+<h3>Accessing Variable Params<a class="headerlink" href="#accessing-variable-params" title="Link to this heading">#</a></h3>
+<p>A chart’s variable parameters are stored in the <code class="docutils literal notranslate"><span class="pre">params</span></code> property of the <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code>
+instance. The values of individual named variable parameters may be accessed using
+regular attribute access. Here is an example that uses <a class="reference internal" href="bindings_widgets.html#binding-parameters"><span class="std std-ref">Bindings &amp; Widgets</span></a> to bind a
+variable parameter named <code class="docutils literal notranslate"><span class="pre">cutoff</span></code> to a slider. The current value of the <code class="docutils literal notranslate"><span class="pre">cutoff</span></code> variable
+is available as <code class="docutils literal notranslate"><span class="pre">jchart.params.cutoff</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;xval&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;yval&#39;</span><span class="p">:</span> <span class="n">rand</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="p">})</span>
+
+<span class="n">slider</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_range</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cutoff</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;cutoff&quot;</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="n">slider</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">predicate</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">xval</span> <span class="o">&lt;</span> <span class="n">cutoff</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;xval&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;yval&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">predicate</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">)),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">cutoff</span>
+<span class="p">)</span>
+<span class="n">jchart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">JupyterChart</span><span class="p">(</span><span class="n">chart</span><span class="p">)</span>
+<span class="n">jchart</span>
+</pre></div>
+</div>
+<video controls>
+  <source src="/_static/jupyter_chart/accessing_variable_params.mov">
+  Your browser does not support the video tag.
+</video></section>
+<section id="observing-variable-params">
+<h3>Observing Variable Params<a class="headerlink" href="#observing-variable-params" title="Link to this heading">#</a></h3>
+<p>The <a class="reference external" href="https://ipywidgets.readthedocs.io/en/8.1.0/examples/Widget%20Events.html#traitlet-events">observe</a>
+method on the <code class="docutils literal notranslate"><span class="pre">params</span></code> property may be used to register a callback that will be invoked when a
+parameter changes. In this example, a simple callback function is registered to print the value of
+the <code class="docutils literal notranslate"><span class="pre">cutoff</span></code> parameter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_cutoff_change</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">change</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+
+<span class="n">jchart</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">on_cutoff_change</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;cutoff&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<video controls>
+  <source src="/_static/jupyter_chart/observing_variable_params.mov">
+  Your browser does not support the video tag.
+</video></section>
+<section id="setting-variable-params">
+<h3>Setting Variable Params<a class="headerlink" href="#setting-variable-params" title="Link to this heading">#</a></h3>
+<p>The value of variable parameters may be updated from Python by assigning to the corresponding <code class="docutils literal notranslate"><span class="pre">params</span></code>
+attribute. Here’s an example of updating the <code class="docutils literal notranslate"><span class="pre">cutoff</span></code> variable parameter by assigning to <code class="docutils literal notranslate"><span class="pre">jchart.params.cutoff</span></code>.</p>
+<video controls>
+  <source src="/_static/jupyter_chart/setting_variable_params.mov">
+  Your browser does not support the video tag.
+</video></section>
+<section id="linking-variable-params">
+<h3>Linking Variable Params<a class="headerlink" href="#linking-variable-params" title="Link to this heading">#</a></h3>
+<p>Because <code class="docutils literal notranslate"><span class="pre">params</span></code> is a traitlet object, it’s possible to use the ipywidgets
+<a class="reference external" href="https://ipywidgets.readthedocs.io/en/8.1.0/examples/Widget%20Events.html#linking-widgets">link function</a>
+to bind params to other ipywidgets. Here is an example of linking the <code class="docutils literal notranslate"><span class="pre">cutoff</span></code> variable parameter
+to the value of an ipywidgets <code class="docutils literal notranslate"><span class="pre">IntSlider</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntSlider</span><span class="p">,</span> <span class="n">link</span>
+<span class="n">slider</span> <span class="o">=</span> <span class="n">IntSlider</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">link</span><span class="p">((</span><span class="n">slider</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span> <span class="p">(</span><span class="n">jchart</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="s2">&quot;cutoff&quot;</span><span class="p">))</span>
+<span class="n">slider</span>
+</pre></div>
+</div>
+<video controls>
+  <source src="/_static/jupyter_chart/linking_variable_params.mov">
+  Your browser does not support the video tag.
+</video><p>If an ipywidget is linked to a Vega-Altair variable param, it’s not necessary to also bind
+the param to a Vega-Altair widget. Here, the example above is updated to control the <code class="docutils literal notranslate"><span class="pre">cutoff</span></code>
+variable’s value only from the <code class="docutils literal notranslate"><span class="pre">IntSlider</span></code> ipywidget.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;xval&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;yval&#39;</span><span class="p">:</span> <span class="n">rand</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="p">})</span>
+
+<span class="n">cutoff</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;cutoff&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">predicate</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">xval</span> <span class="o">&lt;</span> <span class="n">cutoff</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;xval&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;yval&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">predicate</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">))</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">cutoff</span>
+<span class="p">)</span>
+<span class="n">jchart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">JupyterChart</span><span class="p">(</span><span class="n">chart</span><span class="p">)</span>
+<span class="n">jchart</span>
+</pre></div>
+</div>
+<video controls>
+  <source src="/_static/jupyter_chart/linking_variable_params2.mov">
+  Your browser does not support the video tag.
+</video></section>
+</section>
+<section id="selection-params">
+<h2>Selection Params<a class="headerlink" href="#selection-params" title="Link to this heading">#</a></h2>
+<p>JupyterChart makes it possible to access and observe selection parameters. For the purpose of accessing
+selections from Python, selection parameters are divided into three types:
+Point selections, index selections, and interval selection. These selection types are
+represented by Python classes named <code class="docutils literal notranslate"><span class="pre">PointSelection</span></code>, <code class="docutils literal notranslate"><span class="pre">IndexSelection</span></code>, and <code class="docutils literal notranslate"><span class="pre">IntervalSelection</span></code>
+respectively.</p>
+<p>Instances of these selection classes are available as properties of the JupyterChart’s
+<code class="docutils literal notranslate"><span class="pre">selections</span></code> property.</p>
+<section id="point-selections">
+<h3>Point Selections<a class="headerlink" href="#point-selections" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">PointSelection</span></code> class is used to store the current state of a Vega-Altair point selection
+(as created by <code class="docutils literal notranslate"><span class="pre">alt.selection_point()</span></code>) when either a <code class="docutils literal notranslate"><span class="pre">fields</span></code> or <code class="docutils literal notranslate"><span class="pre">encodings</span></code> specification
+is provided. One common example is a point selection with <code class="docutils literal notranslate"><span class="pre">encodings=[&quot;color&quot;]</span></code> that is bound to
+the legend.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="p">()</span>
+<span class="n">brush</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;point&quot;</span><span class="p">,</span> <span class="n">encodings</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="n">bind</span><span class="o">=</span><span class="s2">&quot;legend&quot;</span><span class="p">)</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon:Q&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">brush</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="s2">&quot;Origin:N&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;grey&quot;</span><span class="p">)),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">brush</span><span class="p">)</span>
+
+<span class="n">jchart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">JupyterChart</span><span class="p">(</span><span class="n">chart</span><span class="p">)</span>
+<span class="n">jchart</span>
+</pre></div>
+</div>
+<video controls>
+  <source src="/_static/jupyter_chart/point_selection_param.mov">
+  Your browser does not support the video tag.
+</video><p>The <code class="docutils literal notranslate"><span class="pre">PointSelection</span></code> instance may be accessed as <code class="docutils literal notranslate"><span class="pre">jchart.selections.point</span></code> (Where “point” is the
+value of the <code class="docutils literal notranslate"><span class="pre">name</span></code> argument to <code class="docutils literal notranslate"><span class="pre">alt.selection_point</span></code>).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">jchart.selections.point.value</span></code> property contains a list of dictionaries where each element
+represents a single point in the selection. This list of dictionaries may be converted into a pandas
+<a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.query.html">query</a> string as follows</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">filter</span> <span class="o">=</span> <span class="s2">&quot; or &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+    <span class="s2">&quot; and &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+        <span class="sa">f</span><span class="s2">&quot;`</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">` == </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">sel</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">])</span>
+    <span class="k">for</span> <span class="n">sel</span> <span class="ow">in</span> <span class="n">jchart</span><span class="o">.</span><span class="n">selections</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">value</span>
+<span class="p">])</span>
+<span class="n">source</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For example, when the Japan and Europe legend entries are selected, the <code class="docutils literal notranslate"><span class="pre">filter</span></code> string above will
+evaluate to <code class="docutils literal notranslate"><span class="pre">&quot;`Origin`</span> <span class="pre">==</span> <span class="pre">'Japan'</span> <span class="pre">or</span> <span class="pre">`Origin`</span> <span class="pre">==</span> <span class="pre">'Europe'&quot;</span></code>, and the <code class="docutils literal notranslate"><span class="pre">source.query(filter)</span></code> expression
+will evaluate to a pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> containing the rows of <code class="docutils literal notranslate"><span class="pre">source</span></code> that are in the selection.</p>
+</section>
+<section id="index-selections">
+<h3>Index Selections<a class="headerlink" href="#index-selections" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">IndexSelection</span></code> class is used to store the current state of a Vega-Altair point selection
+(as created by <code class="docutils literal notranslate"><span class="pre">alt.selection_point()</span></code>) when neither a <code class="docutils literal notranslate"><span class="pre">fields</span></code> nor <code class="docutils literal notranslate"><span class="pre">encodings</span></code> specification
+is provided.  In this case, the <code class="docutils literal notranslate"><span class="pre">value</span></code> property of the selection is a list of the indices
+of the selected rows. These indices can be used with the pandas DataFrame’s <code class="docutils literal notranslate"><span class="pre">iloc</span></code> attribute to
+extract the selected rows in the input DataFrame.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="p">()</span>
+<span class="n">brush</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;point&quot;</span><span class="p">)</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon:Q&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">brush</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="s2">&quot;Origin:N&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;grey&quot;</span><span class="p">)),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">brush</span><span class="p">)</span>
+
+<span class="n">jchart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">JupyterChart</span><span class="p">(</span><span class="n">chart</span><span class="p">)</span>
+<span class="n">jchart</span>
+</pre></div>
+</div>
+<video controls>
+  <source src="/_static/jupyter_chart/index_selection_param.mov">
+  Your browser does not support the video tag.
+</video><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The indices returned will only correspond to the input DataFrame for charts that do not include
+aggregations. If a chart includes aggregations, then the <code class="docutils literal notranslate"><span class="pre">alt.selection_point</span></code> specification
+should include either a <code class="docutils literal notranslate"><span class="pre">fields</span></code> or <code class="docutils literal notranslate"><span class="pre">encodings</span></code> argument, which will result in the
+<code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> containing a <code class="docutils literal notranslate"><span class="pre">PointSelection</span></code> rather than an <code class="docutils literal notranslate"><span class="pre">IndexSelection</span></code>.</p>
+</div>
+</section>
+<section id="interval-selections">
+<h3>Interval Selections<a class="headerlink" href="#interval-selections" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">IntervalSelection</span></code> class is used to store the current state of a Vega-Altair interval selection
+(as created by <code class="docutils literal notranslate"><span class="pre">alt.selection_interval()</span></code>). In this case, the <code class="docutils literal notranslate"><span class="pre">value</span></code> property of the selection
+is a dictionary from column names to selection intervals</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="p">()</span>
+<span class="n">brush</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_interval</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;interval&quot;</span><span class="p">)</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon:Q&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">brush</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="s2">&quot;Cylinders:O&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;grey&quot;</span><span class="p">)),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">brush</span><span class="p">)</span>
+
+<span class="n">jchart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">JupyterChart</span><span class="p">(</span><span class="n">chart</span><span class="p">)</span>
+<span class="n">jchart</span>
+</pre></div>
+</div>
+<video controls>
+  <source src="/_static/jupyter_chart/interval_selection_param.mov">
+  Your browser does not support the video tag.
+</video><p>The selection dictionary may be converted into a pandas
+<a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.query.html">query</a> string as follows</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">filter</span> <span class="o">=</span> <span class="s2">&quot; and &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> &lt;= `</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">` &lt;= </span><span class="si">{</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">jchart</span><span class="o">.</span><span class="n">selections</span><span class="o">.</span><span class="n">interval</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="p">])</span>
+<span class="n">source</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For example, when the x-selection is from 120 to 160 and the y-selection is from 25 to 35,
+<code class="docutils literal notranslate"><span class="pre">jchart.selections.interval.value</span></code> will be <code class="docutils literal notranslate"><span class="pre">{'Horsepower':</span> <span class="pre">[120,</span> <span class="pre">160],</span> <span class="pre">'Miles_per_Gallon':</span> <span class="pre">[25,</span> <span class="pre">30]}</span></code>,
+the <code class="docutils literal notranslate"><span class="pre">filter</span></code> string will be <code class="docutils literal notranslate"><span class="pre">&quot;120</span> <span class="pre">&lt;=</span> <span class="pre">`Horsepower`</span> <span class="pre">&lt;=</span> <span class="pre">160</span> <span class="pre">and</span> <span class="pre">25</span> <span class="pre">&lt;=</span> <span class="pre">`Miles_per_Gallon`</span> <span class="pre">&lt;=</span> <span class="pre">35&quot;</span></code>, and the
+<code class="docutils literal notranslate"><span class="pre">source.query(filter)</span></code> expression will evaluate to a pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> that contains the rows of
+<code class="docutils literal notranslate"><span class="pre">source</span></code> that are in the selection.</p>
+</section>
+<section id="observing-selections">
+<h3>Observing Selections<a class="headerlink" href="#observing-selections" title="Link to this heading">#</a></h3>
+<p>As with variable parameters, it’s possible to register a callback function to be invoked
+when a selection changes by using the <code class="docutils literal notranslate"><span class="pre">observe</span></code> method on the <code class="docutils literal notranslate"><span class="pre">selections</span></code> property.
+Here is an example that listens for changes to an interval selection, then uses the selection
+value to filter the input DataFrame and display it’s HTML representation. An ipywidgets <code class="docutils literal notranslate"><span class="pre">VBox</span></code>
+is used to combine the chart and HTML table in a column layout.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">VBox</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="p">()</span>
+<span class="n">brush</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_interval</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;brush&quot;</span><span class="p">)</span>
+
+<span class="n">chart_widget</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">JupyterChart</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon:Q&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">brush</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="s2">&quot;Cylinders:O&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;grey&quot;</span><span class="p">)),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">brush</span><span class="p">))</span>
+
+<span class="n">table_widget</span> <span class="o">=</span> <span class="n">HTML</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">source</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_html</span><span class="p">())</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">on_select</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">sel</span> <span class="o">=</span> <span class="n">change</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">value</span>
+    <span class="k">if</span> <span class="n">sel</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s1">&#39;Horsepower&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sel</span><span class="p">:</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">filter_query</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sel</span><span class="p">[</span><span class="s1">&#39;Horsepower&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> &lt;= `Horsepower` &lt;= </span><span class="si">{</span><span class="n">sel</span><span class="p">[</span><span class="s1">&#39;Horsepower&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> and &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sel</span><span class="p">[</span><span class="s1">&#39;Miles_per_Gallon&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> &lt;= `Miles_per_Gallon` &lt;= </span><span class="si">{</span><span class="n">sel</span><span class="p">[</span><span class="s1">&#39;Miles_per_Gallon&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">filter_query</span><span class="p">)</span>
+
+    <span class="n">table_widget</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">filtered</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span>
+
+<span class="n">chart_widget</span><span class="o">.</span><span class="n">selections</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">on_select</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;brush&quot;</span><span class="p">])</span>
+
+<span class="n">VBox</span><span class="p">([</span><span class="n">chart_widget</span><span class="p">,</span> <span class="n">table_widget</span><span class="p">])</span>
+</pre></div>
+</div>
+<video controls>
+  <source src="/_static/jupyter_chart/linking_interval_selection.mov">
+  Your browser does not support the video tag.
+</video></section>
+</section>
+<section id="offline-usage">
+<span id="user-guide-jupyterchart-offline"></span><h2>Offline Usage<a class="headerlink" href="#offline-usage" title="Link to this heading">#</a></h2>
+<p>By default, the <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> widget loads its JavaScript dependencies dynamically from a CDN
+location, which requires an active internet connection. Starting in Altair 5.3, JupyterChart supports
+loading its JavaScript dependencies from the <code class="docutils literal notranslate"><span class="pre">vl-convert-python</span></code> package, which enables offline usage.</p>
+<p>Offline mode is enabled using the <code class="docutils literal notranslate"><span class="pre">JupyterChart.enable_offline</span></code> class method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">JupyterChart</span><span class="o">.</span><span class="n">enable_offline</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This only needs to be called once, after which all displayed JupyterCharts will operate in offline mode.</p>
+<p>Offline mode can be disabled by passing <code class="docutils literal notranslate"><span class="pre">offline=False</span></code> to this same method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">JupyterChart</span><span class="o">.</span><span class="n">enable_offline</span><span class="p">(</span><span class="n">offline</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Link to this heading">#</a></h2>
+<section id="setting-selections">
+<h3>Setting Selections<a class="headerlink" href="#setting-selections" title="Link to this heading">#</a></h3>
+<p>It’s not currently possible to set selection states from Python.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="expressions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Expressions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../compound_charts.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Layered &amp; Multi-View Charts</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-environments">Supported Environments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-usage">Basic Usage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-charts">Updating Charts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#params-variables-and-selections">Params: Variables and Selections</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-params">Variable Params</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-variable-params">Accessing Variable Params</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observing-variable-params">Observing Variable Params</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-variable-params">Setting Variable Params</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linking-variable-params">Linking Variable Params</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selection-params">Selection Params</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#point-selections">Point Selections</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#index-selections">Index Selections</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interval-selections">Interval Selections</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observing-selections">Observing Selections</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#offline-usage">Offline Usage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-selections">Setting Selections</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

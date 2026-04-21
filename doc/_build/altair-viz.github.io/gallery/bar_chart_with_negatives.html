@@ -1,0 +1,569 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Bar Chart with Negative Values &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/bar_chart_with_negatives';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Bar Chart with Negative Values</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="bar-chart-with-negative-values">
+<span id="gallery-bar-chart-with-negatives"></span><h1>Bar Chart with Negative Values<a class="headerlink" href="#bar-chart-with-negative-values" title="Link to this heading">#</a></h1>
+<p>This example shows a bar chart with both positive and negative values.</p>
+
+<div id="bar_chart_with_negatives-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-47b635ed2eb04c99c31d7dc9bd6ff69f"}, "mark": {"type": "bar"}, "encoding": {"color": {"condition": [{"test": "(datum.nonfarm_change > 0)", "value": "steelblue"}], "value": "orange"}, "x": {"field": "month", "type": "temporal"}, "y": {"field": "nonfarm_change", "type": "quantitative"}}, "width": 600, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-47b635ed2eb04c99c31d7dc9bd6ff69f": [{"month": "2006-01-01T00:00:00", "nonfarm": 135450, "private": 113603, "goods_producing": 22467, "service_providing": 112983, "private_service_providing": 91136, "mining_and_logging": 656, "construction": 7601, "manufacturing": 14210, "durable_goods": 8982, "nondurable_goods": 5228, "trade_transportation_utilties": 26162, "wholesale_trade": 5840.4, "retail_trade": 15351.5, "transportation_and_warehousing": 4420.0, "utilities": 549.8, "information": 3052, "financial_activities": 8307, "professional_and_business_services": 17299, "education_and_health_services": 17946, "leisure_and_hospitality": 12945, "other_services": 5425, "government": 21847, "nonfarm_change": 282}, {"month": "2006-02-01T00:00:00", "nonfarm": 135762, "private": 113884, "goods_producing": 22535, "service_providing": 113227, "private_service_providing": 91349, "mining_and_logging": 662, "construction": 7664, "manufacturing": 14209, "durable_goods": 8986, "nondurable_goods": 5223, "trade_transportation_utilties": 26196, "wholesale_trade": 5854.8, "retail_trade": 15361.3, "transportation_and_warehousing": 4429.4, "utilities": 550.1, "information": 3052, "financial_activities": 8332, "professional_and_business_services": 17365, "education_and_health_services": 17998, "leisure_and_hospitality": 12980, "other_services": 5426, "government": 21878, "nonfarm_change": 312}, {"month": "2006-03-01T00:00:00", "nonfarm": 136059, "private": 114156, "goods_producing": 22572, "service_providing": 113487, "private_service_providing": 91584, "mining_and_logging": 669, "construction": 7689, "manufacturing": 14214, "durable_goods": 9000, "nondurable_goods": 5214, "trade_transportation_utilties": 26239, "wholesale_trade": 5873.3, "retail_trade": 15388.0, "transportation_and_warehousing": 4429.7, "utilities": 547.5, "information": 3055, "financial_activities": 8348, "professional_and_business_services": 17438, "education_and_health_services": 18045, "leisure_and_hospitality": 13034, "other_services": 5425, "government": 21903, "nonfarm_change": 297}, {"month": "2006-04-01T00:00:00", "nonfarm": 136227, "private": 114308, "goods_producing": 22631, "service_providing": 113596, "private_service_providing": 91677, "mining_and_logging": 679, "construction": 7726, "manufacturing": 14226, "durable_goods": 9020, "nondurable_goods": 5206, "trade_transportation_utilties": 26230, "wholesale_trade": 5886.9, "retail_trade": 15348.5, "transportation_and_warehousing": 4445.4, "utilities": 548.9, "information": 3046, "financial_activities": 8369, "professional_and_business_services": 17462, "education_and_health_services": 18070, "leisure_and_hospitality": 13074, "other_services": 5426, "government": 21919, "nonfarm_change": 168}, {"month": "2006-05-01T00:00:00", "nonfarm": 136258, "private": 114332, "goods_producing": 22597, "service_providing": 113661, "private_service_providing": 91735, "mining_and_logging": 681, "construction": 7713, "manufacturing": 14203, "durable_goods": 9017, "nondurable_goods": 5186, "trade_transportation_utilties": 26223, "wholesale_trade": 5897.2, "retail_trade": 15318.1, "transportation_and_warehousing": 4459.4, "utilities": 548.3, "information": 3039, "financial_activities": 8376, "professional_and_business_services": 17512, "education_and_health_services": 18100, "leisure_and_hospitality": 13052, "other_services": 5433, "government": 21926, "nonfarm_change": 31}, {"month": "2006-06-01T00:00:00", "nonfarm": 136337, "private": 114415, "goods_producing": 22598, "service_providing": 113739, "private_service_providing": 91817, "mining_and_logging": 686, "construction": 7699, "manufacturing": 14213, "durable_goods": 9028, "nondurable_goods": 5185, "trade_transportation_utilties": 26241, "wholesale_trade": 5903.0, "retail_trade": 15325.5, "transportation_and_warehousing": 4465.1, "utilities": 547.6, "information": 3036, "financial_activities": 8362, "professional_and_business_services": 17583, "education_and_health_services": 18102, "leisure_and_hospitality": 13061, "other_services": 5432, "government": 21922, "nonfarm_change": 79}, {"month": "2006-07-01T00:00:00", "nonfarm": 136543, "private": 114570, "goods_producing": 22590, "service_providing": 113953, "private_service_providing": 91980, "mining_and_logging": 690, "construction": 7712, "manufacturing": 14188, "durable_goods": 9008, "nondurable_goods": 5180, "trade_transportation_utilties": 26264, "wholesale_trade": 5911.2, "retail_trade": 15326.0, "transportation_and_warehousing": 4479.3, "utilities": 547.9, "information": 3031, "financial_activities": 8366, "professional_and_business_services": 17632, "education_and_health_services": 18128, "leisure_and_hospitality": 13130, "other_services": 5429, "government": 21973, "nonfarm_change": 206}, {"month": "2006-08-01T00:00:00", "nonfarm": 136722, "private": 114711, "goods_producing": 22572, "service_providing": 114150, "private_service_providing": 92139, "mining_and_logging": 693, "construction": 7720, "manufacturing": 14159, "durable_goods": 8992, "nondurable_goods": 5167, "trade_transportation_utilties": 26283, "wholesale_trade": 5918.2, "retail_trade": 15337.5, "transportation_and_warehousing": 4479.5, "utilities": 548.0, "information": 3035, "financial_activities": 8374, "professional_and_business_services": 17681, "education_and_health_services": 18182, "leisure_and_hospitality": 13152, "other_services": 5432, "government": 22011, "nonfarm_change": 179}, {"month": "2006-09-01T00:00:00", "nonfarm": 136870, "private": 114788, "goods_producing": 22537, "service_providing": 114333, "private_service_providing": 92251, "mining_and_logging": 694, "construction": 7718, "manufacturing": 14125, "durable_goods": 8972, "nondurable_goods": 5153, "trade_transportation_utilties": 26311, "wholesale_trade": 5927.6, "retail_trade": 15347.8, "transportation_and_warehousing": 4486.6, "utilities": 548.5, "information": 3028, "financial_activities": 8390, "professional_and_business_services": 17676, "education_and_health_services": 18248, "leisure_and_hospitality": 13150, "other_services": 5448, "government": 22082, "nonfarm_change": 148}, {"month": "2006-10-01T00:00:00", "nonfarm": 136882, "private": 114814, "goods_producing": 22456, "service_providing": 114426, "private_service_providing": 92358, "mining_and_logging": 699, "construction": 7682, "manufacturing": 14075, "durable_goods": 8945, "nondurable_goods": 5130, "trade_transportation_utilties": 26335, "wholesale_trade": 5925.8, "retail_trade": 15366.2, "transportation_and_warehousing": 4496.1, "utilities": 546.9, "information": 3024, "financial_activities": 8385, "professional_and_business_services": 17685, "education_and_health_services": 18288, "leisure_and_hospitality": 13187, "other_services": 5454, "government": 22068, "nonfarm_change": 12}, {"month": "2006-11-01T00:00:00", "nonfarm": 137090, "private": 115007, "goods_producing": 22408, "service_providing": 114682, "private_service_providing": 92599, "mining_and_logging": 701, "construction": 7666, "manufacturing": 14041, "durable_goods": 8918, "nondurable_goods": 5123, "trade_transportation_utilties": 26392, "wholesale_trade": 5942.7, "retail_trade": 15391.5, "transportation_and_warehousing": 4509.3, "utilities": 548.0, "information": 3025, "financial_activities": 8394, "professional_and_business_services": 17745, "education_and_health_services": 18337, "leisure_and_hospitality": 13251, "other_services": 5455, "government": 22083, "nonfarm_change": 208}, {"month": "2006-12-01T00:00:00", "nonfarm": 137263, "private": 115175, "goods_producing": 22405, "service_providing": 114858, "private_service_providing": 92770, "mining_and_logging": 705, "construction": 7685, "manufacturing": 14015, "durable_goods": 8913, "nondurable_goods": 5102, "trade_transportation_utilties": 26437, "wholesale_trade": 5964.6, "retail_trade": 15394.2, "transportation_and_warehousing": 4529.2, "utilities": 548.5, "information": 3032, "financial_activities": 8394, "professional_and_business_services": 17771, "education_and_health_services": 18378, "leisure_and_hospitality": 13292, "other_services": 5466, "government": 22088, "nonfarm_change": 173}, {"month": "2007-01-01T00:00:00", "nonfarm": 137497, "private": 115402, "goods_producing": 22439, "service_providing": 115058, "private_service_providing": 92963, "mining_and_logging": 706, "construction": 7725, "manufacturing": 14008, "durable_goods": 8890, "nondurable_goods": 5118, "trade_transportation_utilties": 26491, "wholesale_trade": 5969.3, "retail_trade": 15443.3, "transportation_and_warehousing": 4530.2, "utilities": 548.6, "information": 3029, "financial_activities": 8389, "professional_and_business_services": 17834, "education_and_health_services": 18415, "leisure_and_hospitality": 13338, "other_services": 5467, "government": 22095, "nonfarm_change": 234}, {"month": "2007-02-01T00:00:00", "nonfarm": 137582, "private": 115451, "goods_producing": 22334, "service_providing": 115248, "private_service_providing": 93117, "mining_and_logging": 711, "construction": 7626, "manufacturing": 13997, "durable_goods": 8889, "nondurable_goods": 5108, "trade_transportation_utilties": 26540, "wholesale_trade": 5986.7, "retail_trade": 15474.7, "transportation_and_warehousing": 4530.1, "utilities": 548.5, "information": 3033, "financial_activities": 8390, "professional_and_business_services": 17868, "education_and_health_services": 18451, "leisure_and_hospitality": 13361, "other_services": 5474, "government": 22131, "nonfarm_change": 85}, {"month": "2007-03-01T00:00:00", "nonfarm": 137796, "private": 115647, "goods_producing": 22391, "service_providing": 115405, "private_service_providing": 93256, "mining_and_logging": 715, "construction": 7706, "manufacturing": 13970, "durable_goods": 8871, "nondurable_goods": 5099, "trade_transportation_utilties": 26614, "wholesale_trade": 5987.4, "retail_trade": 15542.2, "transportation_and_warehousing": 4535.3, "utilities": 549.1, "information": 3029, "financial_activities": 8379, "professional_and_business_services": 17880, "education_and_health_services": 18507, "leisure_and_hospitality": 13363, "other_services": 5484, "government": 22149, "nonfarm_change": 214}, {"month": "2007-04-01T00:00:00", "nonfarm": 137855, "private": 115680, "goods_producing": 22350, "service_providing": 115505, "private_service_providing": 93330, "mining_and_logging": 719, "construction": 7686, "manufacturing": 13945, "durable_goods": 8860, "nondurable_goods": 5085, "trade_transportation_utilties": 26601, "wholesale_trade": 6003.6, "retail_trade": 15508.5, "transportation_and_warehousing": 4537.6, "utilities": 551.4, "information": 3034, "financial_activities": 8360, "professional_and_business_services": 17906, "education_and_health_services": 18563, "leisure_and_hospitality": 13375, "other_services": 5491, "government": 22175, "nonfarm_change": 59}, {"month": "2007-05-01T00:00:00", "nonfarm": 138008, "private": 115815, "goods_producing": 22323, "service_providing": 115685, "private_service_providing": 93492, "mining_and_logging": 721, "construction": 7673, "manufacturing": 13929, "durable_goods": 8846, "nondurable_goods": 5083, "trade_transportation_utilties": 26634, "wholesale_trade": 6010.4, "retail_trade": 15528.7, "transportation_and_warehousing": 4541.1, "utilities": 553.7, "information": 3040, "financial_activities": 8371, "professional_and_business_services": 17939, "education_and_health_services": 18608, "leisure_and_hospitality": 13404, "other_services": 5496, "government": 22193, "nonfarm_change": 153}, {"month": "2007-06-01T00:00:00", "nonfarm": 138085, "private": 115878, "goods_producing": 22323, "service_providing": 115762, "private_service_providing": 93555, "mining_and_logging": 725, "construction": 7687, "manufacturing": 13911, "durable_goods": 8830, "nondurable_goods": 5081, "trade_transportation_utilties": 26626, "wholesale_trade": 6024.4, "retail_trade": 15507.9, "transportation_and_warehousing": 4538.3, "utilities": 554.9, "information": 3038, "financial_activities": 8369, "professional_and_business_services": 17949, "education_and_health_services": 18661, "leisure_and_hospitality": 13413, "other_services": 5499, "government": 22207, "nonfarm_change": 77}, {"month": "2007-07-01T00:00:00", "nonfarm": 138055, "private": 115884, "goods_producing": 22277, "service_providing": 115778, "private_service_providing": 93607, "mining_and_logging": 728, "construction": 7660, "manufacturing": 13889, "durable_goods": 8815, "nondurable_goods": 5074, "trade_transportation_utilties": 26633, "wholesale_trade": 6029.8, "retail_trade": 15509.2, "transportation_and_warehousing": 4539.1, "utilities": 555.0, "information": 3037, "financial_activities": 8370, "professional_and_business_services": 17959, "education_and_health_services": 18691, "leisure_and_hospitality": 13417, "other_services": 5500, "government": 22171, "nonfarm_change": -30}, {"month": "2007-08-01T00:00:00", "nonfarm": 138027, "private": 115801, "goods_producing": 22165, "service_providing": 115862, "private_service_providing": 93636, "mining_and_logging": 727, "construction": 7610, "manufacturing": 13828, "durable_goods": 8778, "nondurable_goods": 5050, "trade_transportation_utilties": 26629, "wholesale_trade": 6031.0, "retail_trade": 15507.2, "transportation_and_warehousing": 4534.7, "utilities": 555.8, "information": 3029, "financial_activities": 8341, "professional_and_business_services": 17967, "education_and_health_services": 18755, "leisure_and_hospitality": 13419, "other_services": 5496, "government": 22226, "nonfarm_change": -28}, {"month": "2007-09-01T00:00:00", "nonfarm": 138123, "private": 115844, "goods_producing": 22093, "service_providing": 116030, "private_service_providing": 93751, "mining_and_logging": 726, "construction": 7577, "manufacturing": 13790, "durable_goods": 8752, "nondurable_goods": 5038, "trade_transportation_utilties": 26658, "wholesale_trade": 6028.3, "retail_trade": 15514.7, "transportation_and_warehousing": 4559.9, "utilities": 555.4, "information": 3030, "financial_activities": 8319, "professional_and_business_services": 17979, "education_and_health_services": 18812, "leisure_and_hospitality": 13461, "other_services": 5492, "government": 22279, "nonfarm_change": 96}, {"month": "2007-10-01T00:00:00", "nonfarm": 138201, "private": 115904, "goods_producing": 22056, "service_providing": 116145, "private_service_providing": 93848, "mining_and_logging": 727, "construction": 7565, "manufacturing": 13764, "durable_goods": 8727, "nondurable_goods": 5037, "trade_transportation_utilties": 26662, "wholesale_trade": 6035.8, "retail_trade": 15515.3, "transportation_and_warehousing": 4555.1, "utilities": 555.8, "information": 3028, "financial_activities": 8306, "professional_and_business_services": 18010, "education_and_health_services": 18849, "leisure_and_hospitality": 13499, "other_services": 5494, "government": 22297, "nonfarm_change": 78}, {"month": "2007-11-01T00:00:00", "nonfarm": 138307, "private": 115973, "goods_producing": 22015, "service_providing": 116292, "private_service_providing": 93958, "mining_and_logging": 735, "construction": 7523, "manufacturing": 13757, "durable_goods": 8724, "nondurable_goods": 5033, "trade_transportation_utilties": 26717, "wholesale_trade": 6041.8, "retail_trade": 15568.7, "transportation_and_warehousing": 4551.1, "utilities": 555.5, "information": 3025, "financial_activities": 8292, "professional_and_business_services": 18009, "education_and_health_services": 18875, "leisure_and_hospitality": 13535, "other_services": 5505, "government": 22334, "nonfarm_change": 106}, {"month": "2007-12-01T00:00:00", "nonfarm": 138411, "private": 116035, "goods_producing": 21976, "service_providing": 116435, "private_service_providing": 94059, "mining_and_logging": 740, "construction": 7490, "manufacturing": 13746, "durable_goods": 8707, "nondurable_goods": 5039, "trade_transportation_utilties": 26712, "wholesale_trade": 6037.8, "retail_trade": 15568.8, "transportation_and_warehousing": 4548.0, "utilities": 557.1, "information": 3024, "financial_activities": 8282, "professional_and_business_services": 18051, "education_and_health_services": 18924, "leisure_and_hospitality": 13550, "other_services": 5516, "government": 22376, "nonfarm_change": 104}, {"month": "2008-01-01T00:00:00", "nonfarm": 138419, "private": 116031, "goods_producing": 21947, "service_providing": 116472, "private_service_providing": 94084, "mining_and_logging": 746, "construction": 7476, "manufacturing": 13725, "durable_goods": 8693, "nondurable_goods": 5032, "trade_transportation_utilties": 26710, "wholesale_trade": 6035.7, "retail_trade": 15565.6, "transportation_and_warehousing": 4551.4, "utilities": 557.0, "information": 3025, "financial_activities": 8277, "professional_and_business_services": 18030, "education_and_health_services": 18978, "leisure_and_hospitality": 13542, "other_services": 5522, "government": 22388, "nonfarm_change": 8}, {"month": "2008-02-01T00:00:00", "nonfarm": 138338, "private": 115921, "goods_producing": 21897, "service_providing": 116441, "private_service_providing": 94024, "mining_and_logging": 748, "construction": 7453, "manufacturing": 13696, "durable_goods": 8673, "nondurable_goods": 5023, "trade_transportation_utilties": 26658, "wholesale_trade": 6026.2, "retail_trade": 15523.0, "transportation_and_warehousing": 4552.3, "utilities": 556.3, "information": 3019, "financial_activities": 8268, "professional_and_business_services": 17985, "education_and_health_services": 19018, "leisure_and_hospitality": 13543, "other_services": 5533, "government": 22417, "nonfarm_change": -81}, {"month": "2008-03-01T00:00:00", "nonfarm": 138283, "private": 115840, "goods_producing": 21820, "service_providing": 116463, "private_service_providing": 94020, "mining_and_logging": 755, "construction": 7406, "manufacturing": 13659, "durable_goods": 8646, "nondurable_goods": 5013, "trade_transportation_utilties": 26653, "wholesale_trade": 6015.4, "retail_trade": 15526.2, "transportation_and_warehousing": 4554.8, "utilities": 556.4, "information": 3021, "financial_activities": 8266, "professional_and_business_services": 17942, "education_and_health_services": 19068, "leisure_and_hospitality": 13531, "other_services": 5539, "government": 22443, "nonfarm_change": -55}, {"month": "2008-04-01T00:00:00", "nonfarm": 138054, "private": 115604, "goods_producing": 21681, "service_providing": 116373, "private_service_providing": 93923, "mining_and_logging": 755, "construction": 7327, "manufacturing": 13599, "durable_goods": 8597, "nondurable_goods": 5002, "trade_transportation_utilties": 26537, "wholesale_trade": 5993.0, "retail_trade": 15426.1, "transportation_and_warehousing": 4560.6, "utilities": 556.9, "information": 3012, "financial_activities": 8258, "professional_and_business_services": 17939, "education_and_health_services": 19126, "leisure_and_hospitality": 13511, "other_services": 5540, "government": 22450, "nonfarm_change": -229}, {"month": "2008-05-01T00:00:00", "nonfarm": 137870, "private": 115387, "goods_producing": 21599, "service_providing": 116271, "private_service_providing": 93788, "mining_and_logging": 761, "construction": 7274, "manufacturing": 13564, "durable_goods": 8579, "nondurable_goods": 4985, "trade_transportation_utilties": 26452, "wholesale_trade": 5980.2, "retail_trade": 15370.9, "transportation_and_warehousing": 4543.8, "utilities": 556.8, "information": 3008, "financial_activities": 8246, "professional_and_business_services": 17882, "education_and_health_services": 19166, "leisure_and_hospitality": 13498, "other_services": 5536, "government": 22483, "nonfarm_change": -184}, {"month": "2008-06-01T00:00:00", "nonfarm": 137716, "private": 115199, "goods_producing": 21483, "service_providing": 116233, "private_service_providing": 93716, "mining_and_logging": 766, "construction": 7213, "manufacturing": 13504, "durable_goods": 8542, "nondurable_goods": 4962, "trade_transportation_utilties": 26398, "wholesale_trade": 5965.8, "retail_trade": 15337.4, "transportation_and_warehousing": 4536.6, "utilities": 557.8, "information": 3001, "financial_activities": 8236, "professional_and_business_services": 17850, "education_and_health_services": 19224, "leisure_and_hospitality": 13482, "other_services": 5525, "government": 22517, "nonfarm_change": -154}, {"month": "2008-07-01T00:00:00", "nonfarm": 137503, "private": 114935, "goods_producing": 21360, "service_providing": 116143, "private_service_providing": 93575, "mining_and_logging": 770, "construction": 7160, "manufacturing": 13430, "durable_goods": 8488, "nondurable_goods": 4942, "trade_transportation_utilties": 26333, "wholesale_trade": 5946.3, "retail_trade": 15300.0, "transportation_and_warehousing": 4527.3, "utilities": 559.6, "information": 2987, "financial_activities": 8219, "professional_and_business_services": 17777, "education_and_health_services": 19275, "leisure_and_hospitality": 13463, "other_services": 5521, "government": 22568, "nonfarm_change": -213}, {"month": "2008-08-01T00:00:00", "nonfarm": 137226, "private": 114659, "goods_producing": 21250, "service_providing": 115976, "private_service_providing": 93409, "mining_and_logging": 778, "construction": 7114, "manufacturing": 13358, "durable_goods": 8430, "nondurable_goods": 4928, "trade_transportation_utilties": 26238, "wholesale_trade": 5926.3, "retail_trade": 15241.1, "transportation_and_warehousing": 4511.2, "utilities": 558.9, "information": 2973, "financial_activities": 8204, "professional_and_business_services": 17713, "education_and_health_services": 19337, "leisure_and_hospitality": 13431, "other_services": 5513, "government": 22567, "nonfarm_change": -277}, {"month": "2008-09-01T00:00:00", "nonfarm": 136783, "private": 114246, "goods_producing": 21101, "service_providing": 115682, "private_service_providing": 93145, "mining_and_logging": 782, "construction": 7044, "manufacturing": 13275, "durable_goods": 8372, "nondurable_goods": 4903, "trade_transportation_utilties": 26123, "wholesale_trade": 5914.0, "retail_trade": 15171.9, "transportation_and_warehousing": 4477.6, "utilities": 559.4, "information": 2961, "financial_activities": 8170, "professional_and_business_services": 17657, "education_and_health_services": 19343, "leisure_and_hospitality": 13379, "other_services": 5512, "government": 22537, "nonfarm_change": -443}, {"month": "2008-10-01T00:00:00", "nonfarm": 136308, "private": 113759, "goods_producing": 20895, "service_providing": 115413, "private_service_providing": 92864, "mining_and_logging": 781, "construction": 6967, "manufacturing": 13147, "durable_goods": 8275, "nondurable_goods": 4872, "trade_transportation_utilties": 26002, "wholesale_trade": 5876.3, "retail_trade": 15101.4, "transportation_and_warehousing": 4463.4, "utilities": 560.9, "information": 2950, "financial_activities": 8138, "professional_and_business_services": 17543, "education_and_health_services": 19363, "leisure_and_hospitality": 13352, "other_services": 5516, "government": 22549, "nonfarm_change": -475}, {"month": "2008-11-01T00:00:00", "nonfarm": 135549, "private": 112989, "goods_producing": 20623, "service_providing": 114926, "private_service_providing": 92366, "mining_and_logging": 776, "construction": 6813, "manufacturing": 13034, "durable_goods": 8193, "nondurable_goods": 4841, "trade_transportation_utilties": 25808, "wholesale_trade": 5838.2, "retail_trade": 14986.6, "transportation_and_warehousing": 4420.9, "utilities": 562.5, "information": 2932, "financial_activities": 8101, "professional_and_business_services": 17348, "education_and_health_services": 19401, "leisure_and_hospitality": 13300, "other_services": 5476, "government": 22560, "nonfarm_change": -759}, {"month": "2008-12-01T00:00:00", "nonfarm": 134842, "private": 112286, "goods_producing": 20322, "service_providing": 114520, "private_service_providing": 91964, "mining_and_logging": 771, "construction": 6701, "manufacturing": 12850, "durable_goods": 8065, "nondurable_goods": 4785, "trade_transportation_utilties": 25622, "wholesale_trade": 5797.0, "retail_trade": 14866.7, "transportation_and_warehousing": 4395.2, "utilities": 562.9, "information": 2909, "financial_activities": 8070, "professional_and_business_services": 17219, "education_and_health_services": 19442, "leisure_and_hospitality": 13256, "other_services": 5446, "government": 22556, "nonfarm_change": -707}, {"month": "2009-01-01T00:00:00", "nonfarm": 134055, "private": 111476, "goods_producing": 19889, "service_providing": 114166, "private_service_providing": 91587, "mining_and_logging": 761, "construction": 6567, "manufacturing": 12561, "durable_goods": 7832, "nondurable_goods": 4729, "trade_transportation_utilties": 25485, "wholesale_trade": 5762.7, "retail_trade": 14788.4, "transportation_and_warehousing": 4371.1, "utilities": 563.0, "information": 2891, "financial_activities": 8018, "professional_and_business_services": 17061, "education_and_health_services": 19482, "leisure_and_hospitality": 13222, "other_services": 5428, "government": 22579, "nonfarm_change": -787}, {"month": "2009-02-01T00:00:00", "nonfarm": 133351, "private": 110775, "goods_producing": 19575, "service_providing": 113776, "private_service_providing": 91200, "mining_and_logging": 749, "construction": 6446, "manufacturing": 12380, "durable_goods": 7699, "nondurable_goods": 4681, "trade_transportation_utilties": 25345, "wholesale_trade": 5717.9, "retail_trade": 14716.7, "transportation_and_warehousing": 4346.8, "utilities": 563.6, "information": 2878, "financial_activities": 7970, "professional_and_business_services": 16896, "education_and_health_services": 19507, "leisure_and_hospitality": 13193, "other_services": 5411, "government": 22576, "nonfarm_change": -704}, {"month": "2009-03-01T00:00:00", "nonfarm": 132549, "private": 109989, "goods_producing": 19227, "service_providing": 113322, "private_service_providing": 90762, "mining_and_logging": 728, "construction": 6291, "manufacturing": 12208, "durable_goods": 7577, "nondurable_goods": 4631, "trade_transportation_utilties": 25192, "wholesale_trade": 5673.0, "retail_trade": 14641.6, "transportation_and_warehousing": 4314.3, "utilities": 563.0, "information": 2864, "financial_activities": 7927, "professional_and_business_services": 16755, "education_and_health_services": 19514, "leisure_and_hospitality": 13127, "other_services": 5383, "government": 22560, "nonfarm_change": -802}, {"month": "2009-04-01T00:00:00", "nonfarm": 131845, "private": 109168, "goods_producing": 18894, "service_providing": 112951, "private_service_providing": 90274, "mining_and_logging": 710, "construction": 6154, "manufacturing": 12030, "durable_goods": 7428, "nondurable_goods": 4602, "trade_transportation_utilties": 25014, "wholesale_trade": 5627.5, "retail_trade": 14556.1, "transportation_and_warehousing": 4268.7, "utilities": 561.3, "information": 2833, "financial_activities": 7870, "professional_and_business_services": 16608, "education_and_health_services": 19521, "leisure_and_hospitality": 13056, "other_services": 5372, "government": 22677, "nonfarm_change": -704}, {"month": "2009-05-01T00:00:00", "nonfarm": 131491, "private": 108874, "goods_producing": 18655, "service_providing": 112836, "private_service_providing": 90219, "mining_and_logging": 693, "construction": 6100, "manufacturing": 11862, "durable_goods": 7289, "nondurable_goods": 4573, "trade_transportation_utilties": 24965, "wholesale_trade": 5602.9, "retail_trade": 14553.5, "transportation_and_warehousing": 4249.2, "utilities": 559.8, "information": 2807, "financial_activities": 7844, "professional_and_business_services": 16546, "education_and_health_services": 19582, "leisure_and_hospitality": 13106, "other_services": 5369, "government": 22617, "nonfarm_change": -354}, {"month": "2009-06-01T00:00:00", "nonfarm": 131022, "private": 108446, "goods_producing": 18422, "service_providing": 112600, "private_service_providing": 90024, "mining_and_logging": 686, "construction": 6010, "manufacturing": 11726, "durable_goods": 7182, "nondurable_goods": 4544, "trade_transportation_utilties": 24909, "wholesale_trade": 5577.4, "retail_trade": 14537.2, "transportation_and_warehousing": 4233.8, "utilities": 560.1, "information": 2796, "financial_activities": 7821, "professional_and_business_services": 16436, "education_and_health_services": 19614, "leisure_and_hospitality": 13076, "other_services": 5372, "government": 22576, "nonfarm_change": -469}, {"month": "2009-07-01T00:00:00", "nonfarm": 130680, "private": 108159, "goods_producing": 18278, "service_providing": 112402, "private_service_providing": 89881, "mining_and_logging": 678, "construction": 5932, "manufacturing": 11668, "durable_goods": 7146, "nondurable_goods": 4522, "trade_transportation_utilties": 24808, "wholesale_trade": 5552.5, "retail_trade": 14486.3, "transportation_and_warehousing": 4210.0, "utilities": 558.8, "information": 2780, "financial_activities": 7807, "professional_and_business_services": 16411, "education_and_health_services": 19629, "leisure_and_hospitality": 13078, "other_services": 5368, "government": 22521, "nonfarm_change": -342}, {"month": "2009-08-01T00:00:00", "nonfarm": 130484, "private": 107947, "goods_producing": 18151, "service_providing": 112333, "private_service_providing": 89796, "mining_and_logging": 670, "construction": 5855, "manufacturing": 11626, "durable_goods": 7113, "nondurable_goods": 4513, "trade_transportation_utilties": 24769, "wholesale_trade": 5535.0, "retail_trade": 14477.3, "transportation_and_warehousing": 4198.9, "utilities": 557.9, "information": 2767, "financial_activities": 7782, "professional_and_business_services": 16392, "education_and_health_services": 19681, "leisure_and_hospitality": 13046, "other_services": 5359, "government": 22537, "nonfarm_change": -196}, {"month": "2009-09-01T00:00:00", "nonfarm": 130255, "private": 107804, "goods_producing": 18043, "service_providing": 112212, "private_service_providing": 89761, "mining_and_logging": 665, "construction": 5787, "manufacturing": 11591, "durable_goods": 7084, "nondurable_goods": 4507, "trade_transportation_utilties": 24716, "wholesale_trade": 5518.8, "retail_trade": 14445.9, "transportation_and_warehousing": 4192.0, "utilities": 558.8, "information": 2768, "financial_activities": 7769, "professional_and_business_services": 16409, "education_and_health_services": 19692, "leisure_and_hospitality": 13054, "other_services": 5353, "government": 22451, "nonfarm_change": -229}, {"month": "2009-10-01T00:00:00", "nonfarm": 130046, "private": 107522, "goods_producing": 17915, "service_providing": 112131, "private_service_providing": 89607, "mining_and_logging": 661, "construction": 5716, "manufacturing": 11538, "durable_goods": 7044, "nondurable_goods": 4494, "trade_transportation_utilties": 24612, "wholesale_trade": 5500.1, "retail_trade": 14379.2, "transportation_and_warehousing": 4173.9, "utilities": 558.6, "information": 2763, "financial_activities": 7754, "professional_and_business_services": 16414, "education_and_health_services": 19736, "leisure_and_hospitality": 12995, "other_services": 5333, "government": 22524, "nonfarm_change": -209}, {"month": "2009-11-01T00:00:00", "nonfarm": 130058, "private": 107525, "goods_producing": 17869, "service_providing": 112189, "private_service_providing": 89656, "mining_and_logging": 664, "construction": 5696, "manufacturing": 11509, "durable_goods": 7020, "nondurable_goods": 4489, "trade_transportation_utilties": 24590, "wholesale_trade": 5489.4, "retail_trade": 14374.8, "transportation_and_warehousing": 4168.7, "utilities": 557.5, "information": 2752, "financial_activities": 7756, "professional_and_business_services": 16478, "education_and_health_services": 19770, "leisure_and_hospitality": 12986, "other_services": 5324, "government": 22533, "nonfarm_change": 12}, {"month": "2009-12-01T00:00:00", "nonfarm": 129781, "private": 107299, "goods_producing": 17792, "service_providing": 111989, "private_service_providing": 89507, "mining_and_logging": 663, "construction": 5654, "manufacturing": 11475, "durable_goods": 6999, "nondurable_goods": 4476, "trade_transportation_utilties": 24475, "wholesale_trade": 5475.1, "retail_trade": 14326.4, "transportation_and_warehousing": 4117.2, "utilities": 556.0, "information": 2743, "financial_activities": 7743, "professional_and_business_services": 16478, "education_and_health_services": 19804, "leisure_and_hospitality": 12944, "other_services": 5320, "government": 22482, "nonfarm_change": -277}, {"month": "2010-01-01T00:00:00", "nonfarm": 129799, "private": 107308, "goods_producing": 17707, "service_providing": 112092, "private_service_providing": 89601, "mining_and_logging": 667, "construction": 5580, "manufacturing": 11460, "durable_goods": 6989, "nondurable_goods": 4471, "trade_transportation_utilties": 24543, "wholesale_trade": 5455.3, "retail_trade": 14393.1, "transportation_and_warehousing": 4138.7, "utilities": 556.0, "information": 2737, "financial_activities": 7733, "professional_and_business_services": 16513, "education_and_health_services": 19820, "leisure_and_hospitality": 12932, "other_services": 5323, "government": 22491, "nonfarm_change": 18}, {"month": "2010-02-01T00:00:00", "nonfarm": 129726, "private": 107250, "goods_producing": 17627, "service_providing": 112099, "private_service_providing": 89623, "mining_and_logging": 674, "construction": 5500, "manufacturing": 11453, "durable_goods": 6985, "nondurable_goods": 4468, "trade_transportation_utilties": 24534, "wholesale_trade": 5443.6, "retail_trade": 14395.7, "transportation_and_warehousing": 4140.0, "utilities": 554.8, "information": 2737, "financial_activities": 7724, "professional_and_business_services": 16546, "education_and_health_services": 19839, "leisure_and_hospitality": 12927, "other_services": 5316, "government": 22476, "nonfarm_change": -73}, {"month": "2010-03-01T00:00:00", "nonfarm": 129919, "private": 107401, "goods_producing": 17672, "service_providing": 112247, "private_service_providing": 89729, "mining_and_logging": 682, "construction": 5537, "manufacturing": 11453, "durable_goods": 6996, "nondurable_goods": 4457, "trade_transportation_utilties": 24594, "wholesale_trade": 5444.3, "retail_trade": 14442.7, "transportation_and_warehousing": 4152.1, "utilities": 554.5, "information": 2718, "financial_activities": 7708, "professional_and_business_services": 16541, "education_and_health_services": 19896, "leisure_and_hospitality": 12943, "other_services": 5329, "government": 22518, "nonfarm_change": 193}, {"month": "2010-04-01T00:00:00", "nonfarm": 130140, "private": 107571, "goods_producing": 17729, "service_providing": 112411, "private_service_providing": 89842, "mining_and_logging": 687, "construction": 5553, "manufacturing": 11489, "durable_goods": 7026, "nondurable_goods": 4463, "trade_transportation_utilties": 24580, "wholesale_trade": 5443.4, "retail_trade": 14423.3, "transportation_and_warehousing": 4158.9, "utilities": 554.2, "information": 2715, "financial_activities": 7713, "professional_and_business_services": 16618, "education_and_health_services": 19902, "leisure_and_hospitality": 12979, "other_services": 5335, "government": 22569, "nonfarm_change": 221}, {"month": "2010-05-01T00:00:00", "nonfarm": 130662, "private": 107666, "goods_producing": 17742, "service_providing": 112920, "private_service_providing": 89924, "mining_and_logging": 697, "construction": 5520, "manufacturing": 11525, "durable_goods": 7053, "nondurable_goods": 4472, "trade_transportation_utilties": 24597, "wholesale_trade": 5439.0, "retail_trade": 14435.6, "transportation_and_warehousing": 4169.1, "utilities": 553.6, "information": 2709, "financial_activities": 7699, "professional_and_business_services": 16643, "education_and_health_services": 19934, "leisure_and_hospitality": 13012, "other_services": 5330, "government": 22996, "nonfarm_change": 522}, {"month": "2010-06-01T00:00:00", "nonfarm": 130522, "private": 107782, "goods_producing": 17763, "service_providing": 112759, "private_service_providing": 90019, "mining_and_logging": 702, "construction": 5516, "manufacturing": 11545, "durable_goods": 7072, "nondurable_goods": 4473, "trade_transportation_utilties": 24621, "wholesale_trade": 5442.9, "retail_trade": 14436.1, "transportation_and_warehousing": 4190.0, "utilities": 552.0, "information": 2703, "financial_activities": 7689, "professional_and_business_services": 16702, "education_and_health_services": 19955, "leisure_and_hospitality": 13034, "other_services": 5315, "government": 22740, "nonfarm_change": -140}, {"month": "2010-07-01T00:00:00", "nonfarm": 130444, "private": 107875, "goods_producing": 17777, "service_providing": 112667, "private_service_providing": 90098, "mining_and_logging": 708, "construction": 5508, "manufacturing": 11561, "durable_goods": 7083, "nondurable_goods": 4478, "trade_transportation_utilties": 24650, "wholesale_trade": 5445.9, "retail_trade": 14445.6, "transportation_and_warehousing": 4206.7, "utilities": 551.4, "information": 2703, "financial_activities": 7676, "professional_and_business_services": 16715, "education_and_health_services": 19980, "leisure_and_hospitality": 13048, "other_services": 5326, "government": 22569, "nonfarm_change": -78}, {"month": "2010-08-01T00:00:00", "nonfarm": 130428, "private": 108008, "goods_producing": 17793, "service_providing": 112635, "private_service_providing": 90215, "mining_and_logging": 716, "construction": 5524, "manufacturing": 11553, "durable_goods": 7090, "nondurable_goods": 4463, "trade_transportation_utilties": 24648, "wholesale_trade": 5446.4, "retail_trade": 14450.0, "transportation_and_warehousing": 4200.0, "utilities": 551.5, "information": 2702, "financial_activities": 7676, "professional_and_business_services": 16768, "education_and_health_services": 20017, "leisure_and_hospitality": 13081, "other_services": 5323, "government": 22420, "nonfarm_change": -16}, {"month": "2010-09-01T00:00:00", "nonfarm": 130365, "private": 108118, "goods_producing": 17787, "service_providing": 112578, "private_service_providing": 90331, "mining_and_logging": 723, "construction": 5501, "manufacturing": 11563, "durable_goods": 7105, "nondurable_goods": 4458, "trade_transportation_utilties": 24696, "wholesale_trade": 5454.4, "retail_trade": 14472.6, "transportation_and_warehousing": 4219.3, "utilities": 549.4, "information": 2697, "financial_activities": 7683, "professional_and_business_services": 16785, "education_and_health_services": 20001, "leisure_and_hospitality": 13137, "other_services": 5332, "government": 22247, "nonfarm_change": -63}, {"month": "2010-10-01T00:00:00", "nonfarm": 130632, "private": 108335, "goods_producing": 17801, "service_providing": 112831, "private_service_providing": 90534, "mining_and_logging": 731, "construction": 5508, "manufacturing": 11562, "durable_goods": 7109, "nondurable_goods": 4453, "trade_transportation_utilties": 24748, "wholesale_trade": 5463.5, "retail_trade": 14503.7, "transportation_and_warehousing": 4229.3, "utilities": 551.6, "information": 2695, "financial_activities": 7682, "professional_and_business_services": 16851, "education_and_health_services": 20074, "leisure_and_hospitality": 13127, "other_services": 5357, "government": 22297, "nonfarm_change": 267}, {"month": "2010-11-01T00:00:00", "nonfarm": 130761, "private": 108474, "goods_producing": 17827, "service_providing": 112934, "private_service_providing": 90647, "mining_and_logging": 736, "construction": 5506, "manufacturing": 11585, "durable_goods": 7125, "nondurable_goods": 4460, "trade_transportation_utilties": 24735, "wholesale_trade": 5469.7, "retail_trade": 14480.0, "transportation_and_warehousing": 4234.1, "utilities": 551.1, "information": 2689, "financial_activities": 7679, "professional_and_business_services": 16953, "education_and_health_services": 20119, "leisure_and_hospitality": 13126, "other_services": 5346, "government": 22287, "nonfarm_change": 129}, {"month": "2010-12-01T00:00:00", "nonfarm": 130834, "private": 108568, "goods_producing": 17796, "service_providing": 113038, "private_service_providing": 90772, "mining_and_logging": 734, "construction": 5467, "manufacturing": 11595, "durable_goods": 7137, "nondurable_goods": 4458, "trade_transportation_utilties": 24759, "wholesale_trade": 5476.4, "retail_trade": 14467.4, "transportation_and_warehousing": 4261.5, "utilities": 553.3, "information": 2682, "financial_activities": 7683, "professional_and_business_services": 17020, "education_and_health_services": 20134, "leisure_and_hospitality": 13157, "other_services": 5337, "government": 22266, "nonfarm_change": 73}, {"month": "2011-01-01T00:00:00", "nonfarm": 130878, "private": 108620, "goods_producing": 17784, "service_providing": 113094, "private_service_providing": 90836, "mining_and_logging": 736, "construction": 5427, "manufacturing": 11621, "durable_goods": 7168, "nondurable_goods": 4453, "trade_transportation_utilties": 24795, "wholesale_trade": 5481.4, "retail_trade": 14531.4, "transportation_and_warehousing": 4230.5, "utilities": 551.5, "information": 2678, "financial_activities": 7680, "professional_and_business_services": 17054, "education_and_health_services": 20153, "leisure_and_hospitality": 13149, "other_services": 5327, "government": 22258, "nonfarm_change": 44}, {"month": "2011-02-01T00:00:00", "nonfarm": 131060, "private": 108845, "goods_producing": 17844, "service_providing": 113216, "private_service_providing": 91001, "mining_and_logging": 739, "construction": 5451, "manufacturing": 11654, "durable_goods": 7195, "nondurable_goods": 4459, "trade_transportation_utilties": 24864, "wholesale_trade": 5493.9, "retail_trade": 14553.6, "transportation_and_warehousing": 4263.6, "utilities": 553.3, "information": 2673, "financial_activities": 7676, "professional_and_business_services": 17100, "education_and_health_services": 20163, "leisure_and_hospitality": 13188, "other_services": 5337, "government": 22215, "nonfarm_change": 182}, {"month": "2011-03-01T00:00:00", "nonfarm": 131314, "private": 109122, "goods_producing": 17906, "service_providing": 113408, "private_service_providing": 91216, "mining_and_logging": 754, "construction": 5477, "manufacturing": 11675, "durable_goods": 7214, "nondurable_goods": 4461, "trade_transportation_utilties": 24922, "wholesale_trade": 5512.4, "retail_trade": 14584.2, "transportation_and_warehousing": 4272.5, "utilities": 552.7, "information": 2672, "financial_activities": 7681, "professional_and_business_services": 17184, "education_and_health_services": 20177, "leisure_and_hospitality": 13247, "other_services": 5333, "government": 22192, "nonfarm_change": 254}, {"month": "2011-04-01T00:00:00", "nonfarm": 131637, "private": 109453, "goods_producing": 17957, "service_providing": 113680, "private_service_providing": 91496, "mining_and_logging": 768, "construction": 5485, "manufacturing": 11704, "durable_goods": 7240, "nondurable_goods": 4464, "trade_transportation_utilties": 25014, "wholesale_trade": 5527.7, "retail_trade": 14641.7, "transportation_and_warehousing": 4291.0, "utilities": 553.7, "information": 2674, "financial_activities": 7685, "professional_and_business_services": 17246, "education_and_health_services": 20237, "leisure_and_hospitality": 13298, "other_services": 5342, "government": 22184, "nonfarm_change": 323}, {"month": "2011-05-01T00:00:00", "nonfarm": 131718, "private": 109589, "goods_producing": 18007, "service_providing": 113711, "private_service_providing": 91582, "mining_and_logging": 778, "construction": 5516, "manufacturing": 11713, "durable_goods": 7257, "nondurable_goods": 4456, "trade_transportation_utilties": 25024, "wholesale_trade": 5531.4, "retail_trade": 14640.2, "transportation_and_warehousing": 4299.3, "utilities": 553.1, "information": 2679, "financial_activities": 7701, "professional_and_business_services": 17287, "education_and_health_services": 20252, "leisure_and_hospitality": 13293, "other_services": 5346, "government": 22129, "nonfarm_change": 81}, {"month": "2011-06-01T00:00:00", "nonfarm": 131952, "private": 109788, "goods_producing": 18045, "service_providing": 113907, "private_service_providing": 91743, "mining_and_logging": 790, "construction": 5528, "manufacturing": 11727, "durable_goods": 7275, "nondurable_goods": 4452, "trade_transportation_utilties": 25084, "wholesale_trade": 5540.9, "retail_trade": 14675.7, "transportation_and_warehousing": 4314.2, "utilities": 553.0, "information": 2685, "financial_activities": 7691, "professional_and_business_services": 17300, "education_and_health_services": 20288, "leisure_and_hospitality": 13343, "other_services": 5352, "government": 22164, "nonfarm_change": 234}, {"month": "2011-07-01T00:00:00", "nonfarm": 132024, "private": 109975, "goods_producing": 18094, "service_providing": 113930, "private_service_providing": 91881, "mining_and_logging": 801, "construction": 5547, "manufacturing": 11746, "durable_goods": 7289, "nondurable_goods": 4457, "trade_transportation_utilties": 25129, "wholesale_trade": 5545.5, "retail_trade": 14717.5, "transportation_and_warehousing": 4314.8, "utilities": 551.6, "information": 2676, "financial_activities": 7694, "professional_and_business_services": 17326, "education_and_health_services": 20327, "leisure_and_hospitality": 13370, "other_services": 5359, "government": 22049, "nonfarm_change": 72}, {"month": "2011-08-01T00:00:00", "nonfarm": 132136, "private": 110119, "goods_producing": 18120, "service_providing": 114016, "private_service_providing": 91999, "mining_and_logging": 804, "construction": 5552, "manufacturing": 11764, "durable_goods": 7303, "nondurable_goods": 4461, "trade_transportation_utilties": 25141, "wholesale_trade": 5554.1, "retail_trade": 14714.9, "transportation_and_warehousing": 4320.0, "utilities": 552.1, "information": 2634, "financial_activities": 7698, "professional_and_business_services": 17388, "education_and_health_services": 20367, "leisure_and_hospitality": 13395, "other_services": 5376, "government": 22017, "nonfarm_change": 112}, {"month": "2011-09-01T00:00:00", "nonfarm": 132369, "private": 110386, "goods_producing": 18167, "service_providing": 114202, "private_service_providing": 92219, "mining_and_logging": 814, "construction": 5584, "manufacturing": 11769, "durable_goods": 7313, "nondurable_goods": 4456, "trade_transportation_utilties": 25180, "wholesale_trade": 5559.4, "retail_trade": 14738.7, "transportation_and_warehousing": 4329.0, "utilities": 552.6, "information": 2677, "financial_activities": 7693, "professional_and_business_services": 17447, "education_and_health_services": 20415, "leisure_and_hospitality": 13426, "other_services": 5381, "government": 21983, "nonfarm_change": 233}, {"month": "2011-10-01T00:00:00", "nonfarm": 132578, "private": 110580, "goods_producing": 18188, "service_providing": 114390, "private_service_providing": 92392, "mining_and_logging": 820, "construction": 5588, "manufacturing": 11780, "durable_goods": 7330, "nondurable_goods": 4450, "trade_transportation_utilties": 25209, "wholesale_trade": 5576.5, "retail_trade": 14743.8, "transportation_and_warehousing": 4336.3, "utilities": 552.1, "information": 2677, "financial_activities": 7706, "professional_and_business_services": 17497, "education_and_health_services": 20457, "leisure_and_hospitality": 13464, "other_services": 5382, "government": 21998, "nonfarm_change": 209}, {"month": "2011-11-01T00:00:00", "nonfarm": 132723, "private": 110752, "goods_producing": 18187, "service_providing": 114536, "private_service_providing": 92565, "mining_and_logging": 824, "construction": 5593, "manufacturing": 11770, "durable_goods": 7331, "nondurable_goods": 4439, "trade_transportation_utilties": 25232, "wholesale_trade": 5588.5, "retail_trade": 14751.3, "transportation_and_warehousing": 4339.4, "utilities": 552.6, "information": 2676, "financial_activities": 7719, "professional_and_business_services": 17541, "education_and_health_services": 20496, "leisure_and_hospitality": 13511, "other_services": 5390, "government": 21971, "nonfarm_change": 145}, {"month": "2011-12-01T00:00:00", "nonfarm": 132924, "private": 110970, "goods_producing": 18244, "service_providing": 114680, "private_service_providing": 92726, "mining_and_logging": 831, "construction": 5611, "manufacturing": 11802, "durable_goods": 7368, "nondurable_goods": 4434, "trade_transportation_utilties": 25247, "wholesale_trade": 5605.1, "retail_trade": 14745.5, "transportation_and_warehousing": 4344.3, "utilities": 552.2, "information": 2678, "financial_activities": 7727, "professional_and_business_services": 17603, "education_and_health_services": 20530, "leisure_and_hospitality": 13538, "other_services": 5403, "government": 21954, "nonfarm_change": 201}, {"month": "2012-01-01T00:00:00", "nonfarm": 133272, "private": 111326, "goods_producing": 18304, "service_providing": 114968, "private_service_providing": 93022, "mining_and_logging": 840, "construction": 5626, "manufacturing": 11838, "durable_goods": 7398, "nondurable_goods": 4440, "trade_transportation_utilties": 25347, "wholesale_trade": 5620.5, "retail_trade": 14813.1, "transportation_and_warehousing": 4360.3, "utilities": 553.3, "information": 2665, "financial_activities": 7736, "professional_and_business_services": 17686, "education_and_health_services": 20574, "leisure_and_hospitality": 13600, "other_services": 5414, "government": 21946, "nonfarm_change": 348}, {"month": "2012-02-01T00:00:00", "nonfarm": 133505, "private": 111558, "goods_producing": 18334, "service_providing": 115171, "private_service_providing": 93224, "mining_and_logging": 845, "construction": 5629, "manufacturing": 11860, "durable_goods": 7420, "nondurable_goods": 4440, "trade_transportation_utilties": 25352, "wholesale_trade": 5630.3, "retail_trade": 14784.4, "transportation_and_warehousing": 4384.5, "utilities": 553.2, "information": 2676, "financial_activities": 7744, "professional_and_business_services": 17739, "education_and_health_services": 20657, "leisure_and_hospitality": 13641, "other_services": 5415, "government": 21947, "nonfarm_change": 233}, {"month": "2012-03-01T00:00:00", "nonfarm": 133769, "private": 111826, "goods_producing": 18372, "service_providing": 115397, "private_service_providing": 93454, "mining_and_logging": 849, "construction": 5625, "manufacturing": 11898, "durable_goods": 7446, "nondurable_goods": 4452, "trade_transportation_utilties": 25407, "wholesale_trade": 5640.1, "retail_trade": 14820.0, "transportation_and_warehousing": 4393.5, "utilities": 553.6, "information": 2678, "financial_activities": 7768, "professional_and_business_services": 17784, "education_and_health_services": 20689, "leisure_and_hospitality": 13706, "other_services": 5422, "government": 21943, "nonfarm_change": 264}, {"month": "2012-04-01T00:00:00", "nonfarm": 133841, "private": 111910, "goods_producing": 18384, "service_providing": 115457, "private_service_providing": 93526, "mining_and_logging": 850, "construction": 5618, "manufacturing": 11916, "durable_goods": 7461, "nondurable_goods": 4455, "trade_transportation_utilties": 25411, "wholesale_trade": 5652.3, "retail_trade": 14831.3, "transportation_and_warehousing": 4374.2, "utilities": 553.4, "information": 2679, "financial_activities": 7771, "professional_and_business_services": 17832, "education_and_health_services": 20707, "leisure_and_hospitality": 13709, "other_services": 5417, "government": 21931, "nonfarm_change": 72}, {"month": "2012-05-01T00:00:00", "nonfarm": 133958, "private": 112047, "goods_producing": 18386, "service_providing": 115572, "private_service_providing": 93661, "mining_and_logging": 855, "construction": 5604, "manufacturing": 11927, "durable_goods": 7471, "nondurable_goods": 4456, "trade_transportation_utilties": 25457, "wholesale_trade": 5663.1, "retail_trade": 14829.4, "transportation_and_warehousing": 4411.0, "utilities": 553.2, "information": 2685, "financial_activities": 7781, "professional_and_business_services": 17869, "education_and_health_services": 20747, "leisure_and_hospitality": 13705, "other_services": 5417, "government": 21911, "nonfarm_change": 117}, {"month": "2012-06-01T00:00:00", "nonfarm": 134026, "private": 112096, "goods_producing": 18411, "service_providing": 115615, "private_service_providing": 93685, "mining_and_logging": 854, "construction": 5621, "manufacturing": 11936, "durable_goods": 7480, "nondurable_goods": 4456, "trade_transportation_utilties": 25445, "wholesale_trade": 5671.9, "retail_trade": 14810.0, "transportation_and_warehousing": 4409.2, "utilities": 554.0, "information": 2674, "financial_activities": 7781, "professional_and_business_services": 17921, "education_and_health_services": 20738, "leisure_and_hospitality": 13702, "other_services": 5424, "government": 21930, "nonfarm_change": 68}, {"month": "2012-07-01T00:00:00", "nonfarm": 134182, "private": 112269, "goods_producing": 18447, "service_providing": 115735, "private_service_providing": 93822, "mining_and_logging": 851, "construction": 5632, "manufacturing": 11964, "durable_goods": 7503, "nondurable_goods": 4461, "trade_transportation_utilties": 25450, "wholesale_trade": 5679.2, "retail_trade": 14803.7, "transportation_and_warehousing": 4420.4, "utilities": 546.6, "information": 2680, "financial_activities": 7779, "professional_and_business_services": 17972, "education_and_health_services": 20773, "leisure_and_hospitality": 13735, "other_services": 5433, "government": 21913, "nonfarm_change": 156}, {"month": "2012-08-01T00:00:00", "nonfarm": 134355, "private": 112439, "goods_producing": 18459, "service_providing": 115896, "private_service_providing": 93980, "mining_and_logging": 851, "construction": 5648, "manufacturing": 11960, "durable_goods": 7492, "nondurable_goods": 4468, "trade_transportation_utilties": 25483, "wholesale_trade": 5685.1, "retail_trade": 14811.0, "transportation_and_warehousing": 4432.5, "utilities": 554.2, "information": 2676, "financial_activities": 7787, "professional_and_business_services": 17998, "education_and_health_services": 20801, "leisure_and_hospitality": 13804, "other_services": 5431, "government": 21916, "nonfarm_change": 173}, {"month": "2012-09-01T00:00:00", "nonfarm": 134549, "private": 112624, "goods_producing": 18461, "service_providing": 116088, "private_service_providing": 94163, "mining_and_logging": 846, "construction": 5661, "manufacturing": 11954, "durable_goods": 7483, "nondurable_goods": 4471, "trade_transportation_utilties": 25514, "wholesale_trade": 5676.3, "retail_trade": 14845.9, "transportation_and_warehousing": 4437.0, "utilities": 554.4, "information": 2670, "financial_activities": 7801, "professional_and_business_services": 18023, "education_and_health_services": 20841, "leisure_and_hospitality": 13872, "other_services": 5442, "government": 21925, "nonfarm_change": 194}, {"month": "2012-10-01T00:00:00", "nonfarm": 134702, "private": 112799, "goods_producing": 18472, "service_providing": 116230, "private_service_providing": 94327, "mining_and_logging": 837, "construction": 5674, "manufacturing": 11961, "durable_goods": 7485, "nondurable_goods": 4476, "trade_transportation_utilties": 25560, "wholesale_trade": 5691.6, "retail_trade": 14867.1, "transportation_and_warehousing": 4447.8, "utilities": 553.9, "information": 2667, "financial_activities": 7809, "professional_and_business_services": 18081, "education_and_health_services": 20881, "leisure_and_hospitality": 13883, "other_services": 5446, "government": 21903, "nonfarm_change": 153}, {"month": "2012-11-01T00:00:00", "nonfarm": 134832, "private": 112949, "goods_producing": 18477, "service_providing": 116355, "private_service_providing": 94472, "mining_and_logging": 843, "construction": 5684, "manufacturing": 11950, "durable_goods": 7488, "nondurable_goods": 4462, "trade_transportation_utilties": 25614, "wholesale_trade": 5693.5, "retail_trade": 14930.1, "transportation_and_warehousing": 4439.2, "utilities": 551.5, "information": 2674, "financial_activities": 7816, "professional_and_business_services": 18122, "education_and_health_services": 20887, "leisure_and_hospitality": 13910, "other_services": 5449, "government": 21883, "nonfarm_change": 130}, {"month": "2012-12-01T00:00:00", "nonfarm": 135075, "private": 113188, "goods_producing": 18532, "service_providing": 116543, "private_service_providing": 94656, "mining_and_logging": 848, "construction": 5724, "manufacturing": 11960, "durable_goods": 7505, "nondurable_goods": 4455, "trade_transportation_utilties": 25633, "wholesale_trade": 5704.0, "retail_trade": 14905.1, "transportation_and_warehousing": 4472.6, "utilities": 551.5, "information": 2675, "financial_activities": 7826, "professional_and_business_services": 18157, "education_and_health_services": 20935, "leisure_and_hospitality": 13978, "other_services": 5452, "government": 21887, "nonfarm_change": 243}, {"month": "2013-01-01T00:00:00", "nonfarm": 135282, "private": 113413, "goods_producing": 18580, "service_providing": 116702, "private_service_providing": 94833, "mining_and_logging": 851, "construction": 5746, "manufacturing": 11983, "durable_goods": 7515, "nondurable_goods": 4468, "trade_transportation_utilties": 25679, "wholesale_trade": 5715.5, "retail_trade": 14928.6, "transportation_and_warehousing": 4482.7, "utilities": 551.8, "information": 2661, "financial_activities": 7836, "professional_and_business_services": 18206, "education_and_health_services": 20956, "leisure_and_hospitality": 14037, "other_services": 5458, "government": 21869, "nonfarm_change": 207}, {"month": "2013-02-01T00:00:00", "nonfarm": 135547, "private": 113666, "goods_producing": 18638, "service_providing": 116909, "private_service_providing": 95028, "mining_and_logging": 858, "construction": 5784, "manufacturing": 11996, "durable_goods": 7523, "nondurable_goods": 4473, "trade_transportation_utilties": 25679, "wholesale_trade": 5711.1, "retail_trade": 14941.7, "transportation_and_warehousing": 4474.3, "utilities": 552.2, "information": 2699, "financial_activities": 7852, "professional_and_business_services": 18302, "education_and_health_services": 20958, "leisure_and_hospitality": 14082, "other_services": 5456, "government": 21881, "nonfarm_change": 265}, {"month": "2013-03-01T00:00:00", "nonfarm": 135703, "private": 113833, "goods_producing": 18660, "service_providing": 117043, "private_service_providing": 95173, "mining_and_logging": 859, "construction": 5802, "manufacturing": 11999, "durable_goods": 7531, "nondurable_goods": 4468, "trade_transportation_utilties": 25680, "wholesale_trade": 5713.7, "retail_trade": 14941.4, "transportation_and_warehousing": 4473.9, "utilities": 550.6, "information": 2699, "financial_activities": 7857, "professional_and_business_services": 18366, "education_and_health_services": 21007, "leisure_and_hospitality": 14113, "other_services": 5451, "government": 21870, "nonfarm_change": 156}, {"month": "2013-04-01T00:00:00", "nonfarm": 135882, "private": 114013, "goods_producing": 18653, "service_providing": 117229, "private_service_providing": 95360, "mining_and_logging": 857, "construction": 5796, "manufacturing": 12000, "durable_goods": 7534, "nondurable_goods": 4466, "trade_transportation_utilties": 25710, "wholesale_trade": 5714.9, "retail_trade": 14961.7, "transportation_and_warehousing": 4480.7, "utilities": 552.3, "information": 2696, "financial_activities": 7872, "professional_and_business_services": 18421, "education_and_health_services": 21054, "leisure_and_hospitality": 14152, "other_services": 5455, "government": 21869, "nonfarm_change": 179}, {"month": "2013-05-01T00:00:00", "nonfarm": 136122, "private": 114258, "goods_producing": 18691, "service_providing": 117431, "private_service_providing": 95567, "mining_and_logging": 862, "construction": 5829, "manufacturing": 12000, "durable_goods": 7533, "nondurable_goods": 4467, "trade_transportation_utilties": 25749, "wholesale_trade": 5721.0, "retail_trade": 14996.2, "transportation_and_warehousing": 4479.1, "utilities": 553.0, "information": 2711, "financial_activities": 7885, "professional_and_business_services": 18488, "education_and_health_services": 21071, "leisure_and_hospitality": 14193, "other_services": 5470, "government": 21864, "nonfarm_change": 240}, {"month": "2013-06-01T00:00:00", "nonfarm": 136280, "private": 114440, "goods_producing": 18724, "service_providing": 117556, "private_service_providing": 95716, "mining_and_logging": 865, "construction": 5855, "manufacturing": 12004, "durable_goods": 7539, "nondurable_goods": 4465, "trade_transportation_utilties": 25803, "wholesale_trade": 5723.9, "retail_trade": 15039.8, "transportation_and_warehousing": 4484.8, "utilities": 554.7, "information": 2707, "financial_activities": 7887, "professional_and_business_services": 18517, "education_and_health_services": 21070, "leisure_and_hospitality": 14252, "other_services": 5480, "government": 21840, "nonfarm_change": 158}, {"month": "2013-07-01T00:00:00", "nonfarm": 136391, "private": 114576, "goods_producing": 18705, "service_providing": 117686, "private_service_providing": 95871, "mining_and_logging": 862, "construction": 5859, "manufacturing": 11984, "durable_goods": 7517, "nondurable_goods": 4467, "trade_transportation_utilties": 25837, "wholesale_trade": 5734.6, "retail_trade": 15080.5, "transportation_and_warehousing": 4470.6, "utilities": 551.4, "information": 2720, "financial_activities": 7903, "professional_and_business_services": 18566, "education_and_health_services": 21074, "leisure_and_hospitality": 14288, "other_services": 5483, "government": 21815, "nonfarm_change": 111}, {"month": "2013-08-01T00:00:00", "nonfarm": 136651, "private": 114820, "goods_producing": 18756, "service_providing": 117895, "private_service_providing": 96064, "mining_and_logging": 864, "construction": 5878, "manufacturing": 12014, "durable_goods": 7547, "nondurable_goods": 4467, "trade_transportation_utilties": 25906, "wholesale_trade": 5743.7, "retail_trade": 15123.2, "transportation_and_warehousing": 4488.2, "utilities": 551.0, "information": 2690, "financial_activities": 7901, "professional_and_business_services": 18603, "education_and_health_services": 21143, "leisure_and_hospitality": 14327, "other_services": 5494, "government": 21831, "nonfarm_change": 260}, {"month": "2013-09-01T00:00:00", "nonfarm": 136852, "private": 115017, "goods_producing": 18810, "service_providing": 118042, "private_service_providing": 96207, "mining_and_logging": 868, "construction": 5910, "manufacturing": 12032, "durable_goods": 7564, "nondurable_goods": 4468, "trade_transportation_utilties": 25979, "wholesale_trade": 5752.8, "retail_trade": 15156.7, "transportation_and_warehousing": 4518.4, "utilities": 551.4, "information": 2707, "financial_activities": 7904, "professional_and_business_services": 18643, "education_and_health_services": 21133, "leisure_and_hospitality": 14339, "other_services": 5502, "government": 21835, "nonfarm_change": 201}, {"month": "2013-10-01T00:00:00", "nonfarm": 137062, "private": 115232, "goods_producing": 18857, "service_providing": 118205, "private_service_providing": 96375, "mining_and_logging": 870, "construction": 5931, "manufacturing": 12056, "durable_goods": 7576, "nondurable_goods": 4480, "trade_transportation_utilties": 26018, "wholesale_trade": 5748.7, "retail_trade": 15195.6, "transportation_and_warehousing": 4522.8, "utilities": 551.1, "information": 2719, "financial_activities": 7910, "professional_and_business_services": 18666, "education_and_health_services": 21158, "leisure_and_hospitality": 14395, "other_services": 5509, "government": 21830, "nonfarm_change": 210}, {"month": "2013-11-01T00:00:00", "nonfarm": 137283, "private": 115440, "goods_producing": 18911, "service_providing": 118372, "private_service_providing": 96529, "mining_and_logging": 869, "construction": 5963, "manufacturing": 12079, "durable_goods": 7589, "nondurable_goods": 4490, "trade_transportation_utilties": 26054, "wholesale_trade": 5760.0, "retail_trade": 15199.8, "transportation_and_warehousing": 4541.5, "utilities": 552.2, "information": 2724, "financial_activities": 7912, "professional_and_business_services": 18700, "education_and_health_services": 21194, "leisure_and_hospitality": 14432, "other_services": 5513, "government": 21843, "nonfarm_change": 221}, {"month": "2013-12-01T00:00:00", "nonfarm": 137376, "private": 115556, "goods_producing": 18881, "service_providing": 118495, "private_service_providing": 96675, "mining_and_logging": 866, "construction": 5932, "manufacturing": 12083, "durable_goods": 7591, "nondurable_goods": 4492, "trade_transportation_utilties": 26148, "wholesale_trade": 5762.8, "retail_trade": 15285.6, "transportation_and_warehousing": 4549.5, "utilities": 550.5, "information": 2726, "financial_activities": 7914, "professional_and_business_services": 18712, "education_and_health_services": 21196, "leisure_and_hospitality": 14454, "other_services": 5525, "government": 21820, "nonfarm_change": 93}, {"month": "2014-01-01T00:00:00", "nonfarm": 137550, "private": 115740, "goods_producing": 18934, "service_providing": 118616, "private_service_providing": 96806, "mining_and_logging": 871, "construction": 5981, "manufacturing": 12082, "durable_goods": 7584, "nondurable_goods": 4498, "trade_transportation_utilties": 26151, "wholesale_trade": 5776.2, "retail_trade": 15256.3, "transportation_and_warehousing": 4569.7, "utilities": 549.2, "information": 2723, "financial_activities": 7915, "professional_and_business_services": 18773, "education_and_health_services": 21225, "leisure_and_hospitality": 14486, "other_services": 5533, "government": 21810, "nonfarm_change": 174}, {"month": "2014-02-01T00:00:00", "nonfarm": 137732, "private": 115909, "goods_producing": 18986, "service_providing": 118746, "private_service_providing": 96923, "mining_and_logging": 874, "construction": 6007, "manufacturing": 12105, "durable_goods": 7604, "nondurable_goods": 4501, "trade_transportation_utilties": 26132, "wholesale_trade": 5782.7, "retail_trade": 15229.9, "transportation_and_warehousing": 4570.5, "utilities": 549.0, "information": 2719, "financial_activities": 7932, "professional_and_business_services": 18844, "education_and_health_services": 21246, "leisure_and_hospitality": 14516, "other_services": 5534, "government": 21823, "nonfarm_change": 182}, {"month": "2014-03-01T00:00:00", "nonfarm": 137993, "private": 116162, "goods_producing": 19041, "service_providing": 118952, "private_service_providing": 97121, "mining_and_logging": 879, "construction": 6041, "manufacturing": 12121, "durable_goods": 7622, "nondurable_goods": 4499, "trade_transportation_utilties": 26170, "wholesale_trade": 5785.8, "retail_trade": 15248.8, "transportation_and_warehousing": 4584.6, "utilities": 551.1, "information": 2724, "financial_activities": 7933, "professional_and_business_services": 18887, "education_and_health_services": 21292, "leisure_and_hospitality": 14562, "other_services": 5553, "government": 21831, "nonfarm_change": 261}, {"month": "2014-04-01T00:00:00", "nonfarm": 138304, "private": 116447, "goods_producing": 19102, "service_providing": 119202, "private_service_providing": 97345, "mining_and_logging": 886, "construction": 6081, "manufacturing": 12135, "durable_goods": 7633, "nondurable_goods": 4502, "trade_transportation_utilties": 26247, "wholesale_trade": 5802.9, "retail_trade": 15295.6, "transportation_and_warehousing": 4598.4, "utilities": 550.2, "information": 2722, "financial_activities": 7945, "professional_and_business_services": 18943, "education_and_health_services": 21314, "leisure_and_hospitality": 14610, "other_services": 5564, "government": 21857, "nonfarm_change": 311}, {"month": "2014-05-01T00:00:00", "nonfarm": 138556, "private": 116693, "goods_producing": 19145, "service_providing": 119411, "private_service_providing": 97548, "mining_and_logging": 887, "construction": 6111, "manufacturing": 12147, "durable_goods": 7649, "nondurable_goods": 4498, "trade_transportation_utilties": 26293, "wholesale_trade": 5807.7, "retail_trade": 15307.5, "transportation_and_warehousing": 4627.4, "utilities": 550.1, "information": 2718, "financial_activities": 7953, "professional_and_business_services": 18984, "education_and_health_services": 21370, "leisure_and_hospitality": 14663, "other_services": 5567, "government": 21863, "nonfarm_change": 252}, {"month": "2014-06-01T00:00:00", "nonfarm": 138862, "private": 116967, "goods_producing": 19194, "service_providing": 119668, "private_service_providing": 97773, "mining_and_logging": 892, "construction": 6131, "manufacturing": 12171, "durable_goods": 7670, "nondurable_goods": 4501, "trade_transportation_utilties": 26368, "wholesale_trade": 5818.6, "retail_trade": 15347.9, "transportation_and_warehousing": 4650.8, "utilities": 551.0, "information": 2724, "financial_activities": 7965, "professional_and_business_services": 19048, "education_and_health_services": 21416, "leisure_and_hospitality": 14689, "other_services": 5563, "government": 21895, "nonfarm_change": 306}, {"month": "2014-07-01T00:00:00", "nonfarm": 139058, "private": 117180, "goods_producing": 19261, "service_providing": 119797, "private_service_providing": 97919, "mining_and_logging": 897, "construction": 6174, "manufacturing": 12190, "durable_goods": 7687, "nondurable_goods": 4503, "trade_transportation_utilties": 26415, "wholesale_trade": 5824.3, "retail_trade": 15369.5, "transportation_and_warehousing": 4669.7, "utilities": 551.2, "information": 2727, "financial_activities": 7978, "professional_and_business_services": 19083, "education_and_health_services": 21449, "leisure_and_hospitality": 14702, "other_services": 5565, "government": 21878, "nonfarm_change": 196}, {"month": "2014-08-01T00:00:00", "nonfarm": 139284, "private": 117421, "goods_producing": 19307, "service_providing": 119977, "private_service_providing": 98114, "mining_and_logging": 897, "construction": 6204, "manufacturing": 12206, "durable_goods": 7698, "nondurable_goods": 4508, "trade_transportation_utilties": 26437, "wholesale_trade": 5824.6, "retail_trade": 15374.7, "transportation_and_warehousing": 4685.0, "utilities": 553.1, "information": 2734, "financial_activities": 7993, "professional_and_business_services": 19143, "education_and_health_services": 21499, "leisure_and_hospitality": 14727, "other_services": 5581, "government": 21863, "nonfarm_change": 226}, {"month": "2014-09-01T00:00:00", "nonfarm": 139568, "private": 117672, "goods_producing": 19364, "service_providing": 120204, "private_service_providing": 98308, "mining_and_logging": 904, "construction": 6236, "manufacturing": 12224, "durable_goods": 7708, "nondurable_goods": 4516, "trade_transportation_utilties": 26483, "wholesale_trade": 5823.5, "retail_trade": 15406.3, "transportation_and_warehousing": 4701.5, "utilities": 551.3, "information": 2732, "financial_activities": 8008, "professional_and_business_services": 19200, "education_and_health_services": 21540, "leisure_and_hospitality": 14771, "other_services": 5574, "government": 21896, "nonfarm_change": 284}, {"month": "2014-10-01T00:00:00", "nonfarm": 139823, "private": 117906, "goods_producing": 19411, "service_providing": 120412, "private_service_providing": 98495, "mining_and_logging": 901, "construction": 6254, "manufacturing": 12256, "durable_goods": 7729, "nondurable_goods": 4527, "trade_transportation_utilties": 26555, "wholesale_trade": 5832.3, "retail_trade": 15447.6, "transportation_and_warehousing": 4722.7, "utilities": 552.0, "information": 2728, "financial_activities": 8020, "professional_and_business_services": 19219, "education_and_health_services": 21575, "leisure_and_hospitality": 14818, "other_services": 5580, "government": 21917, "nonfarm_change": 255}, {"month": "2014-11-01T00:00:00", "nonfarm": 140130, "private": 118196, "goods_producing": 19451, "service_providing": 120679, "private_service_providing": 98745, "mining_and_logging": 899, "construction": 6270, "manufacturing": 12282, "durable_goods": 7746, "nondurable_goods": 4536, "trade_transportation_utilties": 26629, "wholesale_trade": 5835.5, "retail_trade": 15501.9, "transportation_and_warehousing": 4739.4, "utilities": 552.4, "information": 2736, "financial_activities": 8034, "professional_and_business_services": 19283, "education_and_health_services": 21625, "leisure_and_hospitality": 14847, "other_services": 5591, "government": 21934, "nonfarm_change": 307}, {"month": "2014-12-01T00:00:00", "nonfarm": 140381, "private": 118432, "goods_producing": 19482, "service_providing": 120899, "private_service_providing": 98950, "mining_and_logging": 896, "construction": 6295, "manufacturing": 12291, "durable_goods": 7751, "nondurable_goods": 4540, "trade_transportation_utilties": 26663, "wholesale_trade": 5844.0, "retail_trade": 15495.5, "transportation_and_warehousing": 4769.1, "utilities": 554.1, "information": 2737, "financial_activities": 8042, "professional_and_business_services": 19350, "education_and_health_services": 21676, "leisure_and_hospitality": 14890, "other_services": 5592, "government": 21949, "nonfarm_change": 251}, {"month": "2015-01-01T00:00:00", "nonfarm": 140592, "private": 118637, "goods_producing": 19516, "service_providing": 121076, "private_service_providing": 99121, "mining_and_logging": 888, "construction": 6332, "manufacturing": 12296, "durable_goods": 7754, "nondurable_goods": 4542, "trade_transportation_utilties": 26697, "wholesale_trade": 5848.9, "retail_trade": 15501.7, "transportation_and_warehousing": 4791.6, "utilities": 554.6, "information": 2737, "financial_activities": 8060, "professional_and_business_services": 19371, "education_and_health_services": 21741, "leisure_and_hospitality": 14916, "other_services": 5599, "government": 21955, "nonfarm_change": 211}, {"month": "2015-02-01T00:00:00", "nonfarm": 140859, "private": 118884, "goods_producing": 19532, "service_providing": 121327, "private_service_providing": 99352, "mining_and_logging": 875, "construction": 6356, "manufacturing": 12301, "durable_goods": 7761, "nondurable_goods": 4540, "trade_transportation_utilties": 26733, "wholesale_trade": 5857.7, "retail_trade": 15521.6, "transportation_and_warehousing": 4799.6, "utilities": 554.2, "information": 2741, "financial_activities": 8072, "professional_and_business_services": 19424, "education_and_health_services": 21787, "leisure_and_hospitality": 14990, "other_services": 5605, "government": 21975, "nonfarm_change": 267}, {"month": "2015-03-01T00:00:00", "nonfarm": 140937, "private": 118973, "goods_producing": 19512, "service_providing": 121425, "private_service_providing": 99461, "mining_and_logging": 859, "construction": 6340, "manufacturing": 12313, "durable_goods": 7766, "nondurable_goods": 4547, "trade_transportation_utilties": 26772, "wholesale_trade": 5858.7, "retail_trade": 15545.1, "transportation_and_warehousing": 4813.6, "utilities": 554.7, "information": 2735, "financial_activities": 8082, "professional_and_business_services": 19447, "education_and_health_services": 21829, "leisure_and_hospitality": 14990, "other_services": 5606, "government": 21964, "nonfarm_change": 78}, {"month": "2015-04-01T00:00:00", "nonfarm": 141219, "private": 119219, "goods_producing": 19551, "service_providing": 121668, "private_service_providing": 99668, "mining_and_logging": 843, "construction": 6390, "manufacturing": 12318, "durable_goods": 7764, "nondurable_goods": 4554, "trade_transportation_utilties": 26803, "wholesale_trade": 5854.8, "retail_trade": 15568.8, "transportation_and_warehousing": 4824.0, "utilities": 555.1, "information": 2742, "financial_activities": 8087, "professional_and_business_services": 19499, "education_and_health_services": 21905, "leisure_and_hospitality": 15019, "other_services": 5613, "government": 22000, "nonfarm_change": 282}, {"month": "2015-05-01T00:00:00", "nonfarm": 141545, "private": 119535, "goods_producing": 19584, "service_providing": 121961, "private_service_providing": 99951, "mining_and_logging": 820, "construction": 6428, "manufacturing": 12336, "durable_goods": 7774, "nondurable_goods": 4562, "trade_transportation_utilties": 26857, "wholesale_trade": 5859.6, "retail_trade": 15597.2, "transportation_and_warehousing": 4843.7, "utilities": 556.2, "information": 2750, "financial_activities": 8096, "professional_and_business_services": 19571, "education_and_health_services": 21952, "leisure_and_hospitality": 15101, "other_services": 5624, "government": 22010, "nonfarm_change": 326}, {"month": "2015-06-01T00:00:00", "nonfarm": 141736, "private": 119724, "goods_producing": 19601, "service_providing": 122135, "private_service_providing": 100123, "mining_and_logging": 817, "construction": 6444, "manufacturing": 12340, "durable_goods": 7776, "nondurable_goods": 4564, "trade_transportation_utilties": 26897, "wholesale_trade": 5857.1, "retail_trade": 15615.0, "transportation_and_warehousing": 4869.7, "utilities": 555.6, "information": 2751, "financial_activities": 8112, "professional_and_business_services": 19634, "education_and_health_services": 22002, "leisure_and_hospitality": 15109, "other_services": 5618, "government": 22012, "nonfarm_change": 191}, {"month": "2015-07-01T00:00:00", "nonfarm": 141992, "private": 119958, "goods_producing": 19629, "service_providing": 122363, "private_service_providing": 100329, "mining_and_logging": 808, "construction": 6466, "manufacturing": 12355, "durable_goods": 7776, "nondurable_goods": 4579, "trade_transportation_utilties": 26942, "wholesale_trade": 5857.4, "retail_trade": 15635.6, "transportation_and_warehousing": 4892.0, "utilities": 557.2, "information": 2754, "financial_activities": 8134, "professional_and_business_services": 19665, "education_and_health_services": 22051, "leisure_and_hospitality": 15154, "other_services": 5629, "government": 22034, "nonfarm_change": 256}, {"month": "2015-08-01T00:00:00", "nonfarm": 142156, "private": 120084, "goods_producing": 19628, "service_providing": 122528, "private_service_providing": 100456, "mining_and_logging": 797, "construction": 6485, "manufacturing": 12346, "durable_goods": 7774, "nondurable_goods": 4572, "trade_transportation_utilties": 26946, "wholesale_trade": 5854.8, "retail_trade": 15629.7, "transportation_and_warehousing": 4903.8, "utilities": 557.8, "information": 2754, "financial_activities": 8146, "professional_and_business_services": 19697, "education_and_health_services": 22093, "leisure_and_hospitality": 15201, "other_services": 5619, "government": 22072, "nonfarm_change": 164}, {"month": "2015-09-01T00:00:00", "nonfarm": 142244, "private": 120203, "goods_producing": 19622, "service_providing": 122622, "private_service_providing": 100581, "mining_and_logging": 779, "construction": 6498, "manufacturing": 12345, "durable_goods": 7770, "nondurable_goods": 4575, "trade_transportation_utilties": 26930, "wholesale_trade": 5842.1, "retail_trade": 15620.5, "transportation_and_warehousing": 4910.9, "utilities": 556.7, "information": 2761, "financial_activities": 8152, "professional_and_business_services": 19717, "education_and_health_services": 22138, "leisure_and_hospitality": 15263, "other_services": 5620, "government": 22041, "nonfarm_change": 88}, {"month": "2015-10-01T00:00:00", "nonfarm": 142595, "private": 120536, "goods_producing": 19669, "service_providing": 122926, "private_service_providing": 100867, "mining_and_logging": 771, "construction": 6540, "manufacturing": 12358, "durable_goods": 7768, "nondurable_goods": 4590, "trade_transportation_utilties": 26970, "wholesale_trade": 5849.6, "retail_trade": 15661.9, "transportation_and_warehousing": 4903.0, "utilities": 555.9, "information": 2768, "financial_activities": 8168, "professional_and_business_services": 19791, "education_and_health_services": 22217, "leisure_and_hospitality": 15324, "other_services": 5629, "government": 22059, "nonfarm_change": 351}, {"month": "2015-11-01T00:00:00", "nonfarm": 142859, "private": 120775, "goods_producing": 19701, "service_providing": 123158, "private_service_providing": 101074, "mining_and_logging": 755, "construction": 6592, "manufacturing": 12354, "durable_goods": 7753, "nondurable_goods": 4601, "trade_transportation_utilties": 27037, "wholesale_trade": 5851.8, "retail_trade": 15704.2, "transportation_and_warehousing": 4924.7, "utilities": 556.6, "information": 2754, "financial_activities": 8181, "professional_and_business_services": 19835, "education_and_health_services": 22263, "leisure_and_hospitality": 15366, "other_services": 5638, "government": 22084, "nonfarm_change": 264}, {"month": "2015-12-01T00:00:00", "nonfarm": 143093, "private": 120993, "goods_producing": 19737, "service_providing": 123356, "private_service_providing": 101256, "mining_and_logging": 745, "construction": 6632, "manufacturing": 12360, "durable_goods": 7747, "nondurable_goods": 4613, "trade_transportation_utilties": 27036, "wholesale_trade": 5850.5, "retail_trade": 15677.8, "transportation_and_warehousing": 4950.9, "utilities": 556.5, "information": 2762, "financial_activities": 8188, "professional_and_business_services": 19892, "education_and_health_services": 22318, "leisure_and_hospitality": 15408, "other_services": 5652, "government": 22100, "nonfarm_change": 234}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#bar_chart_with_negatives-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="method" for="sd-tab-item-0">
+Method syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">us_employment</span><span class="p">()</span>
+
+<span class="n">predicate</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">nonfarm_change</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">predicate</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;steelblue&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;orange&quot;</span><span class="p">))</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;month:T&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;nonfarm_change:Q&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">color</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="attribute" for="sd-tab-item-1">
+Attribute syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">us_employment</span><span class="p">()</span>
+
+<span class="n">predicate</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">nonfarm_change</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">predicate</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;steelblue&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;orange&quot;</span><span class="p">))</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;month:T&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;nonfarm_change:Q&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">color</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># No channel encoding options are specified in this chart</span>
+<span class="c1"># so the code is the same as for the method-based syntax.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

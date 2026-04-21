@@ -1,0 +1,46 @@
+﻿altair.theme.TimeLocaleKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: TimeLocaleKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TimeLocaleKwds.__init__
+      ~TimeLocaleKwds.clear
+      ~TimeLocaleKwds.copy
+      ~TimeLocaleKwds.fromkeys
+      ~TimeLocaleKwds.get
+      ~TimeLocaleKwds.items
+      ~TimeLocaleKwds.keys
+      ~TimeLocaleKwds.pop
+      ~TimeLocaleKwds.popitem
+      ~TimeLocaleKwds.setdefault
+      ~TimeLocaleKwds.update
+      ~TimeLocaleKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TimeLocaleKwds.date
+      ~TimeLocaleKwds.dateTime
+      ~TimeLocaleKwds.days
+      ~TimeLocaleKwds.months
+      ~TimeLocaleKwds.periods
+      ~TimeLocaleKwds.shortDays
+      ~TimeLocaleKwds.shortMonths
+      ~TimeLocaleKwds.time
+   
+   

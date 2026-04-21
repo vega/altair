@@ -1,0 +1,30 @@
+﻿altair.TimeIntervalStep
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: TimeIntervalStep
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TimeIntervalStep.__init__
+      ~TimeIntervalStep.copy
+      ~TimeIntervalStep.from_dict
+      ~TimeIntervalStep.from_json
+      ~TimeIntervalStep.resolve_references
+      ~TimeIntervalStep.to_dict
+      ~TimeIntervalStep.to_json
+      ~TimeIntervalStep.validate
+      ~TimeIntervalStep.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.VegaLiteSchema
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: VegaLiteSchema
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~VegaLiteSchema.__init__
+      ~VegaLiteSchema.copy
+      ~VegaLiteSchema.from_dict
+      ~VegaLiteSchema.from_json
+      ~VegaLiteSchema.resolve_references
+      ~VegaLiteSchema.to_dict
+      ~VegaLiteSchema.to_json
+      ~VegaLiteSchema.validate
+      ~VegaLiteSchema.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.FieldOneOfPredicate
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldOneOfPredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldOneOfPredicate.__init__
+      ~FieldOneOfPredicate.copy
+      ~FieldOneOfPredicate.from_dict
+      ~FieldOneOfPredicate.from_json
+      ~FieldOneOfPredicate.resolve_references
+      ~FieldOneOfPredicate.to_dict
+      ~FieldOneOfPredicate.to_json
+      ~FieldOneOfPredicate.validate
+      ~FieldOneOfPredicate.validate_property
+   
+   
+
+   
+   
+   

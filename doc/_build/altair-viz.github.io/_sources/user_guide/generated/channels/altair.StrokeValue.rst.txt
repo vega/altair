@@ -1,0 +1,37 @@
+﻿altair.StrokeValue
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeValue.__init__
+      ~StrokeValue.copy
+      ~StrokeValue.from_dict
+      ~StrokeValue.from_json
+      ~StrokeValue.resolve_references
+      ~StrokeValue.to_dict
+      ~StrokeValue.to_json
+      ~StrokeValue.validate
+      ~StrokeValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StrokeValue.condition
+      ~StrokeValue.value
+   
+   

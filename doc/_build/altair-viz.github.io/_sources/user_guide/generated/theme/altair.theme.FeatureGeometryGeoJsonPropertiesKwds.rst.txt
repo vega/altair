@@ -1,0 +1,43 @@
+﻿altair.theme.FeatureGeometryGeoJsonPropertiesKwds
+=================================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: FeatureGeometryGeoJsonPropertiesKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FeatureGeometryGeoJsonPropertiesKwds.__init__
+      ~FeatureGeometryGeoJsonPropertiesKwds.clear
+      ~FeatureGeometryGeoJsonPropertiesKwds.copy
+      ~FeatureGeometryGeoJsonPropertiesKwds.fromkeys
+      ~FeatureGeometryGeoJsonPropertiesKwds.get
+      ~FeatureGeometryGeoJsonPropertiesKwds.items
+      ~FeatureGeometryGeoJsonPropertiesKwds.keys
+      ~FeatureGeometryGeoJsonPropertiesKwds.pop
+      ~FeatureGeometryGeoJsonPropertiesKwds.popitem
+      ~FeatureGeometryGeoJsonPropertiesKwds.setdefault
+      ~FeatureGeometryGeoJsonPropertiesKwds.update
+      ~FeatureGeometryGeoJsonPropertiesKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~FeatureGeometryGeoJsonPropertiesKwds.geometry
+      ~FeatureGeometryGeoJsonPropertiesKwds.properties
+      ~FeatureGeometryGeoJsonPropertiesKwds.type
+      ~FeatureGeometryGeoJsonPropertiesKwds.bbox
+      ~FeatureGeometryGeoJsonPropertiesKwds.id
+   
+   

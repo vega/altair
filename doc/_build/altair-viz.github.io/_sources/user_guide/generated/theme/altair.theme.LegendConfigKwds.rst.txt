@@ -1,0 +1,113 @@
+﻿altair.theme.LegendConfigKwds
+=============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: LegendConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LegendConfigKwds.__init__
+      ~LegendConfigKwds.clear
+      ~LegendConfigKwds.copy
+      ~LegendConfigKwds.fromkeys
+      ~LegendConfigKwds.get
+      ~LegendConfigKwds.items
+      ~LegendConfigKwds.keys
+      ~LegendConfigKwds.pop
+      ~LegendConfigKwds.popitem
+      ~LegendConfigKwds.setdefault
+      ~LegendConfigKwds.update
+      ~LegendConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LegendConfigKwds.aria
+      ~LegendConfigKwds.clipHeight
+      ~LegendConfigKwds.columnPadding
+      ~LegendConfigKwds.columns
+      ~LegendConfigKwds.cornerRadius
+      ~LegendConfigKwds.description
+      ~LegendConfigKwds.direction
+      ~LegendConfigKwds.disable
+      ~LegendConfigKwds.fillColor
+      ~LegendConfigKwds.gradientDirection
+      ~LegendConfigKwds.gradientHorizontalMaxLength
+      ~LegendConfigKwds.gradientHorizontalMinLength
+      ~LegendConfigKwds.gradientLabelLimit
+      ~LegendConfigKwds.gradientLabelOffset
+      ~LegendConfigKwds.gradientLength
+      ~LegendConfigKwds.gradientOpacity
+      ~LegendConfigKwds.gradientStrokeColor
+      ~LegendConfigKwds.gradientStrokeWidth
+      ~LegendConfigKwds.gradientThickness
+      ~LegendConfigKwds.gradientVerticalMaxLength
+      ~LegendConfigKwds.gradientVerticalMinLength
+      ~LegendConfigKwds.gridAlign
+      ~LegendConfigKwds.labelAlign
+      ~LegendConfigKwds.labelBaseline
+      ~LegendConfigKwds.labelColor
+      ~LegendConfigKwds.labelFont
+      ~LegendConfigKwds.labelFontSize
+      ~LegendConfigKwds.labelFontStyle
+      ~LegendConfigKwds.labelFontWeight
+      ~LegendConfigKwds.labelLimit
+      ~LegendConfigKwds.labelOffset
+      ~LegendConfigKwds.labelOpacity
+      ~LegendConfigKwds.labelOverlap
+      ~LegendConfigKwds.labelPadding
+      ~LegendConfigKwds.labelSeparation
+      ~LegendConfigKwds.layout
+      ~LegendConfigKwds.legendX
+      ~LegendConfigKwds.legendY
+      ~LegendConfigKwds.offset
+      ~LegendConfigKwds.orient
+      ~LegendConfigKwds.padding
+      ~LegendConfigKwds.rowPadding
+      ~LegendConfigKwds.strokeColor
+      ~LegendConfigKwds.strokeDash
+      ~LegendConfigKwds.strokeWidth
+      ~LegendConfigKwds.symbolBaseFillColor
+      ~LegendConfigKwds.symbolBaseStrokeColor
+      ~LegendConfigKwds.symbolDash
+      ~LegendConfigKwds.symbolDashOffset
+      ~LegendConfigKwds.symbolDirection
+      ~LegendConfigKwds.symbolFillColor
+      ~LegendConfigKwds.symbolLimit
+      ~LegendConfigKwds.symbolOffset
+      ~LegendConfigKwds.symbolOpacity
+      ~LegendConfigKwds.symbolSize
+      ~LegendConfigKwds.symbolStrokeColor
+      ~LegendConfigKwds.symbolStrokeWidth
+      ~LegendConfigKwds.symbolType
+      ~LegendConfigKwds.tickCount
+      ~LegendConfigKwds.title
+      ~LegendConfigKwds.titleAlign
+      ~LegendConfigKwds.titleAnchor
+      ~LegendConfigKwds.titleBaseline
+      ~LegendConfigKwds.titleColor
+      ~LegendConfigKwds.titleFont
+      ~LegendConfigKwds.titleFontSize
+      ~LegendConfigKwds.titleFontStyle
+      ~LegendConfigKwds.titleFontWeight
+      ~LegendConfigKwds.titleLimit
+      ~LegendConfigKwds.titleLineHeight
+      ~LegendConfigKwds.titleOpacity
+      ~LegendConfigKwds.titleOrient
+      ~LegendConfigKwds.titlePadding
+      ~LegendConfigKwds.unselectedOpacity
+      ~LegendConfigKwds.zindex
+   
+   

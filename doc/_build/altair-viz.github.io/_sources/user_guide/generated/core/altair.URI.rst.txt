@@ -1,0 +1,30 @@
+﻿altair.URI
+==========
+
+.. currentmodule:: altair
+
+.. autoclass:: URI
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~URI.__init__
+      ~URI.copy
+      ~URI.from_dict
+      ~URI.from_json
+      ~URI.resolve_references
+      ~URI.to_dict
+      ~URI.to_json
+      ~URI.validate
+      ~URI.validate_property
+   
+   
+
+   
+   
+   

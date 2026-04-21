@@ -1,0 +1,30 @@
+﻿altair.OffsetDef
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: OffsetDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OffsetDef.__init__
+      ~OffsetDef.copy
+      ~OffsetDef.from_dict
+      ~OffsetDef.from_json
+      ~OffsetDef.resolve_references
+      ~OffsetDef.to_dict
+      ~OffsetDef.to_json
+      ~OffsetDef.validate
+      ~OffsetDef.validate_property
+   
+   
+
+   
+   
+   

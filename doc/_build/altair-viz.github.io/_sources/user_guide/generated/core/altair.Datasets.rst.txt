@@ -1,0 +1,30 @@
+﻿altair.Datasets
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: Datasets
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Datasets.__init__
+      ~Datasets.copy
+      ~Datasets.from_dict
+      ~Datasets.from_json
+      ~Datasets.resolve_references
+      ~Datasets.to_dict
+      ~Datasets.to_json
+      ~Datasets.validate
+      ~Datasets.validate_property
+   
+   
+
+   
+   
+   

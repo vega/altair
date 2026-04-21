@@ -1,0 +1,40 @@
+﻿altair.StrokeWidthDatum
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeWidthDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeWidthDatum.__init__
+      ~StrokeWidthDatum.copy
+      ~StrokeWidthDatum.from_dict
+      ~StrokeWidthDatum.from_json
+      ~StrokeWidthDatum.resolve_references
+      ~StrokeWidthDatum.to_dict
+      ~StrokeWidthDatum.to_json
+      ~StrokeWidthDatum.validate
+      ~StrokeWidthDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StrokeWidthDatum.bandPosition
+      ~StrokeWidthDatum.condition
+      ~StrokeWidthDatum.datum
+      ~StrokeWidthDatum.title
+      ~StrokeWidthDatum.type
+   
+   

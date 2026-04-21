@@ -1,0 +1,30 @@
+﻿altair.RangeConfig
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: RangeConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RangeConfig.__init__
+      ~RangeConfig.copy
+      ~RangeConfig.from_dict
+      ~RangeConfig.from_json
+      ~RangeConfig.resolve_references
+      ~RangeConfig.to_dict
+      ~RangeConfig.to_json
+      ~RangeConfig.validate
+      ~RangeConfig.validate_property
+   
+   
+
+   
+   
+   

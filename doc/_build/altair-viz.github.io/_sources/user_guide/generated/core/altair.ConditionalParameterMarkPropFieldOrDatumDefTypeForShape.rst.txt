@@ -1,0 +1,30 @@
+﻿altair.ConditionalParameterMarkPropFieldOrDatumDefTypeForShape
+==============================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalParameterMarkPropFieldOrDatumDefTypeForShape
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalParameterMarkPropFieldOrDatumDefTypeForShape.__init__
+      ~ConditionalParameterMarkPropFieldOrDatumDefTypeForShape.copy
+      ~ConditionalParameterMarkPropFieldOrDatumDefTypeForShape.from_dict
+      ~ConditionalParameterMarkPropFieldOrDatumDefTypeForShape.from_json
+      ~ConditionalParameterMarkPropFieldOrDatumDefTypeForShape.resolve_references
+      ~ConditionalParameterMarkPropFieldOrDatumDefTypeForShape.to_dict
+      ~ConditionalParameterMarkPropFieldOrDatumDefTypeForShape.to_json
+      ~ConditionalParameterMarkPropFieldOrDatumDefTypeForShape.validate
+      ~ConditionalParameterMarkPropFieldOrDatumDefTypeForShape.validate_property
+   
+   
+
+   
+   
+   

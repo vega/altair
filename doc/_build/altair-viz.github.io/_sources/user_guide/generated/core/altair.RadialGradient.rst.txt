@@ -1,0 +1,30 @@
+﻿altair.RadialGradient
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: RadialGradient
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RadialGradient.__init__
+      ~RadialGradient.copy
+      ~RadialGradient.from_dict
+      ~RadialGradient.from_json
+      ~RadialGradient.resolve_references
+      ~RadialGradient.to_dict
+      ~RadialGradient.to_json
+      ~RadialGradient.validate
+      ~RadialGradient.validate_property
+   
+   
+
+   
+   
+   

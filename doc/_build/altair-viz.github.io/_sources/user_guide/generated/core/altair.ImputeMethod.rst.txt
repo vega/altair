@@ -1,0 +1,30 @@
+﻿altair.ImputeMethod
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: ImputeMethod
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ImputeMethod.__init__
+      ~ImputeMethod.copy
+      ~ImputeMethod.from_dict
+      ~ImputeMethod.from_json
+      ~ImputeMethod.resolve_references
+      ~ImputeMethod.to_dict
+      ~ImputeMethod.to_json
+      ~ImputeMethod.validate
+      ~ImputeMethod.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,47 @@
+﻿altair.Y
+========
+
+.. currentmodule:: altair
+
+.. autoclass:: Y
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Y.__init__
+      ~Y.copy
+      ~Y.from_dict
+      ~Y.from_json
+      ~Y.resolve_references
+      ~Y.to_dict
+      ~Y.to_json
+      ~Y.validate
+      ~Y.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Y.aggregate
+      ~Y.axis
+      ~Y.bandPosition
+      ~Y.bin
+      ~Y.field
+      ~Y.impute
+      ~Y.scale
+      ~Y.sort
+      ~Y.stack
+      ~Y.timeUnit
+      ~Y.title
+      ~Y.type
+   
+   

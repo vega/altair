@@ -1,0 +1,30 @@
+﻿altair.ConditionalAxisPropertyFontWeightnull
+============================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalAxisPropertyFontWeightnull
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalAxisPropertyFontWeightnull.__init__
+      ~ConditionalAxisPropertyFontWeightnull.copy
+      ~ConditionalAxisPropertyFontWeightnull.from_dict
+      ~ConditionalAxisPropertyFontWeightnull.from_json
+      ~ConditionalAxisPropertyFontWeightnull.resolve_references
+      ~ConditionalAxisPropertyFontWeightnull.to_dict
+      ~ConditionalAxisPropertyFontWeightnull.to_json
+      ~ConditionalAxisPropertyFontWeightnull.validate
+      ~ConditionalAxisPropertyFontWeightnull.validate_property
+   
+   
+
+   
+   
+   

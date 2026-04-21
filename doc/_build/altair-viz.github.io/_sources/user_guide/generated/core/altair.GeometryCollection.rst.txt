@@ -1,0 +1,30 @@
+﻿altair.GeometryCollection
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: GeometryCollection
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GeometryCollection.__init__
+      ~GeometryCollection.copy
+      ~GeometryCollection.from_dict
+      ~GeometryCollection.from_json
+      ~GeometryCollection.resolve_references
+      ~GeometryCollection.to_dict
+      ~GeometryCollection.to_json
+      ~GeometryCollection.validate
+      ~GeometryCollection.validate_property
+   
+   
+
+   
+   
+   

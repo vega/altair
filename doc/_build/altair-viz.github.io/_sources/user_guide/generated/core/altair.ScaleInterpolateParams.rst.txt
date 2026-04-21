@@ -1,0 +1,30 @@
+﻿altair.ScaleInterpolateParams
+=============================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInterpolateParams
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInterpolateParams.__init__
+      ~ScaleInterpolateParams.copy
+      ~ScaleInterpolateParams.from_dict
+      ~ScaleInterpolateParams.from_json
+      ~ScaleInterpolateParams.resolve_references
+      ~ScaleInterpolateParams.to_dict
+      ~ScaleInterpolateParams.to_json
+      ~ScaleInterpolateParams.validate
+      ~ScaleInterpolateParams.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.RowColLayoutAlign
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: RowColLayoutAlign
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RowColLayoutAlign.__init__
+      ~RowColLayoutAlign.copy
+      ~RowColLayoutAlign.from_dict
+      ~RowColLayoutAlign.from_json
+      ~RowColLayoutAlign.resolve_references
+      ~RowColLayoutAlign.to_dict
+      ~RowColLayoutAlign.to_json
+      ~RowColLayoutAlign.validate
+      ~RowColLayoutAlign.validate_property
+   
+   
+
+   
+   
+   

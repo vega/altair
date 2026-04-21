@@ -1,0 +1,113 @@
+﻿altair.theme.BarConfigKwds
+==========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: BarConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BarConfigKwds.__init__
+      ~BarConfigKwds.clear
+      ~BarConfigKwds.copy
+      ~BarConfigKwds.fromkeys
+      ~BarConfigKwds.get
+      ~BarConfigKwds.items
+      ~BarConfigKwds.keys
+      ~BarConfigKwds.pop
+      ~BarConfigKwds.popitem
+      ~BarConfigKwds.setdefault
+      ~BarConfigKwds.update
+      ~BarConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BarConfigKwds.align
+      ~BarConfigKwds.angle
+      ~BarConfigKwds.aria
+      ~BarConfigKwds.ariaRole
+      ~BarConfigKwds.ariaRoleDescription
+      ~BarConfigKwds.aspect
+      ~BarConfigKwds.baseline
+      ~BarConfigKwds.binSpacing
+      ~BarConfigKwds.blend
+      ~BarConfigKwds.color
+      ~BarConfigKwds.continuousBandSize
+      ~BarConfigKwds.cornerRadius
+      ~BarConfigKwds.cornerRadiusBottomLeft
+      ~BarConfigKwds.cornerRadiusBottomRight
+      ~BarConfigKwds.cornerRadiusEnd
+      ~BarConfigKwds.cornerRadiusTopLeft
+      ~BarConfigKwds.cornerRadiusTopRight
+      ~BarConfigKwds.cursor
+      ~BarConfigKwds.description
+      ~BarConfigKwds.dir
+      ~BarConfigKwds.discreteBandSize
+      ~BarConfigKwds.dx
+      ~BarConfigKwds.dy
+      ~BarConfigKwds.ellipsis
+      ~BarConfigKwds.endAngle
+      ~BarConfigKwds.fill
+      ~BarConfigKwds.fillOpacity
+      ~BarConfigKwds.filled
+      ~BarConfigKwds.font
+      ~BarConfigKwds.fontSize
+      ~BarConfigKwds.fontStyle
+      ~BarConfigKwds.fontWeight
+      ~BarConfigKwds.height
+      ~BarConfigKwds.href
+      ~BarConfigKwds.innerRadius
+      ~BarConfigKwds.interpolate
+      ~BarConfigKwds.invalid
+      ~BarConfigKwds.limit
+      ~BarConfigKwds.lineBreak
+      ~BarConfigKwds.lineHeight
+      ~BarConfigKwds.minBandSize
+      ~BarConfigKwds.opacity
+      ~BarConfigKwds.order
+      ~BarConfigKwds.orient
+      ~BarConfigKwds.outerRadius
+      ~BarConfigKwds.padAngle
+      ~BarConfigKwds.radius
+      ~BarConfigKwds.radius2
+      ~BarConfigKwds.shape
+      ~BarConfigKwds.size
+      ~BarConfigKwds.smooth
+      ~BarConfigKwds.startAngle
+      ~BarConfigKwds.stroke
+      ~BarConfigKwds.strokeCap
+      ~BarConfigKwds.strokeDash
+      ~BarConfigKwds.strokeDashOffset
+      ~BarConfigKwds.strokeJoin
+      ~BarConfigKwds.strokeMiterLimit
+      ~BarConfigKwds.strokeOffset
+      ~BarConfigKwds.strokeOpacity
+      ~BarConfigKwds.strokeWidth
+      ~BarConfigKwds.tension
+      ~BarConfigKwds.text
+      ~BarConfigKwds.theta
+      ~BarConfigKwds.theta2
+      ~BarConfigKwds.time
+      ~BarConfigKwds.timeUnitBandPosition
+      ~BarConfigKwds.timeUnitBandSize
+      ~BarConfigKwds.tooltip
+      ~BarConfigKwds.url
+      ~BarConfigKwds.width
+      ~BarConfigKwds.x
+      ~BarConfigKwds.x2
+      ~BarConfigKwds.y
+      ~BarConfigKwds.y2
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.AnyMark
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: AnyMark
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AnyMark.__init__
+      ~AnyMark.copy
+      ~AnyMark.from_dict
+      ~AnyMark.from_json
+      ~AnyMark.resolve_references
+      ~AnyMark.to_dict
+      ~AnyMark.to_json
+      ~AnyMark.validate
+      ~AnyMark.validate_property
+   
+   
+
+   
+   
+   

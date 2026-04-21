@@ -1,0 +1,30 @@
+﻿altair.JoinAggregateFieldDef
+============================
+
+.. currentmodule:: altair
+
+.. autoclass:: JoinAggregateFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~JoinAggregateFieldDef.__init__
+      ~JoinAggregateFieldDef.copy
+      ~JoinAggregateFieldDef.from_dict
+      ~JoinAggregateFieldDef.from_json
+      ~JoinAggregateFieldDef.resolve_references
+      ~JoinAggregateFieldDef.to_dict
+      ~JoinAggregateFieldDef.to_json
+      ~JoinAggregateFieldDef.validate
+      ~JoinAggregateFieldDef.validate_property
+   
+   
+
+   
+   
+   

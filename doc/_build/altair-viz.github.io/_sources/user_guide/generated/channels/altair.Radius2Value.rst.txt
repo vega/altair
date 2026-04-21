@@ -1,0 +1,36 @@
+﻿altair.Radius2Value
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: Radius2Value
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Radius2Value.__init__
+      ~Radius2Value.copy
+      ~Radius2Value.from_dict
+      ~Radius2Value.from_json
+      ~Radius2Value.resolve_references
+      ~Radius2Value.to_dict
+      ~Radius2Value.to_json
+      ~Radius2Value.validate
+      ~Radius2Value.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Radius2Value.value
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.QuantileTransform
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: QuantileTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~QuantileTransform.__init__
+      ~QuantileTransform.copy
+      ~QuantileTransform.from_dict
+      ~QuantileTransform.from_json
+      ~QuantileTransform.resolve_references
+      ~QuantileTransform.to_dict
+      ~QuantileTransform.to_json
+      ~QuantileTransform.validate
+      ~QuantileTransform.validate_property
+   
+   
+
+   
+   
+   

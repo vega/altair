@@ -1,0 +1,30 @@
+﻿altair.Parse
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Parse
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Parse.__init__
+      ~Parse.copy
+      ~Parse.from_dict
+      ~Parse.from_json
+      ~Parse.resolve_references
+      ~Parse.to_dict
+      ~Parse.to_json
+      ~Parse.validate
+      ~Parse.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.StackTransform
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: StackTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StackTransform.__init__
+      ~StackTransform.copy
+      ~StackTransform.from_dict
+      ~StackTransform.from_json
+      ~StackTransform.resolve_references
+      ~StackTransform.to_dict
+      ~StackTransform.to_json
+      ~StackTransform.validate
+      ~StackTransform.validate_property
+   
+   
+
+   
+   
+   

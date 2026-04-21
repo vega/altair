@@ -1,0 +1,42 @@
+﻿altair.Detail
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: Detail
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Detail.__init__
+      ~Detail.copy
+      ~Detail.from_dict
+      ~Detail.from_json
+      ~Detail.resolve_references
+      ~Detail.to_dict
+      ~Detail.to_json
+      ~Detail.validate
+      ~Detail.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Detail.aggregate
+      ~Detail.bandPosition
+      ~Detail.bin
+      ~Detail.field
+      ~Detail.timeUnit
+      ~Detail.title
+      ~Detail.type
+   
+   

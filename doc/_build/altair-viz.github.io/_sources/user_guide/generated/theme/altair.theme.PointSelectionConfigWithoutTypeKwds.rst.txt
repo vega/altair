@@ -1,0 +1,44 @@
+﻿altair.theme.PointSelectionConfigWithoutTypeKwds
+================================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: PointSelectionConfigWithoutTypeKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PointSelectionConfigWithoutTypeKwds.__init__
+      ~PointSelectionConfigWithoutTypeKwds.clear
+      ~PointSelectionConfigWithoutTypeKwds.copy
+      ~PointSelectionConfigWithoutTypeKwds.fromkeys
+      ~PointSelectionConfigWithoutTypeKwds.get
+      ~PointSelectionConfigWithoutTypeKwds.items
+      ~PointSelectionConfigWithoutTypeKwds.keys
+      ~PointSelectionConfigWithoutTypeKwds.pop
+      ~PointSelectionConfigWithoutTypeKwds.popitem
+      ~PointSelectionConfigWithoutTypeKwds.setdefault
+      ~PointSelectionConfigWithoutTypeKwds.update
+      ~PointSelectionConfigWithoutTypeKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~PointSelectionConfigWithoutTypeKwds.encodings
+      ~PointSelectionConfigWithoutTypeKwds.fields
+      ~PointSelectionConfigWithoutTypeKwds.nearest
+      ~PointSelectionConfigWithoutTypeKwds.on
+      ~PointSelectionConfigWithoutTypeKwds.resolve
+      ~PointSelectionConfigWithoutTypeKwds.toggle
+   
+   

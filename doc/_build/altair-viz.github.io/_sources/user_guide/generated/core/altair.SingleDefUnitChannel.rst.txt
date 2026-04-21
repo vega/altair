@@ -1,0 +1,30 @@
+﻿altair.SingleDefUnitChannel
+===========================
+
+.. currentmodule:: altair
+
+.. autoclass:: SingleDefUnitChannel
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SingleDefUnitChannel.__init__
+      ~SingleDefUnitChannel.copy
+      ~SingleDefUnitChannel.from_dict
+      ~SingleDefUnitChannel.from_json
+      ~SingleDefUnitChannel.resolve_references
+      ~SingleDefUnitChannel.to_dict
+      ~SingleDefUnitChannel.to_json
+      ~SingleDefUnitChannel.validate
+      ~SingleDefUnitChannel.validate_property
+   
+   
+
+   
+   
+   

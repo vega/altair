@@ -1,0 +1,30 @@
+﻿altair.TopLevelConcatSpec
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: TopLevelConcatSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TopLevelConcatSpec.__init__
+      ~TopLevelConcatSpec.copy
+      ~TopLevelConcatSpec.from_dict
+      ~TopLevelConcatSpec.from_json
+      ~TopLevelConcatSpec.resolve_references
+      ~TopLevelConcatSpec.to_dict
+      ~TopLevelConcatSpec.to_json
+      ~TopLevelConcatSpec.validate
+      ~TopLevelConcatSpec.validate_property
+   
+   
+
+   
+   
+   

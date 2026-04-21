@@ -1,0 +1,49 @@
+﻿altair.Facet
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Facet
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Facet.__init__
+      ~Facet.copy
+      ~Facet.from_dict
+      ~Facet.from_json
+      ~Facet.resolve_references
+      ~Facet.to_dict
+      ~Facet.to_json
+      ~Facet.validate
+      ~Facet.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Facet.aggregate
+      ~Facet.align
+      ~Facet.bandPosition
+      ~Facet.bin
+      ~Facet.bounds
+      ~Facet.center
+      ~Facet.columns
+      ~Facet.field
+      ~Facet.header
+      ~Facet.sort
+      ~Facet.spacing
+      ~Facet.timeUnit
+      ~Facet.title
+      ~Facet.type
+   
+   

@@ -1,0 +1,42 @@
+﻿altair.Latitude
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: Latitude
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Latitude.__init__
+      ~Latitude.copy
+      ~Latitude.from_dict
+      ~Latitude.from_json
+      ~Latitude.resolve_references
+      ~Latitude.to_dict
+      ~Latitude.to_json
+      ~Latitude.validate
+      ~Latitude.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Latitude.aggregate
+      ~Latitude.bandPosition
+      ~Latitude.bin
+      ~Latitude.field
+      ~Latitude.timeUnit
+      ~Latitude.title
+      ~Latitude.type
+   
+   

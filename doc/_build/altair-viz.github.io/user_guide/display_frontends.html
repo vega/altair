@@ -1,0 +1,1389 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Displaying Altair Charts &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/display_frontends';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Customizing Renderers" href="custom_renderers.html" />
+    <link rel="prev" title="Altair Internals" href="internals.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data.html">Specifying Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="encodings/index.html">Encodings</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="encodings/channels.html">Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encodings/channel_options.html">Channel Options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="marks/index.html">Marks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="marks/arc.html">Arc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/area.html">Area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/bar.html">Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/boxplot.html">Box Plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/circle.html">Circle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/errorband.html">Error Band</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/errorbar.html">Error Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/geoshape.html">Geoshape</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="marks/image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/line.html">Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/rule.html">Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/square.html">Square</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/text.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/tick.html">Tick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/trail.html">Trail</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="transform/index.html">Data Transformations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="transform/aggregate.html">Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/bin.html">Bin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/calculate.html">Calculate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/density.html">Density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/extent.html">Extent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/filter.html">Filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/flatten.html">Flatten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/fold.html">Fold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/impute.html">Impute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/joinaggregate.html">Join Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/lookup.html">Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/loess.html">LOESS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/pivot.html">Pivot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/quantile.html">Quantile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/sample.html">Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/stack.html">Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/timeunit.html">TimeUnit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/window.html">Window</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="interactions/index.html">Interactive Charts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="interactions/parameters.html">Parameters, Conditions, &amp; Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interactions/bindings_widgets.html">Bindings &amp; Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interactions/expressions.html">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interactions/jupyter_chart.html">JupyterChart</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="compound_charts.html">Layered &amp; Multi-View Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scale_resolve.html">Scale &amp; Guide Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="times_and_dates.html">Times &amp; Dates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">Customizing Visualizations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Top-Level Chart Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saving_charts.html">Saving Altair Charts</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="internals.html">Altair Internals</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Displaying Altair Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_renderers.html">Customizing Renderers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_transformers.html">Data Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="large_datasets.html">Large Datasets</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="data.html" class="nav-link">Specifying Data</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Displaying Altair Charts</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="displaying-altair-charts">
+<span id="displaying-charts"></span><h1>Displaying Altair Charts<a class="headerlink" href="#displaying-altair-charts" title="Link to this heading">#</a></h1>
+<p>Altair produces <a class="reference external" href="http://vega.github.io/vega-lite">Vega-Lite</a> visualizations, which require a Javascript frontend to
+display the charts.
+Because notebook environments combine a Python backend with a Javascript frontend,
+many users find them convenient for using Altair.</p>
+<p>Altair charts work out-of-the-box on <a class="reference external" href="https://jupyter-notebook.readthedocs.io/en/stable/">Jupyter Notebook</a>, <a class="reference external" href="http://jupyterlab.readthedocs.io/en/stable/">JupyterLab</a>, <a class="reference external" href="https://zeppelin.apache.org/">Zeppelin</a>,
+and related notebook environments, so long as there is a web connection to load the
+required javascript libraries.</p>
+<p>Altair can also be used with various IDEs that are enabled to display Altair charts,
+and can be used offline in most platforms with an appropriate frontend extension enabled;
+details are below.</p>
+<section id="altair-s-renderer-framework">
+<span id="renderers"></span><h2>Altair’s Renderer Framework<a class="headerlink" href="#altair-s-renderer-framework" title="Link to this heading">#</a></h2>
+<p>Because different display systems have different requirements and constraints, Altair provides
+an API to switch between various <em>renderers</em> to tune Altair’s chart representation.
+These can be chosen with the renderer registry in <code class="docutils literal notranslate"><span class="pre">alt.renderers</span></code>.
+The most used built-in renderers are:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">alt.renderers.enable(&quot;html&quot;)</span></code></dt><dd><p><em>(the default)</em> Output an HTML representation of the chart. The HTML renderer works
+in <a class="reference external" href="http://jupyterlab.readthedocs.io/en/stable/">JupyterLab</a>, <a class="reference external" href="https://jupyter-notebook.readthedocs.io/en/stable/">Jupyter Notebook</a>, <a class="reference external" href="https://zeppelin.apache.org/">Zeppelin</a>, <a class="reference external" href="https://code.visualstudio.com/docs/python/python-tutorial">VSCode-Python</a> and many related notebook frontends,
+as well as Jupyter ecosystem tools like <a class="reference external" href="https://nbviewer.jupyter.org/">nbviewer</a> and <a class="reference external" href="https://nbconvert.readthedocs.io/">nbconvert</a> HTML output.
+It requires a web connection in order to load relevant Javascript libraries.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">alt.renderers.enable(&quot;mimetype&quot;)</span></code></dt><dd><p><em>(default prior to Altair 4.0):</em> Output a vega-lite specific mimetype that can be
+interpreted by appropriate frontend extensions to display charts. This also outputs
+a PNG representation of the plot, which is useful to view plots offline or on
+platforms that don’t support rendering vegaspecs, such as GitHub. It works with
+newer versions of <a class="reference external" href="http://jupyterlab.readthedocs.io/en/stable/">JupyterLab</a>, <a class="reference external" href="https://nteract.io">nteract</a>, and <a class="reference external" href="https://code.visualstudio.com/docs/python/python-tutorial">VSCode-Python</a>, but does not work
+with the <a class="reference external" href="https://jupyter-notebook.readthedocs.io/en/stable/">Jupyter Notebook</a>, or with tools like <a class="reference external" href="https://nbviewer.jupyter.org/">nbviewer</a> and <a class="reference external" href="https://nbconvert.readthedocs.io/">nbconvert</a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">alt.renderers.enable(&quot;jupyter&quot;)</span></code></dt><dd><p><em>(added in version 5.3):</em> Output the chart using <a class="reference internal" href="interactions/jupyter_chart.html#user-guide-jupyterchart"><span class="std std-ref">JupyterChart</span></a>. This renderer
+is compatible with environments that support third-party Jupyter Widgets including
+<a class="reference external" href="http://jupyterlab.readthedocs.io/en/stable/">JupyterLab</a>, <a class="reference external" href="https://jupyter-notebook.readthedocs.io/en/stable/">Jupyter Notebook</a>, <a class="reference external" href="https://code.visualstudio.com/docs/python/python-tutorial">VSCode-Python</a>, and <a class="reference external" href="https://colab.research.google.com">Colab</a>.
+It requires a web connection in order to load relevant Javascript libraries.  Note that,
+although this renderer uses <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code>, it does not provide the
+ability to access value and selection params in Python. To do so, create a <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code>
+object explicitly following the instructions in the <a class="reference internal" href="interactions/jupyter_chart.html#user-guide-jupyterchart"><span class="std std-ref">JupyterChart</span></a>
+documentation.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">alt.renderers.enable(&quot;jupyter&quot;,</span> <span class="pre">offline=True)</span></code></dt><dd><p><em>(added in version 5.3):</em> Same as the <code class="docutils literal notranslate"><span class="pre">&quot;jupyter&quot;</span></code> renderer above, but loads JavaScript
+dependencies from the <code class="docutils literal notranslate"><span class="pre">vl-convert-python</span></code> package (rather than from an online CDN)
+so that an internet connection is not required.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">alt.renderers.enable(&quot;browser&quot;)</span></code></dt><dd><p><em>(added in version 5.3):</em> Display charts in an external web browser. This renderer is
+particularly useful when using Vega-Altair in a local non-Jupyter environment, such as
+in <a class="reference external" href="https://ipython.org/">IPython</a> or <a class="reference external" href="https://www.spyder-ide.org/">Spyder</a>. See <a class="reference internal" href="#display-browser"><span class="std std-ref">Browser Renderer</span></a> for more information.</p>
+</dd>
+</dl>
+<p>In addition, Altair includes the following renderers:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;default&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;colab&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;kaggle&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;zeppelin&quot;</span></code>: identical to <code class="docutils literal notranslate"><span class="pre">&quot;html&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;jupyterlab&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;nteract&quot;</span></code>: identical to <code class="docutils literal notranslate"><span class="pre">&quot;mimetype&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;png&quot;</span></code>: renderer that renders and converts the chart to PNG, outputting it
+using the <code class="docutils literal notranslate"><span class="pre">&quot;image/png&quot;</span></code> MIME type.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;svg&quot;</span></code>: renderer that renders and converts the chart to an SVG image,
+outputting it using the <code class="docutils literal notranslate"><span class="pre">&quot;image/svg+xml&quot;</span></code> MIME type.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;olli&quot;</span></code>: renderer that uses <a class="reference external" href="https://mitvis.github.io/olli/">Olli</a> to generate accessible text structures for screen reader users.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;json&quot;</span></code>: renderer that outputs the raw JSON chart specification, using the
+<code class="docutils literal notranslate"><span class="pre">&quot;application/json&quot;</span></code> MIME type.</p></li>
+</ul>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">alt.renderers.names()</span></code> to return all registered renderers as a Python list.</p>
+<p>Other renderers can be installed by third-party packages via Python’s entrypoints system or you can create your own,
+see <a class="reference internal" href="custom_renderers.html#customizing-renderers"><span class="std std-ref">Customizing Renderers</span></a>.</p>
+</section>
+<section id="displaying-in-jupyterlab">
+<span id="display-jupyterlab"></span><h2>Displaying in JupyterLab<a class="headerlink" href="#displaying-in-jupyterlab" title="Link to this heading">#</a></h2>
+<p>JupyterLab 1.0 and later will work with Altair’s default renderer with
+a live web connection: no render enable step is required.</p>
+<p>Optionally, for offline rendering in JupyterLab, you can use the mimetype renderer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optional in JupyterLab: requires an up-to-date vega labextension.</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;mimetype&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and ensure you have the proper version of the vega labextension installed; for
+Altair 4 this can be installed with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>jupyter<span class="w"> </span>labextension<span class="w"> </span>install<span class="w"> </span>@jupyterlab/vega5-extension
+</pre></div>
+</div>
+<p>In JupyterLab version 2.0 or newer, this extension is installed by default, though the
+version available in the JupyterLab release often takes a few months to catch up with
+new Altair releases.</p>
+</section>
+<section id="displaying-in-jupyter-notebook">
+<span id="display-notebook"></span><h2>Displaying in Jupyter Notebook<a class="headerlink" href="#displaying-in-jupyter-notebook" title="Link to this heading">#</a></h2>
+<p>The classic Jupyter Notebook will work with Altair’s default renderer with
+a live web connection: no render enable step is required.</p>
+<p>Optionally, for offline rendering in Jupyter Notebook, you can use the notebook renderer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optional in Jupyter Notebook: requires an up-to-date vega nbextension.</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;notebook&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This renderer is provided by the <a class="reference external" href="https://github.com/vega/ipyvega/">ipyvega</a> notebook extension, which can be
+installed and enabled either using pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>vega
+</pre></div>
+</div>
+<p>or conda:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>install<span class="w"> </span>vega<span class="w"> </span>--channel<span class="w"> </span>conda-forge
+</pre></div>
+</div>
+<p>In older versions of the notebook (&lt;5.3) you need to additionally enable the extension:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>jupyter<span class="w"> </span>nbextension<span class="w"> </span>install<span class="w"> </span>--sys-prefix<span class="w"> </span>--py<span class="w"> </span>vega
+</pre></div>
+</div>
+</section>
+<section id="displaying-in-nteract">
+<span id="display-nteract"></span><h2>Displaying in nteract<a class="headerlink" href="#displaying-in-nteract" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://nteract.io">nteract</a> cannot display HTML outputs natively, and so Altair’s default <code class="docutils literal notranslate"><span class="pre">html</span></code> renderer
+will not work. However, nteract natively includes vega and vega-lite mimetype-based rendering.
+To use Altair in nteract, ensure you are using a version that supports the Vega-Lite v6
+mimetype, and use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;mimetype&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="displaying-in-vscode">
+<span id="display-vscode"></span><h2>Displaying in VSCode<a class="headerlink" href="#displaying-in-vscode" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://code.visualstudio.com/docs/python/python-tutorial">VSCode-Python</a> works with Altair’s default renderer with a live web connection: no render enable step is required.</p>
+<p>Optionally, for offline rendering, you can use the mimetype renderer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optional in VS Code</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;mimetype&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="dashboards">
+<span id="display-dashboards"></span><h2>Dashboards<a class="headerlink" href="#dashboards" title="Link to this heading">#</a></h2>
+<p>Altair is compatible with common Python dashboarding packages. Many of them even provide support for reading out <a class="reference internal" href="interactions/index.html#user-guide-interactions"><span class="std std-ref">parameters</span></a> from the chart.
+This allows you to e.g. select data points and update another part of the dashboard such as a table based on that selection:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Package</p></th>
+<th class="head"><p>Displays interactive Altair charts</p></th>
+<th class="head"><p>Supports reading out parameters</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://panel.holoviz.org/reference/panes/Vega.html#altair">Panel</a></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://dash.plotly.com/dash-vega-components?utm_medium=altair">Plotly Dash</a></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://voila.readthedocs.io/en/stable/">Jupyter Voila</a> using <a class="reference internal" href="interactions/jupyter_chart.html#user-guide-jupyterchart"><span class="std std-ref">JupyterChart</span></a></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://docs.marimo.io/guides/plotting.html">Marimo</a></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://shiny.posit.co/py/docs/ipywidgets.html#quick-start">Shiny</a> using <a class="reference internal" href="interactions/jupyter_chart.html#user-guide-jupyterchart"><span class="std std-ref">JupyterChart</span></a></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://solara.dev/api/altair">Solara</a></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://docs.streamlit.io/library/api-reference/charts/st.altair_chart">Streamlit</a></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The above mentioned frameworks all require you to run a web application on a server if you want to share your work with others. A web application gives you a lot of flexibility, you can for example fetch data from a database based on the value of a dropdown menu in the dashboard. However, it comes with some complexity as well.
+For use cases where the interactivity provided by Altair itself is enough, you can also use tools which generate HTML pages which do not require a web server such as <a class="reference external" href="https://quarto.org/">Quarto</a> or <a class="reference external" href="https://jupyterbook.org/">Jupyter Book</a>.</p>
+<p>If you are using a dashboarding package that is not listed here, please <a class="reference external" href="https://github.com/vega/altair/issues">open an issue</a> on GitHub so that we can add it.</p>
+</section>
+<section id="working-in-environments-without-a-javascript-frontend">
+<span id="display-general"></span><h2>Working in environments without a JavaScript frontend<a class="headerlink" href="#working-in-environments-without-a-javascript-frontend" title="Link to this heading">#</a></h2>
+<p>The Vega-Lite specifications produced by Altair can be produced in any Python
+environment, but to render these specifications currently requires a JavaScript
+engine. For this reason, Altair works most seamlessly with the browser-based
+environments mentioned above. Even so, Altair can be used effectively in non-browser
+based environments using the approaches described below.</p>
+<section id="static-image-renderers">
+<h3>Static Image Renderers<a class="headerlink" href="#static-image-renderers" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;png&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;svg&quot;</span></code> renderers rely on the JavaScript engine embedded in
+the vl-convert optional dependency to generate static images from Vega-Lite chart
+specifications. These static images are then displayed in IPython-based environments
+using the Mime Renderer Extensions system. This approach may be used to display static
+versions of Altair charts inline in the <a class="reference external" href="https://qtconsole.readthedocs.io/en/stable/">IPython QtConsole</a> and <a class="reference external" href="https://www.spyder-ide.org/">Spyder</a>, as well as
+in browser-based environments like JupyterLab.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;svg&quot;</span></code> renderer is enabled like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;svg&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;png&quot;</span></code> renderer is enabled like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;png&quot;</span></code> renderer supports the following keyword argument configuration options:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">scale_factor</span></code> argument may be used to increase the chart size by the specified
+scale factor (Default 1.0).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ppi</span></code> argument controls the pixels-per-inch resolution of the displayed image (Default 72).</p></li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">scale_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ppi</span><span class="o">=</span><span class="mi">144</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="browser-renderer">
+<span id="display-browser"></span><h3>Browser Renderer<a class="headerlink" href="#browser-renderer" title="Link to this heading">#</a></h3>
+<p>To support displaying charts with interactive features in non-browser based environments,
+the <code class="docutils literal notranslate"><span class="pre">&quot;browser&quot;</span></code> renderer automatically opens charts in browser tabs of a system web browser.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;browser&quot;</span></code> renderer is enabled like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;browser&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;browser&quot;</span></code> renderer supports the following keyword argument configuration options:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">using</span></code> argument may be used to specify which system web browser to use. This
+may be set to a string to indicate the single browser that must be used (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;safari&quot;</span></code>),
+or it may be set to a list of browser names where the first available browser is used. See the
+documentation for the <a class="reference external" href="https://docs.python.org/3/library/webbrowser.html#webbrowser.register">webbrowser module</a> for the list of supported browser names. If not
+specified, the system default browser is used.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">offline</span></code> argument may be used to specify whether JavaScript dependencies should
+be loaded from an online CDN or embedded alongside the chart specification. When <code class="docutils literal notranslate"><span class="pre">offline</span></code>
+is <code class="docutils literal notranslate"><span class="pre">False</span></code> (the default), JavaScript dependencies are loaded from an online CDN, and so
+an internet connection is required. When <code class="docutils literal notranslate"><span class="pre">offline</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, JavaScript dependencies
+are embedded alongside the chart specification and so no internet connection is required. Setting
+<code class="docutils literal notranslate"><span class="pre">offline</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> requires the optional <code class="docutils literal notranslate"><span class="pre">vl-convert-python</span></code> dependency.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">port</span></code> argument may be used to configure the system port that the chart HTML is served
+on. Defaults to a random open port.</p></li>
+</ul>
+<p>Limitations:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">&quot;browser&quot;</span></code> renderer sets up a temporary web server that serves the chart exactly once,
+then opens the designated browser pointing to the server’s URL. This approach does not require
+the creation of temporary HTML files on disk, and it’s memory efficient as there are no long-lived
+web server processes required. A limitation of this approach is that the chart will be lost if the
+browser is refreshed, and it’s not possible to copy the chart URL and paste it in another browser
+tab.</p></li>
+<li><p>When used in IPython-based environments, the <code class="docutils literal notranslate"><span class="pre">&quot;browser&quot;</span></code> renderer will automatically open the
+chart in the browser when the chart is the final value of the cell or command. This behavior is not
+available in the standard <code class="docutils literal notranslate"><span class="pre">python</span></code> REPL. In this case, the <code class="docutils literal notranslate"><span class="pre">chart.show()</span></code> method may be used to
+manually invoke the active renderer and open the chart in the browser.</p></li>
+<li><p>This renderer is not compatible with remote environments like <a class="reference external" href="https://mybinder.org/">Binder</a> or <a class="reference external" href="https://colab.research.google.com">Colab</a>.</p></li>
+</ul>
+</section>
+<section id="manual-save-and-display">
+<h3>Manual <code class="docutils literal notranslate"><span class="pre">save()</span></code> and display<a class="headerlink" href="#manual-save-and-display" title="Link to this heading">#</a></h3>
+<p>If you would prefer, you can save your chart to a file (html, png, etc.) first and then display it.
+See <a class="reference internal" href="saving_charts.html#user-guide-saving"><span class="std std-ref">Saving Altair Charts</span></a> for more information.</p>
+</section>
+</section>
+<section id="troubleshooting">
+<span id="display-troubleshooting"></span><h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">#</a></h2>
+<p>Altair has a number of moving parts: it creates data structures in Python, those
+structures are passed to front-end renderers, and the renderers run JavaScript
+code to generate the output. This complexity means that it’s possible to get
+into strange states where things don’t immediately work as expected.</p>
+<p>This section summarizes some of the most common problems and their solutions.</p>
+<section id="general-troubleshooting">
+<span id="troubleshooting-general"></span><h3>General Troubleshooting<a class="headerlink" href="#general-troubleshooting" title="Link to this heading">#</a></h3>
+<section id="chart-does-not-display-at-all">
+<h4>Chart does not display at all<a class="headerlink" href="#chart-does-not-display-at-all" title="Link to this heading">#</a></h4>
+<p>If you are expecting a chart output and see nothing at all, it means that the
+Javascript rendering libraries are not being invoked.
+This can happen for several reasons:</p>
+<ol class="arabic simple">
+<li><p>You have an old browser that doesn’t support JavaScript’s <a class="reference external" href="https://www.w3schools.com/js/js_es6.asp">ECMAScript 6</a>:
+in this case, charts may not display properly or at all. For example, Altair
+charts will not render in any version of Internet Explorer.
+If this is the case, you will likely see syntax errors in your browser’s
+<a class="reference external" href="https://webmasters.stackexchange.com/questions/8525/how-do-i-open-the-javascript-console-in-different-browsers">Javascript Console</a>.</p></li>
+<li><p>Your browser is unable to load the javascript libraries. This may be due to
+a local firewall, an adblocker, or because your browser is offline. Check your
+browser’s <a class="reference external" href="https://webmasters.stackexchange.com/questions/8525/how-do-i-open-the-javascript-console-in-different-browsers">Javascript Console</a>  to see if there are errors.</p></li>
+<li><p>You may be failing to trigger the notebook’s display mechanism (see below).</p></li>
+</ol>
+<p>If you are working in a notebook environment, the chart is only displayed if the
+<strong>last line of the cell evaluates to a chart object</strong></p>
+<p>By analogy, consider the output of simple Python operations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># no output here</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>      <span class="c1"># output here, because x is evaluated</span>
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>  <span class="c1"># output here, because the expression is evaluated</span>
+<span class="go">8</span>
+</pre></div>
+</div>
+<p>If the last thing you type consists of an assignment operation, there will be no
+output displayed. This turns out to be true of Altair charts as well:</p>
+<div class="highlight-python notranslate" id="display_frontends-rst-altair-source-0"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+<span class="n">cars</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="o">.</span><span class="n">url</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon:Q&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;Origin:N&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The last statement is an assignment, so there is no output and the chart is not
+shown. If you have a chart assigned to a variable, you need to end the cell with
+an evaluation of that variable:</p>
+<div class="highlight-python notranslate" id="display_frontends-rst-altair-source-1"><div class="highlight"><pre><span></span><span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon:Q&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;Origin:N&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">chart</span>
+</pre></div>
+</div>
+
+<div id="display_frontends-rst-altair-plot-1">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/cars.json"}, "mark": {"type": "point"}, "encoding": {"color": {"field": "Origin", "type": "nominal"}, "x": {"field": "Horsepower", "type": "quantitative"}, "y": {"field": "Miles_per_Gallon", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#display_frontends-rst-altair-plot-1', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>Alternatively, you can evaluate a chart directly, and not assign it to a variable,
+in which case the object definition itself is the final statement and will be
+displayed as an output:</p>
+<div class="highlight-python notranslate" id="display_frontends-rst-altair-source-2"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon:Q&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;Origin:N&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="display_frontends-rst-altair-plot-2">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/cars.json"}, "mark": {"type": "point"}, "encoding": {"color": {"field": "Origin", "type": "nominal"}, "x": {"field": "Horsepower", "type": "quantitative"}, "y": {"field": "Miles_per_Gallon", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#display_frontends-rst-altair-plot-2', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+<section id="plot-displays-but-the-content-is-empty">
+<h4>Plot displays, but the content is empty<a class="headerlink" href="#plot-displays-but-the-content-is-empty" title="Link to this heading">#</a></h4>
+<p>Sometimes charts may appear, but the content is empty; for example:</p>
+<div class="highlight-python notranslate" id="display_frontends-rst-altair-source-3"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="s1">&#39;nonexistent_file.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y:Q&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="display_frontends-rst-altair-plot-3">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "nonexistent_file.csv"}, "mark": {"type": "line"}, "encoding": {"x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#display_frontends-rst-altair-plot-3', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>If this is the case, it generally means one of two things:</p>
+<ol class="arabic simple">
+<li><p>your data is specified by a URL that is invalid or inaccessible</p></li>
+<li><p>your encodings do not match the columns in your data source</p></li>
+</ol>
+<p>In the above example, <code class="docutils literal notranslate"><span class="pre">nonexistent_file.csv</span></code> doesn’t exist, and so the chart
+does not render (associated warnings will be visible in the <a class="reference external" href="https://webmasters.stackexchange.com/questions/8525/how-do-i-open-the-javascript-console-in-different-browsers">Javascript Console</a>).</p>
+<p>Some other specific situations that may cause this:</p>
+<dl>
+<dt>You have an adblocker active</dt><dd><p>Charts that reference data by URL can sometimes trigger false positives in your
+browser’s adblocker. Check your browser’s <a class="reference external" href="https://webmasters.stackexchange.com/questions/8525/how-do-i-open-the-javascript-console-in-different-browsers">Javascript Console</a> for errors, and
+try disabling your adblocker.</p>
+</dd>
+<dt>You are loading data cross-domain</dt><dd><p>If you save a chart to HTML and open it using a <code class="docutils literal notranslate"><span class="pre">file://</span></code> url in your browser,
+most browsers will not allow the javascript to load datasets from an <code class="docutils literal notranslate"><span class="pre">http://</span></code>
+domain. This is a security feature in your browser that cannot be disabled.
+To view such charts locally, a good approach is to use a simple local HTTP server
+like the one provided by Python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m http.server
+</pre></div>
+</div>
+</dd>
+<dt>Your encodings do not match your data</dt><dd><p>A similar blank chart results if you refer to a field that does not exist
+in the data, either because of a typo in your field name, or because the
+column contains special characters (see below).</p>
+</dd>
+</dl>
+<p>Here is an example of a mis-specified field name leading to a blank chart:</p>
+<div class="highlight-python notranslate" id="display_frontends-rst-altair-source-4"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+                     <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]})</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y:Q&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;color:Q&#39;</span>  <span class="c1"># &lt;-- this field does not exist in the data!</span>
+  <span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="display_frontends-rst-altair-plot-4">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-bfeee3518fd40b1936c1b011fe795244"}, "mark": {"type": "point"}, "encoding": {"color": {"field": "color", "type": "quantitative"}, "x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-bfeee3518fd40b1936c1b011fe795244": [{"x": 1, "y": 3}, {"x": 2, "y": 1}, {"x": 3, "y": 4}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#display_frontends-rst-altair-plot-4', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>Altair does not check whether fields are valid, because there are many avenues
+by which a field can be specified within the full schema, and it is too difficult
+to account for all corner cases. Improving the user experience in this is a
+priority; see <a class="github reference external" href="https://github.com/vega/vega-lite/issues/3576">vega/vega-lite#3576</a>.</p>
+</section>
+<section id="encodings-with-special-characters">
+<h4>Encodings with special characters<a class="headerlink" href="#encodings-with-special-characters" title="Link to this heading">#</a></h4>
+<p>The Vega-Lite grammar on which Altair is based allows for encoding names to use
+special characters to access nested properties (See Vega-Lite’s <a class="reference external" href="https://vega.github.io/vega-lite/docs/field.html">Field</a> documentation).</p>
+<p>This can lead to errors in Altair when trying to use such columns in your chart.
+For example, the following chart is invalid:</p>
+<div class="highlight-python notranslate" id="display_frontends-rst-altair-source-5"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x.value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x.value:Q&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="display_frontends-rst-altair-plot-5">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-9e0f4e4cecdcb896c4230cec90448fd0"}, "mark": {"type": "point"}, "encoding": {"x": {"field": "x.value", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-9e0f4e4cecdcb896c4230cec90448fd0": [{"x.value": 1}, {"x.value": 2}, {"x.value": 3}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#display_frontends-rst-altair-plot-5', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>To plot this data directly, you must escape the period in the field name:</p>
+<div class="highlight-python notranslate" id="display_frontends-rst-altair-source-6"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x.value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;x\.value:Q&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="display_frontends-rst-altair-plot-6">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-9e0f4e4cecdcb896c4230cec90448fd0"}, "mark": {"type": "point"}, "encoding": {"x": {"field": "x\\.value", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-9e0f4e4cecdcb896c4230cec90448fd0": [{"x.value": 1}, {"x.value": 2}, {"x.value": 3}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#display_frontends-rst-altair-plot-6', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>In general, it is better to avoid special characters like <code class="docutils literal notranslate"><span class="pre">&quot;.&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;[&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;]&quot;</span></code>
+in your data sources where possible.</p>
+</section>
+</section>
+<section id="troubleshooting-in-jupyterlab">
+<span id="troubleshooting-jupyterlab"></span><h3>Troubleshooting in JupyterLab<a class="headerlink" href="#troubleshooting-in-jupyterlab" title="Link to this heading">#</a></h3>
+<section id="vegalite-4-5-object">
+<span id="jupyterlab-vega-lite-4-object"></span><h4>VegaLite 4/5 Object<a class="headerlink" href="#vegalite-4-5-object" title="Link to this heading">#</a></h4>
+<p><em>If you are using the Jupyter notebook rather than JupyterLab, then refer to</em>
+<a class="reference internal" href="#notebook-vega-lite-4-object"><span class="std std-ref">Notebook: VegaLite 4/5 object</span></a></p>
+<p>If you are using JupyterLab (not Jupyter notebook) and see an error message
+mentioning either <code class="docutils literal notranslate"><span class="pre">VegaLite</span> <span class="pre">4</span> <span class="pre">object</span></code> or <code class="docutils literal notranslate"><span class="pre">VegaLite</span> <span class="pre">5</span> <span class="pre">object</span></code>, then this means
+that you have enabled the <code class="docutils literal notranslate"><span class="pre">mimetype</span></code> renderer, but that your JupyterLab
+frontend does not support the VegaLite 4 or 5 mimetype.</p>
+<p>The easiest solution is to use the default renderer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and rerun the cell with the chart.</p>
+<p>If you would like to use the mimetype rendering with JupyterLab,
+update JupyterLab to the newest version with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">jupyterlab</span></code>
+or <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">update</span> <span class="pre">jupyterlab</span></code>.</p>
+</section>
+<section id="vegalite-3-object">
+<span id="jupyterlab-vega-lite-3-object"></span><h4>VegaLite 3 Object<a class="headerlink" href="#vegalite-3-object" title="Link to this heading">#</a></h4>
+<p><em>If you are using the Jupyter notebook rather than JupyterLab, then refer to</em>
+<a class="reference internal" href="#notebook-vega-lite-3-object"><span class="std std-ref">Notebook: VegaLite 3 object</span></a></p>
+<p>If you are using JupyterLab (not Jupyter notebook) and see the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VegaLite</span> <span class="mi">3</span> <span class="nb">object</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This most likely means that you are using too old a version of JupyterLab.
+Altair 3.0 or later works best with JupyterLab version 1.0 or later;
+check the version with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ jupyter lab --version
+1.2.0
+</pre></div>
+</div>
+<p>If you have an older jupyterlab version, then use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">jupyterlab</span></code>
+or <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">update</span> <span class="pre">jupyterlab</span></code> to update JupyterLab, depending on how you
+first installed it.</p>
+</section>
+<section id="javascript-output-is-disabled-in-jupyterlab">
+<h4>JavaScript output is disabled in JupyterLab<a class="headerlink" href="#javascript-output-is-disabled-in-jupyterlab" title="Link to this heading">#</a></h4>
+<p>If you are using JupyterLab and see the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">JavaScript</span> <span class="n">output</span> <span class="ow">is</span> <span class="n">disabled</span> <span class="ow">in</span> <span class="n">JupyterLab</span>
+</pre></div>
+</div>
+<p>it can mean one of two things is wrong</p>
+<ol class="arabic">
+<li><p>You are using an old version of Altair. JupyterLab only works with Altair
+version 2.0 or newer; you can check the altair version by executing the
+following in a notebook code cell:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+</div>
+<p>If the version is older than 2.0, then exit JupyterLab and follow the
+installation instructions at <a class="reference internal" href="#display-jupyterlab"><span class="std std-ref">Displaying in JupyterLab</span></a>.</p>
+</li>
+<li><p>You have enabled the wrong renderer. JupyterLab works with the default
+renderer, but if you have used <code class="docutils literal notranslate"><span class="pre">alt.renderers.enable()</span></code> to enable
+another renderer, charts will no longer render correctly in JupyterLab.
+You can check which renderer is active by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">active</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>JupyterLab rendering will work only if the active renderer is <code class="docutils literal notranslate"><span class="pre">&quot;default&quot;</span></code>
+or <code class="docutils literal notranslate"><span class="pre">&quot;jupyterlab&quot;</span></code>. You can re-enable the default renderer by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(Note that the default renderer is enabled, well, by default, and so this
+is only necessary if you’ve somewhere changed the renderer explicitly).</p>
+</li>
+</ol>
+</section>
+<section id="textual-chart-representation">
+<span id="jupyterlab-textual-chart-representation"></span><h4>Textual Chart Representation<a class="headerlink" href="#textual-chart-representation" title="Link to this heading">#</a></h4>
+<p><em>If you are using the Notebook rather than the JupyterLab, then refer to</em>
+<a class="reference internal" href="#notebook-textual-chart-representation"><span class="std std-ref">Notebook: Textual Chart Representation</span></a></p>
+<p>If you are using JupyterLab and see a textual representation of the Chart object
+similar to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Chart</span><span class="p">({</span>
+  <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;https://vega.github.io/vega-datasets/data/cars.json&#39;</span><span class="p">,</span>
+  <span class="n">encoding</span><span class="p">:</span> <span class="n">FacetedEncoding</span><span class="p">({</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">X</span><span class="p">({</span>
+      <span class="n">shorthand</span><span class="p">:</span> <span class="s1">&#39;Horsepower&#39;</span>
+    <span class="p">})</span>
+  <span class="p">}),</span>
+  <span class="n">mark</span><span class="p">:</span> <span class="s1">&#39;point&#39;</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>it probably means that you are using an older Jupyter kernel.
+You can confirm this by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">IPython</span><span class="p">;</span> <span class="n">IPython</span><span class="o">.</span><span class="n">__version__</span>
+<span class="c1"># 6.2.1</span>
+</pre></div>
+</div>
+<p>Altair will not display correctly if using a kernel with IPython version 4.X or older.</p>
+<p>The easiest way to address this is to change your kernel: choose “Kernel”-&gt;”Change Kernel”
+and then use the first kernel that appears.</p>
+</section>
+<section id="javascript-error-require-is-not-defined">
+<span id="jupyterlab-notebook-backend"></span><h4>Javascript Error: require is not defined<a class="headerlink" href="#javascript-error-require-is-not-defined" title="Link to this heading">#</a></h4>
+<p>If you are using JupyterLab and see the error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Javascript</span> <span class="n">Error</span><span class="p">:</span> <span class="n">require</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+</pre></div>
+</div>
+<p>This likely means that you have enabled the notebook renderer, which is not
+supported in JupyterLab: that is, you have somewhere run
+<code class="docutils literal notranslate"><span class="pre">alt.renderers.enable('notebook')</span></code>.
+JupyterLab supports Altair’s default renderer, which you can re-enable using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting-in-notebooks">
+<span id="troubleshooting-notebook"></span><h3>Troubleshooting in Notebooks<a class="headerlink" href="#troubleshooting-in-notebooks" title="Link to this heading">#</a></h3>
+<section id="notebook-vegalite-4-5-object">
+<span id="notebook-vega-lite-4-object"></span><h4>Notebook: VegaLite 4/5 object<a class="headerlink" href="#notebook-vegalite-4-5-object" title="Link to this heading">#</a></h4>
+<p><em>If you are using JupyterLab rather than the Jupyter notebook, then refer to</em>
+<a class="reference internal" href="#jupyterlab-vega-lite-4-object"><span class="std std-ref">VegaLite 4/5 Object</span></a></p>
+<p>If you are using Jupyter Notebook (not JupyterLab) and see an error message
+mentioning either <code class="docutils literal notranslate"><span class="pre">VegaLite</span> <span class="pre">4</span> <span class="pre">object</span></code> or <code class="docutils literal notranslate"><span class="pre">VegaLite</span> <span class="pre">5</span> <span class="pre">object</span></code>, then this means
+that you have enabled the <code class="docutils literal notranslate"><span class="pre">mimetype</span></code> renderer. The easiest solution is to use the default renderer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and rerun the cell with the chart.</p>
+</section>
+<section id="notebook-vegalite-3-object">
+<span id="notebook-vega-lite-3-object"></span><h4>Notebook: VegaLite 3 object<a class="headerlink" href="#notebook-vegalite-3-object" title="Link to this heading">#</a></h4>
+<p><em>If you are using JupyterLab rather than the Jupyter notebook, then refer to</em>
+<a class="reference internal" href="#jupyterlab-vega-lite-3-object"><span class="std std-ref">VegaLite 3 Object</span></a></p>
+<p>If you are using the notebook (not JupyterLab) and see the the following output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Vegalite</span> <span class="mi">3</span> <span class="nb">object</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>it means that either:</p>
+<ol class="arabic">
+<li><p>You have forgotten to enable the notebook renderer. As mentioned
+in <a class="reference internal" href="#display-notebook"><span class="std std-ref">Displaying in Jupyter Notebook</span></a>, you need to install version 2.0 or newer
+of the <code class="docutils literal notranslate"><span class="pre">vega</span></code> package and Jupyter extension, and then enable it using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;notebook&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>in order to render charts in the classic notebook.</p>
+<p>If the above code gives an error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NoSuchEntryPoint</span><span class="p">:</span> <span class="n">No</span> <span class="s1">&#39;notebook&#39;</span> <span class="n">entry</span> <span class="n">point</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">group</span> <span class="s1">&#39;altair.vegalite.v2.renderer&#39;</span>
+</pre></div>
+</div>
+<p>This means that you have not installed the vega package. If you see this error,
+please make sure to follow the standard installation instructions at
+<a class="reference internal" href="#display-notebook"><span class="std std-ref">Displaying in Jupyter Notebook</span></a>.</p>
+</li>
+<li><p>You have too old a version of Jupyter notebook. Run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ jupyter notebook --version
+</pre></div>
+</div>
+<p>and make certain you have version 5.3 or newer. If not, then update the notebook
+using either <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">jupyter</span> <span class="pre">notebook</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">update</span> <span class="pre">jupyter</span> <span class="pre">notebook</span></code>
+depending on how you first installed the packages.</p>
+</li>
+</ol>
+<p>If you have done the above steps and charts still do not render, it likely means
+that you are using a different <em>Kernel</em> within your notebook. Switch to the kernel
+named <em>Python 2</em> if you are using Python 2, or <em>Python 3</em> if you are using Python 3.</p>
+</section>
+<section id="notebook-textual-chart-representation">
+<span id="id1"></span><h4>Notebook: Textual Chart Representation<a class="headerlink" href="#notebook-textual-chart-representation" title="Link to this heading">#</a></h4>
+<p><em>If you are using the Notebook rather than the JupyterLab, then refer to</em>
+<a class="reference internal" href="#jupyterlab-textual-chart-representation"><span class="std std-ref">Textual Chart Representation</span></a></p>
+<p><em>If you are not using a Jupyter notebook environment, then refer to</em>
+<a class="reference internal" href="#troubleshooting-non-notebook"><span class="std std-ref">Troubleshooting outside of Jupyter</span></a>.</p>
+<p>If you are using Jupyter notebook and see a textual representation of the Chart
+object similar to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Chart</span><span class="p">({</span>
+  <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;https://vega.github.io/vega-datasets/data/cars.json&#39;</span><span class="p">,</span>
+  <span class="n">encoding</span><span class="p">:</span> <span class="n">FacetedEncoding</span><span class="p">({</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">X</span><span class="p">({</span>
+      <span class="n">shorthand</span><span class="p">:</span> <span class="s1">&#39;Horsepower&#39;</span>
+    <span class="p">})</span>
+  <span class="p">}),</span>
+  <span class="n">mark</span><span class="p">:</span> <span class="s1">&#39;point&#39;</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>it probably means that you are using an older Jupyter kernel.
+You can confirm this by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">IPython</span><span class="p">;</span> <span class="n">IPython</span><span class="o">.</span><span class="n">__version__</span>
+<span class="c1"># 6.2.1</span>
+</pre></div>
+</div>
+<p>Altair will not display correctly if using a kernel with IPython version 4.X or older.</p>
+<p>The easiest way to address this is to change your kernel:
+choose “Kernel”-&gt;”Change Kernel” and then select “Python 2” or “Python 3”,
+depending on what version of Python you used when installing Altair.</p>
+</section>
+</section>
+<section id="troubleshooting-outside-of-jupyter">
+<span id="troubleshooting-non-notebook"></span><h3>Troubleshooting outside of Jupyter<a class="headerlink" href="#troubleshooting-outside-of-jupyter" title="Link to this heading">#</a></h3>
+<p>If you are using Altair outside of a Jupyter notebook environment (such as a
+Python or IPython terminal) charts will be displayed as a textual
+representation. Rendering of Altair charts requires executing Javascript code,
+which your Python terminal cannot do natively.</p>
+<p>For recommendations on how to use Altair outside of notebook environments,
+see <a class="reference internal" href="#display-general"><span class="std std-ref">Working in environments without a JavaScript frontend</span></a>.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="internals.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Altair Internals</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="custom_renderers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Customizing Renderers</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#altair-s-renderer-framework">Altair’s Renderer Framework</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-in-jupyterlab">Displaying in JupyterLab</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-in-jupyter-notebook">Displaying in Jupyter Notebook</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-in-nteract">Displaying in nteract</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-in-vscode">Displaying in VSCode</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboards">Dashboards</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-in-environments-without-a-javascript-frontend">Working in environments without a JavaScript frontend</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#static-image-renderers">Static Image Renderers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#browser-renderer">Browser Renderer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-save-and-display">Manual <code class="docutils literal notranslate"><span class="pre">save()</span></code> and display</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting">Troubleshooting</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-troubleshooting">General Troubleshooting</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#chart-does-not-display-at-all">Chart does not display at all</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-displays-but-the-content-is-empty">Plot displays, but the content is empty</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#encodings-with-special-characters">Encodings with special characters</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting-in-jupyterlab">Troubleshooting in JupyterLab</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#vegalite-4-5-object">VegaLite 4/5 Object</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#vegalite-3-object">VegaLite 3 Object</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#javascript-output-is-disabled-in-jupyterlab">JavaScript output is disabled in JupyterLab</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#textual-chart-representation">Textual Chart Representation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#javascript-error-require-is-not-defined">Javascript Error: require is not defined</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting-in-notebooks">Troubleshooting in Notebooks</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-vegalite-4-5-object">Notebook: VegaLite 4/5 object</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-vegalite-3-object">Notebook: VegaLite 3 object</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-textual-chart-representation">Notebook: Textual Chart Representation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting-outside-of-jupyter">Troubleshooting outside of Jupyter</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

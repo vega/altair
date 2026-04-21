@@ -1,0 +1,30 @@
+﻿altair.ScaleBinParams
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleBinParams
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleBinParams.__init__
+      ~ScaleBinParams.copy
+      ~ScaleBinParams.from_dict
+      ~ScaleBinParams.from_json
+      ~ScaleBinParams.resolve_references
+      ~ScaleBinParams.to_dict
+      ~ScaleBinParams.to_json
+      ~ScaleBinParams.validate
+      ~ScaleBinParams.validate_property
+   
+   
+
+   
+   
+   

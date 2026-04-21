@@ -1,0 +1,45 @@
+﻿altair.theme.IntervalSelectionConfigWithoutTypeKwds
+===================================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: IntervalSelectionConfigWithoutTypeKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~IntervalSelectionConfigWithoutTypeKwds.__init__
+      ~IntervalSelectionConfigWithoutTypeKwds.clear
+      ~IntervalSelectionConfigWithoutTypeKwds.copy
+      ~IntervalSelectionConfigWithoutTypeKwds.fromkeys
+      ~IntervalSelectionConfigWithoutTypeKwds.get
+      ~IntervalSelectionConfigWithoutTypeKwds.items
+      ~IntervalSelectionConfigWithoutTypeKwds.keys
+      ~IntervalSelectionConfigWithoutTypeKwds.pop
+      ~IntervalSelectionConfigWithoutTypeKwds.popitem
+      ~IntervalSelectionConfigWithoutTypeKwds.setdefault
+      ~IntervalSelectionConfigWithoutTypeKwds.update
+      ~IntervalSelectionConfigWithoutTypeKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~IntervalSelectionConfigWithoutTypeKwds.encodings
+      ~IntervalSelectionConfigWithoutTypeKwds.fields
+      ~IntervalSelectionConfigWithoutTypeKwds.mark
+      ~IntervalSelectionConfigWithoutTypeKwds.on
+      ~IntervalSelectionConfigWithoutTypeKwds.resolve
+      ~IntervalSelectionConfigWithoutTypeKwds.translate
+      ~IntervalSelectionConfigWithoutTypeKwds.zoom
+   
+   

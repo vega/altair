@@ -1,0 +1,45 @@
+﻿altair.theme.LinearGradientKwds
+===============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: LinearGradientKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LinearGradientKwds.__init__
+      ~LinearGradientKwds.clear
+      ~LinearGradientKwds.copy
+      ~LinearGradientKwds.fromkeys
+      ~LinearGradientKwds.get
+      ~LinearGradientKwds.items
+      ~LinearGradientKwds.keys
+      ~LinearGradientKwds.pop
+      ~LinearGradientKwds.popitem
+      ~LinearGradientKwds.setdefault
+      ~LinearGradientKwds.update
+      ~LinearGradientKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LinearGradientKwds.gradient
+      ~LinearGradientKwds.stops
+      ~LinearGradientKwds.id
+      ~LinearGradientKwds.x1
+      ~LinearGradientKwds.x2
+      ~LinearGradientKwds.y1
+      ~LinearGradientKwds.y2
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.LoessTransform
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: LoessTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LoessTransform.__init__
+      ~LoessTransform.copy
+      ~LoessTransform.from_dict
+      ~LoessTransform.from_json
+      ~LoessTransform.resolve_references
+      ~LoessTransform.to_dict
+      ~LoessTransform.to_json
+      ~LoessTransform.validate
+      ~LoessTransform.validate_property
+   
+   
+
+   
+   
+   

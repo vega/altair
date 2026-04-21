@@ -1,0 +1,30 @@
+﻿altair.TopLevelSelectionParameter
+=================================
+
+.. currentmodule:: altair
+
+.. autoclass:: TopLevelSelectionParameter
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TopLevelSelectionParameter.__init__
+      ~TopLevelSelectionParameter.copy
+      ~TopLevelSelectionParameter.from_dict
+      ~TopLevelSelectionParameter.from_json
+      ~TopLevelSelectionParameter.resolve_references
+      ~TopLevelSelectionParameter.to_dict
+      ~TopLevelSelectionParameter.to_json
+      ~TopLevelSelectionParameter.validate
+      ~TopLevelSelectionParameter.validate_property
+   
+   
+
+   
+   
+   

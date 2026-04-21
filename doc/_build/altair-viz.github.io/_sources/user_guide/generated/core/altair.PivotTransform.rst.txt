@@ -1,0 +1,30 @@
+﻿altair.PivotTransform
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: PivotTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PivotTransform.__init__
+      ~PivotTransform.copy
+      ~PivotTransform.from_dict
+      ~PivotTransform.from_json
+      ~PivotTransform.resolve_references
+      ~PivotTransform.to_dict
+      ~PivotTransform.to_json
+      ~PivotTransform.validate
+      ~PivotTransform.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+﻿altair.theme.get
+================
+
+.. currentmodule:: altair.theme
+
+.. autofunction:: get

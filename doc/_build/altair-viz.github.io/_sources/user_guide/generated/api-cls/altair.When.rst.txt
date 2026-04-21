@@ -1,0 +1,23 @@
+﻿altair.When
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: When
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~When.__init__
+      ~When.then
+   
+   
+
+   
+   
+   

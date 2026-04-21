@@ -1,0 +1,39 @@
+﻿altair.X2Datum
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: X2Datum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~X2Datum.__init__
+      ~X2Datum.copy
+      ~X2Datum.from_dict
+      ~X2Datum.from_json
+      ~X2Datum.resolve_references
+      ~X2Datum.to_dict
+      ~X2Datum.to_json
+      ~X2Datum.validate
+      ~X2Datum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~X2Datum.bandPosition
+      ~X2Datum.datum
+      ~X2Datum.title
+      ~X2Datum.type
+   
+   

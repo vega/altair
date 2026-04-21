@@ -1,0 +1,686 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Confidence Interval Ellipses &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/deviation_ellipses';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Confidence Interval Ellipses</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="confidence-interval-ellipses">
+<span id="gallery-deviation-ellipses"></span><h1>Confidence Interval Ellipses<a class="headerlink" href="#confidence-interval-ellipses" title="Link to this heading">#</a></h1>
+<p>This example shows bivariate deviation ellipses of flipper length and body mass of three penguin species.</p>
+<p>Inspired by <a class="reference external" href="https://ggplot2.tidyverse.org/reference/stat_ellipse.html#ref-examples">ggplot2.stat_ellipse</a> and directly based on <a class="reference external" href="https://github.com/vega/altair/pull/514">Deviation ellipses example</a> by <a class="reference external" href="https://github.com/essicolo">&#64;essicolo</a></p>
+
+<div id="deviation_ellipses-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"data": {"name": "data-f91a1e5ec388ef09930f52dd94c59507"}, "mark": {"type": "line", "fillOpacity": 0.2, "filled": true}, "encoding": {"color": {"field": "Species", "type": "nominal"}, "order": {"field": "order", "type": "quantitative"}, "x": {"field": "Flipper Length (mm)", "scale": {"zero": false}, "type": "quantitative"}, "y": {"field": "Body Mass (g)", "scale": {"zero": false}, "type": "quantitative"}}}, {"data": {"name": "data-300f0a3d0d4c94aa773629def4db880e"}, "mark": {"type": "circle", "size": 50, "tooltip": true}, "encoding": {"color": {"field": "Species", "type": "nominal"}, "x": {"field": "Flipper Length (mm)", "scale": {"zero": false}, "type": "quantitative"}, "y": {"field": "Body Mass (g)", "scale": {"zero": false}, "type": "quantitative"}}}], "height": 500, "width": 500, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-f91a1e5ec388ef09930f52dd94c59507": [{"order": 0, "Flipper Length (mm)": 206.12175832560587, "Body Mass (g)": 4231.4888181075785, "Species": "Adelie"}, {"order": 1, "Flipper Length (mm)": 205.994267902225, "Body Mass (g)": 4352.863364351802, "Species": "Adelie"}, {"order": 2, "Flipper Length (mm)": 205.61380723221816, "Body Mass (g)": 4463.952309442748, "Species": "Adelie"}, {"order": 3, "Flipper Length (mm)": 204.98637640762757, "Body Mass (g)": 4563.003714355011, "Species": "Adelie"}, {"order": 4, "Flipper Length (mm)": 204.12187038736602, "Body Mass (g)": 4648.455479262685, "Species": "Adelie"}, {"order": 5, "Flipper Length (mm)": 203.0339229478039, "Body Mass (g)": 4718.959978786766, "Species": "Adelie"}, {"order": 6, "Flipper Length (mm)": 201.7396916699714, "Body Mass (g)": 4773.405314852413, "Species": "Adelie"}, {"order": 7, "Flipper Length (mm)": 200.25958735425624, "Body Mass (g)": 4810.932851985801, "Species": "Adelie"}, {"order": 8, "Flipper Length (mm)": 198.6169521298887, "Body Mass (g)": 4830.950758508475, "Species": "Adelie"}, {"order": 9, "Flipper Length (mm)": 196.83769133561975, "Body Mass (g)": 4833.143340076454, "Species": "Adelie"}, {"order": 10, "Flipper Length (mm)": 194.94986497705395, "Body Mass (g)": 4817.476018368626, "Species": "Adelie"}, {"order": 11, "Flipper Length (mm)": 192.98324520359864, "Body Mass (g)": 4784.195876407528, "Species": "Adelie"}, {"order": 12, "Flipper Length (mm)": 190.96884678388292, "Body Mass (g)": 4733.827761912479, "Species": "Adelie"}, {"order": 13, "Flipper Length (mm)": 188.938437984329, "Body Mass (g)": 4667.16601013752, "Species": "Adelie"}, {"order": 14, "Flipper Length (mm)": 186.9240395646133, "Body Mass (g)": 4585.261916729942, "Species": "Adelie"}, {"order": 15, "Flipper Length (mm)": 184.957419791158, "Body Mass (g)": 4489.407158169917, "Species": "Adelie"}, {"order": 16, "Flipper Length (mm)": 183.06959343259217, "Body Mass (g)": 4381.113421260792, "Species": "Adelie"}, {"order": 17, "Flipper Length (mm)": 181.29033263832324, "Body Mass (g)": 4262.088562925168, "Species": "Adelie"}, {"order": 18, "Flipper Length (mm)": 179.64769741395568, "Body Mass (g)": 4134.209676281002, "Species": "Adelie"}, {"order": 19, "Flipper Length (mm)": 178.16759309824053, "Body Mass (g)": 3999.493487761816, "Species": "Adelie"}, {"order": 20, "Flipper Length (mm)": 176.87336182040804, "Body Mass (g)": 3860.064552136108, "Species": "Adelie"}, {"order": 21, "Flipper Length (mm)": 175.7854143808459, "Body Mass (g)": 3718.1217470095035, "Species": "Adelie"}, {"order": 22, "Flipper Length (mm)": 174.92090836058435, "Body Mass (g)": 3575.9035952113722, "Species": "Adelie"}, {"order": 23, "Flipper Length (mm)": 174.29347753599376, "Body Mass (g)": 3435.6529619525754, "Species": "Adelie"}, {"order": 24, "Flipper Length (mm)": 173.91301686598692, "Body Mass (g)": 3299.5816835012715, "Species": "Adelie"}, {"order": 25, "Flipper Length (mm)": 173.78552644260606, "Body Mass (g)": 3169.83568520368, "Species": "Adelie"}, {"order": 26, "Flipper Length (mm)": 173.91301686598692, "Body Mass (g)": 3048.4611389594556, "Species": "Adelie"}, {"order": 27, "Flipper Length (mm)": 174.29347753599376, "Body Mass (g)": 2937.3721938685107, "Species": "Adelie"}, {"order": 28, "Flipper Length (mm)": 174.92090836058435, "Body Mass (g)": 2838.320788956247, "Species": "Adelie"}, {"order": 29, "Flipper Length (mm)": 175.7854143808459, "Body Mass (g)": 2752.8690240485726, "Species": "Adelie"}, {"order": 30, "Flipper Length (mm)": 176.873361820408, "Body Mass (g)": 2682.364524524492, "Species": "Adelie"}, {"order": 31, "Flipper Length (mm)": 178.16759309824053, "Body Mass (g)": 2627.9191884588463, "Species": "Adelie"}, {"order": 32, "Flipper Length (mm)": 179.64769741395568, "Body Mass (g)": 2590.391651325457, "Species": "Adelie"}, {"order": 33, "Flipper Length (mm)": 181.29033263832324, "Body Mass (g)": 2570.373744802783, "Species": "Adelie"}, {"order": 34, "Flipper Length (mm)": 183.06959343259217, "Body Mass (g)": 2568.1811632348044, "Species": "Adelie"}, {"order": 35, "Flipper Length (mm)": 184.95741979115797, "Body Mass (g)": 2583.8484849426322, "Species": "Adelie"}, {"order": 36, "Flipper Length (mm)": 186.9240395646133, "Body Mass (g)": 2617.1286269037305, "Species": "Adelie"}, {"order": 37, "Flipper Length (mm)": 188.938437984329, "Body Mass (g)": 2667.4967413987792, "Species": "Adelie"}, {"order": 38, "Flipper Length (mm)": 190.9688467838829, "Body Mass (g)": 2734.158493173738, "Species": "Adelie"}, {"order": 39, "Flipper Length (mm)": 192.9832452035986, "Body Mass (g)": 2816.062586581316, "Species": "Adelie"}, {"order": 40, "Flipper Length (mm)": 194.94986497705395, "Body Mass (g)": 2911.9173451413417, "Species": "Adelie"}, {"order": 41, "Flipper Length (mm)": 196.83769133561975, "Body Mass (g)": 3020.211082050465, "Species": "Adelie"}, {"order": 42, "Flipper Length (mm)": 198.6169521298887, "Body Mass (g)": 3139.23594038609, "Species": "Adelie"}, {"order": 43, "Flipper Length (mm)": 200.2595873542562, "Body Mass (g)": 3267.1148270302556, "Species": "Adelie"}, {"order": 44, "Flipper Length (mm)": 201.7396916699714, "Body Mass (g)": 3401.8310155494414, "Species": "Adelie"}, {"order": 45, "Flipper Length (mm)": 203.0339229478039, "Body Mass (g)": 3541.25995117515, "Species": "Adelie"}, {"order": 46, "Flipper Length (mm)": 204.12187038736602, "Body Mass (g)": 3683.202756301753, "Species": "Adelie"}, {"order": 47, "Flipper Length (mm)": 204.98637640762757, "Body Mass (g)": 3825.420908099886, "Species": "Adelie"}, {"order": 48, "Flipper Length (mm)": 205.61380723221816, "Body Mass (g)": 3965.6715413586826, "Species": "Adelie"}, {"order": 49, "Flipper Length (mm)": 205.994267902225, "Body Mass (g)": 4101.742819809986, "Species": "Adelie"}, {"order": 0, "Flipper Length (mm)": 213.67824432190744, "Body Mass (g)": 4350.386326175865, "Species": "Chinstrap"}, {"order": 1, "Flipper Length (mm)": 213.53745456189614, "Body Mass (g)": 4438.022890602155, "Species": "Chinstrap"}, {"order": 2, "Flipper Length (mm)": 213.11730562048126, "Body Mass (g)": 4514.542214406684, "Species": "Chinstrap"}, {"order": 3, "Flipper Length (mm)": 212.4244234974538, "Body Mass (g)": 4578.7375421426295, "Species": "Chinstrap"}, {"order": 4, "Flipper Length (mm)": 211.46973535780157, "Body Mass (g)": 4629.596475143164, "Species": "Chinstrap"}, {"order": 5, "Flipper Length (mm)": 210.26829720378996, "Body Mass (g)": 4666.316937653216, "Species": "Chinstrap"}, {"order": 6, "Flipper Length (mm)": 208.83905643281207, "Body Mass (g)": 4688.31982604326, "Species": "Chinstrap"}, {"order": 7, "Flipper Length (mm)": 207.2045530256133, "Body Mass (g)": 4695.258141619497, "Species": "Chinstrap"}, {"order": 8, "Flipper Length (mm)": 205.3905640773302, "Body Mass (g)": 4687.022463000541, "Species": "Chinstrap"}, {"order": 9, "Flipper Length (mm)": 203.42569727730162, "Body Mass (g)": 4663.742671757969, "Species": "Chinstrap"}, {"order": 10, "Flipper Length (mm)": 201.34093974871857, "Body Mass (g)": 4625.785904106349, "Species": "Chinstrap"}, {"order": 11, "Flipper Length (mm)": 199.16916936318057, "Body Mass (g)": 4573.750760945823, "Species": "Chinstrap"}, {"order": 12, "Flipper Length (mm)": 196.94463623702035, "Body Mass (g)": 4508.457867568317, "Species": "Chinstrap"}, {"order": 13, "Flipper Length (mm)": 194.70242258650904, "Body Mass (g)": 4430.93693190648, "Species": "Chinstrap"}, {"order": 14, "Flipper Length (mm)": 192.47788946034882, "Body Mass (g)": 4342.410505424462, "Species": "Chinstrap"}, {"order": 15, "Flipper Length (mm)": 190.30611907481082, "Body Mass (g)": 4244.274702751008, "Species": "Chinstrap"}, {"order": 16, "Flipper Length (mm)": 188.22136154622777, "Body Mass (g)": 4138.077184117764, "Species": "Chinstrap"}, {"order": 17, "Flipper Length (mm)": 186.2564947461992, "Body Mass (g)": 4025.4927478329, "Species": "Chinstrap"}, {"order": 18, "Flipper Length (mm)": 184.44250579791608, "Body Mass (g)": 3908.2969177113105, "Species": "Chinstrap"}, {"order": 19, "Flipper Length (mm)": 182.80800239071732, "Body Mass (g)": 3788.3379420034084, "Species": "Chinstrap"}, {"order": 20, "Flipper Length (mm)": 181.37876161973944, "Body Mass (g)": 3667.507645416126, "Species": "Chinstrap"}, {"order": 21, "Flipper Length (mm)": 180.17732346572782, "Body Mass (g)": 3547.7115939071646, "Species": "Chinstrap"}, {"order": 22, "Flipper Length (mm)": 179.2226353260756, "Body Mass (g)": 3430.8390427715135, "Species": "Chinstrap"}, {"order": 23, "Flipper Length (mm)": 178.52975320304813, "Body Mass (g)": 3318.7331419568595, "Species": "Chinstrap"}, {"order": 24, "Flipper Length (mm)": 178.10960426163328, "Body Mass (g)": 3213.161868487869, "Species": "Chinstrap"}, {"order": 25, "Flipper Length (mm)": 177.96881450162195, "Body Mass (g)": 3115.7901444123695, "Species": "Chinstrap"}, {"order": 26, "Flipper Length (mm)": 178.10960426163325, "Body Mass (g)": 3028.1535799860803, "Species": "Chinstrap"}, {"order": 27, "Flipper Length (mm)": 178.52975320304813, "Body Mass (g)": 2951.634256181551, "Species": "Chinstrap"}, {"order": 28, "Flipper Length (mm)": 179.2226353260756, "Body Mass (g)": 2887.4389284456056, "Species": "Chinstrap"}, {"order": 29, "Flipper Length (mm)": 180.17732346572782, "Body Mass (g)": 2836.5799954450713, "Species": "Chinstrap"}, {"order": 30, "Flipper Length (mm)": 181.37876161973944, "Body Mass (g)": 2799.8595329350196, "Species": "Chinstrap"}, {"order": 31, "Flipper Length (mm)": 182.80800239071732, "Body Mass (g)": 2777.8566445449756, "Species": "Chinstrap"}, {"order": 32, "Flipper Length (mm)": 184.44250579791608, "Body Mass (g)": 2770.9183289687385, "Species": "Chinstrap"}, {"order": 33, "Flipper Length (mm)": 186.2564947461992, "Body Mass (g)": 2779.154007587694, "Species": "Chinstrap"}, {"order": 34, "Flipper Length (mm)": 188.2213615462278, "Body Mass (g)": 2802.4337988302664, "Species": "Chinstrap"}, {"order": 35, "Flipper Length (mm)": 190.30611907481082, "Body Mass (g)": 2840.390566481886, "Species": "Chinstrap"}, {"order": 36, "Flipper Length (mm)": 192.47788946034882, "Body Mass (g)": 2892.4257096424126, "Species": "Chinstrap"}, {"order": 37, "Flipper Length (mm)": 194.70242258650904, "Body Mass (g)": 2957.7186030199186, "Species": "Chinstrap"}, {"order": 38, "Flipper Length (mm)": 196.94463623702032, "Body Mass (g)": 3035.2395386817543, "Species": "Chinstrap"}, {"order": 39, "Flipper Length (mm)": 199.16916936318057, "Body Mass (g)": 3123.7659651637728, "Species": "Chinstrap"}, {"order": 40, "Flipper Length (mm)": 201.34093974871857, "Body Mass (g)": 3221.9017678372275, "Species": "Chinstrap"}, {"order": 41, "Flipper Length (mm)": 203.4256972773016, "Body Mass (g)": 3328.0992864704704, "Species": "Chinstrap"}, {"order": 42, "Flipper Length (mm)": 205.3905640773302, "Body Mass (g)": 3440.683722755335, "Species": "Chinstrap"}, {"order": 43, "Flipper Length (mm)": 207.2045530256133, "Body Mass (g)": 3557.879552876924, "Species": "Chinstrap"}, {"order": 44, "Flipper Length (mm)": 208.83905643281207, "Body Mass (g)": 3677.8385285848262, "Species": "Chinstrap"}, {"order": 45, "Flipper Length (mm)": 210.26829720378996, "Body Mass (g)": 3798.6688251721093, "Species": "Chinstrap"}, {"order": 46, "Flipper Length (mm)": 211.46973535780154, "Body Mass (g)": 3918.4648766810697, "Species": "Chinstrap"}, {"order": 47, "Flipper Length (mm)": 212.4244234974538, "Body Mass (g)": 4035.337427816722, "Species": "Chinstrap"}, {"order": 48, "Flipper Length (mm)": 213.11730562048126, "Body Mass (g)": 4147.443328631375, "Species": "Chinstrap"}, {"order": 49, "Flipper Length (mm)": 213.5374545618961, "Body Mass (g)": 4253.014602100366, "Species": "Chinstrap"}, {"order": 0, "Flipper Length (mm)": 233.25746893675148, "Body Mass (g)": 5953.8259240492625, "Species": "Gentoo"}, {"order": 1, "Flipper Length (mm)": 233.13074842506066, "Body Mass (g)": 6058.308967956957, "Species": "Gentoo"}, {"order": 2, "Flipper Length (mm)": 232.75258534815674, "Body Mass (g)": 6147.300669069513, "Species": "Gentoo"}, {"order": 3, "Flipper Length (mm)": 232.1289435636662, "Body Mass (g)": 6219.39757509932, "Species": "Gentoo"}, {"order": 4, "Flipper Length (mm)": 231.26965827507595, "Body Mass (g)": 6273.462674769686, "Species": "Gentoo"}, {"order": 5, "Flipper Length (mm)": 230.18828092469926, "Body Mass (g)": 6308.643329161883, "Species": "Gentoo"}, {"order": 6, "Flipper Length (mm)": 228.90186547933504, "Body Mass (g)": 6324.384718340241, "Species": "Gentoo"}, {"order": 7, "Flipper Length (mm)": 227.43069947902407, "Body Mass (g)": 6320.438591193969, "Species": "Gentoo"}, {"order": 8, "Flipper Length (mm)": 225.79798409042317, "Body Mass (g)": 6296.867180505464, "Species": "Gentoo"}, {"order": 9, "Flipper Length (mm)": 224.0294682105475, "Body Mass (g)": 6254.042221502164, "Species": "Gentoo"}, {"order": 10, "Flipper Length (mm)": 222.1530423912829, "Body Mass (g)": 6192.639089369939, "Species": "Gentoo"}, {"order": 11, "Flipper Length (mm)": 220.19829898872158, "Body Mass (g)": 6113.62614818297, "Species": "Gentoo"}, {"order": 12, "Flipper Length (mm)": 218.19606547402904, "Body Mass (g)": 6018.249479223816, "Species": "Gentoo"}, {"order": 13, "Flipper Length (mm)": 216.17791826580836, "Body Mass (g)": 5908.013229537225, "Species": "Gentoo"}, {"order": 14, "Flipper Length (mm)": 214.17568475111582, "Body Mass (g)": 5784.655890632698, "Species": "Gentoo"}, {"order": 15, "Flipper Length (mm)": 212.22094134855453, "Body Mass (g)": 5650.1228814348615, "Species": "Gentoo"}, {"order": 16, "Flipper Length (mm)": 210.3445155292899, "Body Mass (g)": 5506.535867864889, "Species": "Gentoo"}, {"order": 17, "Flipper Length (mm)": 208.57599964941423, "Body Mass (g)": 5356.159302901504, "Species": "Gentoo"}, {"order": 18, "Flipper Length (mm)": 206.94328426081333, "Body Mass (g)": 5201.364714804785, "Species": "Gentoo"}, {"order": 19, "Flipper Length (mm)": 205.47211826050236, "Body Mass (g)": 5044.593306698822, "Species": "Gentoo"}, {"order": 20, "Flipper Length (mm)": 204.18570281513814, "Body Mass (g)": 4888.317457340144, "Species": "Gentoo"}, {"order": 21, "Flipper Length (mm)": 203.10432546476144, "Body Mass (g)": 4735.001730227807, "Species": "Gentoo"}, {"order": 22, "Flipper Length (mm)": 202.2450401761712, "Body Mass (g)": 4587.064005964747, "Species": "Gentoo"}, {"order": 23, "Flipper Length (mm)": 201.62139839168066, "Body Mass (g)": 4446.837350836306, "Species": "Gentoo"}, {"order": 24, "Flipper Length (mm)": 201.24323531477674, "Body Mass (g)": 4316.533222961203, "Species": "Gentoo"}, {"order": 25, "Flipper Length (mm)": 201.11651480308592, "Body Mass (g)": 4198.206596275941, "Species": "Gentoo"}, {"order": 26, "Flipper Length (mm)": 201.24323531477674, "Body Mass (g)": 4093.7235523682466, "Species": "Gentoo"}, {"order": 27, "Flipper Length (mm)": 201.62139839168066, "Body Mass (g)": 4004.7318512556913, "Species": "Gentoo"}, {"order": 28, "Flipper Length (mm)": 202.2450401761712, "Body Mass (g)": 3932.634945225883, "Species": "Gentoo"}, {"order": 29, "Flipper Length (mm)": 203.10432546476144, "Body Mass (g)": 3878.5698455555175, "Species": "Gentoo"}, {"order": 30, "Flipper Length (mm)": 204.18570281513814, "Body Mass (g)": 3843.3891911633204, "Species": "Gentoo"}, {"order": 31, "Flipper Length (mm)": 205.47211826050236, "Body Mass (g)": 3827.647801984962, "Species": "Gentoo"}, {"order": 32, "Flipper Length (mm)": 206.94328426081333, "Body Mass (g)": 3831.5939291312343, "Species": "Gentoo"}, {"order": 33, "Flipper Length (mm)": 208.57599964941423, "Body Mass (g)": 3855.1653398197386, "Species": "Gentoo"}, {"order": 34, "Flipper Length (mm)": 210.3445155292899, "Body Mass (g)": 3897.9902988230397, "Species": "Gentoo"}, {"order": 35, "Flipper Length (mm)": 212.2209413485545, "Body Mass (g)": 3959.393430955264, "Species": "Gentoo"}, {"order": 36, "Flipper Length (mm)": 214.17568475111582, "Body Mass (g)": 4038.406372142234, "Species": "Gentoo"}, {"order": 37, "Flipper Length (mm)": 216.17791826580836, "Body Mass (g)": 4133.783041101387, "Species": "Gentoo"}, {"order": 38, "Flipper Length (mm)": 218.19606547402904, "Body Mass (g)": 4244.019290787977, "Species": "Gentoo"}, {"order": 39, "Flipper Length (mm)": 220.19829898872155, "Body Mass (g)": 4367.376629692505, "Species": "Gentoo"}, {"order": 40, "Flipper Length (mm)": 222.15304239128287, "Body Mass (g)": 4501.909638890342, "Species": "Gentoo"}, {"order": 41, "Flipper Length (mm)": 224.0294682105475, "Body Mass (g)": 4645.496652460313, "Species": "Gentoo"}, {"order": 42, "Flipper Length (mm)": 225.79798409042317, "Body Mass (g)": 4795.873217423699, "Species": "Gentoo"}, {"order": 43, "Flipper Length (mm)": 227.43069947902404, "Body Mass (g)": 4950.6678055204175, "Species": "Gentoo"}, {"order": 44, "Flipper Length (mm)": 228.90186547933504, "Body Mass (g)": 5107.439213626381, "Species": "Gentoo"}, {"order": 45, "Flipper Length (mm)": 230.18828092469926, "Body Mass (g)": 5263.715062985059, "Species": "Gentoo"}, {"order": 46, "Flipper Length (mm)": 231.26965827507595, "Body Mass (g)": 5417.030790097396, "Species": "Gentoo"}, {"order": 47, "Flipper Length (mm)": 232.1289435636662, "Body Mass (g)": 5564.9685143604565, "Species": "Gentoo"}, {"order": 48, "Flipper Length (mm)": 232.75258534815674, "Body Mass (g)": 5705.195169488897, "Species": "Gentoo"}, {"order": 49, "Flipper Length (mm)": 233.13074842506066, "Body Mass (g)": 5835.499297364, "Species": "Gentoo"}], "data-300f0a3d0d4c94aa773629def4db880e": [{"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 39.1, "Beak Depth (mm)": 18.7, "Flipper Length (mm)": 181, "Body Mass (g)": 3750, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 39.5, "Beak Depth (mm)": 17.4, "Flipper Length (mm)": 186, "Body Mass (g)": 3800, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 40.3, "Beak Depth (mm)": 18.0, "Flipper Length (mm)": 195, "Body Mass (g)": 3250, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 36.7, "Beak Depth (mm)": 19.3, "Flipper Length (mm)": 193, "Body Mass (g)": 3450, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 39.3, "Beak Depth (mm)": 20.6, "Flipper Length (mm)": 190, "Body Mass (g)": 3650, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 38.9, "Beak Depth (mm)": 17.8, "Flipper Length (mm)": 181, "Body Mass (g)": 3625, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 39.2, "Beak Depth (mm)": 19.6, "Flipper Length (mm)": 195, "Body Mass (g)": 4675, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 34.1, "Beak Depth (mm)": 18.1, "Flipper Length (mm)": 193, "Body Mass (g)": 3475, "Sex": null}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 42.0, "Beak Depth (mm)": 20.2, "Flipper Length (mm)": 190, "Body Mass (g)": 4250, "Sex": null}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 37.8, "Beak Depth (mm)": 17.1, "Flipper Length (mm)": 186, "Body Mass (g)": 3300, "Sex": null}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 37.8, "Beak Depth (mm)": 17.3, "Flipper Length (mm)": 180, "Body Mass (g)": 3700, "Sex": null}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 41.1, "Beak Depth (mm)": 17.6, "Flipper Length (mm)": 182, "Body Mass (g)": 3200, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 38.6, "Beak Depth (mm)": 21.2, "Flipper Length (mm)": 191, "Body Mass (g)": 3800, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 34.6, "Beak Depth (mm)": 21.1, "Flipper Length (mm)": 198, "Body Mass (g)": 4400, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 36.6, "Beak Depth (mm)": 17.8, "Flipper Length (mm)": 185, "Body Mass (g)": 3700, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 38.7, "Beak Depth (mm)": 19.0, "Flipper Length (mm)": 195, "Body Mass (g)": 3450, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 42.5, "Beak Depth (mm)": 20.7, "Flipper Length (mm)": 197, "Body Mass (g)": 4500, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 34.4, "Beak Depth (mm)": 18.4, "Flipper Length (mm)": 184, "Body Mass (g)": 3325, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 46.0, "Beak Depth (mm)": 21.5, "Flipper Length (mm)": 194, "Body Mass (g)": 4200, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 37.8, "Beak Depth (mm)": 18.3, "Flipper Length (mm)": 174, "Body Mass (g)": 3400, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 37.7, "Beak Depth (mm)": 18.7, "Flipper Length (mm)": 180, "Body Mass (g)": 3600, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 35.9, "Beak Depth (mm)": 19.2, "Flipper Length (mm)": 189, "Body Mass (g)": 3800, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 38.2, "Beak Depth (mm)": 18.1, "Flipper Length (mm)": 185, "Body Mass (g)": 3950, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 38.8, "Beak Depth (mm)": 17.2, "Flipper Length (mm)": 180, "Body Mass (g)": 3800, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 35.3, "Beak Depth (mm)": 18.9, "Flipper Length (mm)": 187, "Body Mass (g)": 3800, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 40.6, "Beak Depth (mm)": 18.6, "Flipper Length (mm)": 183, "Body Mass (g)": 3550, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 40.5, "Beak Depth (mm)": 17.9, "Flipper Length (mm)": 187, "Body Mass (g)": 3200, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 37.9, "Beak Depth (mm)": 18.6, "Flipper Length (mm)": 172, "Body Mass (g)": 3150, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 40.5, "Beak Depth (mm)": 18.9, "Flipper Length (mm)": 180, "Body Mass (g)": 3950, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 39.5, "Beak Depth (mm)": 16.7, "Flipper Length (mm)": 178, "Body Mass (g)": 3250, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 37.2, "Beak Depth (mm)": 18.1, "Flipper Length (mm)": 178, "Body Mass (g)": 3900, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 39.5, "Beak Depth (mm)": 17.8, "Flipper Length (mm)": 188, "Body Mass (g)": 3300, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 40.9, "Beak Depth (mm)": 18.9, "Flipper Length (mm)": 184, "Body Mass (g)": 3900, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 36.4, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 195, "Body Mass (g)": 3325, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 39.2, "Beak Depth (mm)": 21.1, "Flipper Length (mm)": 196, "Body Mass (g)": 4150, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 38.8, "Beak Depth (mm)": 20.0, "Flipper Length (mm)": 190, "Body Mass (g)": 3950, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 42.2, "Beak Depth (mm)": 18.5, "Flipper Length (mm)": 180, "Body Mass (g)": 3550, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 37.6, "Beak Depth (mm)": 19.3, "Flipper Length (mm)": 181, "Body Mass (g)": 3300, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 39.8, "Beak Depth (mm)": 19.1, "Flipper Length (mm)": 184, "Body Mass (g)": 4650, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 36.5, "Beak Depth (mm)": 18.0, "Flipper Length (mm)": 182, "Body Mass (g)": 3150, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 40.8, "Beak Depth (mm)": 18.4, "Flipper Length (mm)": 195, "Body Mass (g)": 3900, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 36.0, "Beak Depth (mm)": 18.5, "Flipper Length (mm)": 186, "Body Mass (g)": 3100, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 44.1, "Beak Depth (mm)": 19.7, "Flipper Length (mm)": 196, "Body Mass (g)": 4400, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 37.0, "Beak Depth (mm)": 16.9, "Flipper Length (mm)": 185, "Body Mass (g)": 3000, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 39.6, "Beak Depth (mm)": 18.8, "Flipper Length (mm)": 190, "Body Mass (g)": 4600, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 41.1, "Beak Depth (mm)": 19.0, "Flipper Length (mm)": 182, "Body Mass (g)": 3425, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 37.5, "Beak Depth (mm)": 18.9, "Flipper Length (mm)": 179, "Body Mass (g)": 2975, "Sex": null}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 36.0, "Beak Depth (mm)": 17.9, "Flipper Length (mm)": 190, "Body Mass (g)": 3450, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 42.3, "Beak Depth (mm)": 21.2, "Flipper Length (mm)": 191, "Body Mass (g)": 4150, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 39.6, "Beak Depth (mm)": 17.7, "Flipper Length (mm)": 186, "Body Mass (g)": 3500, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 40.1, "Beak Depth (mm)": 18.9, "Flipper Length (mm)": 188, "Body Mass (g)": 4300, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 35.0, "Beak Depth (mm)": 17.9, "Flipper Length (mm)": 190, "Body Mass (g)": 3450, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 42.0, "Beak Depth (mm)": 19.5, "Flipper Length (mm)": 200, "Body Mass (g)": 4050, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 34.5, "Beak Depth (mm)": 18.1, "Flipper Length (mm)": 187, "Body Mass (g)": 2900, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 41.4, "Beak Depth (mm)": 18.6, "Flipper Length (mm)": 191, "Body Mass (g)": 3700, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 39.0, "Beak Depth (mm)": 17.5, "Flipper Length (mm)": 186, "Body Mass (g)": 3550, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 40.6, "Beak Depth (mm)": 18.8, "Flipper Length (mm)": 193, "Body Mass (g)": 3800, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 36.5, "Beak Depth (mm)": 16.6, "Flipper Length (mm)": 181, "Body Mass (g)": 2850, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 37.6, "Beak Depth (mm)": 19.1, "Flipper Length (mm)": 194, "Body Mass (g)": 3750, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 35.7, "Beak Depth (mm)": 16.9, "Flipper Length (mm)": 185, "Body Mass (g)": 3150, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 41.3, "Beak Depth (mm)": 21.1, "Flipper Length (mm)": 195, "Body Mass (g)": 4400, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 37.6, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 185, "Body Mass (g)": 3600, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 41.1, "Beak Depth (mm)": 18.2, "Flipper Length (mm)": 192, "Body Mass (g)": 4050, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 36.4, "Beak Depth (mm)": 17.1, "Flipper Length (mm)": 184, "Body Mass (g)": 2850, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 41.6, "Beak Depth (mm)": 18.0, "Flipper Length (mm)": 192, "Body Mass (g)": 3950, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 35.5, "Beak Depth (mm)": 16.2, "Flipper Length (mm)": 195, "Body Mass (g)": 3350, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 41.1, "Beak Depth (mm)": 19.1, "Flipper Length (mm)": 188, "Body Mass (g)": 4100, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 35.9, "Beak Depth (mm)": 16.6, "Flipper Length (mm)": 190, "Body Mass (g)": 3050, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 41.8, "Beak Depth (mm)": 19.4, "Flipper Length (mm)": 198, "Body Mass (g)": 4450, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 33.5, "Beak Depth (mm)": 19.0, "Flipper Length (mm)": 190, "Body Mass (g)": 3600, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 39.7, "Beak Depth (mm)": 18.4, "Flipper Length (mm)": 190, "Body Mass (g)": 3900, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 39.6, "Beak Depth (mm)": 17.2, "Flipper Length (mm)": 196, "Body Mass (g)": 3550, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 45.8, "Beak Depth (mm)": 18.9, "Flipper Length (mm)": 197, "Body Mass (g)": 4150, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 35.5, "Beak Depth (mm)": 17.5, "Flipper Length (mm)": 190, "Body Mass (g)": 3700, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 42.8, "Beak Depth (mm)": 18.5, "Flipper Length (mm)": 195, "Body Mass (g)": 4250, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 40.9, "Beak Depth (mm)": 16.8, "Flipper Length (mm)": 191, "Body Mass (g)": 3700, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 37.2, "Beak Depth (mm)": 19.4, "Flipper Length (mm)": 184, "Body Mass (g)": 3900, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 36.2, "Beak Depth (mm)": 16.1, "Flipper Length (mm)": 187, "Body Mass (g)": 3550, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 42.1, "Beak Depth (mm)": 19.1, "Flipper Length (mm)": 195, "Body Mass (g)": 4000, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 34.6, "Beak Depth (mm)": 17.2, "Flipper Length (mm)": 189, "Body Mass (g)": 3200, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 42.9, "Beak Depth (mm)": 17.6, "Flipper Length (mm)": 196, "Body Mass (g)": 4700, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 36.7, "Beak Depth (mm)": 18.8, "Flipper Length (mm)": 187, "Body Mass (g)": 3800, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 35.1, "Beak Depth (mm)": 19.4, "Flipper Length (mm)": 193, "Body Mass (g)": 4200, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 37.3, "Beak Depth (mm)": 17.8, "Flipper Length (mm)": 191, "Body Mass (g)": 3350, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 41.3, "Beak Depth (mm)": 20.3, "Flipper Length (mm)": 194, "Body Mass (g)": 3550, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 36.3, "Beak Depth (mm)": 19.5, "Flipper Length (mm)": 190, "Body Mass (g)": 3800, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 36.9, "Beak Depth (mm)": 18.6, "Flipper Length (mm)": 189, "Body Mass (g)": 3500, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 38.3, "Beak Depth (mm)": 19.2, "Flipper Length (mm)": 189, "Body Mass (g)": 3950, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 38.9, "Beak Depth (mm)": 18.8, "Flipper Length (mm)": 190, "Body Mass (g)": 3600, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 35.7, "Beak Depth (mm)": 18.0, "Flipper Length (mm)": 202, "Body Mass (g)": 3550, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 41.1, "Beak Depth (mm)": 18.1, "Flipper Length (mm)": 205, "Body Mass (g)": 4300, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 34.0, "Beak Depth (mm)": 17.1, "Flipper Length (mm)": 185, "Body Mass (g)": 3400, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 39.6, "Beak Depth (mm)": 18.1, "Flipper Length (mm)": 186, "Body Mass (g)": 4450, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 36.2, "Beak Depth (mm)": 17.3, "Flipper Length (mm)": 187, "Body Mass (g)": 3300, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 40.8, "Beak Depth (mm)": 18.9, "Flipper Length (mm)": 208, "Body Mass (g)": 4300, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 38.1, "Beak Depth (mm)": 18.6, "Flipper Length (mm)": 190, "Body Mass (g)": 3700, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 40.3, "Beak Depth (mm)": 18.5, "Flipper Length (mm)": 196, "Body Mass (g)": 4350, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 33.1, "Beak Depth (mm)": 16.1, "Flipper Length (mm)": 178, "Body Mass (g)": 2900, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 43.2, "Beak Depth (mm)": 18.5, "Flipper Length (mm)": 192, "Body Mass (g)": 4100, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 35.0, "Beak Depth (mm)": 17.9, "Flipper Length (mm)": 192, "Body Mass (g)": 3725, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 41.0, "Beak Depth (mm)": 20.0, "Flipper Length (mm)": 203, "Body Mass (g)": 4725, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 37.7, "Beak Depth (mm)": 16.0, "Flipper Length (mm)": 183, "Body Mass (g)": 3075, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 37.8, "Beak Depth (mm)": 20.0, "Flipper Length (mm)": 190, "Body Mass (g)": 4250, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 37.9, "Beak Depth (mm)": 18.6, "Flipper Length (mm)": 193, "Body Mass (g)": 2925, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 39.7, "Beak Depth (mm)": 18.9, "Flipper Length (mm)": 184, "Body Mass (g)": 3550, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 38.6, "Beak Depth (mm)": 17.2, "Flipper Length (mm)": 199, "Body Mass (g)": 3750, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 38.2, "Beak Depth (mm)": 20.0, "Flipper Length (mm)": 190, "Body Mass (g)": 3900, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 38.1, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 181, "Body Mass (g)": 3175, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 43.2, "Beak Depth (mm)": 19.0, "Flipper Length (mm)": 197, "Body Mass (g)": 4775, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 38.1, "Beak Depth (mm)": 16.5, "Flipper Length (mm)": 198, "Body Mass (g)": 3825, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 45.6, "Beak Depth (mm)": 20.3, "Flipper Length (mm)": 191, "Body Mass (g)": 4600, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 39.7, "Beak Depth (mm)": 17.7, "Flipper Length (mm)": 193, "Body Mass (g)": 3200, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 42.2, "Beak Depth (mm)": 19.5, "Flipper Length (mm)": 197, "Body Mass (g)": 4275, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 39.6, "Beak Depth (mm)": 20.7, "Flipper Length (mm)": 191, "Body Mass (g)": 3900, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Biscoe", "Beak Length (mm)": 42.7, "Beak Depth (mm)": 18.3, "Flipper Length (mm)": 196, "Body Mass (g)": 4075, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 38.6, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 188, "Body Mass (g)": 2900, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 37.3, "Beak Depth (mm)": 20.5, "Flipper Length (mm)": 199, "Body Mass (g)": 3775, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 35.7, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 189, "Body Mass (g)": 3350, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 41.1, "Beak Depth (mm)": 18.6, "Flipper Length (mm)": 189, "Body Mass (g)": 3325, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 36.2, "Beak Depth (mm)": 17.2, "Flipper Length (mm)": 187, "Body Mass (g)": 3150, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 37.7, "Beak Depth (mm)": 19.8, "Flipper Length (mm)": 198, "Body Mass (g)": 3500, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 40.2, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 176, "Body Mass (g)": 3450, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 41.4, "Beak Depth (mm)": 18.5, "Flipper Length (mm)": 202, "Body Mass (g)": 3875, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 35.2, "Beak Depth (mm)": 15.9, "Flipper Length (mm)": 186, "Body Mass (g)": 3050, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 40.6, "Beak Depth (mm)": 19.0, "Flipper Length (mm)": 199, "Body Mass (g)": 4000, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 38.8, "Beak Depth (mm)": 17.6, "Flipper Length (mm)": 191, "Body Mass (g)": 3275, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 41.5, "Beak Depth (mm)": 18.3, "Flipper Length (mm)": 195, "Body Mass (g)": 4300, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 39.0, "Beak Depth (mm)": 17.1, "Flipper Length (mm)": 191, "Body Mass (g)": 3050, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 44.1, "Beak Depth (mm)": 18.0, "Flipper Length (mm)": 210, "Body Mass (g)": 4000, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 38.5, "Beak Depth (mm)": 17.9, "Flipper Length (mm)": 190, "Body Mass (g)": 3325, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Torgersen", "Beak Length (mm)": 43.1, "Beak Depth (mm)": 19.2, "Flipper Length (mm)": 197, "Body Mass (g)": 3500, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 36.8, "Beak Depth (mm)": 18.5, "Flipper Length (mm)": 193, "Body Mass (g)": 3500, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 37.5, "Beak Depth (mm)": 18.5, "Flipper Length (mm)": 199, "Body Mass (g)": 4475, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 38.1, "Beak Depth (mm)": 17.6, "Flipper Length (mm)": 187, "Body Mass (g)": 3425, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 41.1, "Beak Depth (mm)": 17.5, "Flipper Length (mm)": 190, "Body Mass (g)": 3900, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 35.6, "Beak Depth (mm)": 17.5, "Flipper Length (mm)": 191, "Body Mass (g)": 3175, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 40.2, "Beak Depth (mm)": 20.1, "Flipper Length (mm)": 200, "Body Mass (g)": 3975, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 37.0, "Beak Depth (mm)": 16.5, "Flipper Length (mm)": 185, "Body Mass (g)": 3400, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 39.7, "Beak Depth (mm)": 17.9, "Flipper Length (mm)": 193, "Body Mass (g)": 4250, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 40.2, "Beak Depth (mm)": 17.1, "Flipper Length (mm)": 193, "Body Mass (g)": 3400, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 40.6, "Beak Depth (mm)": 17.2, "Flipper Length (mm)": 187, "Body Mass (g)": 3475, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 32.1, "Beak Depth (mm)": 15.5, "Flipper Length (mm)": 188, "Body Mass (g)": 3050, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 40.7, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 190, "Body Mass (g)": 3725, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 37.3, "Beak Depth (mm)": 16.8, "Flipper Length (mm)": 192, "Body Mass (g)": 3000, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 39.0, "Beak Depth (mm)": 18.7, "Flipper Length (mm)": 185, "Body Mass (g)": 3650, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 39.2, "Beak Depth (mm)": 18.6, "Flipper Length (mm)": 190, "Body Mass (g)": 4250, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 36.6, "Beak Depth (mm)": 18.4, "Flipper Length (mm)": 184, "Body Mass (g)": 3475, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 36.0, "Beak Depth (mm)": 17.8, "Flipper Length (mm)": 195, "Body Mass (g)": 3450, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 37.8, "Beak Depth (mm)": 18.1, "Flipper Length (mm)": 193, "Body Mass (g)": 3750, "Sex": "MALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 36.0, "Beak Depth (mm)": 17.1, "Flipper Length (mm)": 187, "Body Mass (g)": 3700, "Sex": "FEMALE"}, {"Species": "Adelie", "Island": "Dream", "Beak Length (mm)": 41.5, "Beak Depth (mm)": 18.5, "Flipper Length (mm)": 201, "Body Mass (g)": 4000, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 46.5, "Beak Depth (mm)": 17.9, "Flipper Length (mm)": 192, "Body Mass (g)": 3500, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.0, "Beak Depth (mm)": 19.5, "Flipper Length (mm)": 196, "Body Mass (g)": 3900, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 51.3, "Beak Depth (mm)": 19.2, "Flipper Length (mm)": 193, "Body Mass (g)": 3650, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 45.4, "Beak Depth (mm)": 18.7, "Flipper Length (mm)": 188, "Body Mass (g)": 3525, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 52.7, "Beak Depth (mm)": 19.8, "Flipper Length (mm)": 197, "Body Mass (g)": 3725, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 45.2, "Beak Depth (mm)": 17.8, "Flipper Length (mm)": 198, "Body Mass (g)": 3950, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 46.1, "Beak Depth (mm)": 18.2, "Flipper Length (mm)": 178, "Body Mass (g)": 3250, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 51.3, "Beak Depth (mm)": 18.2, "Flipper Length (mm)": 197, "Body Mass (g)": 3750, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 46.0, "Beak Depth (mm)": 18.9, "Flipper Length (mm)": 195, "Body Mass (g)": 4150, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 51.3, "Beak Depth (mm)": 19.9, "Flipper Length (mm)": 198, "Body Mass (g)": 3700, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 46.6, "Beak Depth (mm)": 17.8, "Flipper Length (mm)": 193, "Body Mass (g)": 3800, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 51.7, "Beak Depth (mm)": 20.3, "Flipper Length (mm)": 194, "Body Mass (g)": 3775, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 47.0, "Beak Depth (mm)": 17.3, "Flipper Length (mm)": 185, "Body Mass (g)": 3700, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 52.0, "Beak Depth (mm)": 18.1, "Flipper Length (mm)": 201, "Body Mass (g)": 4050, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 45.9, "Beak Depth (mm)": 17.1, "Flipper Length (mm)": 190, "Body Mass (g)": 3575, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.5, "Beak Depth (mm)": 19.6, "Flipper Length (mm)": 201, "Body Mass (g)": 4050, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.3, "Beak Depth (mm)": 20.0, "Flipper Length (mm)": 197, "Body Mass (g)": 3300, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 58.0, "Beak Depth (mm)": 17.8, "Flipper Length (mm)": 181, "Body Mass (g)": 3700, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 46.4, "Beak Depth (mm)": 18.6, "Flipper Length (mm)": 190, "Body Mass (g)": 3450, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 49.2, "Beak Depth (mm)": 18.2, "Flipper Length (mm)": 195, "Body Mass (g)": 4400, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 42.4, "Beak Depth (mm)": 17.3, "Flipper Length (mm)": 181, "Body Mass (g)": 3600, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 48.5, "Beak Depth (mm)": 17.5, "Flipper Length (mm)": 191, "Body Mass (g)": 3400, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 43.2, "Beak Depth (mm)": 16.6, "Flipper Length (mm)": 187, "Body Mass (g)": 2900, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.6, "Beak Depth (mm)": 19.4, "Flipper Length (mm)": 193, "Body Mass (g)": 3800, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 46.7, "Beak Depth (mm)": 17.9, "Flipper Length (mm)": 195, "Body Mass (g)": 3300, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 52.0, "Beak Depth (mm)": 19.0, "Flipper Length (mm)": 197, "Body Mass (g)": 4150, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.5, "Beak Depth (mm)": 18.4, "Flipper Length (mm)": 200, "Body Mass (g)": 3400, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 49.5, "Beak Depth (mm)": 19.0, "Flipper Length (mm)": 200, "Body Mass (g)": 3800, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 46.4, "Beak Depth (mm)": 17.8, "Flipper Length (mm)": 191, "Body Mass (g)": 3700, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 52.8, "Beak Depth (mm)": 20.0, "Flipper Length (mm)": 205, "Body Mass (g)": 4550, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 40.9, "Beak Depth (mm)": 16.6, "Flipper Length (mm)": 187, "Body Mass (g)": 3200, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 54.2, "Beak Depth (mm)": 20.8, "Flipper Length (mm)": 201, "Body Mass (g)": 4300, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 42.5, "Beak Depth (mm)": 16.7, "Flipper Length (mm)": 187, "Body Mass (g)": 3350, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 51.0, "Beak Depth (mm)": 18.8, "Flipper Length (mm)": 203, "Body Mass (g)": 4100, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 49.7, "Beak Depth (mm)": 18.6, "Flipper Length (mm)": 195, "Body Mass (g)": 3600, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 47.5, "Beak Depth (mm)": 16.8, "Flipper Length (mm)": 199, "Body Mass (g)": 3900, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 47.6, "Beak Depth (mm)": 18.3, "Flipper Length (mm)": 195, "Body Mass (g)": 3850, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 52.0, "Beak Depth (mm)": 20.7, "Flipper Length (mm)": 210, "Body Mass (g)": 4800, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 46.9, "Beak Depth (mm)": 16.6, "Flipper Length (mm)": 192, "Body Mass (g)": 2700, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 53.5, "Beak Depth (mm)": 19.9, "Flipper Length (mm)": 205, "Body Mass (g)": 4500, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 49.0, "Beak Depth (mm)": 19.5, "Flipper Length (mm)": 210, "Body Mass (g)": 3950, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 46.2, "Beak Depth (mm)": 17.5, "Flipper Length (mm)": 187, "Body Mass (g)": 3650, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.9, "Beak Depth (mm)": 19.1, "Flipper Length (mm)": 196, "Body Mass (g)": 3550, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 45.5, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 196, "Body Mass (g)": 3500, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.9, "Beak Depth (mm)": 17.9, "Flipper Length (mm)": 196, "Body Mass (g)": 3675, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.8, "Beak Depth (mm)": 18.5, "Flipper Length (mm)": 201, "Body Mass (g)": 4450, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.1, "Beak Depth (mm)": 17.9, "Flipper Length (mm)": 190, "Body Mass (g)": 3400, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 49.0, "Beak Depth (mm)": 19.6, "Flipper Length (mm)": 212, "Body Mass (g)": 4300, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 51.5, "Beak Depth (mm)": 18.7, "Flipper Length (mm)": 187, "Body Mass (g)": 3250, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 49.8, "Beak Depth (mm)": 17.3, "Flipper Length (mm)": 198, "Body Mass (g)": 3675, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 48.1, "Beak Depth (mm)": 16.4, "Flipper Length (mm)": 199, "Body Mass (g)": 3325, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 51.4, "Beak Depth (mm)": 19.0, "Flipper Length (mm)": 201, "Body Mass (g)": 3950, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 45.7, "Beak Depth (mm)": 17.3, "Flipper Length (mm)": 193, "Body Mass (g)": 3600, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.7, "Beak Depth (mm)": 19.7, "Flipper Length (mm)": 203, "Body Mass (g)": 4050, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 42.5, "Beak Depth (mm)": 17.3, "Flipper Length (mm)": 187, "Body Mass (g)": 3350, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 52.2, "Beak Depth (mm)": 18.8, "Flipper Length (mm)": 197, "Body Mass (g)": 3450, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 45.2, "Beak Depth (mm)": 16.6, "Flipper Length (mm)": 191, "Body Mass (g)": 3250, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 49.3, "Beak Depth (mm)": 19.9, "Flipper Length (mm)": 203, "Body Mass (g)": 4050, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.2, "Beak Depth (mm)": 18.8, "Flipper Length (mm)": 202, "Body Mass (g)": 3800, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 45.6, "Beak Depth (mm)": 19.4, "Flipper Length (mm)": 194, "Body Mass (g)": 3525, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 51.9, "Beak Depth (mm)": 19.5, "Flipper Length (mm)": 206, "Body Mass (g)": 3950, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 46.8, "Beak Depth (mm)": 16.5, "Flipper Length (mm)": 189, "Body Mass (g)": 3650, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 45.7, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 195, "Body Mass (g)": 3650, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 55.8, "Beak Depth (mm)": 19.8, "Flipper Length (mm)": 207, "Body Mass (g)": 4000, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 43.5, "Beak Depth (mm)": 18.1, "Flipper Length (mm)": 202, "Body Mass (g)": 3400, "Sex": "FEMALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 49.6, "Beak Depth (mm)": 18.2, "Flipper Length (mm)": 193, "Body Mass (g)": 3775, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.8, "Beak Depth (mm)": 19.0, "Flipper Length (mm)": 210, "Body Mass (g)": 4100, "Sex": "MALE"}, {"Species": "Chinstrap", "Island": "Dream", "Beak Length (mm)": 50.2, "Beak Depth (mm)": 18.7, "Flipper Length (mm)": 198, "Body Mass (g)": 3775, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.1, "Beak Depth (mm)": 13.2, "Flipper Length (mm)": 211, "Body Mass (g)": 4500, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.0, "Beak Depth (mm)": 16.3, "Flipper Length (mm)": 230, "Body Mass (g)": 5700, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.7, "Beak Depth (mm)": 14.1, "Flipper Length (mm)": 210, "Body Mass (g)": 4450, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.0, "Beak Depth (mm)": 15.2, "Flipper Length (mm)": 218, "Body Mass (g)": 5700, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 47.6, "Beak Depth (mm)": 14.5, "Flipper Length (mm)": 215, "Body Mass (g)": 5400, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.5, "Beak Depth (mm)": 13.5, "Flipper Length (mm)": 210, "Body Mass (g)": 4550, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.4, "Beak Depth (mm)": 14.6, "Flipper Length (mm)": 211, "Body Mass (g)": 4800, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.7, "Beak Depth (mm)": 15.3, "Flipper Length (mm)": 219, "Body Mass (g)": 5200, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 43.3, "Beak Depth (mm)": 13.4, "Flipper Length (mm)": 209, "Body Mass (g)": 4400, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.8, "Beak Depth (mm)": 15.4, "Flipper Length (mm)": 215, "Body Mass (g)": 5150, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 40.9, "Beak Depth (mm)": 13.7, "Flipper Length (mm)": 214, "Body Mass (g)": 4650, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.0, "Beak Depth (mm)": 16.1, "Flipper Length (mm)": 216, "Body Mass (g)": 5550, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.5, "Beak Depth (mm)": 13.7, "Flipper Length (mm)": 214, "Body Mass (g)": 4650, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.4, "Beak Depth (mm)": 14.6, "Flipper Length (mm)": 213, "Body Mass (g)": 5850, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.8, "Beak Depth (mm)": 14.6, "Flipper Length (mm)": 210, "Body Mass (g)": 4200, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.3, "Beak Depth (mm)": 15.7, "Flipper Length (mm)": 217, "Body Mass (g)": 5850, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 42.0, "Beak Depth (mm)": 13.5, "Flipper Length (mm)": 210, "Body Mass (g)": 4150, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.2, "Beak Depth (mm)": 15.2, "Flipper Length (mm)": 221, "Body Mass (g)": 6300, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.2, "Beak Depth (mm)": 14.5, "Flipper Length (mm)": 209, "Body Mass (g)": 4800, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.7, "Beak Depth (mm)": 15.1, "Flipper Length (mm)": 222, "Body Mass (g)": 5350, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.2, "Beak Depth (mm)": 14.3, "Flipper Length (mm)": 218, "Body Mass (g)": 5700, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.1, "Beak Depth (mm)": 14.5, "Flipper Length (mm)": 215, "Body Mass (g)": 5000, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.5, "Beak Depth (mm)": 14.5, "Flipper Length (mm)": 213, "Body Mass (g)": 4400, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.3, "Beak Depth (mm)": 15.8, "Flipper Length (mm)": 215, "Body Mass (g)": 5050, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 42.9, "Beak Depth (mm)": 13.1, "Flipper Length (mm)": 215, "Body Mass (g)": 5000, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.1, "Beak Depth (mm)": 15.1, "Flipper Length (mm)": 215, "Body Mass (g)": 5100, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 44.5, "Beak Depth (mm)": 14.3, "Flipper Length (mm)": 216, "Body Mass (g)": 4100, "Sex": null}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 47.8, "Beak Depth (mm)": 15.0, "Flipper Length (mm)": 215, "Body Mass (g)": 5650, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.2, "Beak Depth (mm)": 14.3, "Flipper Length (mm)": 210, "Body Mass (g)": 4600, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.0, "Beak Depth (mm)": 15.3, "Flipper Length (mm)": 220, "Body Mass (g)": 5550, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 47.3, "Beak Depth (mm)": 15.3, "Flipper Length (mm)": 222, "Body Mass (g)": 5250, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 42.8, "Beak Depth (mm)": 14.2, "Flipper Length (mm)": 209, "Body Mass (g)": 4700, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.1, "Beak Depth (mm)": 14.5, "Flipper Length (mm)": 207, "Body Mass (g)": 5050, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 59.6, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 230, "Body Mass (g)": 6050, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.1, "Beak Depth (mm)": 14.8, "Flipper Length (mm)": 220, "Body Mass (g)": 5150, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.4, "Beak Depth (mm)": 16.3, "Flipper Length (mm)": 220, "Body Mass (g)": 5400, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 42.6, "Beak Depth (mm)": 13.7, "Flipper Length (mm)": 213, "Body Mass (g)": 4950, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 44.4, "Beak Depth (mm)": 17.3, "Flipper Length (mm)": 219, "Body Mass (g)": 5250, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 44.0, "Beak Depth (mm)": 13.6, "Flipper Length (mm)": 208, "Body Mass (g)": 4350, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.7, "Beak Depth (mm)": 15.7, "Flipper Length (mm)": 208, "Body Mass (g)": 5350, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 42.7, "Beak Depth (mm)": 13.7, "Flipper Length (mm)": 208, "Body Mass (g)": 3950, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.6, "Beak Depth (mm)": 16.0, "Flipper Length (mm)": 225, "Body Mass (g)": 5700, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.3, "Beak Depth (mm)": 13.7, "Flipper Length (mm)": 210, "Body Mass (g)": 4300, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.6, "Beak Depth (mm)": 15.0, "Flipper Length (mm)": 216, "Body Mass (g)": 4750, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.5, "Beak Depth (mm)": 15.9, "Flipper Length (mm)": 222, "Body Mass (g)": 5550, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 43.6, "Beak Depth (mm)": 13.9, "Flipper Length (mm)": 217, "Body Mass (g)": 4900, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.5, "Beak Depth (mm)": 13.9, "Flipper Length (mm)": 210, "Body Mass (g)": 4200, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.5, "Beak Depth (mm)": 15.9, "Flipper Length (mm)": 225, "Body Mass (g)": 5400, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 44.9, "Beak Depth (mm)": 13.3, "Flipper Length (mm)": 213, "Body Mass (g)": 5100, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.2, "Beak Depth (mm)": 15.8, "Flipper Length (mm)": 215, "Body Mass (g)": 5300, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.6, "Beak Depth (mm)": 14.2, "Flipper Length (mm)": 210, "Body Mass (g)": 4850, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.5, "Beak Depth (mm)": 14.1, "Flipper Length (mm)": 220, "Body Mass (g)": 5300, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.1, "Beak Depth (mm)": 14.4, "Flipper Length (mm)": 210, "Body Mass (g)": 4400, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.1, "Beak Depth (mm)": 15.0, "Flipper Length (mm)": 225, "Body Mass (g)": 5000, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.5, "Beak Depth (mm)": 14.4, "Flipper Length (mm)": 217, "Body Mass (g)": 4900, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.0, "Beak Depth (mm)": 15.4, "Flipper Length (mm)": 220, "Body Mass (g)": 5050, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 43.8, "Beak Depth (mm)": 13.9, "Flipper Length (mm)": 208, "Body Mass (g)": 4300, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.5, "Beak Depth (mm)": 15.0, "Flipper Length (mm)": 220, "Body Mass (g)": 5000, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 43.2, "Beak Depth (mm)": 14.5, "Flipper Length (mm)": 208, "Body Mass (g)": 4450, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.4, "Beak Depth (mm)": 15.3, "Flipper Length (mm)": 224, "Body Mass (g)": 5550, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.3, "Beak Depth (mm)": 13.8, "Flipper Length (mm)": 208, "Body Mass (g)": 4200, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.2, "Beak Depth (mm)": 14.9, "Flipper Length (mm)": 221, "Body Mass (g)": 5300, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.7, "Beak Depth (mm)": 13.9, "Flipper Length (mm)": 214, "Body Mass (g)": 4400, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 54.3, "Beak Depth (mm)": 15.7, "Flipper Length (mm)": 231, "Body Mass (g)": 5650, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.8, "Beak Depth (mm)": 14.2, "Flipper Length (mm)": 219, "Body Mass (g)": 4700, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.8, "Beak Depth (mm)": 16.8, "Flipper Length (mm)": 230, "Body Mass (g)": 5700, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.2, "Beak Depth (mm)": 14.4, "Flipper Length (mm)": 214, "Body Mass (g)": 4650, "Sex": null}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.5, "Beak Depth (mm)": 16.2, "Flipper Length (mm)": 229, "Body Mass (g)": 5800, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 43.5, "Beak Depth (mm)": 14.2, "Flipper Length (mm)": 220, "Body Mass (g)": 4700, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.7, "Beak Depth (mm)": 15.0, "Flipper Length (mm)": 223, "Body Mass (g)": 5550, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 47.7, "Beak Depth (mm)": 15.0, "Flipper Length (mm)": 216, "Body Mass (g)": 4750, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.4, "Beak Depth (mm)": 15.6, "Flipper Length (mm)": 221, "Body Mass (g)": 5000, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.2, "Beak Depth (mm)": 15.6, "Flipper Length (mm)": 221, "Body Mass (g)": 5100, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.5, "Beak Depth (mm)": 14.8, "Flipper Length (mm)": 217, "Body Mass (g)": 5200, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.4, "Beak Depth (mm)": 15.0, "Flipper Length (mm)": 216, "Body Mass (g)": 4700, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.6, "Beak Depth (mm)": 16.0, "Flipper Length (mm)": 230, "Body Mass (g)": 5800, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 47.5, "Beak Depth (mm)": 14.2, "Flipper Length (mm)": 209, "Body Mass (g)": 4600, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 51.1, "Beak Depth (mm)": 16.3, "Flipper Length (mm)": 220, "Body Mass (g)": 6000, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.2, "Beak Depth (mm)": 13.8, "Flipper Length (mm)": 215, "Body Mass (g)": 4750, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.2, "Beak Depth (mm)": 16.4, "Flipper Length (mm)": 223, "Body Mass (g)": 5950, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.1, "Beak Depth (mm)": 14.5, "Flipper Length (mm)": 212, "Body Mass (g)": 4625, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 52.5, "Beak Depth (mm)": 15.6, "Flipper Length (mm)": 221, "Body Mass (g)": 5450, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 47.4, "Beak Depth (mm)": 14.6, "Flipper Length (mm)": 212, "Body Mass (g)": 4725, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.0, "Beak Depth (mm)": 15.9, "Flipper Length (mm)": 224, "Body Mass (g)": 5350, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 44.9, "Beak Depth (mm)": 13.8, "Flipper Length (mm)": 212, "Body Mass (g)": 4750, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.8, "Beak Depth (mm)": 17.3, "Flipper Length (mm)": 228, "Body Mass (g)": 5600, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 43.4, "Beak Depth (mm)": 14.4, "Flipper Length (mm)": 218, "Body Mass (g)": 4600, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 51.3, "Beak Depth (mm)": 14.2, "Flipper Length (mm)": 218, "Body Mass (g)": 5300, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 47.5, "Beak Depth (mm)": 14.0, "Flipper Length (mm)": 212, "Body Mass (g)": 4875, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 52.1, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 230, "Body Mass (g)": 5550, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 47.5, "Beak Depth (mm)": 15.0, "Flipper Length (mm)": 218, "Body Mass (g)": 4950, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 52.2, "Beak Depth (mm)": 17.1, "Flipper Length (mm)": 228, "Body Mass (g)": 5400, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.5, "Beak Depth (mm)": 14.5, "Flipper Length (mm)": 212, "Body Mass (g)": 4750, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.5, "Beak Depth (mm)": 16.1, "Flipper Length (mm)": 224, "Body Mass (g)": 5650, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 44.5, "Beak Depth (mm)": 14.7, "Flipper Length (mm)": 214, "Body Mass (g)": 4850, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.8, "Beak Depth (mm)": 15.7, "Flipper Length (mm)": 226, "Body Mass (g)": 5200, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.4, "Beak Depth (mm)": 15.8, "Flipper Length (mm)": 216, "Body Mass (g)": 4925, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.9, "Beak Depth (mm)": 14.6, "Flipper Length (mm)": 222, "Body Mass (g)": 4875, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.4, "Beak Depth (mm)": 14.4, "Flipper Length (mm)": 203, "Body Mass (g)": 4625, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 51.1, "Beak Depth (mm)": 16.5, "Flipper Length (mm)": 225, "Body Mass (g)": 5250, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.5, "Beak Depth (mm)": 15.0, "Flipper Length (mm)": 219, "Body Mass (g)": 4850, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 55.9, "Beak Depth (mm)": 17.0, "Flipper Length (mm)": 228, "Body Mass (g)": 5600, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 47.2, "Beak Depth (mm)": 15.5, "Flipper Length (mm)": 215, "Body Mass (g)": 4975, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.1, "Beak Depth (mm)": 15.0, "Flipper Length (mm)": 228, "Body Mass (g)": 5500, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 47.3, "Beak Depth (mm)": 13.8, "Flipper Length (mm)": 216, "Body Mass (g)": 4725, "Sex": null}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.8, "Beak Depth (mm)": 16.1, "Flipper Length (mm)": 215, "Body Mass (g)": 5500, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 41.7, "Beak Depth (mm)": 14.7, "Flipper Length (mm)": 210, "Body Mass (g)": 4700, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 53.4, "Beak Depth (mm)": 15.8, "Flipper Length (mm)": 219, "Body Mass (g)": 5500, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 43.3, "Beak Depth (mm)": 14.0, "Flipper Length (mm)": 208, "Body Mass (g)": 4575, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.1, "Beak Depth (mm)": 15.1, "Flipper Length (mm)": 209, "Body Mass (g)": 5500, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.5, "Beak Depth (mm)": 15.2, "Flipper Length (mm)": 216, "Body Mass (g)": 5000, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.8, "Beak Depth (mm)": 15.9, "Flipper Length (mm)": 229, "Body Mass (g)": 5950, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 43.5, "Beak Depth (mm)": 15.2, "Flipper Length (mm)": 213, "Body Mass (g)": 4650, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 51.5, "Beak Depth (mm)": 16.3, "Flipper Length (mm)": 230, "Body Mass (g)": 5500, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.2, "Beak Depth (mm)": 14.1, "Flipper Length (mm)": 217, "Body Mass (g)": 4375, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 55.1, "Beak Depth (mm)": 16.0, "Flipper Length (mm)": 230, "Body Mass (g)": 5850, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 44.5, "Beak Depth (mm)": 15.7, "Flipper Length (mm)": 217, "Body Mass (g)": 4875, "Sex": "."}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 48.8, "Beak Depth (mm)": 16.2, "Flipper Length (mm)": 222, "Body Mass (g)": 6000, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 47.2, "Beak Depth (mm)": 13.7, "Flipper Length (mm)": 214, "Body Mass (g)": 4925, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 46.8, "Beak Depth (mm)": 14.3, "Flipper Length (mm)": 215, "Body Mass (g)": 4850, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 50.4, "Beak Depth (mm)": 15.7, "Flipper Length (mm)": 222, "Body Mass (g)": 5750, "Sex": "MALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 45.2, "Beak Depth (mm)": 14.8, "Flipper Length (mm)": 212, "Body Mass (g)": 5200, "Sex": "FEMALE"}, {"Species": "Gentoo", "Island": "Biscoe", "Beak Length (mm)": 49.9, "Beak Depth (mm)": 16.1, "Flipper Length (mm)": 213, "Body Mass (g)": 5400, "Sex": "MALE"}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#deviation_ellipses-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="method" for="sd-tab-item-0">
+Method syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">f</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">confidence_region_2d</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">conf_level</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">segments</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate confidence interval ellipse.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arr</span>
+<span class="sd">        numpy array with 2 columns</span>
+<span class="sd">    conf_level</span>
+<span class="sd">        lower tail probability</span>
+<span class="sd">    segments</span>
+<span class="sd">        number of points describing the ellipse.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_elements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="c1"># Degrees of freedom of the chi-squared distribution in the **numerator**</span>
+    <span class="n">dfn</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="c1"># Degrees of freedom of the chi-squared distribution in the **denominator**</span>
+    <span class="n">dfd</span> <span class="o">=</span> <span class="n">n_elements</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="c1"># Percent point function at `conf_level` of an F continuous random variable</span>
+    <span class="n">quantile</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">conf_level</span><span class="p">,</span> <span class="n">dfn</span><span class="o">=</span><span class="n">dfn</span><span class="p">,</span> <span class="n">dfd</span><span class="o">=</span><span class="n">dfd</span><span class="p">)</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">quantile</span><span class="p">)</span>
+    <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">segments</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">segments</span>
+    <span class="n">circle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angles</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angles</span><span class="p">)))</span>
+    <span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">cov_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">center</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">*</span> <span class="p">(</span><span class="n">circle</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">cov_mat</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">grouped_confidence_regions</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col_x</span><span class="p">,</span> <span class="n">col_y</span><span class="p">,</span> <span class="n">col_group</span><span class="p">):</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_x</span><span class="p">,</span> <span class="n">col_y</span><span class="p">]</span>
+    <span class="n">ellipses</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ser</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col_group</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">ser</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">():</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ser</span> <span class="o">==</span> <span class="n">group</span><span class="p">,</span> <span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">ellipse</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">confidence_region_2d</span><span class="p">(</span><span class="n">arr</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+        <span class="n">ellipse</span><span class="p">[</span><span class="n">col_group</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span>
+        <span class="n">ellipses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ellipse</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">ellipses</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="s2">&quot;order&quot;</span><span class="p">)</span>
+
+
+<span class="n">col_x</span> <span class="o">=</span> <span class="s2">&quot;Flipper Length (mm)&quot;</span>
+<span class="n">col_y</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+<span class="n">col_group</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="n">col_x</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="n">col_y</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="n">col_group</span><span class="p">)</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">penguins</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">col_x</span><span class="p">,</span> <span class="n">col_y</span><span class="p">,</span> <span class="n">col_group</span><span class="p">])</span>
+<span class="n">ellipse</span> <span class="o">=</span> <span class="n">grouped_confidence_regions</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">col_x</span><span class="o">=</span><span class="n">col_x</span><span class="p">,</span> <span class="n">col_y</span><span class="o">=</span><span class="n">col_y</span><span class="p">,</span> <span class="n">col_group</span><span class="o">=</span><span class="n">col_group</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">tooltip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">color</span>
+<span class="p">)</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">ellipse</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">(</span><span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fillOpacity</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+    <span class="n">order</span><span class="o">=</span><span class="s2">&quot;order&quot;</span>
+<span class="p">)</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="p">(</span><span class="n">lines</span> <span class="o">+</span> <span class="n">points</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">chart</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="attribute" for="sd-tab-item-1">
+Attribute syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">f</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">confidence_region_2d</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">conf_level</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">segments</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate confidence interval ellipse.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arr</span>
+<span class="sd">        numpy array with 2 columns</span>
+<span class="sd">    conf_level</span>
+<span class="sd">        lower tail probability</span>
+<span class="sd">    segments</span>
+<span class="sd">        number of points describing the ellipse.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_elements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="c1"># Degrees of freedom of the chi-squared distribution in the **numerator**</span>
+    <span class="n">dfn</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="c1"># Degrees of freedom of the chi-squared distribution in the **denominator**</span>
+    <span class="n">dfd</span> <span class="o">=</span> <span class="n">n_elements</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="c1"># Percent point function at `conf_level` of an F continuous random variable</span>
+    <span class="n">quantile</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">conf_level</span><span class="p">,</span> <span class="n">dfn</span><span class="o">=</span><span class="n">dfn</span><span class="p">,</span> <span class="n">dfd</span><span class="o">=</span><span class="n">dfd</span><span class="p">)</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">quantile</span><span class="p">)</span>
+    <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">segments</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">segments</span>
+    <span class="n">circle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angles</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angles</span><span class="p">)))</span>
+    <span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">cov_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">center</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">*</span> <span class="p">(</span><span class="n">circle</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">cov_mat</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">grouped_confidence_regions</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col_x</span><span class="p">,</span> <span class="n">col_y</span><span class="p">,</span> <span class="n">col_group</span><span class="p">):</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_x</span><span class="p">,</span> <span class="n">col_y</span><span class="p">]</span>
+    <span class="n">ellipses</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ser</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col_group</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">ser</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">():</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ser</span> <span class="o">==</span> <span class="n">group</span><span class="p">,</span> <span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">ellipse</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">confidence_region_2d</span><span class="p">(</span><span class="n">arr</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+        <span class="n">ellipse</span><span class="p">[</span><span class="n">col_group</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span>
+        <span class="n">ellipses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ellipse</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">ellipses</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="s2">&quot;order&quot;</span><span class="p">)</span>
+
+
+<span class="n">col_x</span> <span class="o">=</span> <span class="s2">&quot;Flipper Length (mm)&quot;</span>
+<span class="n">col_y</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+<span class="n">col_group</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="n">col_x</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="n">col_y</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="n">col_group</span><span class="p">)</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">penguins</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">col_x</span><span class="p">,</span> <span class="n">col_y</span><span class="p">,</span> <span class="n">col_group</span><span class="p">])</span>
+<span class="n">ellipse</span> <span class="o">=</span> <span class="n">grouped_confidence_regions</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">col_x</span><span class="o">=</span><span class="n">col_x</span><span class="p">,</span> <span class="n">col_y</span><span class="o">=</span><span class="n">col_y</span><span class="p">,</span> <span class="n">col_group</span><span class="o">=</span><span class="n">col_group</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">tooltip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">color</span>
+<span class="p">)</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">ellipse</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">(</span><span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fillOpacity</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+    <span class="n">order</span><span class="o">=</span><span class="s2">&quot;order&quot;</span>
+<span class="p">)</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="p">(</span><span class="n">lines</span> <span class="o">+</span> <span class="n">points</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">chart</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

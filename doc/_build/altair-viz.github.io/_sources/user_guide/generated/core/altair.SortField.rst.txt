@@ -1,0 +1,30 @@
+﻿altair.SortField
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: SortField
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SortField.__init__
+      ~SortField.copy
+      ~SortField.from_dict
+      ~SortField.from_json
+      ~SortField.resolve_references
+      ~SortField.to_dict
+      ~SortField.to_json
+      ~SortField.validate
+      ~SortField.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.LookupData
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: LookupData
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LookupData.__init__
+      ~LookupData.copy
+      ~LookupData.from_dict
+      ~LookupData.from_json
+      ~LookupData.resolve_references
+      ~LookupData.to_dict
+      ~LookupData.to_json
+      ~LookupData.validate
+      ~LookupData.validate_property
+   
+   
+
+   
+   
+   

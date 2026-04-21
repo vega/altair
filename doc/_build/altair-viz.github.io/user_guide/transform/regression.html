@@ -1,0 +1,760 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Regression &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/transform/regression';</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Sample" href="sample.html" />
+    <link rel="prev" title="Quantile" href="quantile.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../data.html">Specifying Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../encodings/index.html">Encodings</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../encodings/channels.html">Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../encodings/channel_options.html">Channel Options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../marks/index.html">Marks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../marks/arc.html">Arc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/area.html">Area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/bar.html">Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/boxplot.html">Box Plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/circle.html">Circle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/errorband.html">Error Band</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/errorbar.html">Error Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/geoshape.html">Geoshape</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../marks/image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/line.html">Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/rule.html">Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/square.html">Square</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/text.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/tick.html">Tick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/trail.html">Trail</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Data Transformations</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="aggregate.html">Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bin.html">Bin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calculate.html">Calculate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="density.html">Density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extent.html">Extent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter.html">Filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flatten.html">Flatten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fold.html">Fold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="impute.html">Impute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="joinaggregate.html">Join Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lookup.html">Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loess.html">LOESS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pivot.html">Pivot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quantile.html">Quantile</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample.html">Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stack.html">Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeunit.html">TimeUnit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="window.html">Window</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../interactions/index.html">Interactive Charts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../interactions/parameters.html">Parameters, Conditions, &amp; Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interactions/bindings_widgets.html">Bindings &amp; Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interactions/expressions.html">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interactions/jupyter_chart.html">JupyterChart</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../compound_charts.html">Layered &amp; Multi-View Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scale_resolve.html">Scale &amp; Guide Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../times_and_dates.html">Times &amp; Dates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../customization.html">Customizing Visualizations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Top-Level Chart Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../saving_charts.html">Saving Altair Charts</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../internals.html">Altair Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../display_frontends.html">Displaying Altair Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../custom_renderers.html">Customizing Renderers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_transformers.html">Data Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../large_datasets.html">Large Datasets</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../data.html" class="nav-link">Specifying Data</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Data Transformations</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Regression</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="regression">
+<span id="user-guide-regression-transform"></span><h1>Regression<a class="headerlink" href="#regression" title="Link to this heading">#</a></h1>
+<p>The regression transform fits two-dimensional regression models to smooth and
+predict data. This transform can fit multiple models for input data (one per group)
+and generates new data objects that represent points for summary trend lines.
+Alternatively, this transform can be used to generate a set of objects containing
+regression model parameters, one per group.</p>
+<p>This transform supports parametric models for the following functional forms:</p>
+<ul class="simple">
+<li><p>linear (<code class="docutils literal notranslate"><span class="pre">linear</span></code>): <em>y = a + b * x</em></p></li>
+<li><p>logarithmic (<code class="docutils literal notranslate"><span class="pre">log</span></code>): <em>y = a + b * log(x)</em></p></li>
+<li><p>exponential (<code class="docutils literal notranslate"><span class="pre">exp</span></code>): <em>y = a * e^(b * x)</em></p></li>
+<li><p>power (<code class="docutils literal notranslate"><span class="pre">pow</span></code>): <em>y = a * x^b</em></p></li>
+<li><p>quadratic (<code class="docutils literal notranslate"><span class="pre">quad</span></code>): <em>y = a + b * x + c * x^2</em></p></li>
+<li><p>polynomial (<code class="docutils literal notranslate"><span class="pre">poly</span></code>): <em>y = a + b * x + … + k * x^(order)</em></p></li>
+</ul>
+<p>All models are fit using ordinary least squares.
+For non-parametric locally weighted regression, see the
+<a class="reference internal" href="loess.html#user-guide-loess-transform"><span class="std std-ref">LOESS</span></a>.</p>
+<p>Here is an example of a simple linear regression plotted on top of data:</p>
+<div class="highlight-python notranslate" id="regression-rst-altair-source-0"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">})</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y&#39;</span>
+<span class="p">)</span>
+
+<span class="n">chart</span> <span class="o">+</span> <span class="n">chart</span><span class="o">.</span><span class="n">transform_regression</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span>
+</pre></div>
+</div>
+
+<div id="regression-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"mark": {"type": "point"}, "encoding": {"x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}}}, {"mark": {"type": "line"}, "encoding": {"x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}}, "transform": [{"on": "x", "regression": "y"}]}], "data": {"name": "data-868dd2a490db12cfa251f01c94a5708a"}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-868dd2a490db12cfa251f01c94a5708a": [{"x": 0.0, "y": -4.503285846988767}, {"x": 0.20408163265306123, "y": -4.934182668518123}, {"x": 0.40816326530612246, "y": -3.9441481965931855}, {"x": 0.6122448979591837, "y": -2.8647252456327905}, {"x": 0.8163265306122449, "y": -4.417826844111091}, {"x": 1.0204081632653061, "y": -4.213728793683875}, {"x": 1.2244897959183674, "y": -2.196297388574241}, {"x": 1.4285714285714286, "y": -2.8039938422756623}, {"x": 1.6326530612244898, "y": -3.836821324710462}, {"x": 1.836734693877551, "y": -2.6207052625364846}, {"x": 2.0408163265306123, "y": -3.42260136628185}, {"x": 2.2448979591836737, "y": -3.220831794386583}, {"x": 2.4489795918367347, "y": -2.309058136597231}, {"x": 2.6530612244897958, "y": -4.260219020168002}, {"x": 2.857142857142857, "y": -3.8677749753701756}, {"x": 3.0612244897959187, "y": -2.501063039445054}, {"x": 3.2653061224489797, "y": -2.747524997885444}, {"x": 3.4693877551020407, "y": -1.2163649123026854}, {"x": 3.673469387755102, "y": -2.2345546877661087}, {"x": 3.8775510204081636, "y": -2.534752680927128}, {"x": 4.081632653061225, "y": 0.5472814219827786}, {"x": 4.285714285714286, "y": -0.94006201477225}, {"x": 4.4897959183673475, "y": -0.44267587694472865}, {"x": 4.6938775510204085, "y": -1.7308706351930483}, {"x": 4.8979591836734695, "y": -0.6464235408517132}, {"x": 5.1020408163265305, "y": 0.21296340603639657}, {"x": 5.3061224489795915, "y": -0.8448711284427113}, {"x": 5.510204081632653, "y": 0.8859020999783254}, {"x": 5.714285714285714, "y": 0.11364702436690943}, {"x": 5.918367346938775, "y": 0.6266735971454986}, {"x": 6.122448979591837, "y": 0.5207423673624404}, {"x": 6.326530612244898, "y": 3.1788087967538363}, {"x": 6.530612244897959, "y": 1.5171150201600254}, {"x": 6.73469387755102, "y": 0.67698294859512}, {"x": 6.938775510204081, "y": 2.7613204223072705}, {"x": 7.142857142857143, "y": 0.922013492886121}, {"x": 7.346938775510204, "y": 2.5558023705149595}, {"x": 7.551020408163265, "y": 0.5913502842834897}, {"x": 7.755102040816327, "y": 1.4269159919178966}, {"x": 7.959183673469388, "y": 3.1560449093385117}, {"x": 8.16326530612245, "y": 3.90173188611786}, {"x": 8.36734693877551, "y": 3.5387152199654808}, {"x": 8.571428571428571, "y": 3.4557802890403306}, {"x": 8.775510204081632, "y": 3.4744065084923434}, {"x": 8.979591836734695, "y": 2.5010698463672676}, {"x": 9.183673469387756, "y": 3.463829260993047}, {"x": 9.387755102040817, "y": 3.9271163310810295}, {"x": 9.591836734693878, "y": 5.648958960912793}, {"x": 9.795918367346939, "y": 5.1395366569154}, {"x": 10.0, "y": 3.236959844637266}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#regression-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><section id="transform-options">
+<h2>Transform Options<a class="headerlink" href="#transform-options" title="Link to this heading">#</a></h2>
+<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">transform_regression()</span></code> method is built on the <a class="reference internal" href="../generated/core/altair.RegressionTransform.html#altair.RegressionTransform" title="altair.RegressionTransform"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressionTransform</span></code></a>
+class, which has the following options:</p>
+<details><summary><a>Click to show table</a></summary><div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="vl-prop"><p>as</p></td>
+<td class="vl-type-def"><p>array(<a class="reference internal" href="../generated/core/altair.FieldName.html#altair.FieldName" title="altair.FieldName"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldName</span></code></a>)</p></td>
+<td class="vl-decsr"><p>The output field names for the smoothed points generated by the regression transform.</p>
+<p><strong>Default value:</strong> The field names of the input x and y values.</p>
+</td>
+</tr>
+<tr class="row-odd"><td class="vl-prop"><p>extent</p></td>
+<td class="vl-type-def"><p>array(<code class="docutils literal notranslate"><span class="pre">number</span></code>)</p></td>
+<td class="vl-decsr"><p>A [min, max] domain over the independent (x) field for the starting and ending points of the generated trend line.</p></td>
+</tr>
+<tr class="row-even"><td class="vl-prop"><p>groupby</p></td>
+<td class="vl-type-def"><p>array(<a class="reference internal" href="../generated/core/altair.FieldName.html#altair.FieldName" title="altair.FieldName"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldName</span></code></a>)</p></td>
+<td class="vl-decsr"><p>The data fields to group by. If not specified, a single group containing all data objects will be used.</p></td>
+</tr>
+<tr class="row-odd"><td class="vl-prop"><p>method</p></td>
+<td class="vl-type-def"><p>[‘linear’, ‘log’, ‘exp’, ‘pow’, ‘quad’, ‘poly’]</p></td>
+<td class="vl-decsr"><p>The functional form of the regression model. One of <code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;log&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;exp&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;pow&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;quad&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;poly&quot;</span></code>.</p>
+<p><strong>Default value:</strong> <code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td class="vl-prop"><p>on</p></td>
+<td class="vl-type-def"><p><a class="reference internal" href="../generated/core/altair.FieldName.html#altair.FieldName" title="altair.FieldName"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldName</span></code></a></p></td>
+<td class="vl-decsr"><p>The data field of the independent variable to use a predictor.</p></td>
+</tr>
+<tr class="row-odd"><td class="vl-prop"><p>order</p></td>
+<td class="vl-type-def"><p><code class="docutils literal notranslate"><span class="pre">number</span></code></p></td>
+<td class="vl-decsr"><p>The polynomial order (number of coefficients) for the ‘poly’ method.</p>
+<p><strong>Default value:</strong> <code class="docutils literal notranslate"><span class="pre">3</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td class="vl-prop"><p>params</p></td>
+<td class="vl-type-def"><p><code class="docutils literal notranslate"><span class="pre">boolean</span></code></p></td>
+<td class="vl-decsr"><p>A boolean flag indicating if the transform should return the regression model parameters (one object per group), rather than trend line points. The resulting objects include a <code class="docutils literal notranslate"><span class="pre">coef</span></code> array of fitted coefficient values (starting with the intercept term and then including terms of increasing order) and an <code class="docutils literal notranslate"><span class="pre">rSquared</span></code> value (indicating the total variance explained by the model).</p>
+<p><strong>Default value:</strong> <code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td class="vl-prop"><p>regression</p></td>
+<td class="vl-type-def"><p><a class="reference internal" href="../generated/core/altair.FieldName.html#altair.FieldName" title="altair.FieldName"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldName</span></code></a></p></td>
+<td class="vl-decsr"><p>The data field of the dependent variable to predict.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="quantile.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Quantile</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sample.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Sample</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-options">Transform Options</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

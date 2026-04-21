@@ -1,0 +1,30 @@
+﻿altair.RangeEnum
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: RangeEnum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RangeEnum.__init__
+      ~RangeEnum.copy
+      ~RangeEnum.from_dict
+      ~RangeEnum.from_json
+      ~RangeEnum.resolve_references
+      ~RangeEnum.to_dict
+      ~RangeEnum.to_json
+      ~RangeEnum.validate
+      ~RangeEnum.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.MultiPoint
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: MultiPoint
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MultiPoint.__init__
+      ~MultiPoint.copy
+      ~MultiPoint.from_dict
+      ~MultiPoint.from_json
+      ~MultiPoint.resolve_references
+      ~MultiPoint.to_dict
+      ~MultiPoint.to_json
+      ~MultiPoint.validate
+      ~MultiPoint.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,130 @@
+﻿altair.LayerChart
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: LayerChart
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LayerChart.__init__
+      ~LayerChart.add_layers
+      ~LayerChart.add_params
+      ~LayerChart.add_selection
+      ~LayerChart.configure
+      ~LayerChart.configure_arc
+      ~LayerChart.configure_area
+      ~LayerChart.configure_axis
+      ~LayerChart.configure_axisBand
+      ~LayerChart.configure_axisBottom
+      ~LayerChart.configure_axisDiscrete
+      ~LayerChart.configure_axisLeft
+      ~LayerChart.configure_axisPoint
+      ~LayerChart.configure_axisQuantitative
+      ~LayerChart.configure_axisRight
+      ~LayerChart.configure_axisTemporal
+      ~LayerChart.configure_axisTop
+      ~LayerChart.configure_axisX
+      ~LayerChart.configure_axisXBand
+      ~LayerChart.configure_axisXDiscrete
+      ~LayerChart.configure_axisXPoint
+      ~LayerChart.configure_axisXQuantitative
+      ~LayerChart.configure_axisXTemporal
+      ~LayerChart.configure_axisY
+      ~LayerChart.configure_axisYBand
+      ~LayerChart.configure_axisYDiscrete
+      ~LayerChart.configure_axisYPoint
+      ~LayerChart.configure_axisYQuantitative
+      ~LayerChart.configure_axisYTemporal
+      ~LayerChart.configure_bar
+      ~LayerChart.configure_boxplot
+      ~LayerChart.configure_circle
+      ~LayerChart.configure_concat
+      ~LayerChart.configure_errorband
+      ~LayerChart.configure_errorbar
+      ~LayerChart.configure_facet
+      ~LayerChart.configure_geoshape
+      ~LayerChart.configure_header
+      ~LayerChart.configure_headerColumn
+      ~LayerChart.configure_headerFacet
+      ~LayerChart.configure_headerRow
+      ~LayerChart.configure_image
+      ~LayerChart.configure_legend
+      ~LayerChart.configure_line
+      ~LayerChart.configure_mark
+      ~LayerChart.configure_point
+      ~LayerChart.configure_projection
+      ~LayerChart.configure_range
+      ~LayerChart.configure_rect
+      ~LayerChart.configure_rule
+      ~LayerChart.configure_scale
+      ~LayerChart.configure_selection
+      ~LayerChart.configure_square
+      ~LayerChart.configure_text
+      ~LayerChart.configure_tick
+      ~LayerChart.configure_title
+      ~LayerChart.configure_tooltipFormat
+      ~LayerChart.configure_trail
+      ~LayerChart.configure_view
+      ~LayerChart.copy
+      ~LayerChart.display
+      ~LayerChart.encode
+      ~LayerChart.facet
+      ~LayerChart.from_dict
+      ~LayerChart.from_json
+      ~LayerChart.interactive
+      ~LayerChart.open_editor
+      ~LayerChart.project
+      ~LayerChart.properties
+      ~LayerChart.repeat
+      ~LayerChart.resolve_axis
+      ~LayerChart.resolve_legend
+      ~LayerChart.resolve_references
+      ~LayerChart.resolve_scale
+      ~LayerChart.save
+      ~LayerChart.serve
+      ~LayerChart.show
+      ~LayerChart.to_dict
+      ~LayerChart.to_html
+      ~LayerChart.to_json
+      ~LayerChart.to_url
+      ~LayerChart.transform_aggregate
+      ~LayerChart.transform_bin
+      ~LayerChart.transform_calculate
+      ~LayerChart.transform_density
+      ~LayerChart.transform_extent
+      ~LayerChart.transform_filter
+      ~LayerChart.transform_flatten
+      ~LayerChart.transform_fold
+      ~LayerChart.transform_impute
+      ~LayerChart.transform_joinaggregate
+      ~LayerChart.transform_loess
+      ~LayerChart.transform_lookup
+      ~LayerChart.transform_pivot
+      ~LayerChart.transform_quantile
+      ~LayerChart.transform_regression
+      ~LayerChart.transform_sample
+      ~LayerChart.transform_stack
+      ~LayerChart.transform_timeunit
+      ~LayerChart.transform_window
+      ~LayerChart.transformed_data
+      ~LayerChart.validate
+      ~LayerChart.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LayerChart.data
+   
+   

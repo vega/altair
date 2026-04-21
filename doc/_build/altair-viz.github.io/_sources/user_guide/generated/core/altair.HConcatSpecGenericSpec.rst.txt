@@ -1,0 +1,30 @@
+﻿altair.HConcatSpecGenericSpec
+=============================
+
+.. currentmodule:: altair
+
+.. autoclass:: HConcatSpecGenericSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~HConcatSpecGenericSpec.__init__
+      ~HConcatSpecGenericSpec.copy
+      ~HConcatSpecGenericSpec.from_dict
+      ~HConcatSpecGenericSpec.from_json
+      ~HConcatSpecGenericSpec.resolve_references
+      ~HConcatSpecGenericSpec.to_dict
+      ~HConcatSpecGenericSpec.to_json
+      ~HConcatSpecGenericSpec.validate
+      ~HConcatSpecGenericSpec.validate_property
+   
+   
+
+   
+   
+   

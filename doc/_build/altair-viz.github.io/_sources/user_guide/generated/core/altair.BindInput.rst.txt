@@ -1,0 +1,30 @@
+﻿altair.BindInput
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: BindInput
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BindInput.__init__
+      ~BindInput.copy
+      ~BindInput.from_dict
+      ~BindInput.from_json
+      ~BindInput.resolve_references
+      ~BindInput.to_dict
+      ~BindInput.to_json
+      ~BindInput.validate
+      ~BindInput.validate_property
+   
+   
+
+   
+   
+   

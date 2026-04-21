@@ -1,0 +1,45 @@
+﻿altair.Href
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Href
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Href.__init__
+      ~Href.copy
+      ~Href.from_dict
+      ~Href.from_json
+      ~Href.resolve_references
+      ~Href.to_dict
+      ~Href.to_json
+      ~Href.validate
+      ~Href.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Href.aggregate
+      ~Href.bandPosition
+      ~Href.bin
+      ~Href.condition
+      ~Href.field
+      ~Href.format
+      ~Href.formatType
+      ~Href.timeUnit
+      ~Href.title
+      ~Href.type
+   
+   

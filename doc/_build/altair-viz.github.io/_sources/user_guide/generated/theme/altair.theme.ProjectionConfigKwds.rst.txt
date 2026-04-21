@@ -1,0 +1,62 @@
+﻿altair.theme.ProjectionConfigKwds
+=================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ProjectionConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ProjectionConfigKwds.__init__
+      ~ProjectionConfigKwds.clear
+      ~ProjectionConfigKwds.copy
+      ~ProjectionConfigKwds.fromkeys
+      ~ProjectionConfigKwds.get
+      ~ProjectionConfigKwds.items
+      ~ProjectionConfigKwds.keys
+      ~ProjectionConfigKwds.pop
+      ~ProjectionConfigKwds.popitem
+      ~ProjectionConfigKwds.setdefault
+      ~ProjectionConfigKwds.update
+      ~ProjectionConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ProjectionConfigKwds.center
+      ~ProjectionConfigKwds.clipAngle
+      ~ProjectionConfigKwds.clipExtent
+      ~ProjectionConfigKwds.coefficient
+      ~ProjectionConfigKwds.distance
+      ~ProjectionConfigKwds.extent
+      ~ProjectionConfigKwds.fit
+      ~ProjectionConfigKwds.fraction
+      ~ProjectionConfigKwds.lobes
+      ~ProjectionConfigKwds.parallel
+      ~ProjectionConfigKwds.parallels
+      ~ProjectionConfigKwds.pointRadius
+      ~ProjectionConfigKwds.precision
+      ~ProjectionConfigKwds.radius
+      ~ProjectionConfigKwds.ratio
+      ~ProjectionConfigKwds.reflectX
+      ~ProjectionConfigKwds.reflectY
+      ~ProjectionConfigKwds.rotate
+      ~ProjectionConfigKwds.scale
+      ~ProjectionConfigKwds.size
+      ~ProjectionConfigKwds.spacing
+      ~ProjectionConfigKwds.tilt
+      ~ProjectionConfigKwds.translate
+      ~ProjectionConfigKwds.type
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsValuefillOpacity
+=============================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsValuefillOpacity
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsValuefillOpacity.__init__
+      ~ScaleInvalidDataShowAsValuefillOpacity.copy
+      ~ScaleInvalidDataShowAsValuefillOpacity.from_dict
+      ~ScaleInvalidDataShowAsValuefillOpacity.from_json
+      ~ScaleInvalidDataShowAsValuefillOpacity.resolve_references
+      ~ScaleInvalidDataShowAsValuefillOpacity.to_dict
+      ~ScaleInvalidDataShowAsValuefillOpacity.to_json
+      ~ScaleInvalidDataShowAsValuefillOpacity.validate
+      ~ScaleInvalidDataShowAsValuefillOpacity.validate_property
+   
+   
+
+   
+   
+   

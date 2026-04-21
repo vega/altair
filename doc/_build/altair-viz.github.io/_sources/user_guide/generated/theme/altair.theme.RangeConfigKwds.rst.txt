@@ -1,0 +1,44 @@
+﻿altair.theme.RangeConfigKwds
+============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: RangeConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RangeConfigKwds.__init__
+      ~RangeConfigKwds.clear
+      ~RangeConfigKwds.copy
+      ~RangeConfigKwds.fromkeys
+      ~RangeConfigKwds.get
+      ~RangeConfigKwds.items
+      ~RangeConfigKwds.keys
+      ~RangeConfigKwds.pop
+      ~RangeConfigKwds.popitem
+      ~RangeConfigKwds.setdefault
+      ~RangeConfigKwds.update
+      ~RangeConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RangeConfigKwds.category
+      ~RangeConfigKwds.diverging
+      ~RangeConfigKwds.heatmap
+      ~RangeConfigKwds.ordinal
+      ~RangeConfigKwds.ramp
+      ~RangeConfigKwds.symbol
+   
+   

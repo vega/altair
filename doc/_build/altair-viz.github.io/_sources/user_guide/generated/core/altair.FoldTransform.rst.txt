@@ -1,0 +1,30 @@
+﻿altair.FoldTransform
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: FoldTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FoldTransform.__init__
+      ~FoldTransform.copy
+      ~FoldTransform.from_dict
+      ~FoldTransform.from_json
+      ~FoldTransform.resolve_references
+      ~FoldTransform.to_dict
+      ~FoldTransform.to_json
+      ~FoldTransform.validate
+      ~FoldTransform.validate_property
+   
+   
+
+   
+   
+   

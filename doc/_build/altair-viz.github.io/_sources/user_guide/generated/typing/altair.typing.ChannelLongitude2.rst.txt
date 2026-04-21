@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelLongitude2
+===============================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelLongitude2

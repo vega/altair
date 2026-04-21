@@ -1,0 +1,30 @@
+﻿altair.TypedFieldDef
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: TypedFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TypedFieldDef.__init__
+      ~TypedFieldDef.copy
+      ~TypedFieldDef.from_dict
+      ~TypedFieldDef.from_json
+      ~TypedFieldDef.resolve_references
+      ~TypedFieldDef.to_dict
+      ~TypedFieldDef.to_json
+      ~TypedFieldDef.validate
+      ~TypedFieldDef.validate_property
+   
+   
+
+   
+   
+   

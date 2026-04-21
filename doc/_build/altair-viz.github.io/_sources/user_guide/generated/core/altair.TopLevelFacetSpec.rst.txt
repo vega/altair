@@ -1,0 +1,30 @@
+﻿altair.TopLevelFacetSpec
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: TopLevelFacetSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TopLevelFacetSpec.__init__
+      ~TopLevelFacetSpec.copy
+      ~TopLevelFacetSpec.from_dict
+      ~TopLevelFacetSpec.from_json
+      ~TopLevelFacetSpec.resolve_references
+      ~TopLevelFacetSpec.to_dict
+      ~TopLevelFacetSpec.to_json
+      ~TopLevelFacetSpec.validate
+      ~TopLevelFacetSpec.validate_property
+   
+   
+
+   
+   
+   

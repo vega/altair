@@ -1,0 +1,30 @@
+﻿altair.ShapeDef
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: ShapeDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ShapeDef.__init__
+      ~ShapeDef.copy
+      ~ShapeDef.from_dict
+      ~ShapeDef.from_json
+      ~ShapeDef.resolve_references
+      ~ShapeDef.to_dict
+      ~ShapeDef.to_json
+      ~ShapeDef.validate
+      ~ShapeDef.validate_property
+   
+   
+
+   
+   
+   

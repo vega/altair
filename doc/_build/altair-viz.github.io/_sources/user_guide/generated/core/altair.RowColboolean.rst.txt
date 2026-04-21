@@ -1,0 +1,30 @@
+﻿altair.RowColboolean
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: RowColboolean
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RowColboolean.__init__
+      ~RowColboolean.copy
+      ~RowColboolean.from_dict
+      ~RowColboolean.from_json
+      ~RowColboolean.resolve_references
+      ~RowColboolean.to_dict
+      ~RowColboolean.to_json
+      ~RowColboolean.validate
+      ~RowColboolean.validate_property
+   
+   
+
+   
+   
+   

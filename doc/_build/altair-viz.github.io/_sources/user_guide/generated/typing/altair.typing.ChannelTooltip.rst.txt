@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelTooltip
+============================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelTooltip

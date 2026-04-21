@@ -1,0 +1,39 @@
+﻿altair.theme.TooltipContentKwds
+===============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: TooltipContentKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TooltipContentKwds.__init__
+      ~TooltipContentKwds.clear
+      ~TooltipContentKwds.copy
+      ~TooltipContentKwds.fromkeys
+      ~TooltipContentKwds.get
+      ~TooltipContentKwds.items
+      ~TooltipContentKwds.keys
+      ~TooltipContentKwds.pop
+      ~TooltipContentKwds.popitem
+      ~TooltipContentKwds.setdefault
+      ~TooltipContentKwds.update
+      ~TooltipContentKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TooltipContentKwds.content
+   
+   

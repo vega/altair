@@ -1,0 +1,30 @@
+﻿altair.ScaleFieldDef
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleFieldDef.__init__
+      ~ScaleFieldDef.copy
+      ~ScaleFieldDef.from_dict
+      ~ScaleFieldDef.from_json
+      ~ScaleFieldDef.resolve_references
+      ~ScaleFieldDef.to_dict
+      ~ScaleFieldDef.to_json
+      ~ScaleFieldDef.validate
+      ~ScaleFieldDef.validate_property
+   
+   
+
+   
+   
+   

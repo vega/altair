@@ -1,0 +1,30 @@
+﻿altair.FacetedEncoding
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: FacetedEncoding
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FacetedEncoding.__init__
+      ~FacetedEncoding.copy
+      ~FacetedEncoding.from_dict
+      ~FacetedEncoding.from_json
+      ~FacetedEncoding.resolve_references
+      ~FacetedEncoding.to_dict
+      ~FacetedEncoding.to_json
+      ~FacetedEncoding.validate
+      ~FacetedEncoding.validate_property
+   
+   
+
+   
+   
+   

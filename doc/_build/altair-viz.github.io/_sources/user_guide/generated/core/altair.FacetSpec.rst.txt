@@ -1,0 +1,30 @@
+﻿altair.FacetSpec
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: FacetSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FacetSpec.__init__
+      ~FacetSpec.copy
+      ~FacetSpec.from_dict
+      ~FacetSpec.from_json
+      ~FacetSpec.resolve_references
+      ~FacetSpec.to_dict
+      ~FacetSpec.to_json
+      ~FacetSpec.validate
+      ~FacetSpec.validate_property
+   
+   
+
+   
+   
+   

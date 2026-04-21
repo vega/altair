@@ -1,0 +1,30 @@
+﻿altair.Config
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: Config
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Config.__init__
+      ~Config.copy
+      ~Config.from_dict
+      ~Config.from_json
+      ~Config.resolve_references
+      ~Config.to_dict
+      ~Config.to_json
+      ~Config.validate
+      ~Config.validate_property
+   
+   
+
+   
+   
+   

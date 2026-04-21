@@ -1,0 +1,40 @@
+﻿altair.ShapeDatum
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: ShapeDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ShapeDatum.__init__
+      ~ShapeDatum.copy
+      ~ShapeDatum.from_dict
+      ~ShapeDatum.from_json
+      ~ShapeDatum.resolve_references
+      ~ShapeDatum.to_dict
+      ~ShapeDatum.to_json
+      ~ShapeDatum.validate
+      ~ShapeDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ShapeDatum.bandPosition
+      ~ShapeDatum.condition
+      ~ShapeDatum.datum
+      ~ShapeDatum.title
+      ~ShapeDatum.type
+   
+   

@@ -1,0 +1,41 @@
+﻿altair.theme.LineStringKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: LineStringKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LineStringKwds.__init__
+      ~LineStringKwds.clear
+      ~LineStringKwds.copy
+      ~LineStringKwds.fromkeys
+      ~LineStringKwds.get
+      ~LineStringKwds.items
+      ~LineStringKwds.keys
+      ~LineStringKwds.pop
+      ~LineStringKwds.popitem
+      ~LineStringKwds.setdefault
+      ~LineStringKwds.update
+      ~LineStringKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LineStringKwds.coordinates
+      ~LineStringKwds.type
+      ~LineStringKwds.bbox
+   
+   

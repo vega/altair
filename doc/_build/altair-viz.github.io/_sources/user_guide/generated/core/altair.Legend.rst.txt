@@ -1,0 +1,30 @@
+﻿altair.Legend
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: Legend
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Legend.__init__
+      ~Legend.copy
+      ~Legend.from_dict
+      ~Legend.from_json
+      ~Legend.resolve_references
+      ~Legend.to_dict
+      ~Legend.to_json
+      ~Legend.validate
+      ~Legend.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.FieldLTPredicate
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldLTPredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldLTPredicate.__init__
+      ~FieldLTPredicate.copy
+      ~FieldLTPredicate.from_dict
+      ~FieldLTPredicate.from_json
+      ~FieldLTPredicate.resolve_references
+      ~FieldLTPredicate.to_dict
+      ~FieldLTPredicate.to_json
+      ~FieldLTPredicate.validate
+      ~FieldLTPredicate.validate_property
+   
+   
+
+   
+   
+   

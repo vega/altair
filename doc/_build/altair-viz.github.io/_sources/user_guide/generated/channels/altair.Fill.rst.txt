@@ -1,0 +1,46 @@
+﻿altair.Fill
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Fill
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Fill.__init__
+      ~Fill.copy
+      ~Fill.from_dict
+      ~Fill.from_json
+      ~Fill.resolve_references
+      ~Fill.to_dict
+      ~Fill.to_json
+      ~Fill.validate
+      ~Fill.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Fill.aggregate
+      ~Fill.bandPosition
+      ~Fill.bin
+      ~Fill.condition
+      ~Fill.field
+      ~Fill.legend
+      ~Fill.scale
+      ~Fill.sort
+      ~Fill.timeUnit
+      ~Fill.title
+      ~Fill.type
+   
+   

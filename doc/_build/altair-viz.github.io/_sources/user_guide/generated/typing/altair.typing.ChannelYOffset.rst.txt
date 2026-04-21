@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelYOffset
+============================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelYOffset

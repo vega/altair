@@ -1,0 +1,30 @@
+﻿altair.ScaleInterpolateEnum
+===========================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInterpolateEnum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInterpolateEnum.__init__
+      ~ScaleInterpolateEnum.copy
+      ~ScaleInterpolateEnum.from_dict
+      ~ScaleInterpolateEnum.from_json
+      ~ScaleInterpolateEnum.resolve_references
+      ~ScaleInterpolateEnum.to_dict
+      ~ScaleInterpolateEnum.to_json
+      ~ScaleInterpolateEnum.validate
+      ~ScaleInterpolateEnum.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.ParameterName
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: ParameterName
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ParameterName.__init__
+      ~ParameterName.copy
+      ~ParameterName.from_dict
+      ~ParameterName.from_json
+      ~ParameterName.resolve_references
+      ~ParameterName.to_dict
+      ~ParameterName.to_json
+      ~ParameterName.validate
+      ~ParameterName.validate_property
+   
+   
+
+   
+   
+   

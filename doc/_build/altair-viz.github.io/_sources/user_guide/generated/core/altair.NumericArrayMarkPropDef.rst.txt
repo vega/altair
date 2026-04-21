@@ -1,0 +1,30 @@
+﻿altair.NumericArrayMarkPropDef
+==============================
+
+.. currentmodule:: altair
+
+.. autoclass:: NumericArrayMarkPropDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NumericArrayMarkPropDef.__init__
+      ~NumericArrayMarkPropDef.copy
+      ~NumericArrayMarkPropDef.from_dict
+      ~NumericArrayMarkPropDef.from_json
+      ~NumericArrayMarkPropDef.resolve_references
+      ~NumericArrayMarkPropDef.to_dict
+      ~NumericArrayMarkPropDef.to_json
+      ~NumericArrayMarkPropDef.validate
+      ~NumericArrayMarkPropDef.validate_property
+   
+   
+
+   
+   
+   

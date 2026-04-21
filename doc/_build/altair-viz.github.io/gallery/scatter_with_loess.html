@@ -1,0 +1,590 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Scatter Plot with LOESS Lines &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/scatter_with_loess';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Scatter Plot with LOESS Lines</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="scatter-plot-with-loess-lines">
+<span id="gallery-scatter-with-loess"></span><h1>Scatter Plot with LOESS Lines<a class="headerlink" href="#scatter-plot-with-loess-lines" title="Link to this heading">#</a></h1>
+<p>This example shows how to add a trend line to a scatter plot using
+the LOESS transform (LOcally Estimated Scatter Plot Smoothing).</p>
+
+<div id="scatter_with_loess-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"mark": {"type": "circle", "opacity": 0.5}, "encoding": {"color": {"field": "category", "type": "nominal"}, "x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}}, "transform": [{"fold": ["A", "B", "C"], "as": ["category", "y"]}]}, {"mark": {"type": "line", "size": 4}, "encoding": {"color": {"field": "category", "type": "nominal"}, "x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}}, "transform": [{"fold": ["A", "B", "C"], "as": ["category", "y"]}, {"loess": "y", "on": "x", "groupby": ["category"]}]}], "data": {"name": "data-feebe27142e4742b2be6eac976922e29"}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-feebe27142e4742b2be6eac976922e29": [{"x": 0, "A": 1.6243453636632417, "B": -0.4471285647859982, "C": -0.40087819178892664}, {"x": 1, "A": 1.0125889500131664, "B": 0.7773791400195007, "C": 0.423127426661481}, {"x": 2, "A": 0.4844171977497107, "B": 1.1808707818103006, "C": -0.1391780043576088}, {"x": 3, "A": -0.5885514244064598, "B": 1.7744493050473675, "C": 1.8157000706514257}, {"x": 4, "A": 0.2768562049182187, "B": 0.6795374593063257, "C": 0.4837484041341775}, {"x": 5, "A": -2.024682491962064, "B": 0.8489198923649938, "C": -1.2769401562646059}, {"x": 6, "A": -0.27987072774558386, "B": 1.5894763434612686, "C": -2.927661422088706}, {"x": 7, "A": -1.0410776286406866, "B": 0.6357757416533341, "C": -3.8182170062517544}, {"x": 8, "A": -0.7220385325835881, "B": 0.369557235649712, "C": -4.937332404811483}, {"x": 9, "A": -0.9714089080609982, "B": 0.40217178234307055, "C": -2.9812535011078407}, {"x": 10, "A": 0.4906990289839759, "B": -0.9709455379036851, "C": -3.307752999186025}, {"x": 11, "A": -1.5694416805136782, "B": -0.6557861458613934, "C": -4.6504287885634605}, {"x": 12, "A": -1.8918588845271858, "B": 0.19037450172364, "C": -3.5360458117836684}, {"x": 13, "A": -2.275913239195601, "B": -0.6691414391083463, "C": -4.122569750605261}, {"x": 14, "A": -1.1421437968601638, "B": -0.318595460444239, "C": -5.359423127146658}, {"x": 15, "A": -2.2420350641741944, "B": -1.6308788716816707, "C": -4.483584199497359}, {"x": 16, "A": -2.41446327172463, "B": -1.6695743809477217, "C": -3.860222022919326}, {"x": 17, "A": -3.292321689646002, "B": -3.285346735651016, "C": -4.295178705874553}, {"x": 18, "A": -3.250107942930409, "B": -2.163929027415352, "C": -2.887638705633325}, {"x": 19, "A": -2.667292729214587, "B": -1.7550284894785244, "C": -2.7585371259225995}, {"x": 20, "A": -3.7679119064275084, "B": -1.7796454453543027, "C": -1.1415875270652993}, {"x": 21, "A": -2.6231881965878943, "B": -2.5548070645234624, "C": -0.638846645065395}, {"x": 22, "A": -1.7215974759950987, "B": -1.2810511343646858, "C": 0.9199588955544643}, {"x": 23, "A": -1.2191031370932306, "B": 0.6860506148900489, "C": 1.0293615919798924}, {"x": 24, "A": -0.3182471878288188, "B": -1.1719312495567031, "C": -0.1903828049991403}, {"x": 25, "A": -1.0019750470031519, "B": 0.06423278089611717, "C": 2.258985844062257}, {"x": 26, "A": -1.1248652725218, "B": 1.6918835340450236, "C": 1.7132116760796894}, {"x": 27, "A": -2.060634706780869, "B": 2.0298952306194993, "C": 1.5143738131907927}, {"x": 28, "A": -2.328522786406885, "B": 0.8306271982843132, "C": 0.813975308269538}, {"x": 29, "A": -1.798167319668699, "B": 1.6939725158283347, "C": 0.6105808593049795}, {"x": 30, "A": -2.489828071394008, "B": 1.5130522137501843, "C": 0.8532503003867741}, {"x": 31, "A": -2.8865815982499856, "B": 0.909131585956927, "C": 1.0550804792607782}, {"x": 32, "A": -3.573754298369585, "B": -0.32092654971003476, "C": 1.716100766859471}, {"x": 33, "A": -4.418959939868305, "B": 0.22961094626618062, "C": 3.508258975835038}, {"x": 34, "A": -5.090206070705124, "B": 1.0224178121855283, "C": 3.387794404046531}, {"x": 35, "A": -5.102870669624025, "B": 0.3988870825057367, "C": 2.154673668600104}, {"x": 36, "A": -6.220181018259303, "B": 0.9194634195791075, "C": 0.9723555420904704}, {"x": 37, "A": -5.98576532044221, "B": -0.2248779700440352, "C": 0.3066010238913438}, {"x": 38, "A": -4.3259631433323396, "B": 0.5769830618273095, "C": -1.3675947837275881}, {"x": 39, "A": -3.583918982755004, "B": 0.623550360251455, "C": -0.5425649592886023}, {"x": 40, "A": -3.775754535116619, "B": 0.43698058834410625, "C": -1.0407785229196804}, {"x": 41, "A": -4.663383499201455, "B": 0.335234715814961, "C": -1.3517635012225313}, {"x": 42, "A": -5.4105417929522925, "B": 1.204120872820829, "C": -1.353654984060535}, {"x": 43, "A": -3.718087191924546, "B": 1.9545325126858373, "C": -2.750275408655967}, {"x": 44, "A": -3.667279437148517, "B": 2.4839978370385465, "C": -3.611591769432009}, {"x": 45, "A": -4.3042750837178705, "B": 2.6216990470359325, "C": -2.936880243744037}, {"x": 46, "A": -4.113359599050405, "B": 2.6995201749486384, "C": -2.318341112957744}, {"x": 47, "A": -2.0131044625715626, "B": 3.3179004369471627, "C": -2.7615130436583817}, {"x": 48, "A": -1.8929455100899335, "B": 3.5503949961259007, "C": -0.9509781295329254}, {"x": 49, "A": -1.2757424003825144, "B": 4.232946402990386, "C": -2.2567050520906626}, {"x": 50, "A": -0.975572080426687, "B": 3.922829629472326, "C": -2.601692262245642}, {"x": 51, "A": -1.3278219269202056, "B": 1.4879918653651871, "C": -2.8325320053811116}, {"x": 52, "A": -2.4703401249423456, "B": 2.5268164672246014, "C": -5.625617005527651}, {"x": 53, "A": -2.819682847355223, "B": 4.713796114198859, "C": -3.6880881919115716}, {"x": 54, "A": -3.028577080730001, "B": 5.155160557767441, "C": -3.321756177371513}, {"x": 55, "A": -2.4419538895478037, "B": 5.055005324483941, "C": -4.366345559279305}, {"x": 56, "A": -1.6029704756732988, "B": 4.918560580587908, "C": -2.31517211642186}, {"x": 57, "A": -0.6718683943697414, "B": 4.799506392813098, "C": -1.7295101162494777}, {"x": 58, "A": -0.38628106911548266, "B": 4.816915801113102, "C": -1.2999839762275132}, {"x": 59, "A": 0.49886009515524543, "B": 3.6948970723662136, "C": -1.9069823744275594}, {"x": 60, "A": -0.2555378458414074, "B": 3.1778026144459854, "C": -1.8007596503923415}, {"x": 61, "A": 0.9973303093918805, "B": 2.1807757867957225, "C": -3.3264399666216993}, {"x": 62, "A": 1.5102601298098892, "B": 2.429574948183493, "C": -2.5314138721968544}, {"x": 63, "A": 1.2121672947071735, "B": 2.1329337958126304, "C": -2.905852191040075}, {"x": 64, "A": 1.7006854412446706, "B": 2.6281451197905907, "C": -2.771803994485452}, {"x": 65, "A": 1.6251137282236148, "B": 2.4534419600480897, "C": -1.5697491322857462}, {"x": 66, "A": 2.7567431156750417, "B": 3.4397771478693318, "C": -1.2850010214366883}, {"x": 67, "A": 4.276559932097241, "B": 3.6533110492047736, "C": -1.0225335759734198}, {"x": 68, "A": 6.462135338630402, "B": 5.844010778174507, "C": -0.7460342711512361}, {"x": 69, "A": 5.065639003142264, "B": 3.9476498552834145, "C": -1.479305875046549}, {"x": 70, "A": 3.621525197712675, "B": 3.3007331670285067, "C": -0.6433011556122803}, {"x": 71, "A": 3.1170593347662234, "B": 4.202220058677217, "C": 0.9000579551922034}, {"x": 72, "A": 3.277096404214054, "B": 6.730545765483615, "C": 1.6588636152901344}, {"x": 73, "A": 4.153265325330279, "B": 6.481910987768155, "C": 2.543772429755018}, {"x": 74, "A": 4.468900272571885, "B": 6.525579980946544, "C": 1.6664909108368295}, {"x": 75, "A": 2.4466990567478817, "B": 6.299265738432939, "C": 0.7987036879639039}, {"x": 76, "A": 2.14049504411951, "B": 7.630722851020531, "C": -0.642172336327936}, {"x": 77, "A": 2.968469686726756, "B": 7.343414987544512, "C": 0.5900807345005}, {"x": 78, "A": 3.1985644220911396, "B": 8.023484827422617, "C": 0.3359008668931317}, {"x": 79, "A": 3.960575602403164, "B": 7.703683228523946, "C": 1.7357448093741175}, {"x": 80, "A": 3.738247459792805, "B": 6.4311244732779524, "C": 0.9538331266873168}, {"x": 81, "A": 3.537489390862808, "B": 6.744672193741384, "C": 0.5163241438587358}, {"x": 82, "A": 3.724050781851092, "B": 7.2478570071767106, "C": 0.6117492310499935}, {"x": 83, "A": 4.134102429059348, "B": 8.541082889708973, "C": 1.533199299709505}, {"x": 84, "A": 4.332402149186118, "B": 8.430635863291656, "C": 1.5939494955090117}, {"x": 85, "A": 4.451410794993577, "B": 7.813273799579295, "C": 1.8050742505167283}, {"x": 86, "A": 3.780748508704546, "B": 8.376034896198322, "C": 1.8216018178223439}, {"x": 87, "A": 4.158312295025466, "B": 8.616771988436053, "C": 1.9987895380983043}, {"x": 88, "A": 4.280133566016903, "B": 8.897437065558693, "C": 0.8823195202135599}, {"x": 89, "A": 5.409617473928822, "B": 8.824324361811415, "C": 0.9632466211868385}, {"x": 90, "A": 6.608535353830329, "B": 9.984662931805184, "C": 0.7766676276753721}, {"x": 91, "A": 6.793691771314273, "B": 10.354155648180908, "C": 0.7198431467895248}, {"x": 92, "A": 6.418406821224159, "B": 12.25881435652189, "C": 1.2121797027261736}, {"x": 93, "A": 5.779676413769937, "B": 13.369871055082395, "C": 0.5315015617172878}, {"x": 94, "A": 6.20317076783405, "B": 14.028920851182605, "C": 0.446993534312658}, {"x": 95, "A": 6.280510836182609, "B": 12.401482510566348, "C": 0.14963165153915436}, {"x": 96, "A": 5.936657160611533, "B": 13.003801790861978, "C": 0.5669336565140168}, {"x": 97, "A": 5.98025401744578, "B": 13.424083994509038, "C": 1.3517043075296065}, {"x": 98, "A": 5.360253173497651, "B": 14.235035667312594, "C": 0.3962790451559173}, {"x": 99, "A": 6.05828520756987, "B": 15.279477762019853, "C": 0.9821894762585329}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#scatter_with_loess-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="method" for="sd-tab-item-0">
+Method syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(),</span>
+    <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(),</span>
+    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(),</span>
+<span class="p">})</span>
+
+<span class="n">base</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">transform_fold</span><span class="p">(</span>
+    <span class="n">fold</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">],</span>
+    <span class="n">as_</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;x:Q&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;y:Q&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s1">&#39;category:N&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">base</span> <span class="o">+</span> <span class="n">base</span><span class="o">.</span><span class="n">transform_loess</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mark_line</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="attribute" for="sd-tab-item-1">
+Attribute syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(),</span>
+    <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(),</span>
+    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(),</span>
+<span class="p">})</span>
+
+<span class="n">base</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">transform_fold</span><span class="p">(</span>
+    <span class="n">fold</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">],</span>
+    <span class="n">as_</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;x:Q&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;y:Q&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s1">&#39;category:N&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">base</span> <span class="o">+</span> <span class="n">base</span><span class="o">.</span><span class="n">transform_loess</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mark_line</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1"># No channel encoding options are specified in this chart</span>
+<span class="c1"># so the code is the same as for the method-based syntax.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

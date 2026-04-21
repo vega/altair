@@ -1,0 +1,30 @@
+﻿altair.ConditionalValueDefnumberExprRef
+=======================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalValueDefnumberExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalValueDefnumberExprRef.__init__
+      ~ConditionalValueDefnumberExprRef.copy
+      ~ConditionalValueDefnumberExprRef.from_dict
+      ~ConditionalValueDefnumberExprRef.from_json
+      ~ConditionalValueDefnumberExprRef.resolve_references
+      ~ConditionalValueDefnumberExprRef.to_dict
+      ~ConditionalValueDefnumberExprRef.to_json
+      ~ConditionalValueDefnumberExprRef.validate
+      ~ConditionalValueDefnumberExprRef.validate_property
+   
+   
+
+   
+   
+   

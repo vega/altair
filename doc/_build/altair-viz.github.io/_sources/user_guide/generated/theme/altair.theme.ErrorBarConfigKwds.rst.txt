@@ -1,0 +1,43 @@
+﻿altair.theme.ErrorBarConfigKwds
+===============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ErrorBarConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ErrorBarConfigKwds.__init__
+      ~ErrorBarConfigKwds.clear
+      ~ErrorBarConfigKwds.copy
+      ~ErrorBarConfigKwds.fromkeys
+      ~ErrorBarConfigKwds.get
+      ~ErrorBarConfigKwds.items
+      ~ErrorBarConfigKwds.keys
+      ~ErrorBarConfigKwds.pop
+      ~ErrorBarConfigKwds.popitem
+      ~ErrorBarConfigKwds.setdefault
+      ~ErrorBarConfigKwds.update
+      ~ErrorBarConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ErrorBarConfigKwds.extent
+      ~ErrorBarConfigKwds.rule
+      ~ErrorBarConfigKwds.size
+      ~ErrorBarConfigKwds.thickness
+      ~ErrorBarConfigKwds.ticks
+   
+   

@@ -1,0 +1,813 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Scatter plot with point paths on hover and search box &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/scatter_point_paths_hover';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Scatter plot with point paths on hover and search box</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="scatter-plot-with-point-paths-on-hover-and-search-box">
+<span id="gallery-scatter-point-paths-hover"></span><h1>Scatter plot with point paths on hover and search box<a class="headerlink" href="#scatter-plot-with-point-paths-on-hover-and-search-box" title="Link to this heading">#</a></h1>
+<p>This example combines cross-sectional analysis (comparing countries at a single point in time)
+with longitudinal analysis (tracking changes in individual countries over time), using
+an interactive visualization technique inspired by [this Vega example](<a class="reference external" href="https://vega.github.io/vega/examples/global-development/">https://vega.github.io/vega/examples/global-development/</a>).</p>
+<p>Key features:
+1. Point Paths. On hover, shows data trajectories using a trail mark that
+thickens from past to present, clearly indicating the direction of time.
+2. Search Box. Implements a case-insensitive regex filter for country names,
+enabling dynamic, flexible data point selection to enhance exploratory analysis.</p>
+
+<div id="scatter_point_paths_hover-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}, "axis": {"labelFontSize": 12, "titleFontSize": 12}}, "layer": [{"mark": {"type": "circle", "size": 100}, "encoding": {"color": {"field": "region", "legend": {"labelFontSize": 12, "orient": "bottom-left", "titleFontSize": 14}, "scale": {"scheme": "dark2"}, "title": "Region", "type": "nominal"}, "detail": {"field": "country", "type": "nominal"}, "opacity": {"condition": [{"test": {"and": [{"param": "param_0f5c0e4c9fd46f03"}, "test(regexp(param_82df1923d868131d,'i'),datum.country)"]}, "value": 0.8}], "value": 0.1}, "x": {"field": "fertility", "scale": {"zero": false}, "title": "Babies per woman (total fertility rate)", "type": "quantitative"}, "y": {"field": "life_expect", "scale": {"zero": false}, "title": "Life expectancy", "type": "quantitative"}}, "name": "view_35a24639f18f3249_0", "transform": [{"calculate": "{\n        '0': 'South Asia',\n        '1': 'Europe & Central Asia',\n        '2': 'Sub-Saharan Africa',\n        '3': 'The Americas',\n        '4': 'East Asia & Pacific',\n        '5': 'Middle East & North Africa'\n    }[datum.cluster]", "as": "region"}, {"filter": "datum.country !== 'North Korea' && datum.country !== 'South Korea'"}, {"filter": {"param": "x_select"}}]}, {"mark": {"type": "text", "align": "left", "dx": 5, "dy": -5, "fontSize": 14}, "encoding": {"color": {"value": "#222222"}, "detail": {"field": "country", "type": "nominal"}, "text": {"field": "year", "type": "ordinal"}, "x": {"field": "fertility", "scale": {"zero": false}, "title": "Babies per woman (total fertility rate)", "type": "quantitative"}, "y": {"field": "life_expect", "scale": {"zero": false}, "title": "Life expectancy", "type": "quantitative"}}, "transform": [{"calculate": "{\n        '0': 'South Asia',\n        '1': 'Europe & Central Asia',\n        '2': 'Sub-Saharan Africa',\n        '3': 'The Americas',\n        '4': 'East Asia & Pacific',\n        '5': 'Middle East & North Africa'\n    }[datum.cluster]", "as": "region"}, {"filter": "datum.country !== 'North Korea' && datum.country !== 'South Korea'"}, {"filter": {"param": "param_0cfcd5e47607a746", "empty": false}}]}, {"mark": {"type": "text", "align": "left", "dx": -15, "dy": -25, "fontSize": 18, "fontWeight": "bold"}, "encoding": {"color": {"value": "black"}, "opacity": {"condition": [{"param": "param_0cfcd5e47607a746", "value": 1, "empty": false}], "value": 0}, "text": {"field": "country", "type": "nominal"}, "x": {"field": "fertility", "type": "quantitative"}, "y": {"field": "life_expect", "type": "quantitative"}}, "transform": [{"window": [{"op": "rank", "field": "life_expect", "as": "rank"}], "groupby": ["country"], "sort": [{"field": "life_expect", "order": "descending"}]}, {"filter": "(datum.rank === 1)"}, {"aggregate": [{"op": "max", "field": "life_expect", "as": "life_expect"}, {"op": "max", "field": "fertility", "as": "fertility"}], "groupby": ["country"]}]}, {"layer": [{"mark": {"type": "trail"}, "encoding": {"color": {"value": "#222222"}, "detail": {"field": "country", "type": "nominal"}, "opacity": {"condition": [{"param": "param_0cfcd5e47607a746", "value": 0.3, "empty": false}], "value": 0}, "order": {"field": "year", "sort": "ascending", "type": "quantitative"}, "size": {"field": "year", "legend": null, "scale": {"domain": [1955, 2005], "range": [1, 12]}, "type": "quantitative"}, "x": {"field": "fertility", "scale": {"zero": false}, "title": "Babies per woman (total fertility rate)", "type": "quantitative"}, "y": {"field": "life_expect", "scale": {"zero": false}, "title": "Life expectancy", "type": "quantitative"}}, "transform": [{"calculate": "{\n        '0': 'South Asia',\n        '1': 'Europe & Central Asia',\n        '2': 'Sub-Saharan Africa',\n        '3': 'The Americas',\n        '4': 'East Asia & Pacific',\n        '5': 'Middle East & North Africa'\n    }[datum.cluster]", "as": "region"}, {"filter": "datum.country !== 'North Korea' && datum.country !== 'South Korea'"}]}, {"mark": {"type": "point", "size": 50}, "encoding": {"color": {"field": "region", "legend": {"labelFontSize": 12, "orient": "bottom-left", "titleFontSize": 14}, "scale": {"scheme": "dark2"}, "title": "Region", "type": "nominal"}, "detail": {"field": "country", "type": "nominal"}, "opacity": {"condition": [{"param": "param_0cfcd5e47607a746", "value": 0.8, "empty": false}], "value": 0}, "x": {"field": "fertility", "scale": {"zero": false}, "title": "Babies per woman (total fertility rate)", "type": "quantitative"}, "y": {"field": "life_expect", "scale": {"zero": false}, "title": "Life expectancy", "type": "quantitative"}}, "transform": [{"calculate": "{\n        '0': 'South Asia',\n        '1': 'Europe & Central Asia',\n        '2': 'Sub-Saharan Africa',\n        '3': 'The Americas',\n        '4': 'East Asia & Pacific',\n        '5': 'Middle East & North Africa'\n    }[datum.cluster]", "as": "region"}, {"filter": "datum.country !== 'North Korea' && datum.country !== 'South Korea'"}]}]}, {"mark": {"type": "text", "baseline": "middle", "fontSize": 96, "opacity": 0.2}, "encoding": {"text": {"field": "year", "type": "ordinal"}}, "transform": [{"filter": {"param": "x_select"}}, {"aggregate": [{"op": "max", "field": "year", "as": "year"}]}]}], "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/gapminder.json"}, "height": 500, "padding": 10, "params": [{"name": "param_0cfcd5e47607a746", "select": {"type": "point", "fields": ["country"], "on": "mouseover"}, "views": ["view_35a24639f18f3249_0"]}, {"name": "param_0f5c0e4c9fd46f03", "select": {"type": "point", "fields": ["country"], "on": "mouseover"}, "views": ["view_35a24639f18f3249_0"]}, {"name": "x_select", "select": {"type": "point", "fields": ["year"]}, "bind": {"input": "range", "max": 2005, "min": 1955, "name": "Year ", "step": 5}, "value": 1980, "views": ["view_35a24639f18f3249_0"]}, {"name": "param_82df1923d868131d", "bind": {"input": "search", "name": "Search ", "placeholder": "Country"}, "value": ""}], "width": 500, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#scatter_point_paths_hover-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="method" for="sd-tab-item-0">
+Method syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="c1"># Data source</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">gapminder</span><span class="o">.</span><span class="n">url</span>
+
+<span class="c1"># X-value slider</span>
+<span class="n">x_slider</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_range</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1955</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">2005</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Year &#39;</span><span class="p">)</span>
+<span class="n">x_select</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;x_select&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">bind</span><span class="o">=</span><span class="n">x_slider</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1980</span><span class="p">)</span>
+
+<span class="c1"># Hover selection</span>
+<span class="n">hover</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s1">&#39;mouseover&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">],</span> <span class="n">empty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># A separate hover for the points since these need empty=True</span>
+<span class="n">hover_point_opacity</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s1">&#39;mouseover&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">])</span>
+
+<span class="c1"># Search box for country name</span>
+<span class="n">search_box</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
+    <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">bind</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">binding</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="s1">&#39;search&#39;</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Country&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Search &#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Base chart</span>
+<span class="n">base</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;fertility:Q&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Babies per woman (total fertility rate)&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;life_expect:Q&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Life expectancy&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s1">&#39;region:N&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;dark2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;bottom-left&#39;</span><span class="p">,</span> <span class="n">titleFontSize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">labelFontSize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Region&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Detail</span><span class="p">(</span><span class="s1">&#39;country:N&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
+    <span class="n">region</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">        &#39;0&#39;: &#39;South Asia&#39;,</span>
+<span class="s2">        &#39;1&#39;: &#39;Europe &amp; Central Asia&#39;,</span>
+<span class="s2">        &#39;2&#39;: &#39;Sub-Saharan Africa&#39;,</span>
+<span class="s2">        &#39;3&#39;: &#39;The Americas&#39;,</span>
+<span class="s2">        &#39;4&#39;: &#39;East Asia &amp; Pacific&#39;,</span>
+<span class="s2">        &#39;5&#39;: &#39;Middle East &amp; North Africa&#39;</span>
+<span class="s2">    }[datum.cluster]&quot;&quot;&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="c1"># Exclude North Korea and South Korea due to source data error</span>
+    <span class="s2">&quot;datum.country !== &#39;North Korea&#39; &amp;&amp; datum.country !== &#39;South Korea&#39;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">search_matches</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">regexp</span><span class="p">(</span><span class="n">search_box</span><span class="p">,</span> <span class="s2">&quot;i&quot;</span><span class="p">),</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">country</span><span class="p">)</span>
+<span class="n">opacity</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">hover_point_opacity</span><span class="p">,</span> <span class="n">search_matches</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.8</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="c1"># Points that are always visible (filtered by slider and search)</span>
+<span class="n">visible_points</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+        <span class="n">x_select</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+        <span class="n">hover</span><span class="p">,</span>
+        <span class="n">hover_point_opacity</span><span class="p">,</span>
+        <span class="n">x_select</span>
+<span class="p">)</span>
+
+<span class="n">when_hover</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">hover</span><span class="p">)</span>
+<span class="n">hover_line</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span>
+    <span class="c1"># Line layer</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">mark_trail</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">alt</span><span class="o">.</span><span class="n">Order</span><span class="p">(</span><span class="s1">&#39;year:Q&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;ascending&#39;</span><span class="p">),</span>
+        <span class="n">alt</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span><span class="s1">&#39;year:Q&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="p">[</span><span class="mi">1955</span><span class="p">,</span> <span class="mi">2005</span><span class="p">],</span> <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span>
+        <span class="n">opacity</span><span class="o">=</span><span class="n">when_hover</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.3</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;#222222&#39;</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="c1"># Point layer</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">mark_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">opacity</span><span class="o">=</span><span class="n">when_hover</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.8</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Year labels</span>
+<span class="n">year_labels</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span><span class="n">align</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">dy</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">fontSize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="s1">&#39;year:O&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;#222222&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">hover</span><span class="p">)</span>
+
+<span class="c1"># Country labels</span>
+<span class="n">country_labels</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span>
+    <span class="n">align</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+    <span class="n">dx</span><span class="o">=-</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">dy</span><span class="o">=-</span><span class="mi">25</span><span class="p">,</span>
+    <span class="n">fontSize</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+    <span class="n">fontWeight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;fertility:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;life_expect:Q&#39;</span><span class="p">,</span>
+    <span class="n">text</span><span class="o">=</span><span class="s1">&#39;country:N&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">),</span>
+    <span class="n">opacity</span><span class="o">=</span><span class="n">when_hover</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_window</span><span class="p">(</span>
+    <span class="n">rank</span><span class="o">=</span><span class="s1">&#39;rank(life_expect)&#39;</span><span class="p">,</span>
+    <span class="n">sort</span><span class="o">=</span><span class="p">[</span><span class="n">alt</span><span class="o">.</span><span class="n">SortField</span><span class="p">(</span><span class="s1">&#39;life_expect&#39;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;descending&#39;</span><span class="p">)],</span>
+    <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span> <span class="c1"># places label atop highest point on y-axis on hover</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_aggregate</span><span class="p">(</span>
+    <span class="n">life_expect</span><span class="o">=</span><span class="s1">&#39;max(life_expect)&#39;</span><span class="p">,</span>
+    <span class="n">fertility</span><span class="o">=</span><span class="s1">&#39;max(fertility)&#39;</span><span class="p">,</span>
+    <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">background_year</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span>
+    <span class="n">baseline</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span><span class="p">,</span>
+    <span class="n">fontSize</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span>
+    <span class="n">opacity</span><span class="o">=</span><span class="mf">0.2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="s1">&#39;year:O&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">x_select</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_aggregate</span><span class="p">(</span>
+    <span class="n">year</span><span class="o">=</span><span class="s1">&#39;max(year)&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Combine all layers</span>
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span>
+    <span class="n">visible_points</span><span class="p">,</span> <span class="n">year_labels</span><span class="p">,</span> <span class="n">country_labels</span><span class="p">,</span> <span class="n">hover_line</span><span class="p">,</span> <span class="n">background_year</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">padding</span><span class="o">=</span><span class="mi">10</span>  <span class="c1"># Padding ensures labels fit</span>
+<span class="p">)</span><span class="o">.</span><span class="n">configure_axis</span><span class="p">(</span>
+    <span class="n">labelFontSize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">titleFontSize</span><span class="o">=</span><span class="mi">12</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">search_box</span><span class="p">)</span>
+
+<span class="n">chart</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="attribute" for="sd-tab-item-1">
+Attribute syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="c1"># Data source</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">gapminder</span><span class="o">.</span><span class="n">url</span>
+
+<span class="c1"># X-value slider</span>
+<span class="n">x_slider</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_range</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1955</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">2005</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Year &#39;</span><span class="p">)</span>
+<span class="n">x_select</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;x_select&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">bind</span><span class="o">=</span><span class="n">x_slider</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1980</span><span class="p">)</span>
+
+<span class="c1"># Hover selection</span>
+<span class="n">hover</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s1">&#39;mouseover&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">],</span> <span class="n">empty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># A separate hover for the points since these need empty=True</span>
+<span class="n">hover_point_opacity</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s1">&#39;mouseover&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">])</span>
+
+<span class="c1"># Search box for country name</span>
+<span class="n">search_box</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
+    <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">bind</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">binding</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="s1">&#39;search&#39;</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Country&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Search &#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Base chart</span>
+<span class="n">base</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;fertility:Q&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Babies per woman (total fertility rate)&#39;</span><span class="p">),</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;life_expect:Q&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Life expectancy&#39;</span><span class="p">),</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s1">&#39;region:N&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Region&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Legend</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;bottom-left&#39;</span><span class="p">,</span> <span class="n">titleFontSize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">labelFontSize</span><span class="o">=</span><span class="mi">12</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;dark2&#39;</span><span class="p">)),</span>
+    <span class="n">detail</span><span class="o">=</span><span class="s1">&#39;country:N&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
+    <span class="n">region</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">        &#39;0&#39;: &#39;South Asia&#39;,</span>
+<span class="s2">        &#39;1&#39;: &#39;Europe &amp; Central Asia&#39;,</span>
+<span class="s2">        &#39;2&#39;: &#39;Sub-Saharan Africa&#39;,</span>
+<span class="s2">        &#39;3&#39;: &#39;The Americas&#39;,</span>
+<span class="s2">        &#39;4&#39;: &#39;East Asia &amp; Pacific&#39;,</span>
+<span class="s2">        &#39;5&#39;: &#39;Middle East &amp; North Africa&#39;</span>
+<span class="s2">    }[datum.cluster]&quot;&quot;&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="c1"># Exclude North Korea and South Korea due to source data error</span>
+    <span class="s2">&quot;datum.country !== &#39;North Korea&#39; &amp;&amp; datum.country !== &#39;South Korea&#39;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">search_matches</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">regexp</span><span class="p">(</span><span class="n">search_box</span><span class="p">,</span> <span class="s2">&quot;i&quot;</span><span class="p">),</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">country</span><span class="p">)</span>
+<span class="n">opacity</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">hover_point_opacity</span><span class="p">,</span> <span class="n">search_matches</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.8</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="c1"># Points that are always visible (filtered by slider and search)</span>
+<span class="n">visible_points</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+        <span class="n">x_select</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+        <span class="n">hover</span><span class="p">,</span>
+        <span class="n">hover_point_opacity</span><span class="p">,</span>
+        <span class="n">x_select</span>
+<span class="p">)</span>
+
+<span class="n">when_hover</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">hover</span><span class="p">)</span>
+<span class="n">hover_line</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span>
+    <span class="c1"># Line layer</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">mark_trail</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">order</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Order</span><span class="p">(</span>
+            <span class="s1">&#39;year:Q&#39;</span><span class="p">,</span>
+            <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span>
+        <span class="p">),</span>
+        <span class="n">size</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span>
+            <span class="s1">&#39;year:Q&#39;</span><span class="p">,</span>
+            <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="p">[</span><span class="mi">1955</span><span class="p">,</span> <span class="mi">2005</span><span class="p">],</span> <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">]),</span>
+            <span class="n">legend</span><span class="o">=</span><span class="kc">None</span>
+        <span class="p">),</span>
+        <span class="n">opacity</span><span class="o">=</span><span class="n">when_hover</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.3</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;#222222&#39;</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="c1"># Point layer</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">mark_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">opacity</span><span class="o">=</span><span class="n">when_hover</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.8</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Year labels</span>
+<span class="n">year_labels</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span><span class="n">align</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">dy</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">fontSize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="s1">&#39;year:O&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;#222222&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">hover</span><span class="p">)</span>
+
+<span class="c1"># Country labels</span>
+<span class="n">country_labels</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span>
+    <span class="n">align</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+    <span class="n">dx</span><span class="o">=-</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">dy</span><span class="o">=-</span><span class="mi">25</span><span class="p">,</span>
+    <span class="n">fontSize</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+    <span class="n">fontWeight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;fertility:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;life_expect:Q&#39;</span><span class="p">,</span>
+    <span class="n">text</span><span class="o">=</span><span class="s1">&#39;country:N&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">),</span>
+    <span class="n">opacity</span><span class="o">=</span><span class="n">when_hover</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_window</span><span class="p">(</span>
+    <span class="n">rank</span><span class="o">=</span><span class="s1">&#39;rank(life_expect)&#39;</span><span class="p">,</span>
+    <span class="n">sort</span><span class="o">=</span><span class="p">[</span><span class="n">alt</span><span class="o">.</span><span class="n">SortField</span><span class="p">(</span><span class="s1">&#39;life_expect&#39;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;descending&#39;</span><span class="p">)],</span>
+    <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span> <span class="c1"># places label atop highest point on y-axis on hover</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_aggregate</span><span class="p">(</span>
+    <span class="n">life_expect</span><span class="o">=</span><span class="s1">&#39;max(life_expect)&#39;</span><span class="p">,</span>
+    <span class="n">fertility</span><span class="o">=</span><span class="s1">&#39;max(fertility)&#39;</span><span class="p">,</span>
+    <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">background_year</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span>
+    <span class="n">baseline</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span><span class="p">,</span>
+    <span class="n">fontSize</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span>
+    <span class="n">opacity</span><span class="o">=</span><span class="mf">0.2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="s1">&#39;year:O&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">x_select</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_aggregate</span><span class="p">(</span>
+    <span class="n">year</span><span class="o">=</span><span class="s1">&#39;max(year)&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Combine all layers</span>
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span>
+    <span class="n">visible_points</span><span class="p">,</span> <span class="n">year_labels</span><span class="p">,</span> <span class="n">country_labels</span><span class="p">,</span> <span class="n">hover_line</span><span class="p">,</span> <span class="n">background_year</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">padding</span><span class="o">=</span><span class="mi">10</span>  <span class="c1"># Padding ensures labels fit</span>
+<span class="p">)</span><span class="o">.</span><span class="n">configure_axis</span><span class="p">(</span>
+    <span class="n">labelFontSize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">titleFontSize</span><span class="o">=</span><span class="mi">12</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">search_box</span><span class="p">)</span>
+
+<span class="n">chart</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

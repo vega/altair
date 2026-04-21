@@ -1,0 +1,40 @@
+﻿altair.theme.AxisResolveMapKwds
+===============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: AxisResolveMapKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AxisResolveMapKwds.__init__
+      ~AxisResolveMapKwds.clear
+      ~AxisResolveMapKwds.copy
+      ~AxisResolveMapKwds.fromkeys
+      ~AxisResolveMapKwds.get
+      ~AxisResolveMapKwds.items
+      ~AxisResolveMapKwds.keys
+      ~AxisResolveMapKwds.pop
+      ~AxisResolveMapKwds.popitem
+      ~AxisResolveMapKwds.setdefault
+      ~AxisResolveMapKwds.update
+      ~AxisResolveMapKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AxisResolveMapKwds.x
+      ~AxisResolveMapKwds.y
+   
+   

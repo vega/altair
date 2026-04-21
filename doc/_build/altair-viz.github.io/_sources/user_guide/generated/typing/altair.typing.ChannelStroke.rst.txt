@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelStroke
+===========================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelStroke

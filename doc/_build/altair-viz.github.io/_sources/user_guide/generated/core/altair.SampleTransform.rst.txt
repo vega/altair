@@ -1,0 +1,30 @@
+﻿altair.SampleTransform
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: SampleTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SampleTransform.__init__
+      ~SampleTransform.copy
+      ~SampleTransform.from_dict
+      ~SampleTransform.from_json
+      ~SampleTransform.resolve_references
+      ~SampleTransform.to_dict
+      ~SampleTransform.to_json
+      ~SampleTransform.validate
+      ~SampleTransform.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.LocalSingleTimeUnit
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: LocalSingleTimeUnit
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LocalSingleTimeUnit.__init__
+      ~LocalSingleTimeUnit.copy
+      ~LocalSingleTimeUnit.from_dict
+      ~LocalSingleTimeUnit.from_json
+      ~LocalSingleTimeUnit.resolve_references
+      ~LocalSingleTimeUnit.to_dict
+      ~LocalSingleTimeUnit.to_json
+      ~LocalSingleTimeUnit.validate
+      ~LocalSingleTimeUnit.validate_property
+   
+   
+
+   
+   
+   

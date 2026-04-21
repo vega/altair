@@ -1,0 +1,53 @@
+﻿altair.theme.StyleConfigIndexKwds
+=================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: StyleConfigIndexKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StyleConfigIndexKwds.__init__
+      ~StyleConfigIndexKwds.clear
+      ~StyleConfigIndexKwds.copy
+      ~StyleConfigIndexKwds.fromkeys
+      ~StyleConfigIndexKwds.get
+      ~StyleConfigIndexKwds.items
+      ~StyleConfigIndexKwds.keys
+      ~StyleConfigIndexKwds.pop
+      ~StyleConfigIndexKwds.popitem
+      ~StyleConfigIndexKwds.setdefault
+      ~StyleConfigIndexKwds.update
+      ~StyleConfigIndexKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StyleConfigIndexKwds.arc
+      ~StyleConfigIndexKwds.area
+      ~StyleConfigIndexKwds.bar
+      ~StyleConfigIndexKwds.circle
+      ~StyleConfigIndexKwds.geoshape
+      ~StyleConfigIndexKwds.image
+      ~StyleConfigIndexKwds.line
+      ~StyleConfigIndexKwds.mark
+      ~StyleConfigIndexKwds.point
+      ~StyleConfigIndexKwds.rect
+      ~StyleConfigIndexKwds.rule
+      ~StyleConfigIndexKwds.square
+      ~StyleConfigIndexKwds.text
+      ~StyleConfigIndexKwds.tick
+      ~StyleConfigIndexKwds.trail
+   
+   

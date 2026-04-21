@@ -1,0 +1,30 @@
+﻿altair.ParameterPredicate
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: ParameterPredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ParameterPredicate.__init__
+      ~ParameterPredicate.copy
+      ~ParameterPredicate.from_dict
+      ~ParameterPredicate.from_json
+      ~ParameterPredicate.resolve_references
+      ~ParameterPredicate.to_dict
+      ~ParameterPredicate.to_json
+      ~ParameterPredicate.validate
+      ~ParameterPredicate.validate_property
+   
+   
+
+   
+   
+   

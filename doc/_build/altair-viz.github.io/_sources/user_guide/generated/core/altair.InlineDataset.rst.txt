@@ -1,0 +1,30 @@
+﻿altair.InlineDataset
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: InlineDataset
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~InlineDataset.__init__
+      ~InlineDataset.copy
+      ~InlineDataset.from_dict
+      ~InlineDataset.from_json
+      ~InlineDataset.resolve_references
+      ~InlineDataset.to_dict
+      ~InlineDataset.to_json
+      ~InlineDataset.validate
+      ~InlineDataset.validate_property
+   
+   
+
+   
+   
+   

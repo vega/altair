@@ -1,0 +1,41 @@
+﻿altair.theme.MultiPolygonKwds
+=============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: MultiPolygonKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MultiPolygonKwds.__init__
+      ~MultiPolygonKwds.clear
+      ~MultiPolygonKwds.copy
+      ~MultiPolygonKwds.fromkeys
+      ~MultiPolygonKwds.get
+      ~MultiPolygonKwds.items
+      ~MultiPolygonKwds.keys
+      ~MultiPolygonKwds.pop
+      ~MultiPolygonKwds.popitem
+      ~MultiPolygonKwds.setdefault
+      ~MultiPolygonKwds.update
+      ~MultiPolygonKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~MultiPolygonKwds.coordinates
+      ~MultiPolygonKwds.type
+      ~MultiPolygonKwds.bbox
+   
+   

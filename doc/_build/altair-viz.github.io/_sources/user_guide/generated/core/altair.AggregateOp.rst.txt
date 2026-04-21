@@ -1,0 +1,30 @@
+﻿altair.AggregateOp
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: AggregateOp
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AggregateOp.__init__
+      ~AggregateOp.copy
+      ~AggregateOp.from_dict
+      ~AggregateOp.from_json
+      ~AggregateOp.resolve_references
+      ~AggregateOp.to_dict
+      ~AggregateOp.to_json
+      ~AggregateOp.validate
+      ~AggregateOp.validate_property
+   
+   
+
+   
+   
+   

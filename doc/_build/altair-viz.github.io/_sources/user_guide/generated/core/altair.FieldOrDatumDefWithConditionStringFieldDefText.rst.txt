@@ -1,0 +1,30 @@
+﻿altair.FieldOrDatumDefWithConditionStringFieldDefText
+=====================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldOrDatumDefWithConditionStringFieldDefText
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldOrDatumDefWithConditionStringFieldDefText.__init__
+      ~FieldOrDatumDefWithConditionStringFieldDefText.copy
+      ~FieldOrDatumDefWithConditionStringFieldDefText.from_dict
+      ~FieldOrDatumDefWithConditionStringFieldDefText.from_json
+      ~FieldOrDatumDefWithConditionStringFieldDefText.resolve_references
+      ~FieldOrDatumDefWithConditionStringFieldDefText.to_dict
+      ~FieldOrDatumDefWithConditionStringFieldDefText.to_json
+      ~FieldOrDatumDefWithConditionStringFieldDefText.validate
+      ~FieldOrDatumDefWithConditionStringFieldDefText.validate_property
+   
+   
+
+   
+   
+   

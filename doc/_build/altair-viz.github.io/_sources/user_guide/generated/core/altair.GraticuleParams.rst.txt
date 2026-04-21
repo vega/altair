@@ -1,0 +1,30 @@
+﻿altair.GraticuleParams
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: GraticuleParams
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GraticuleParams.__init__
+      ~GraticuleParams.copy
+      ~GraticuleParams.from_dict
+      ~GraticuleParams.from_json
+      ~GraticuleParams.resolve_references
+      ~GraticuleParams.to_dict
+      ~GraticuleParams.to_json
+      ~GraticuleParams.validate
+      ~GraticuleParams.validate_property
+   
+   
+
+   
+   
+   

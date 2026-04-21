@@ -1,0 +1,127 @@
+﻿altair.FacetChart
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: FacetChart
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FacetChart.__init__
+      ~FacetChart.add_params
+      ~FacetChart.add_selection
+      ~FacetChart.configure
+      ~FacetChart.configure_arc
+      ~FacetChart.configure_area
+      ~FacetChart.configure_axis
+      ~FacetChart.configure_axisBand
+      ~FacetChart.configure_axisBottom
+      ~FacetChart.configure_axisDiscrete
+      ~FacetChart.configure_axisLeft
+      ~FacetChart.configure_axisPoint
+      ~FacetChart.configure_axisQuantitative
+      ~FacetChart.configure_axisRight
+      ~FacetChart.configure_axisTemporal
+      ~FacetChart.configure_axisTop
+      ~FacetChart.configure_axisX
+      ~FacetChart.configure_axisXBand
+      ~FacetChart.configure_axisXDiscrete
+      ~FacetChart.configure_axisXPoint
+      ~FacetChart.configure_axisXQuantitative
+      ~FacetChart.configure_axisXTemporal
+      ~FacetChart.configure_axisY
+      ~FacetChart.configure_axisYBand
+      ~FacetChart.configure_axisYDiscrete
+      ~FacetChart.configure_axisYPoint
+      ~FacetChart.configure_axisYQuantitative
+      ~FacetChart.configure_axisYTemporal
+      ~FacetChart.configure_bar
+      ~FacetChart.configure_boxplot
+      ~FacetChart.configure_circle
+      ~FacetChart.configure_concat
+      ~FacetChart.configure_errorband
+      ~FacetChart.configure_errorbar
+      ~FacetChart.configure_facet
+      ~FacetChart.configure_geoshape
+      ~FacetChart.configure_header
+      ~FacetChart.configure_headerColumn
+      ~FacetChart.configure_headerFacet
+      ~FacetChart.configure_headerRow
+      ~FacetChart.configure_image
+      ~FacetChart.configure_legend
+      ~FacetChart.configure_line
+      ~FacetChart.configure_mark
+      ~FacetChart.configure_point
+      ~FacetChart.configure_projection
+      ~FacetChart.configure_range
+      ~FacetChart.configure_rect
+      ~FacetChart.configure_rule
+      ~FacetChart.configure_scale
+      ~FacetChart.configure_selection
+      ~FacetChart.configure_square
+      ~FacetChart.configure_text
+      ~FacetChart.configure_tick
+      ~FacetChart.configure_title
+      ~FacetChart.configure_tooltipFormat
+      ~FacetChart.configure_trail
+      ~FacetChart.configure_view
+      ~FacetChart.copy
+      ~FacetChart.display
+      ~FacetChart.from_dict
+      ~FacetChart.from_json
+      ~FacetChart.interactive
+      ~FacetChart.open_editor
+      ~FacetChart.project
+      ~FacetChart.properties
+      ~FacetChart.repeat
+      ~FacetChart.resolve_axis
+      ~FacetChart.resolve_legend
+      ~FacetChart.resolve_references
+      ~FacetChart.resolve_scale
+      ~FacetChart.save
+      ~FacetChart.serve
+      ~FacetChart.show
+      ~FacetChart.to_dict
+      ~FacetChart.to_html
+      ~FacetChart.to_json
+      ~FacetChart.to_url
+      ~FacetChart.transform_aggregate
+      ~FacetChart.transform_bin
+      ~FacetChart.transform_calculate
+      ~FacetChart.transform_density
+      ~FacetChart.transform_extent
+      ~FacetChart.transform_filter
+      ~FacetChart.transform_flatten
+      ~FacetChart.transform_fold
+      ~FacetChart.transform_impute
+      ~FacetChart.transform_joinaggregate
+      ~FacetChart.transform_loess
+      ~FacetChart.transform_lookup
+      ~FacetChart.transform_pivot
+      ~FacetChart.transform_quantile
+      ~FacetChart.transform_regression
+      ~FacetChart.transform_sample
+      ~FacetChart.transform_stack
+      ~FacetChart.transform_timeunit
+      ~FacetChart.transform_window
+      ~FacetChart.transformed_data
+      ~FacetChart.validate
+      ~FacetChart.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~FacetChart.data
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.Resolve
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: Resolve
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Resolve.__init__
+      ~Resolve.copy
+      ~Resolve.from_dict
+      ~Resolve.from_json
+      ~Resolve.resolve_references
+      ~Resolve.to_dict
+      ~Resolve.to_json
+      ~Resolve.validate
+      ~Resolve.validate_property
+   
+   
+
+   
+   
+   

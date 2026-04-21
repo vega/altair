@@ -1,0 +1,37 @@
+﻿altair.TooltipValue
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: TooltipValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TooltipValue.__init__
+      ~TooltipValue.copy
+      ~TooltipValue.from_dict
+      ~TooltipValue.from_json
+      ~TooltipValue.resolve_references
+      ~TooltipValue.to_dict
+      ~TooltipValue.to_json
+      ~TooltipValue.validate
+      ~TooltipValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TooltipValue.condition
+      ~TooltipValue.value
+   
+   

@@ -1,0 +1,40 @@
+﻿altair.OpacityDatum
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: OpacityDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OpacityDatum.__init__
+      ~OpacityDatum.copy
+      ~OpacityDatum.from_dict
+      ~OpacityDatum.from_json
+      ~OpacityDatum.resolve_references
+      ~OpacityDatum.to_dict
+      ~OpacityDatum.to_json
+      ~OpacityDatum.validate
+      ~OpacityDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~OpacityDatum.bandPosition
+      ~OpacityDatum.condition
+      ~OpacityDatum.datum
+      ~OpacityDatum.title
+      ~OpacityDatum.type
+   
+   

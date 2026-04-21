@@ -1,0 +1,30 @@
+﻿altair.Interpolate
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: Interpolate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Interpolate.__init__
+      ~Interpolate.copy
+      ~Interpolate.from_dict
+      ~Interpolate.from_json
+      ~Interpolate.resolve_references
+      ~Interpolate.to_dict
+      ~Interpolate.to_json
+      ~Interpolate.validate
+      ~Interpolate.validate_property
+   
+   
+
+   
+   
+   

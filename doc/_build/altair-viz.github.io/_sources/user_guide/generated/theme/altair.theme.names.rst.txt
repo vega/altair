@@ -1,0 +1,6 @@
+﻿altair.theme.names
+==================
+
+.. currentmodule:: altair.theme
+
+.. autofunction:: names

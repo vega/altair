@@ -1,0 +1,30 @@
+﻿altair.BoxPlotConfig
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: BoxPlotConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BoxPlotConfig.__init__
+      ~BoxPlotConfig.copy
+      ~BoxPlotConfig.from_dict
+      ~BoxPlotConfig.from_json
+      ~BoxPlotConfig.resolve_references
+      ~BoxPlotConfig.to_dict
+      ~BoxPlotConfig.to_json
+      ~BoxPlotConfig.validate
+      ~BoxPlotConfig.validate_property
+   
+   
+
+   
+   
+   

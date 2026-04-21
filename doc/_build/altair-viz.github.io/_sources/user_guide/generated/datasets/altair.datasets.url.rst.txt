@@ -1,0 +1,6 @@
+﻿altair.datasets.url
+===================
+
+.. currentmodule:: altair.datasets
+
+.. autofunction:: url

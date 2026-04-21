@@ -1,0 +1,30 @@
+﻿altair.PositionDatumDef
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: PositionDatumDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PositionDatumDef.__init__
+      ~PositionDatumDef.copy
+      ~PositionDatumDef.from_dict
+      ~PositionDatumDef.from_json
+      ~PositionDatumDef.resolve_references
+      ~PositionDatumDef.to_dict
+      ~PositionDatumDef.to_json
+      ~PositionDatumDef.validate
+      ~PositionDatumDef.validate_property
+   
+   
+
+   
+   
+   

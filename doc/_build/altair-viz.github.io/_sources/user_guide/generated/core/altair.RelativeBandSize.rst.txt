@@ -1,0 +1,30 @@
+﻿altair.RelativeBandSize
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: RelativeBandSize
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RelativeBandSize.__init__
+      ~RelativeBandSize.copy
+      ~RelativeBandSize.from_dict
+      ~RelativeBandSize.from_json
+      ~RelativeBandSize.resolve_references
+      ~RelativeBandSize.to_dict
+      ~RelativeBandSize.to_json
+      ~RelativeBandSize.validate
+      ~RelativeBandSize.validate_property
+   
+   
+
+   
+   
+   

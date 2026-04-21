@@ -1,0 +1,30 @@
+﻿altair.Day
+==========
+
+.. currentmodule:: altair
+
+.. autoclass:: Day
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Day.__init__
+      ~Day.copy
+      ~Day.from_dict
+      ~Day.from_json
+      ~Day.resolve_references
+      ~Day.to_dict
+      ~Day.to_json
+      ~Day.validate
+      ~Day.validate_property
+   
+   
+
+   
+   
+   

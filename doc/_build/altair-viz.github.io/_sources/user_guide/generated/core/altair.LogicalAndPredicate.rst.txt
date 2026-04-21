@@ -1,0 +1,30 @@
+﻿altair.LogicalAndPredicate
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: LogicalAndPredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LogicalAndPredicate.__init__
+      ~LogicalAndPredicate.copy
+      ~LogicalAndPredicate.from_dict
+      ~LogicalAndPredicate.from_json
+      ~LogicalAndPredicate.resolve_references
+      ~LogicalAndPredicate.to_dict
+      ~LogicalAndPredicate.to_json
+      ~LogicalAndPredicate.validate
+      ~LogicalAndPredicate.validate_property
+   
+   
+
+   
+   
+   

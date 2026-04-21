@@ -1,0 +1,30 @@
+﻿altair.Sort
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Sort
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Sort.__init__
+      ~Sort.copy
+      ~Sort.from_dict
+      ~Sort.from_json
+      ~Sort.resolve_references
+      ~Sort.to_dict
+      ~Sort.to_json
+      ~Sort.validate
+      ~Sort.validate_property
+   
+   
+
+   
+   
+   

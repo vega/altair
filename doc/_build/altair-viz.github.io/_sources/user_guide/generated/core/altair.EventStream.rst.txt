@@ -1,0 +1,30 @@
+﻿altair.EventStream
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: EventStream
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~EventStream.__init__
+      ~EventStream.copy
+      ~EventStream.from_dict
+      ~EventStream.from_json
+      ~EventStream.resolve_references
+      ~EventStream.to_dict
+      ~EventStream.to_json
+      ~EventStream.validate
+      ~EventStream.validate_property
+   
+   
+
+   
+   
+   

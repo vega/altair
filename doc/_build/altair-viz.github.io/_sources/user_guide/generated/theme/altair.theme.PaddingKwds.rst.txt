@@ -1,0 +1,42 @@
+﻿altair.theme.PaddingKwds
+========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: PaddingKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PaddingKwds.__init__
+      ~PaddingKwds.clear
+      ~PaddingKwds.copy
+      ~PaddingKwds.fromkeys
+      ~PaddingKwds.get
+      ~PaddingKwds.items
+      ~PaddingKwds.keys
+      ~PaddingKwds.pop
+      ~PaddingKwds.popitem
+      ~PaddingKwds.setdefault
+      ~PaddingKwds.update
+      ~PaddingKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~PaddingKwds.bottom
+      ~PaddingKwds.left
+      ~PaddingKwds.right
+      ~PaddingKwds.top
+   
+   

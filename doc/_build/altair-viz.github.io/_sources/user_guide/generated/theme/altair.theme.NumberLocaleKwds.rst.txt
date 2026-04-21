@@ -1,0 +1,46 @@
+﻿altair.theme.NumberLocaleKwds
+=============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: NumberLocaleKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NumberLocaleKwds.__init__
+      ~NumberLocaleKwds.clear
+      ~NumberLocaleKwds.copy
+      ~NumberLocaleKwds.fromkeys
+      ~NumberLocaleKwds.get
+      ~NumberLocaleKwds.items
+      ~NumberLocaleKwds.keys
+      ~NumberLocaleKwds.pop
+      ~NumberLocaleKwds.popitem
+      ~NumberLocaleKwds.setdefault
+      ~NumberLocaleKwds.update
+      ~NumberLocaleKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~NumberLocaleKwds.currency
+      ~NumberLocaleKwds.decimal
+      ~NumberLocaleKwds.grouping
+      ~NumberLocaleKwds.thousands
+      ~NumberLocaleKwds.minus
+      ~NumberLocaleKwds.nan
+      ~NumberLocaleKwds.numerals
+      ~NumberLocaleKwds.percent
+   
+   

@@ -1,0 +1,1138 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Large Datasets &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/large_datasets';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Example Gallery" href="../gallery/index.html" />
+    <link rel="prev" title="Data Transformers" href="data_transformers.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data.html">Specifying Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="encodings/index.html">Encodings</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="encodings/channels.html">Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encodings/channel_options.html">Channel Options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="marks/index.html">Marks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="marks/arc.html">Arc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/area.html">Area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/bar.html">Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/boxplot.html">Box Plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/circle.html">Circle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/errorband.html">Error Band</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/errorbar.html">Error Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/geoshape.html">Geoshape</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="marks/image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/line.html">Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/rule.html">Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/square.html">Square</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/text.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/tick.html">Tick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/trail.html">Trail</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="transform/index.html">Data Transformations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="transform/aggregate.html">Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/bin.html">Bin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/calculate.html">Calculate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/density.html">Density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/extent.html">Extent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/filter.html">Filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/flatten.html">Flatten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/fold.html">Fold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/impute.html">Impute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/joinaggregate.html">Join Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/lookup.html">Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/loess.html">LOESS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/pivot.html">Pivot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/quantile.html">Quantile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/sample.html">Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/stack.html">Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/timeunit.html">TimeUnit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/window.html">Window</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="interactions/index.html">Interactive Charts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="interactions/parameters.html">Parameters, Conditions, &amp; Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interactions/bindings_widgets.html">Bindings &amp; Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interactions/expressions.html">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interactions/jupyter_chart.html">JupyterChart</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="compound_charts.html">Layered &amp; Multi-View Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scale_resolve.html">Scale &amp; Guide Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="times_and_dates.html">Times &amp; Dates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">Customizing Visualizations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Top-Level Chart Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saving_charts.html">Saving Altair Charts</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="internals.html">Altair Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="display_frontends.html">Displaying Altair Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_renderers.html">Customizing Renderers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_transformers.html">Data Transformers</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Large Datasets</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="data.html" class="nav-link">Specifying Data</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Large Datasets</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="large-datasets">
+<span id="id1"></span><h1>Large Datasets<a class="headerlink" href="#large-datasets" title="Link to this heading">#</a></h1>
+<p>If you try to create a plot that will directly embed a dataset with more than
+5000 rows, you will see a <code class="docutils literal notranslate"><span class="pre">MaxRowsError</span></code>:</p>
+<div class="highlight-python notranslate" id="large_datasets-rst-altair-source-0"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">)})</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>MaxRowsError: The number of rows in your dataset is greater than the maximum allowed (5000).
+
+Try enabling the VegaFusion data transformer which raises this limit by pre-evaluating data
+transformations in Python.
+    &gt;&gt; import altair as alt
+    &gt;&gt; alt.data_transformers.enable(&quot;vegafusion&quot;)
+
+Or, see https://altair-viz.github.io/user_guide/large_datasets.html for additional information
+on how to plot large datasets.
+</pre></div>
+</div>
+<p>This is not because Altair cannot handle larger datasets, but it is because it
+is important for the user to think carefully about how large datasets are handled.
+The following sections describe various considerations as well as approaches to deal with
+large datasets.</p>
+<p>If you are certain you would like to embed your full untransformed dataset within the visualization
+specification, you can disable the <code class="docutils literal notranslate"><span class="pre">MaxRows</span></code> check:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">data_transformers</span><span class="o">.</span><span class="n">disable_max_rows</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="challenges">
+<h2>Challenges<a class="headerlink" href="#challenges" title="Link to this heading">#</a></h2>
+<p>By design, Altair does not produce plots consisting of pixels, but plots
+consisting of data plus a visualization specification. For example, here is a
+simple chart made from a dataframe with three rows of data:</p>
+<div class="highlight-python notranslate" id="large_datasets-rst-altair-source-1"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]})</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+     <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span>
+     <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y&#39;</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pprint</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">chart</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;$schema&#39;: &#39;https://vega.github.io/schema/vega-lite/v2.4.1.json&#39;,
+ &#39;config&#39;: {&#39;view&#39;: {&#39;height&#39;: 300, &#39;width&#39;: 300}},
+ &#39;data&#39;: {&#39;values&#39;: [{&#39;x&#39;: 1, &#39;y&#39;: 2}, {&#39;x&#39;: 2, &#39;y&#39;: 1}, {&#39;x&#39;: 3, &#39;y&#39;: 2}]},
+ &#39;encoding&#39;: {&#39;x&#39;: {&#39;field&#39;: &#39;x&#39;, &#39;type&#39;: &#39;quantitative&#39;},
+              &#39;y&#39;: {&#39;field&#39;: &#39;y&#39;, &#39;type&#39;: &#39;quantitative&#39;}},
+ &#39;mark&#39;: &#39;line&#39;}
+</pre></div>
+</div>
+<p>The resulting specification includes a representation of the data converted
+to JSON format, and this specification is embedded in the notebook or web page
+where it can be used by Vega-Lite to render the plot.
+As the size of the data grows, this explicit data storage can lead to some
+very large specifications which can have various negative implications:</p>
+<ul class="simple">
+<li><p>large notebook files which can slow down your notebook environment such as JupyterLab</p></li>
+<li><p>if you display the chart on a website it slows down the loading of the page</p></li>
+<li><p>slow evaluation of transforms as the calculations are performed in JavaScript which is not the fastest language for processing large amounts of data</p></li>
+</ul>
+</section>
+<section id="vegafusion-data-transformer">
+<span id="id2"></span><h2>VegaFusion Data Transformer<a class="headerlink" href="#vegafusion-data-transformer" title="Link to this heading">#</a></h2>
+<p>The easiest and most flexible approach for addressing a <code class="docutils literal notranslate"><span class="pre">MaxRowsError</span></code> is to
+enable the <code class="docutils literal notranslate"><span class="pre">&quot;vegafusion&quot;</span></code> data transformer, which was added in Altair 5.1.
+<a class="reference external" href="https://vegafusion.io">VegaFusion</a> is an external project that provides efficient Rust implementations
+of most of Altair’s data transformations. By evaluating data transformations (e.g. binning
+and aggregations) in Python, the size of the datasets that must be included in the final chart
+specification are often greatly reduced. In addition, VegaFusion automatically removes
+unused columns, which reduces dataset size even for charts without data transformations.</p>
+<p>When the <code class="docutils literal notranslate"><span class="pre">&quot;vegafusion&quot;</span></code> data transformer is active, data transformations will be
+pre-evaluated when <a class="reference internal" href="display_frontends.html#displaying-charts"><span class="std std-ref">Displaying Altair Charts</span></a>, <a class="reference internal" href="saving_charts.html#user-guide-saving"><span class="std std-ref">Saving Altair Charts</span></a>, converted charts a dictionaries,
+and converting charts to JSON. When combined with <a class="reference internal" href="interactions/jupyter_chart.html#user-guide-jupyterchart"><span class="std std-ref">JupyterChart</span></a> or the <code class="docutils literal notranslate"><span class="pre">&quot;jupyter&quot;</span></code>
+renderer (See <a class="reference internal" href="custom_renderers.html#customizing-renderers"><span class="std std-ref">Customizing Renderers</span></a>), data transformations will also be evaluated in Python
+dynamically in response to chart selection events.</p>
+<p>VegaFusion’s development is sponsored by <a class="reference external" href="https://hex.tech">Hex</a>.</p>
+<section id="installing-vegafusion">
+<h3>Installing VegaFusion<a class="headerlink" href="#installing-vegafusion" title="Link to this heading">#</a></h3>
+<p>The VegaFusion dependencies can be installed using pip</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install vegafusion
+</pre></div>
+</div>
+<p>or conda</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>conda install -c conda-forge vegafusion vl-convert-python
+</pre></div>
+</div>
+</section>
+<section id="enabling-the-vegafusion-data-transformer">
+<h3>Enabling the VegaFusion Data Transformer<a class="headerlink" href="#enabling-the-vegafusion-data-transformer" title="Link to this heading">#</a></h3>
+<p>Activate the VegaFusion data transformer with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">data_transformers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;vegafusion&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All charts created after activating the VegaFusion data transformer
+will work with datasets containing up to 100,000 rows.
+VegaFusion’s row limit is applied after all supported data transformations have been applied.
+So you are unlikely to reach it with a chart such as a histogram,
+but you may hit it in the case of a large scatter chart or a chart that includes interactivity
+when not using <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> or the <code class="docutils literal notranslate"><span class="pre">&quot;jupyter&quot;</span></code> renderer.</p>
+<p>If you need to work with larger datasets, you can disable the maximum row limit
+or switch to using <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> or the <code class="docutils literal notranslate"><span class="pre">&quot;jupyter&quot;</span></code> renderer described below.</p>
+</section>
+<section id="converting-to-json-or-dictionary">
+<h3>Converting to JSON or dictionary<a class="headerlink" href="#converting-to-json-or-dictionary" title="Link to this heading">#</a></h3>
+<p>When converting a VegaFusion chart to JSON with <code class="docutils literal notranslate"><span class="pre">chart.to_json</span></code> or to a Python dictionary with
+<code class="docutils literal notranslate"><span class="pre">chart.to_dict</span></code>, the <code class="docutils literal notranslate"><span class="pre">format</span></code> argument must be set to <code class="docutils literal notranslate"><span class="pre">&quot;vega&quot;</span></code> rather than the
+default of <code class="docutils literal notranslate"><span class="pre">&quot;vega-lite&quot;</span></code>. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">chart</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;vega&quot;</span><span class="p">)</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;vega&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is because VegaFusion works with Vega chart specifications
+rather than the Vega-Lite specifications produced by Altair. When the VegaFusion
+data transformer is enabled, the <a class="reference external" href="https://github.com/vega/vl-convert">vl-convert</a>
+library is used to perform the conversion from Vega-Lite to Vega.</p>
+</section>
+<section id="local-timezone-configuration">
+<h3>Local Timezone Configuration<a class="headerlink" href="#local-timezone-configuration" title="Link to this heading">#</a></h3>
+<p>Some Altair transformations (e.g. <a class="reference internal" href="transform/timeunit.html#user-guide-timeunit-transform"><span class="std std-ref">TimeUnit</span></a>) are based on
+a local timezone. Normally, the browser’s local timezone is used. However, because
+VegaFusion evaluates these transforms in Python before rendering, it’s not always possible
+to access the browser’s timezone. Instead, the local timezone of the Python kernel will be
+used by default. In the case of a cloud notebook service, this may be difference than
+the browser’s local timezone.</p>
+<p>VegaFusion’s local timezone may be customized using the <code class="docutils literal notranslate"><span class="pre">vegafusion.set_local_tz</span></code>
+function. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">vegafusion</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">vf</span>
+<span class="n">vf</span><span class="o">.</span><span class="n">set_local_tz</span><span class="p">(</span><span class="s2">&quot;America/New_York&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When using <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> or the <code class="docutils literal notranslate"><span class="pre">&quot;jupyter&quot;</span></code> renderer, the browser’s local timezone
+is used.</p>
+</section>
+<section id="duckdb-integration">
+<h3>DuckDB Integration<a class="headerlink" href="#duckdb-integration" title="Link to this heading">#</a></h3>
+<p>VegaFusion provides optional integration with <a class="reference external" href="https://duckdb.org/">DuckDB</a>. Because DuckDB can perform queries on pandas
+DataFrames without converting through Arrow, it’s often faster than VegaFusion’s default query engine
+which requires this conversion. See the <a class="reference external" href="https://vegafusion.io/duckdb.html">VegaFusion DuckDB</a> documentation for more information.</p>
+</section>
+<section id="interactivity">
+<h3>Interactivity<a class="headerlink" href="#interactivity" title="Link to this heading">#</a></h3>
+<p>When using the default <code class="docutils literal notranslate"><span class="pre">&quot;html&quot;</span></code> renderer with charts that use selections to filter data interactively,
+the VegaFusion data transformer will include all of the data that participates in the interaction in the resulting chart specification. This makes it an unsuitable approach for building interactive charts that filter large datasets (e.g. crossfiltering a dataset with over a million rows).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> widget and the <code class="docutils literal notranslate"><span class="pre">&quot;jupyter&quot;</span></code> renderer are designed to work with the VegaFusion
+data transformer to evaluate data transformations interactively in response to selection events.
+This avoids the need to transfer the full dataset to the browser, and so supports
+interactive exploration of aggregated datasets on the order of millions of rows.</p>
+<p>Either use <code class="docutils literal notranslate"><span class="pre">JupyterChart</span></code> directly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">data_transformers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;vegafusion&quot;</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">JupyterChart</span><span class="p">(</span><span class="n">chart</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or, enable the <code class="docutils literal notranslate"><span class="pre">&quot;jupyter&quot;</span></code> renderer and display charts as usual:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">data_transformers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;vegafusion&quot;</span><span class="p">)</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s2">&quot;jupyter&quot;</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">chart</span>
+</pre></div>
+</div>
+<p>Charts rendered this way require a running Python kernel and Jupyter Widget extension to
+display, which works in many frontends including locally in the classic notebook, JupyterLab, and VSCode,
+as well as remotely in Colab and Binder.</p>
+</section>
+</section>
+<section id="passing-data-by-url">
+<span id="id3"></span><h2>Passing Data by URL<a class="headerlink" href="#passing-data-by-url" title="Link to this heading">#</a></h2>
+<p>A common approach when working with large datasets is to not embed the data directly,
+but rather store it separately and pass it to the chart by URL.
+This not only addresses the issue of large notebooks, but also leads to better
+interactivity performance with large datasets.</p>
+<section id="local-data-server">
+<h3>Local Data Server<a class="headerlink" href="#local-data-server" title="Link to this heading">#</a></h3>
+<p>A convenient way to do this is by using the <a class="reference external" href="https://github.com/altair-viz/altair_data_server">altair_data_server</a>
+package. It serves your data from a local threaded server. First install the package:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install altair_data_server
+</pre></div>
+</div>
+<p>And then enable the data transformer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">data_transformers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;data_server&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that this approach may not work on some cloud-based Jupyter notebook services.
+A disadvantage of this method is that if you reopen the notebook, the plot may no longer display
+as the data server is no longer running.</p>
+</section>
+<section id="local-filesystem">
+<h3>Local Filesystem<a class="headerlink" href="#local-filesystem" title="Link to this heading">#</a></h3>
+<p>You can also persist the data to disk and then pass the path to Altair:</p>
+<div class="highlight-python notranslate" id="large_datasets-rst-altair-source-2"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;data.json&#39;</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y:Q&#39;</span>
+<span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">chart</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;$schema&#39;: &#39;https://vega.github.io/schema/vega-lite/v2.4.1.json&#39;,
+ &#39;config&#39;: {&#39;view&#39;: {&#39;height&#39;: 300, &#39;width&#39;: 300}},
+ &#39;data&#39;: {&#39;url&#39;: &#39;data.json&#39;},
+ &#39;encoding&#39;: {&#39;x&#39;: {&#39;field&#39;: &#39;x&#39;, &#39;type&#39;: &#39;quantitative&#39;},
+              &#39;y&#39;: {&#39;field&#39;: &#39;y&#39;, &#39;type&#39;: &#39;quantitative&#39;}},
+ &#39;mark&#39;: &#39;line&#39;}
+</pre></div>
+</div>
+<p>Altair also has a <code class="docutils literal notranslate"><span class="pre">JSON</span></code> data transformer that will do this
+transparently when enabled:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">data_transformers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There is a similar CSV data transformer, but it must be used more carefully
+because CSV does not preserve data types as JSON does.</p>
+<p>Note that the filesystem approach may not work on some cloud-based Jupyter
+notebook services. A disadvantage of this method is also a loss of portability: if the notebook is
+ever moved, the data file must accompany it or the plot may not display.</p>
+</section>
+<section id="vega-datasets">
+<h3>Vega Datasets<a class="headerlink" href="#vega-datasets" title="Link to this heading">#</a></h3>
+<p>If you are working with one of the vega datasets, you can pass the data by URL
+using the <code class="docutils literal notranslate"><span class="pre">url</span></code> attribute:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="o">.</span><span class="n">url</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span> <span class="c1"># etc.</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="png-and-svg-renderers">
+<h2>PNG and SVG Renderers<a class="headerlink" href="#png-and-svg-renderers" title="Link to this heading">#</a></h2>
+<p>The approaches presented in <a class="reference internal" href="#passing-data-by-url"><span class="std std-ref">Passing Data by URL</span></a> have the disadvantage that the data is no longer
+contained in the notebook and you therefore lose portability or don’t see the charts when you reopen the notebook.
+Furthermore, the data still needs to be sent to the frontend, e.g. your browser, and any calculations will happen there.</p>
+<p>You might achieve a speedup by enabling either the PNG or SVG renderer
+as described in <a class="reference internal" href="display_frontends.html#renderers"><span class="std std-ref">Altair’s Renderer Framework</span></a>. Instead of a Vega-Lite specification, they will
+prerender the visualization and send only a static image to your notebook. This can
+greatly reduce the amount of data that is being transmitted. The downside with this approach is,
+that you loose all interactivity features of Altair.</p>
+<p>Both renderers require you to install the <a class="reference external" href="https://github.com/vega/vl-convert">vl-convert</a> package, see <a class="reference internal" href="saving_charts.html#saving-png"><span class="std std-ref">PNG, SVG, and PDF format</span></a>.</p>
+</section>
+<section id="preaggregate-and-filter-in-pandas">
+<span id="preaggregate-and-filter"></span><h2>Preaggregate and Filter in pandas<a class="headerlink" href="#preaggregate-and-filter-in-pandas" title="Link to this heading">#</a></h2>
+<p>Another common approach is to perform data transformations such as aggregations
+and filters using pandas before passing the data to Altair.</p>
+<p>For example, to create a bar chart for the <code class="docutils literal notranslate"><span class="pre">barley</span></code> dataset summing up <code class="docutils literal notranslate"><span class="pre">yield</span></code> grouped by <code class="docutils literal notranslate"><span class="pre">site</span></code>,
+it is convenient to pass the unaggregated data to Altair:</p>
+<div class="highlight-python notranslate" id="large_datasets-rst-altair-source-3"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">barley</span><span class="p">()</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sum(yield):Q&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">&quot;site:N&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&quot;-x&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="large_datasets-rst-altair-plot-3">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-9cc0564cb5591205eeeca8d2429dd11b"}, "mark": {"type": "bar"}, "encoding": {"x": {"aggregate": "sum", "field": "yield", "type": "quantitative"}, "y": {"field": "site", "sort": "-x", "type": "nominal"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-9cc0564cb5591205eeeca8d2429dd11b": [{"yield": 27.0, "variety": "Manchuria", "year": 1931, "site": "University Farm"}, {"yield": 48.86667, "variety": "Manchuria", "year": 1931, "site": "Waseca"}, {"yield": 27.43334, "variety": "Manchuria", "year": 1931, "site": "Morris"}, {"yield": 39.93333, "variety": "Manchuria", "year": 1931, "site": "Crookston"}, {"yield": 32.96667, "variety": "Manchuria", "year": 1931, "site": "Grand Rapids"}, {"yield": 28.96667, "variety": "Manchuria", "year": 1931, "site": "Duluth"}, {"yield": 43.06666, "variety": "Glabron", "year": 1931, "site": "University Farm"}, {"yield": 55.2, "variety": "Glabron", "year": 1931, "site": "Waseca"}, {"yield": 28.76667, "variety": "Glabron", "year": 1931, "site": "Morris"}, {"yield": 38.13333, "variety": "Glabron", "year": 1931, "site": "Crookston"}, {"yield": 29.13333, "variety": "Glabron", "year": 1931, "site": "Grand Rapids"}, {"yield": 29.66667, "variety": "Glabron", "year": 1931, "site": "Duluth"}, {"yield": 35.13333, "variety": "Svansota", "year": 1931, "site": "University Farm"}, {"yield": 47.33333, "variety": "Svansota", "year": 1931, "site": "Waseca"}, {"yield": 25.76667, "variety": "Svansota", "year": 1931, "site": "Morris"}, {"yield": 40.46667, "variety": "Svansota", "year": 1931, "site": "Crookston"}, {"yield": 29.66667, "variety": "Svansota", "year": 1931, "site": "Grand Rapids"}, {"yield": 25.7, "variety": "Svansota", "year": 1931, "site": "Duluth"}, {"yield": 39.9, "variety": "Velvet", "year": 1931, "site": "University Farm"}, {"yield": 50.23333, "variety": "Velvet", "year": 1931, "site": "Waseca"}, {"yield": 26.13333, "variety": "Velvet", "year": 1931, "site": "Morris"}, {"yield": 41.33333, "variety": "Velvet", "year": 1931, "site": "Crookston"}, {"yield": 23.03333, "variety": "Velvet", "year": 1931, "site": "Grand Rapids"}, {"yield": 26.3, "variety": "Velvet", "year": 1931, "site": "Duluth"}, {"yield": 36.56666, "variety": "Trebi", "year": 1931, "site": "University Farm"}, {"yield": 63.8333, "variety": "Trebi", "year": 1931, "site": "Waseca"}, {"yield": 43.76667, "variety": "Trebi", "year": 1931, "site": "Morris"}, {"yield": 46.93333, "variety": "Trebi", "year": 1931, "site": "Crookston"}, {"yield": 29.76667, "variety": "Trebi", "year": 1931, "site": "Grand Rapids"}, {"yield": 33.93333, "variety": "Trebi", "year": 1931, "site": "Duluth"}, {"yield": 43.26667, "variety": "No. 457", "year": 1931, "site": "University Farm"}, {"yield": 58.1, "variety": "No. 457", "year": 1931, "site": "Waseca"}, {"yield": 28.7, "variety": "No. 457", "year": 1931, "site": "Morris"}, {"yield": 45.66667, "variety": "No. 457", "year": 1931, "site": "Crookston"}, {"yield": 32.16667, "variety": "No. 457", "year": 1931, "site": "Grand Rapids"}, {"yield": 33.6, "variety": "No. 457", "year": 1931, "site": "Duluth"}, {"yield": 36.6, "variety": "No. 462", "year": 1931, "site": "University Farm"}, {"yield": 65.7667, "variety": "No. 462", "year": 1931, "site": "Waseca"}, {"yield": 30.36667, "variety": "No. 462", "year": 1931, "site": "Morris"}, {"yield": 48.56666, "variety": "No. 462", "year": 1931, "site": "Crookston"}, {"yield": 24.93334, "variety": "No. 462", "year": 1931, "site": "Grand Rapids"}, {"yield": 28.1, "variety": "No. 462", "year": 1931, "site": "Duluth"}, {"yield": 32.76667, "variety": "Peatland", "year": 1931, "site": "University Farm"}, {"yield": 48.56666, "variety": "Peatland", "year": 1931, "site": "Waseca"}, {"yield": 29.86667, "variety": "Peatland", "year": 1931, "site": "Morris"}, {"yield": 41.6, "variety": "Peatland", "year": 1931, "site": "Crookston"}, {"yield": 34.7, "variety": "Peatland", "year": 1931, "site": "Grand Rapids"}, {"yield": 32.0, "variety": "Peatland", "year": 1931, "site": "Duluth"}, {"yield": 24.66667, "variety": "No. 475", "year": 1931, "site": "University Farm"}, {"yield": 46.76667, "variety": "No. 475", "year": 1931, "site": "Waseca"}, {"yield": 22.6, "variety": "No. 475", "year": 1931, "site": "Morris"}, {"yield": 44.1, "variety": "No. 475", "year": 1931, "site": "Crookston"}, {"yield": 19.7, "variety": "No. 475", "year": 1931, "site": "Grand Rapids"}, {"yield": 33.06666, "variety": "No. 475", "year": 1931, "site": "Duluth"}, {"yield": 39.3, "variety": "Wisconsin No. 38", "year": 1931, "site": "University Farm"}, {"yield": 58.8, "variety": "Wisconsin No. 38", "year": 1931, "site": "Waseca"}, {"yield": 29.46667, "variety": "Wisconsin No. 38", "year": 1931, "site": "Morris"}, {"yield": 49.86667, "variety": "Wisconsin No. 38", "year": 1931, "site": "Crookston"}, {"yield": 34.46667, "variety": "Wisconsin No. 38", "year": 1931, "site": "Grand Rapids"}, {"yield": 31.6, "variety": "Wisconsin No. 38", "year": 1931, "site": "Duluth"}, {"yield": 26.9, "variety": "Manchuria", "year": 1932, "site": "University Farm"}, {"yield": 33.46667, "variety": "Manchuria", "year": 1932, "site": "Waseca"}, {"yield": 34.36666, "variety": "Manchuria", "year": 1932, "site": "Morris"}, {"yield": 32.96667, "variety": "Manchuria", "year": 1932, "site": "Crookston"}, {"yield": 22.13333, "variety": "Manchuria", "year": 1932, "site": "Grand Rapids"}, {"yield": 22.56667, "variety": "Manchuria", "year": 1932, "site": "Duluth"}, {"yield": 36.8, "variety": "Glabron", "year": 1932, "site": "University Farm"}, {"yield": 37.73333, "variety": "Glabron", "year": 1932, "site": "Waseca"}, {"yield": 35.13333, "variety": "Glabron", "year": 1932, "site": "Morris"}, {"yield": 26.16667, "variety": "Glabron", "year": 1932, "site": "Crookston"}, {"yield": 14.43333, "variety": "Glabron", "year": 1932, "site": "Grand Rapids"}, {"yield": 25.86667, "variety": "Glabron", "year": 1932, "site": "Duluth"}, {"yield": 27.43334, "variety": "Svansota", "year": 1932, "site": "University Farm"}, {"yield": 38.5, "variety": "Svansota", "year": 1932, "site": "Waseca"}, {"yield": 35.03333, "variety": "Svansota", "year": 1932, "site": "Morris"}, {"yield": 20.63333, "variety": "Svansota", "year": 1932, "site": "Crookston"}, {"yield": 16.63333, "variety": "Svansota", "year": 1932, "site": "Grand Rapids"}, {"yield": 22.23333, "variety": "Svansota", "year": 1932, "site": "Duluth"}, {"yield": 26.8, "variety": "Velvet", "year": 1932, "site": "University Farm"}, {"yield": 37.4, "variety": "Velvet", "year": 1932, "site": "Waseca"}, {"yield": 38.83333, "variety": "Velvet", "year": 1932, "site": "Morris"}, {"yield": 32.06666, "variety": "Velvet", "year": 1932, "site": "Crookston"}, {"yield": 32.23333, "variety": "Velvet", "year": 1932, "site": "Grand Rapids"}, {"yield": 22.46667, "variety": "Velvet", "year": 1932, "site": "Duluth"}, {"yield": 29.06667, "variety": "Trebi", "year": 1932, "site": "University Farm"}, {"yield": 49.2333, "variety": "Trebi", "year": 1932, "site": "Waseca"}, {"yield": 46.63333, "variety": "Trebi", "year": 1932, "site": "Morris"}, {"yield": 41.83333, "variety": "Trebi", "year": 1932, "site": "Crookston"}, {"yield": 20.63333, "variety": "Trebi", "year": 1932, "site": "Grand Rapids"}, {"yield": 30.6, "variety": "Trebi", "year": 1932, "site": "Duluth"}, {"yield": 26.43334, "variety": "No. 457", "year": 1932, "site": "University Farm"}, {"yield": 42.2, "variety": "No. 457", "year": 1932, "site": "Waseca"}, {"yield": 43.53334, "variety": "No. 457", "year": 1932, "site": "Morris"}, {"yield": 34.33333, "variety": "No. 457", "year": 1932, "site": "Crookston"}, {"yield": 19.46667, "variety": "No. 457", "year": 1932, "site": "Grand Rapids"}, {"yield": 22.7, "variety": "No. 457", "year": 1932, "site": "Duluth"}, {"yield": 25.56667, "variety": "No. 462", "year": 1932, "site": "University Farm"}, {"yield": 44.7, "variety": "No. 462", "year": 1932, "site": "Waseca"}, {"yield": 47.0, "variety": "No. 462", "year": 1932, "site": "Morris"}, {"yield": 30.53333, "variety": "No. 462", "year": 1932, "site": "Crookston"}, {"yield": 19.9, "variety": "No. 462", "year": 1932, "site": "Grand Rapids"}, {"yield": 22.5, "variety": "No. 462", "year": 1932, "site": "Duluth"}, {"yield": 28.06667, "variety": "Peatland", "year": 1932, "site": "University Farm"}, {"yield": 36.03333, "variety": "Peatland", "year": 1932, "site": "Waseca"}, {"yield": 43.2, "variety": "Peatland", "year": 1932, "site": "Morris"}, {"yield": 25.23333, "variety": "Peatland", "year": 1932, "site": "Crookston"}, {"yield": 26.76667, "variety": "Peatland", "year": 1932, "site": "Grand Rapids"}, {"yield": 31.36667, "variety": "Peatland", "year": 1932, "site": "Duluth"}, {"yield": 30.0, "variety": "No. 475", "year": 1932, "site": "University Farm"}, {"yield": 41.26667, "variety": "No. 475", "year": 1932, "site": "Waseca"}, {"yield": 44.23333, "variety": "No. 475", "year": 1932, "site": "Morris"}, {"yield": 32.13333, "variety": "No. 475", "year": 1932, "site": "Crookston"}, {"yield": 15.23333, "variety": "No. 475", "year": 1932, "site": "Grand Rapids"}, {"yield": 27.36667, "variety": "No. 475", "year": 1932, "site": "Duluth"}, {"yield": 38.0, "variety": "Wisconsin No. 38", "year": 1932, "site": "University Farm"}, {"yield": 58.16667, "variety": "Wisconsin No. 38", "year": 1932, "site": "Waseca"}, {"yield": 47.16667, "variety": "Wisconsin No. 38", "year": 1932, "site": "Morris"}, {"yield": 35.9, "variety": "Wisconsin No. 38", "year": 1932, "site": "Crookston"}, {"yield": 20.66667, "variety": "Wisconsin No. 38", "year": 1932, "site": "Grand Rapids"}, {"yield": 29.33333, "variety": "Wisconsin No. 38", "year": 1932, "site": "Duluth"}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#large_datasets-rst-altair-plot-3', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>The above works well for smaller datasets but let’s imagine that the <code class="docutils literal notranslate"><span class="pre">barley</span></code> dataset
+is larger and the resulting Altair chart slows down your notebook environment.
+To reduce the data being passed to Altair, you could subset the dataframe to
+only the necessary columns:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">[[</span><span class="s2">&quot;yield&quot;</span><span class="p">,</span> <span class="s2">&quot;site&quot;</span><span class="p">]])</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sum(yield):Q&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">&quot;site:N&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&quot;-x&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>You could also precalculate the sum in pandas which would reduce the size of the dataset even more:</p>
+<div class="highlight-python notranslate" id="large_datasets-rst-altair-source-4"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">barley</span><span class="p">()</span>
+<span class="n">source_aggregated</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">source</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;site&quot;</span><span class="p">)[</span><span class="s2">&quot;yield&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;sum_yield&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source_aggregated</span><span class="p">)</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sum_yield:Q&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">&quot;site:N&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&quot;-x&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="large_datasets-rst-altair-plot-4">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-8422cf5ffff742526e511ccdd8345b44"}, "mark": {"type": "bar"}, "encoding": {"x": {"field": "sum_yield", "type": "quantitative"}, "y": {"field": "site", "sort": "-x", "type": "nominal"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-8422cf5ffff742526e511ccdd8345b44": [{"site": "Crookston", "sum_yield": 748.3999699999999}, {"site": "Duluth", "sum_yield": 559.93334}, {"site": "Grand Rapids", "sum_yield": 498.63334000000003}, {"site": "Morris", "sum_yield": 708.00001}, {"site": "University Farm", "sum_yield": 653.33335}, {"site": "Waseca", "sum_yield": 962.16663}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#large_datasets-rst-altair-plot-4', spec, opt).catch(console.err);
+  });
+</script>
+</div><section id="preaggregate-boxplot">
+<h3>Preaggregate Boxplot<a class="headerlink" href="#preaggregate-boxplot" title="Link to this heading">#</a></h3>
+<p>A boxplot is a useful way to visualize the distribution of data and it is simple to create
+in Altair.</p>
+<div class="highlight-python notranslate" id="large_datasets-rst-altair-source-5"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="p">()</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_boxplot</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Miles_per_Gallon:Q&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Origin:N&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s2">&quot;Origin&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="large_datasets-rst-altair-plot-5">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-ad3a0dd023cd6593db8ec56326f31fcb"}, "mark": {"type": "boxplot"}, "encoding": {"color": {"field": "Origin", "legend": null, "type": "nominal"}, "x": {"field": "Miles_per_Gallon", "type": "quantitative"}, "y": {"field": "Origin", "type": "nominal"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-ad3a0dd023cd6593db8ec56326f31fcb": [{"Name": "chevrolet chevelle malibu", "Miles_per_Gallon": 18.0, "Cylinders": 8, "Displacement": 307.0, "Horsepower": 130, "Weight_in_lbs": 3504, "Acceleration": 12.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick skylark 320", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 165, "Weight_in_lbs": 3693, "Acceleration": 11.5, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth satellite", "Miles_per_Gallon": 18.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 3436, "Acceleration": 11.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc rebel sst", "Miles_per_Gallon": 16.0, "Cylinders": 8, "Displacement": 304.0, "Horsepower": 150, "Weight_in_lbs": 3433, "Acceleration": 12.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford torino", "Miles_per_Gallon": 17.0, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 140, "Weight_in_lbs": 3449, "Acceleration": 10.5, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford galaxie 500", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 429.0, "Horsepower": 198, "Weight_in_lbs": 4341, "Acceleration": 10.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet impala", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 454.0, "Horsepower": 220, "Weight_in_lbs": 4354, "Acceleration": 9.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth fury iii", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 440.0, "Horsepower": 215, "Weight_in_lbs": 4312, "Acceleration": 8.5, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac catalina", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 455.0, "Horsepower": 225, "Weight_in_lbs": 4425, "Acceleration": 10.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc ambassador dpl", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 390.0, "Horsepower": 190, "Weight_in_lbs": 3850, "Acceleration": 8.5, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "citroen ds-21 pallas", "Miles_per_Gallon": null, "Cylinders": 4, "Displacement": 133.0, "Horsepower": 115, "Weight_in_lbs": 3090, "Acceleration": 17.5, "Year": "1970-01-01T00:00:00", "Origin": "Europe"}, {"Name": "chevrolet chevelle concours (sw)", "Miles_per_Gallon": null, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 165, "Weight_in_lbs": 4142, "Acceleration": 11.5, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford torino (sw)", "Miles_per_Gallon": null, "Cylinders": 8, "Displacement": 351.0, "Horsepower": 153, "Weight_in_lbs": 4034, "Acceleration": 11.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth satellite (sw)", "Miles_per_Gallon": null, "Cylinders": 8, "Displacement": 383.0, "Horsepower": 175, "Weight_in_lbs": 4166, "Acceleration": 10.5, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc rebel sst (sw)", "Miles_per_Gallon": null, "Cylinders": 8, "Displacement": 360.0, "Horsepower": 175, "Weight_in_lbs": 3850, "Acceleration": 11.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge challenger se", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 383.0, "Horsepower": 170, "Weight_in_lbs": 3563, "Acceleration": 10.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth 'cuda 340", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 340.0, "Horsepower": 160, "Weight_in_lbs": 3609, "Acceleration": 8.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford mustang boss 302", "Miles_per_Gallon": null, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 140, "Weight_in_lbs": 3353, "Acceleration": 8.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet monte carlo", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 150, "Weight_in_lbs": 3761, "Acceleration": 9.5, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick estate wagon (sw)", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 455.0, "Horsepower": 225, "Weight_in_lbs": 3086, "Acceleration": 10.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota corona mark ii", "Miles_per_Gallon": 24.0, "Cylinders": 4, "Displacement": 113.0, "Horsepower": 95, "Weight_in_lbs": 2372, "Acceleration": 15.0, "Year": "1970-01-01T00:00:00", "Origin": "Japan"}, {"Name": "plymouth duster", "Miles_per_Gallon": 22.0, "Cylinders": 6, "Displacement": 198.0, "Horsepower": 95, "Weight_in_lbs": 2833, "Acceleration": 15.5, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc hornet", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 199.0, "Horsepower": 97, "Weight_in_lbs": 2774, "Acceleration": 15.5, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford maverick", "Miles_per_Gallon": 21.0, "Cylinders": 6, "Displacement": 200.0, "Horsepower": 85, "Weight_in_lbs": 2587, "Acceleration": 16.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "datsun pl510", "Miles_per_Gallon": 27.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 88, "Weight_in_lbs": 2130, "Acceleration": 14.5, "Year": "1970-01-01T00:00:00", "Origin": "Japan"}, {"Name": "volkswagen 1131 deluxe sedan", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 46, "Weight_in_lbs": 1835, "Acceleration": 20.5, "Year": "1970-01-01T00:00:00", "Origin": "Europe"}, {"Name": "peugeot 504", "Miles_per_Gallon": 25.0, "Cylinders": 4, "Displacement": 110.0, "Horsepower": 87, "Weight_in_lbs": 2672, "Acceleration": 17.5, "Year": "1970-01-01T00:00:00", "Origin": "Europe"}, {"Name": "audi 100 ls", "Miles_per_Gallon": 24.0, "Cylinders": 4, "Displacement": 107.0, "Horsepower": 90, "Weight_in_lbs": 2430, "Acceleration": 14.5, "Year": "1970-01-01T00:00:00", "Origin": "Europe"}, {"Name": "saab 99e", "Miles_per_Gallon": 25.0, "Cylinders": 4, "Displacement": 104.0, "Horsepower": 95, "Weight_in_lbs": 2375, "Acceleration": 17.5, "Year": "1970-01-01T00:00:00", "Origin": "Europe"}, {"Name": "bmw 2002", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 121.0, "Horsepower": 113, "Weight_in_lbs": 2234, "Acceleration": 12.5, "Year": "1970-01-01T00:00:00", "Origin": "Europe"}, {"Name": "amc gremlin", "Miles_per_Gallon": 21.0, "Cylinders": 6, "Displacement": 199.0, "Horsepower": 90, "Weight_in_lbs": 2648, "Acceleration": 15.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford f250", "Miles_per_Gallon": 10.0, "Cylinders": 8, "Displacement": 360.0, "Horsepower": 215, "Weight_in_lbs": 4615, "Acceleration": 14.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevy c20", "Miles_per_Gallon": 10.0, "Cylinders": 8, "Displacement": 307.0, "Horsepower": 200, "Weight_in_lbs": 4376, "Acceleration": 15.0, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge d200", "Miles_per_Gallon": 11.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 210, "Weight_in_lbs": 4382, "Acceleration": 13.5, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "hi 1200d", "Miles_per_Gallon": 9.0, "Cylinders": 8, "Displacement": 304.0, "Horsepower": 193, "Weight_in_lbs": 4732, "Acceleration": 18.5, "Year": "1970-01-01T00:00:00", "Origin": "USA"}, {"Name": "datsun pl510", "Miles_per_Gallon": 27.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 88, "Weight_in_lbs": 2130, "Acceleration": 14.5, "Year": "1971-01-01T00:00:00", "Origin": "Japan"}, {"Name": "chevrolet vega 2300", "Miles_per_Gallon": 28.0, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 90, "Weight_in_lbs": 2264, "Acceleration": 15.5, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota corona", "Miles_per_Gallon": 25.0, "Cylinders": 4, "Displacement": 113.0, "Horsepower": 95, "Weight_in_lbs": 2228, "Acceleration": 14.0, "Year": "1971-01-01T00:00:00", "Origin": "Japan"}, {"Name": "ford pinto", "Miles_per_Gallon": 25.0, "Cylinders": 4, "Displacement": 98.0, "Horsepower": null, "Weight_in_lbs": 2046, "Acceleration": 19.0, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "volkswagen super beetle 117", "Miles_per_Gallon": null, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 48, "Weight_in_lbs": 1978, "Acceleration": 20.0, "Year": "1971-01-01T00:00:00", "Origin": "Europe"}, {"Name": "amc gremlin", "Miles_per_Gallon": 19.0, "Cylinders": 6, "Displacement": 232.0, "Horsepower": 100, "Weight_in_lbs": 2634, "Acceleration": 13.0, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth satellite custom", "Miles_per_Gallon": 16.0, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 105, "Weight_in_lbs": 3439, "Acceleration": 15.5, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet chevelle malibu", "Miles_per_Gallon": 17.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 100, "Weight_in_lbs": 3329, "Acceleration": 15.5, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford torino 500", "Miles_per_Gallon": 19.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 88, "Weight_in_lbs": 3302, "Acceleration": 15.5, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc matador", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 232.0, "Horsepower": 100, "Weight_in_lbs": 3288, "Acceleration": 15.5, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet impala", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 165, "Weight_in_lbs": 4209, "Acceleration": 12.0, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac catalina brougham", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 175, "Weight_in_lbs": 4464, "Acceleration": 11.5, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford galaxie 500", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 351.0, "Horsepower": 153, "Weight_in_lbs": 4154, "Acceleration": 13.5, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth fury iii", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 4096, "Acceleration": 13.0, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge monaco (sw)", "Miles_per_Gallon": 12.0, "Cylinders": 8, "Displacement": 383.0, "Horsepower": 180, "Weight_in_lbs": 4955, "Acceleration": 11.5, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford country squire (sw)", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 170, "Weight_in_lbs": 4746, "Acceleration": 12.0, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac safari (sw)", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 175, "Weight_in_lbs": 5140, "Acceleration": 12.0, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc hornet sportabout (sw)", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 258.0, "Horsepower": 110, "Weight_in_lbs": 2962, "Acceleration": 13.5, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet vega (sw)", "Miles_per_Gallon": 22.0, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 72, "Weight_in_lbs": 2408, "Acceleration": 19.0, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac firebird", "Miles_per_Gallon": 19.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 100, "Weight_in_lbs": 3282, "Acceleration": 15.0, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford mustang", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 88, "Weight_in_lbs": 3139, "Acceleration": 14.5, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercury capri 2000", "Miles_per_Gallon": 23.0, "Cylinders": 4, "Displacement": 122.0, "Horsepower": 86, "Weight_in_lbs": 2220, "Acceleration": 14.0, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "opel 1900", "Miles_per_Gallon": 28.0, "Cylinders": 4, "Displacement": 116.0, "Horsepower": 90, "Weight_in_lbs": 2123, "Acceleration": 14.0, "Year": "1971-01-01T00:00:00", "Origin": "Europe"}, {"Name": "peugeot 304", "Miles_per_Gallon": 30.0, "Cylinders": 4, "Displacement": 79.0, "Horsepower": 70, "Weight_in_lbs": 2074, "Acceleration": 19.5, "Year": "1971-01-01T00:00:00", "Origin": "Europe"}, {"Name": "fiat 124b", "Miles_per_Gallon": 30.0, "Cylinders": 4, "Displacement": 88.0, "Horsepower": 76, "Weight_in_lbs": 2065, "Acceleration": 14.5, "Year": "1971-01-01T00:00:00", "Origin": "Europe"}, {"Name": "toyota corolla 1200", "Miles_per_Gallon": 31.0, "Cylinders": 4, "Displacement": 71.0, "Horsepower": 65, "Weight_in_lbs": 1773, "Acceleration": 19.0, "Year": "1971-01-01T00:00:00", "Origin": "Japan"}, {"Name": "datsun 1200", "Miles_per_Gallon": 35.0, "Cylinders": 4, "Displacement": 72.0, "Horsepower": 69, "Weight_in_lbs": 1613, "Acceleration": 18.0, "Year": "1971-01-01T00:00:00", "Origin": "Japan"}, {"Name": "volkswagen model 111", "Miles_per_Gallon": 27.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 60, "Weight_in_lbs": 1834, "Acceleration": 19.0, "Year": "1971-01-01T00:00:00", "Origin": "Europe"}, {"Name": "plymouth cricket", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 70, "Weight_in_lbs": 1955, "Acceleration": 20.5, "Year": "1971-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota corona hardtop", "Miles_per_Gallon": 24.0, "Cylinders": 4, "Displacement": 113.0, "Horsepower": 95, "Weight_in_lbs": 2278, "Acceleration": 15.5, "Year": "1972-01-01T00:00:00", "Origin": "Japan"}, {"Name": "dodge colt hardtop", "Miles_per_Gallon": 25.0, "Cylinders": 4, "Displacement": 97.5, "Horsepower": 80, "Weight_in_lbs": 2126, "Acceleration": 17.0, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "volkswagen type 3", "Miles_per_Gallon": 23.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 54, "Weight_in_lbs": 2254, "Acceleration": 23.5, "Year": "1972-01-01T00:00:00", "Origin": "Europe"}, {"Name": "chevrolet vega", "Miles_per_Gallon": 20.0, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 90, "Weight_in_lbs": 2408, "Acceleration": 19.5, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford pinto runabout", "Miles_per_Gallon": 21.0, "Cylinders": 4, "Displacement": 122.0, "Horsepower": 86, "Weight_in_lbs": 2226, "Acceleration": 16.5, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet impala", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 165, "Weight_in_lbs": 4274, "Acceleration": 12.0, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac catalina", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 175, "Weight_in_lbs": 4385, "Acceleration": 12.0, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth fury iii", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 4135, "Acceleration": 13.5, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford galaxie 500", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 351.0, "Horsepower": 153, "Weight_in_lbs": 4129, "Acceleration": 13.0, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc ambassador sst", "Miles_per_Gallon": 17.0, "Cylinders": 8, "Displacement": 304.0, "Horsepower": 150, "Weight_in_lbs": 3672, "Acceleration": 11.5, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercury marquis", "Miles_per_Gallon": 11.0, "Cylinders": 8, "Displacement": 429.0, "Horsepower": 208, "Weight_in_lbs": 4633, "Acceleration": 11.0, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick lesabre custom", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 155, "Weight_in_lbs": 4502, "Acceleration": 13.5, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "oldsmobile delta 88 royale", "Miles_per_Gallon": 12.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 160, "Weight_in_lbs": 4456, "Acceleration": 13.5, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "chrysler newport royal", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 190, "Weight_in_lbs": 4422, "Acceleration": 12.5, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "mazda rx2 coupe", "Miles_per_Gallon": 19.0, "Cylinders": 3, "Displacement": 70.0, "Horsepower": 97, "Weight_in_lbs": 2330, "Acceleration": 13.5, "Year": "1972-01-01T00:00:00", "Origin": "Japan"}, {"Name": "amc matador (sw)", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 304.0, "Horsepower": 150, "Weight_in_lbs": 3892, "Acceleration": 12.5, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet chevelle concours (sw)", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 307.0, "Horsepower": 130, "Weight_in_lbs": 4098, "Acceleration": 14.0, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford gran torino (sw)", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 140, "Weight_in_lbs": 4294, "Acceleration": 16.0, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth satellite custom (sw)", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 4077, "Acceleration": 14.0, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "volvo 145e (sw)", "Miles_per_Gallon": 18.0, "Cylinders": 4, "Displacement": 121.0, "Horsepower": 112, "Weight_in_lbs": 2933, "Acceleration": 14.5, "Year": "1972-01-01T00:00:00", "Origin": "Europe"}, {"Name": "volkswagen 411 (sw)", "Miles_per_Gallon": 22.0, "Cylinders": 4, "Displacement": 121.0, "Horsepower": 76, "Weight_in_lbs": 2511, "Acceleration": 18.0, "Year": "1972-01-01T00:00:00", "Origin": "Europe"}, {"Name": "peugeot 504 (sw)", "Miles_per_Gallon": 21.0, "Cylinders": 4, "Displacement": 120.0, "Horsepower": 87, "Weight_in_lbs": 2979, "Acceleration": 19.5, "Year": "1972-01-01T00:00:00", "Origin": "Europe"}, {"Name": "renault 12 (sw)", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 96.0, "Horsepower": 69, "Weight_in_lbs": 2189, "Acceleration": 18.0, "Year": "1972-01-01T00:00:00", "Origin": "Europe"}, {"Name": "ford pinto (sw)", "Miles_per_Gallon": 22.0, "Cylinders": 4, "Displacement": 122.0, "Horsepower": 86, "Weight_in_lbs": 2395, "Acceleration": 16.0, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "datsun 510 (sw)", "Miles_per_Gallon": 28.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 92, "Weight_in_lbs": 2288, "Acceleration": 17.0, "Year": "1972-01-01T00:00:00", "Origin": "Japan"}, {"Name": "toyouta corona mark ii (sw)", "Miles_per_Gallon": 23.0, "Cylinders": 4, "Displacement": 120.0, "Horsepower": 97, "Weight_in_lbs": 2506, "Acceleration": 14.5, "Year": "1972-01-01T00:00:00", "Origin": "Japan"}, {"Name": "dodge colt (sw)", "Miles_per_Gallon": 28.0, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 80, "Weight_in_lbs": 2164, "Acceleration": 15.0, "Year": "1972-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota corolla 1600 (sw)", "Miles_per_Gallon": 27.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 88, "Weight_in_lbs": 2100, "Acceleration": 16.5, "Year": "1972-01-01T00:00:00", "Origin": "Japan"}, {"Name": "buick century 350", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 175, "Weight_in_lbs": 4100, "Acceleration": 13.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc matador", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 304.0, "Horsepower": 150, "Weight_in_lbs": 3672, "Acceleration": 11.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet malibu", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 145, "Weight_in_lbs": 3988, "Acceleration": 13.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford gran torino", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 137, "Weight_in_lbs": 4042, "Acceleration": 14.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge coronet custom", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 3777, "Acceleration": 12.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercury marquis brougham", "Miles_per_Gallon": 12.0, "Cylinders": 8, "Displacement": 429.0, "Horsepower": 198, "Weight_in_lbs": 4952, "Acceleration": 11.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet caprice classic", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 150, "Weight_in_lbs": 4464, "Acceleration": 12.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford ltd", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 351.0, "Horsepower": 158, "Weight_in_lbs": 4363, "Acceleration": 13.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth fury gran sedan", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 4237, "Acceleration": 14.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "chrysler new yorker brougham", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 440.0, "Horsepower": 215, "Weight_in_lbs": 4735, "Acceleration": 11.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick electra 225 custom", "Miles_per_Gallon": 12.0, "Cylinders": 8, "Displacement": 455.0, "Horsepower": 225, "Weight_in_lbs": 4951, "Acceleration": 11.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc ambassador brougham", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 360.0, "Horsepower": 175, "Weight_in_lbs": 3821, "Acceleration": 11.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth valiant", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 105, "Weight_in_lbs": 3121, "Acceleration": 16.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet nova custom", "Miles_per_Gallon": 16.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 100, "Weight_in_lbs": 3278, "Acceleration": 18.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc hornet", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 232.0, "Horsepower": 100, "Weight_in_lbs": 2945, "Acceleration": 16.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford maverick", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 88, "Weight_in_lbs": 3021, "Acceleration": 16.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth duster", "Miles_per_Gallon": 23.0, "Cylinders": 6, "Displacement": 198.0, "Horsepower": 95, "Weight_in_lbs": 2904, "Acceleration": 16.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "volkswagen super beetle", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 46, "Weight_in_lbs": 1950, "Acceleration": 21.0, "Year": "1973-01-01T00:00:00", "Origin": "Europe"}, {"Name": "chevrolet impala", "Miles_per_Gallon": 11.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 150, "Weight_in_lbs": 4997, "Acceleration": 14.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford country", "Miles_per_Gallon": 12.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 167, "Weight_in_lbs": 4906, "Acceleration": 12.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth custom suburb", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 360.0, "Horsepower": 170, "Weight_in_lbs": 4654, "Acceleration": 13.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "oldsmobile vista cruiser", "Miles_per_Gallon": 12.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 180, "Weight_in_lbs": 4499, "Acceleration": 12.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc gremlin", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 232.0, "Horsepower": 100, "Weight_in_lbs": 2789, "Acceleration": 15.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota carina", "Miles_per_Gallon": 20.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 88, "Weight_in_lbs": 2279, "Acceleration": 19.0, "Year": "1973-01-01T00:00:00", "Origin": "Japan"}, {"Name": "chevrolet vega", "Miles_per_Gallon": 21.0, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 72, "Weight_in_lbs": 2401, "Acceleration": 19.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "datsun 610", "Miles_per_Gallon": 22.0, "Cylinders": 4, "Displacement": 108.0, "Horsepower": 94, "Weight_in_lbs": 2379, "Acceleration": 16.5, "Year": "1973-01-01T00:00:00", "Origin": "Japan"}, {"Name": "maxda rx3", "Miles_per_Gallon": 18.0, "Cylinders": 3, "Displacement": 70.0, "Horsepower": 90, "Weight_in_lbs": 2124, "Acceleration": 13.5, "Year": "1973-01-01T00:00:00", "Origin": "Japan"}, {"Name": "ford pinto", "Miles_per_Gallon": 19.0, "Cylinders": 4, "Displacement": 122.0, "Horsepower": 85, "Weight_in_lbs": 2310, "Acceleration": 18.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercury capri v6", "Miles_per_Gallon": 21.0, "Cylinders": 6, "Displacement": 155.0, "Horsepower": 107, "Weight_in_lbs": 2472, "Acceleration": 14.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "fiat 124 sport coupe", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 90, "Weight_in_lbs": 2265, "Acceleration": 15.5, "Year": "1973-01-01T00:00:00", "Origin": "Europe"}, {"Name": "chevrolet monte carlo s", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 145, "Weight_in_lbs": 4082, "Acceleration": 13.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac grand prix", "Miles_per_Gallon": 16.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 230, "Weight_in_lbs": 4278, "Acceleration": 9.5, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "fiat 128", "Miles_per_Gallon": 29.0, "Cylinders": 4, "Displacement": 68.0, "Horsepower": 49, "Weight_in_lbs": 1867, "Acceleration": 19.5, "Year": "1973-01-01T00:00:00", "Origin": "Europe"}, {"Name": "opel manta", "Miles_per_Gallon": 24.0, "Cylinders": 4, "Displacement": 116.0, "Horsepower": 75, "Weight_in_lbs": 2158, "Acceleration": 15.5, "Year": "1973-01-01T00:00:00", "Origin": "Europe"}, {"Name": "audi 100ls", "Miles_per_Gallon": 20.0, "Cylinders": 4, "Displacement": 114.0, "Horsepower": 91, "Weight_in_lbs": 2582, "Acceleration": 14.0, "Year": "1973-01-01T00:00:00", "Origin": "Europe"}, {"Name": "volvo 144ea", "Miles_per_Gallon": 19.0, "Cylinders": 4, "Displacement": 121.0, "Horsepower": 112, "Weight_in_lbs": 2868, "Acceleration": 15.5, "Year": "1973-01-01T00:00:00", "Origin": "Europe"}, {"Name": "dodge dart custom", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 3399, "Acceleration": 11.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "saab 99le", "Miles_per_Gallon": 24.0, "Cylinders": 4, "Displacement": 121.0, "Horsepower": 110, "Weight_in_lbs": 2660, "Acceleration": 14.0, "Year": "1973-01-01T00:00:00", "Origin": "Europe"}, {"Name": "toyota mark ii", "Miles_per_Gallon": 20.0, "Cylinders": 6, "Displacement": 156.0, "Horsepower": 122, "Weight_in_lbs": 2807, "Acceleration": 13.5, "Year": "1973-01-01T00:00:00", "Origin": "Japan"}, {"Name": "oldsmobile omega", "Miles_per_Gallon": 11.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 180, "Weight_in_lbs": 3664, "Acceleration": 11.0, "Year": "1973-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth duster", "Miles_per_Gallon": 20.0, "Cylinders": 6, "Displacement": 198.0, "Horsepower": 95, "Weight_in_lbs": 3102, "Acceleration": 16.5, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford maverick", "Miles_per_Gallon": 21.0, "Cylinders": 6, "Displacement": 200.0, "Horsepower": null, "Weight_in_lbs": 2875, "Acceleration": 17.0, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc hornet", "Miles_per_Gallon": 19.0, "Cylinders": 6, "Displacement": 232.0, "Horsepower": 100, "Weight_in_lbs": 2901, "Acceleration": 16.0, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet nova", "Miles_per_Gallon": 15.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 100, "Weight_in_lbs": 3336, "Acceleration": 17.0, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "datsun b210", "Miles_per_Gallon": 31.0, "Cylinders": 4, "Displacement": 79.0, "Horsepower": 67, "Weight_in_lbs": 1950, "Acceleration": 19.0, "Year": "1974-01-01T00:00:00", "Origin": "Japan"}, {"Name": "ford pinto", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 122.0, "Horsepower": 80, "Weight_in_lbs": 2451, "Acceleration": 16.5, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota corolla 1200", "Miles_per_Gallon": 32.0, "Cylinders": 4, "Displacement": 71.0, "Horsepower": 65, "Weight_in_lbs": 1836, "Acceleration": 21.0, "Year": "1974-01-01T00:00:00", "Origin": "Japan"}, {"Name": "chevrolet vega", "Miles_per_Gallon": 25.0, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 75, "Weight_in_lbs": 2542, "Acceleration": 17.0, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet chevelle malibu classic", "Miles_per_Gallon": 16.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 100, "Weight_in_lbs": 3781, "Acceleration": 17.0, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc matador", "Miles_per_Gallon": 16.0, "Cylinders": 6, "Displacement": 258.0, "Horsepower": 110, "Weight_in_lbs": 3632, "Acceleration": 18.0, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth satellite sebring", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 105, "Weight_in_lbs": 3613, "Acceleration": 16.5, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford gran torino", "Miles_per_Gallon": 16.0, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 140, "Weight_in_lbs": 4141, "Acceleration": 14.0, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick century luxus (sw)", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 150, "Weight_in_lbs": 4699, "Acceleration": 14.5, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge coronet custom (sw)", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 4457, "Acceleration": 13.5, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford gran torino (sw)", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 140, "Weight_in_lbs": 4638, "Acceleration": 16.0, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc matador (sw)", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 304.0, "Horsepower": 150, "Weight_in_lbs": 4257, "Acceleration": 15.5, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "audi fox", "Miles_per_Gallon": 29.0, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 83, "Weight_in_lbs": 2219, "Acceleration": 16.5, "Year": "1974-01-01T00:00:00", "Origin": "Europe"}, {"Name": "volkswagen dasher", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 79.0, "Horsepower": 67, "Weight_in_lbs": 1963, "Acceleration": 15.5, "Year": "1974-01-01T00:00:00", "Origin": "Europe"}, {"Name": "opel manta", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 78, "Weight_in_lbs": 2300, "Acceleration": 14.5, "Year": "1974-01-01T00:00:00", "Origin": "Europe"}, {"Name": "toyota corona", "Miles_per_Gallon": 31.0, "Cylinders": 4, "Displacement": 76.0, "Horsepower": 52, "Weight_in_lbs": 1649, "Acceleration": 16.5, "Year": "1974-01-01T00:00:00", "Origin": "Japan"}, {"Name": "datsun 710", "Miles_per_Gallon": 32.0, "Cylinders": 4, "Displacement": 83.0, "Horsepower": 61, "Weight_in_lbs": 2003, "Acceleration": 19.0, "Year": "1974-01-01T00:00:00", "Origin": "Japan"}, {"Name": "dodge colt", "Miles_per_Gallon": 28.0, "Cylinders": 4, "Displacement": 90.0, "Horsepower": 75, "Weight_in_lbs": 2125, "Acceleration": 14.5, "Year": "1974-01-01T00:00:00", "Origin": "USA"}, {"Name": "fiat 128", "Miles_per_Gallon": 24.0, "Cylinders": 4, "Displacement": 90.0, "Horsepower": 75, "Weight_in_lbs": 2108, "Acceleration": 15.5, "Year": "1974-01-01T00:00:00", "Origin": "Europe"}, {"Name": "fiat 124 tc", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 116.0, "Horsepower": 75, "Weight_in_lbs": 2246, "Acceleration": 14.0, "Year": "1974-01-01T00:00:00", "Origin": "Europe"}, {"Name": "honda civic", "Miles_per_Gallon": 24.0, "Cylinders": 4, "Displacement": 120.0, "Horsepower": 97, "Weight_in_lbs": 2489, "Acceleration": 15.0, "Year": "1974-01-01T00:00:00", "Origin": "Japan"}, {"Name": "subaru", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 108.0, "Horsepower": 93, "Weight_in_lbs": 2391, "Acceleration": 15.5, "Year": "1974-01-01T00:00:00", "Origin": "Japan"}, {"Name": "fiat x1.9", "Miles_per_Gallon": 31.0, "Cylinders": 4, "Displacement": 79.0, "Horsepower": 67, "Weight_in_lbs": 2000, "Acceleration": 16.0, "Year": "1974-01-01T00:00:00", "Origin": "Europe"}, {"Name": "plymouth valiant custom", "Miles_per_Gallon": 19.0, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 95, "Weight_in_lbs": 3264, "Acceleration": 16.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet nova", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 105, "Weight_in_lbs": 3459, "Acceleration": 16.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercury monarch", "Miles_per_Gallon": 15.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 72, "Weight_in_lbs": 3432, "Acceleration": 21.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford maverick", "Miles_per_Gallon": 15.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 72, "Weight_in_lbs": 3158, "Acceleration": 19.5, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac catalina", "Miles_per_Gallon": 16.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 170, "Weight_in_lbs": 4668, "Acceleration": 11.5, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet bel air", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 145, "Weight_in_lbs": 4440, "Acceleration": 14.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth grand fury", "Miles_per_Gallon": 16.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 4498, "Acceleration": 14.5, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford ltd", "Miles_per_Gallon": 14.0, "Cylinders": 8, "Displacement": 351.0, "Horsepower": 148, "Weight_in_lbs": 4657, "Acceleration": 13.5, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick century", "Miles_per_Gallon": 17.0, "Cylinders": 6, "Displacement": 231.0, "Horsepower": 110, "Weight_in_lbs": 3907, "Acceleration": 21.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevroelt chevelle malibu", "Miles_per_Gallon": 16.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 105, "Weight_in_lbs": 3897, "Acceleration": 18.5, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc matador", "Miles_per_Gallon": 15.0, "Cylinders": 6, "Displacement": 258.0, "Horsepower": 110, "Weight_in_lbs": 3730, "Acceleration": 19.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth fury", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 95, "Weight_in_lbs": 3785, "Acceleration": 19.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick skyhawk", "Miles_per_Gallon": 21.0, "Cylinders": 6, "Displacement": 231.0, "Horsepower": 110, "Weight_in_lbs": 3039, "Acceleration": 15.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet monza 2+2", "Miles_per_Gallon": 20.0, "Cylinders": 8, "Displacement": 262.0, "Horsepower": 110, "Weight_in_lbs": 3221, "Acceleration": 13.5, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford mustang ii", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 129, "Weight_in_lbs": 3169, "Acceleration": 12.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota corolla", "Miles_per_Gallon": 29.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 75, "Weight_in_lbs": 2171, "Acceleration": 16.0, "Year": "1975-01-01T00:00:00", "Origin": "Japan"}, {"Name": "ford pinto", "Miles_per_Gallon": 23.0, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 83, "Weight_in_lbs": 2639, "Acceleration": 17.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc gremlin", "Miles_per_Gallon": 20.0, "Cylinders": 6, "Displacement": 232.0, "Horsepower": 100, "Weight_in_lbs": 2914, "Acceleration": 16.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac astro", "Miles_per_Gallon": 23.0, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 78, "Weight_in_lbs": 2592, "Acceleration": 18.5, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota corona", "Miles_per_Gallon": 24.0, "Cylinders": 4, "Displacement": 134.0, "Horsepower": 96, "Weight_in_lbs": 2702, "Acceleration": 13.5, "Year": "1975-01-01T00:00:00", "Origin": "Japan"}, {"Name": "volkswagen dasher", "Miles_per_Gallon": 25.0, "Cylinders": 4, "Displacement": 90.0, "Horsepower": 71, "Weight_in_lbs": 2223, "Acceleration": 16.5, "Year": "1975-01-01T00:00:00", "Origin": "Europe"}, {"Name": "datsun 710", "Miles_per_Gallon": 24.0, "Cylinders": 4, "Displacement": 119.0, "Horsepower": 97, "Weight_in_lbs": 2545, "Acceleration": 17.0, "Year": "1975-01-01T00:00:00", "Origin": "Japan"}, {"Name": "ford pinto", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 171.0, "Horsepower": 97, "Weight_in_lbs": 2984, "Acceleration": 14.5, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "volkswagen rabbit", "Miles_per_Gallon": 29.0, "Cylinders": 4, "Displacement": 90.0, "Horsepower": 70, "Weight_in_lbs": 1937, "Acceleration": 14.0, "Year": "1975-01-01T00:00:00", "Origin": "Europe"}, {"Name": "amc pacer", "Miles_per_Gallon": 19.0, "Cylinders": 6, "Displacement": 232.0, "Horsepower": 90, "Weight_in_lbs": 3211, "Acceleration": 17.0, "Year": "1975-01-01T00:00:00", "Origin": "USA"}, {"Name": "audi 100ls", "Miles_per_Gallon": 23.0, "Cylinders": 4, "Displacement": 115.0, "Horsepower": 95, "Weight_in_lbs": 2694, "Acceleration": 15.0, "Year": "1975-01-01T00:00:00", "Origin": "Europe"}, {"Name": "peugeot 504", "Miles_per_Gallon": 23.0, "Cylinders": 4, "Displacement": 120.0, "Horsepower": 88, "Weight_in_lbs": 2957, "Acceleration": 17.0, "Year": "1975-01-01T00:00:00", "Origin": "Europe"}, {"Name": "volvo 244dl", "Miles_per_Gallon": 22.0, "Cylinders": 4, "Displacement": 121.0, "Horsepower": 98, "Weight_in_lbs": 2945, "Acceleration": 14.5, "Year": "1975-01-01T00:00:00", "Origin": "Europe"}, {"Name": "saab 99le", "Miles_per_Gallon": 25.0, "Cylinders": 4, "Displacement": 121.0, "Horsepower": 115, "Weight_in_lbs": 2671, "Acceleration": 13.5, "Year": "1975-01-01T00:00:00", "Origin": "Europe"}, {"Name": "honda civic cvcc", "Miles_per_Gallon": 33.0, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 53, "Weight_in_lbs": 1795, "Acceleration": 17.5, "Year": "1975-01-01T00:00:00", "Origin": "Japan"}, {"Name": "fiat 131", "Miles_per_Gallon": 28.0, "Cylinders": 4, "Displacement": 107.0, "Horsepower": 86, "Weight_in_lbs": 2464, "Acceleration": 15.5, "Year": "1976-01-01T00:00:00", "Origin": "Europe"}, {"Name": "opel 1900", "Miles_per_Gallon": 25.0, "Cylinders": 4, "Displacement": 116.0, "Horsepower": 81, "Weight_in_lbs": 2220, "Acceleration": 16.9, "Year": "1976-01-01T00:00:00", "Origin": "Europe"}, {"Name": "capri ii", "Miles_per_Gallon": 25.0, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 92, "Weight_in_lbs": 2572, "Acceleration": 14.9, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge colt", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 79, "Weight_in_lbs": 2255, "Acceleration": 17.7, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "renault 12tl", "Miles_per_Gallon": 27.0, "Cylinders": 4, "Displacement": 101.0, "Horsepower": 83, "Weight_in_lbs": 2202, "Acceleration": 15.3, "Year": "1976-01-01T00:00:00", "Origin": "Europe"}, {"Name": "chevrolet chevelle malibu classic", "Miles_per_Gallon": 17.5, "Cylinders": 8, "Displacement": 305.0, "Horsepower": 140, "Weight_in_lbs": 4215, "Acceleration": 13.0, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge coronet brougham", "Miles_per_Gallon": 16.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 4190, "Acceleration": 13.0, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc matador", "Miles_per_Gallon": 15.5, "Cylinders": 8, "Displacement": 304.0, "Horsepower": 120, "Weight_in_lbs": 3962, "Acceleration": 13.9, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford gran torino", "Miles_per_Gallon": 14.5, "Cylinders": 8, "Displacement": 351.0, "Horsepower": 152, "Weight_in_lbs": 4215, "Acceleration": 12.8, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth valiant", "Miles_per_Gallon": 22.0, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 100, "Weight_in_lbs": 3233, "Acceleration": 15.4, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet nova", "Miles_per_Gallon": 22.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 105, "Weight_in_lbs": 3353, "Acceleration": 14.5, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford maverick", "Miles_per_Gallon": 24.0, "Cylinders": 6, "Displacement": 200.0, "Horsepower": 81, "Weight_in_lbs": 3012, "Acceleration": 17.6, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc hornet", "Miles_per_Gallon": 22.5, "Cylinders": 6, "Displacement": 232.0, "Horsepower": 90, "Weight_in_lbs": 3085, "Acceleration": 17.6, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet chevette", "Miles_per_Gallon": 29.0, "Cylinders": 4, "Displacement": 85.0, "Horsepower": 52, "Weight_in_lbs": 2035, "Acceleration": 22.2, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet woody", "Miles_per_Gallon": 24.5, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 60, "Weight_in_lbs": 2164, "Acceleration": 22.1, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "vw rabbit", "Miles_per_Gallon": 29.0, "Cylinders": 4, "Displacement": 90.0, "Horsepower": 70, "Weight_in_lbs": 1937, "Acceleration": 14.2, "Year": "1976-01-01T00:00:00", "Origin": "Europe"}, {"Name": "honda civic", "Miles_per_Gallon": 33.0, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 53, "Weight_in_lbs": 1795, "Acceleration": 17.4, "Year": "1976-01-01T00:00:00", "Origin": "Japan"}, {"Name": "dodge aspen se", "Miles_per_Gallon": 20.0, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 100, "Weight_in_lbs": 3651, "Acceleration": 17.7, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford granada ghia", "Miles_per_Gallon": 18.0, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 78, "Weight_in_lbs": 3574, "Acceleration": 21.0, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac ventura sj", "Miles_per_Gallon": 18.5, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 110, "Weight_in_lbs": 3645, "Acceleration": 16.2, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc pacer d/l", "Miles_per_Gallon": 17.5, "Cylinders": 6, "Displacement": 258.0, "Horsepower": 95, "Weight_in_lbs": 3193, "Acceleration": 17.8, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "volkswagen rabbit", "Miles_per_Gallon": 29.5, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 71, "Weight_in_lbs": 1825, "Acceleration": 12.2, "Year": "1976-01-01T00:00:00", "Origin": "Europe"}, {"Name": "datsun b-210", "Miles_per_Gallon": 32.0, "Cylinders": 4, "Displacement": 85.0, "Horsepower": 70, "Weight_in_lbs": 1990, "Acceleration": 17.0, "Year": "1976-01-01T00:00:00", "Origin": "Japan"}, {"Name": "toyota corolla", "Miles_per_Gallon": 28.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 75, "Weight_in_lbs": 2155, "Acceleration": 16.4, "Year": "1976-01-01T00:00:00", "Origin": "Japan"}, {"Name": "ford pinto", "Miles_per_Gallon": 26.5, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 72, "Weight_in_lbs": 2565, "Acceleration": 13.6, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "volvo 245", "Miles_per_Gallon": 20.0, "Cylinders": 4, "Displacement": 130.0, "Horsepower": 102, "Weight_in_lbs": 3150, "Acceleration": 15.7, "Year": "1976-01-01T00:00:00", "Origin": "Europe"}, {"Name": "plymouth volare premier v8", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 3940, "Acceleration": 13.2, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "peugeot 504", "Miles_per_Gallon": 19.0, "Cylinders": 4, "Displacement": 120.0, "Horsepower": 88, "Weight_in_lbs": 3270, "Acceleration": 21.9, "Year": "1976-01-01T00:00:00", "Origin": "Europe"}, {"Name": "toyota mark ii", "Miles_per_Gallon": 19.0, "Cylinders": 6, "Displacement": 156.0, "Horsepower": 108, "Weight_in_lbs": 2930, "Acceleration": 15.5, "Year": "1976-01-01T00:00:00", "Origin": "Japan"}, {"Name": "mercedes-benz 280s", "Miles_per_Gallon": 16.5, "Cylinders": 6, "Displacement": 168.0, "Horsepower": 120, "Weight_in_lbs": 3820, "Acceleration": 16.7, "Year": "1976-01-01T00:00:00", "Origin": "Europe"}, {"Name": "cadillac seville", "Miles_per_Gallon": 16.5, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 180, "Weight_in_lbs": 4380, "Acceleration": 12.1, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevy c10", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 145, "Weight_in_lbs": 4055, "Acceleration": 12.0, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford f108", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 130, "Weight_in_lbs": 3870, "Acceleration": 15.0, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge d100", "Miles_per_Gallon": 13.0, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 150, "Weight_in_lbs": 3755, "Acceleration": 14.0, "Year": "1976-01-01T00:00:00", "Origin": "USA"}, {"Name": "honda Accelerationord cvcc", "Miles_per_Gallon": 31.5, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 68, "Weight_in_lbs": 2045, "Acceleration": 18.5, "Year": "1977-01-01T00:00:00", "Origin": "Japan"}, {"Name": "buick opel isuzu deluxe", "Miles_per_Gallon": 30.0, "Cylinders": 4, "Displacement": 111.0, "Horsepower": 80, "Weight_in_lbs": 2155, "Acceleration": 14.8, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "renault 5 gtl", "Miles_per_Gallon": 36.0, "Cylinders": 4, "Displacement": 79.0, "Horsepower": 58, "Weight_in_lbs": 1825, "Acceleration": 18.6, "Year": "1977-01-01T00:00:00", "Origin": "Europe"}, {"Name": "plymouth arrow gs", "Miles_per_Gallon": 25.5, "Cylinders": 4, "Displacement": 122.0, "Horsepower": 96, "Weight_in_lbs": 2300, "Acceleration": 15.5, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "datsun f-10 hatchback", "Miles_per_Gallon": 33.5, "Cylinders": 4, "Displacement": 85.0, "Horsepower": 70, "Weight_in_lbs": 1945, "Acceleration": 16.8, "Year": "1977-01-01T00:00:00", "Origin": "Japan"}, {"Name": "chevrolet caprice classic", "Miles_per_Gallon": 17.5, "Cylinders": 8, "Displacement": 305.0, "Horsepower": 145, "Weight_in_lbs": 3880, "Acceleration": 12.5, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "oldsmobile cutlass supreme", "Miles_per_Gallon": 17.0, "Cylinders": 8, "Displacement": 260.0, "Horsepower": 110, "Weight_in_lbs": 4060, "Acceleration": 19.0, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge monaco brougham", "Miles_per_Gallon": 15.5, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 145, "Weight_in_lbs": 4140, "Acceleration": 13.7, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercury cougar brougham", "Miles_per_Gallon": 15.0, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 130, "Weight_in_lbs": 4295, "Acceleration": 14.9, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet concours", "Miles_per_Gallon": 17.5, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 110, "Weight_in_lbs": 3520, "Acceleration": 16.4, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick skylark", "Miles_per_Gallon": 20.5, "Cylinders": 6, "Displacement": 231.0, "Horsepower": 105, "Weight_in_lbs": 3425, "Acceleration": 16.9, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth volare custom", "Miles_per_Gallon": 19.0, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 100, "Weight_in_lbs": 3630, "Acceleration": 17.7, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford granada", "Miles_per_Gallon": 18.5, "Cylinders": 6, "Displacement": 250.0, "Horsepower": 98, "Weight_in_lbs": 3525, "Acceleration": 19.0, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac grand prix lj", "Miles_per_Gallon": 16.0, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 180, "Weight_in_lbs": 4220, "Acceleration": 11.1, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet monte carlo landau", "Miles_per_Gallon": 15.5, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 170, "Weight_in_lbs": 4165, "Acceleration": 11.4, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "chrysler cordoba", "Miles_per_Gallon": 15.5, "Cylinders": 8, "Displacement": 400.0, "Horsepower": 190, "Weight_in_lbs": 4325, "Acceleration": 12.2, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford thunderbird", "Miles_per_Gallon": 16.0, "Cylinders": 8, "Displacement": 351.0, "Horsepower": 149, "Weight_in_lbs": 4335, "Acceleration": 14.5, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "volkswagen rabbit custom", "Miles_per_Gallon": 29.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 78, "Weight_in_lbs": 1940, "Acceleration": 14.5, "Year": "1977-01-01T00:00:00", "Origin": "Europe"}, {"Name": "pontiac sunbird coupe", "Miles_per_Gallon": 24.5, "Cylinders": 4, "Displacement": 151.0, "Horsepower": 88, "Weight_in_lbs": 2740, "Acceleration": 16.0, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota corolla liftback", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 75, "Weight_in_lbs": 2265, "Acceleration": 18.2, "Year": "1977-01-01T00:00:00", "Origin": "Japan"}, {"Name": "ford mustang ii 2+2", "Miles_per_Gallon": 25.5, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 89, "Weight_in_lbs": 2755, "Acceleration": 15.8, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet chevette", "Miles_per_Gallon": 30.5, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 63, "Weight_in_lbs": 2051, "Acceleration": 17.0, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge colt m/m", "Miles_per_Gallon": 33.5, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 83, "Weight_in_lbs": 2075, "Acceleration": 15.9, "Year": "1977-01-01T00:00:00", "Origin": "USA"}, {"Name": "subaru dl", "Miles_per_Gallon": 30.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 67, "Weight_in_lbs": 1985, "Acceleration": 16.4, "Year": "1977-01-01T00:00:00", "Origin": "Japan"}, {"Name": "volkswagen dasher", "Miles_per_Gallon": 30.5, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 78, "Weight_in_lbs": 2190, "Acceleration": 14.1, "Year": "1977-01-01T00:00:00", "Origin": "Europe"}, {"Name": "datsun 810", "Miles_per_Gallon": 22.0, "Cylinders": 6, "Displacement": 146.0, "Horsepower": 97, "Weight_in_lbs": 2815, "Acceleration": 14.5, "Year": "1977-01-01T00:00:00", "Origin": "Japan"}, {"Name": "bmw 320i", "Miles_per_Gallon": 21.5, "Cylinders": 4, "Displacement": 121.0, "Horsepower": 110, "Weight_in_lbs": 2600, "Acceleration": 12.8, "Year": "1977-01-01T00:00:00", "Origin": "Europe"}, {"Name": "mazda rx-4", "Miles_per_Gallon": 21.5, "Cylinders": 3, "Displacement": 80.0, "Horsepower": 110, "Weight_in_lbs": 2720, "Acceleration": 13.5, "Year": "1977-01-01T00:00:00", "Origin": "Japan"}, {"Name": "volkswagen rabbit custom diesel", "Miles_per_Gallon": 43.1, "Cylinders": 4, "Displacement": 90.0, "Horsepower": 48, "Weight_in_lbs": 1985, "Acceleration": 21.5, "Year": "1978-01-01T00:00:00", "Origin": "Europe"}, {"Name": "ford fiesta", "Miles_per_Gallon": 36.1, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 66, "Weight_in_lbs": 1800, "Acceleration": 14.4, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "mazda glc deluxe", "Miles_per_Gallon": 32.8, "Cylinders": 4, "Displacement": 78.0, "Horsepower": 52, "Weight_in_lbs": 1985, "Acceleration": 19.4, "Year": "1978-01-01T00:00:00", "Origin": "Japan"}, {"Name": "datsun b210 gx", "Miles_per_Gallon": 39.4, "Cylinders": 4, "Displacement": 85.0, "Horsepower": 70, "Weight_in_lbs": 2070, "Acceleration": 18.6, "Year": "1978-01-01T00:00:00", "Origin": "Japan"}, {"Name": "honda civic cvcc", "Miles_per_Gallon": 36.1, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 60, "Weight_in_lbs": 1800, "Acceleration": 16.4, "Year": "1978-01-01T00:00:00", "Origin": "Japan"}, {"Name": "oldsmobile cutlass salon brougham", "Miles_per_Gallon": 19.9, "Cylinders": 8, "Displacement": 260.0, "Horsepower": 110, "Weight_in_lbs": 3365, "Acceleration": 15.5, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge diplomat", "Miles_per_Gallon": 19.4, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 140, "Weight_in_lbs": 3735, "Acceleration": 13.2, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercury monarch ghia", "Miles_per_Gallon": 20.2, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 139, "Weight_in_lbs": 3570, "Acceleration": 12.8, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac phoenix lj", "Miles_per_Gallon": 19.2, "Cylinders": 6, "Displacement": 231.0, "Horsepower": 105, "Weight_in_lbs": 3535, "Acceleration": 19.2, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet malibu", "Miles_per_Gallon": 20.5, "Cylinders": 6, "Displacement": 200.0, "Horsepower": 95, "Weight_in_lbs": 3155, "Acceleration": 18.2, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford fairmont (auto)", "Miles_per_Gallon": 20.2, "Cylinders": 6, "Displacement": 200.0, "Horsepower": 85, "Weight_in_lbs": 2965, "Acceleration": 15.8, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford fairmont (man)", "Miles_per_Gallon": 25.1, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 88, "Weight_in_lbs": 2720, "Acceleration": 15.4, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth volare", "Miles_per_Gallon": 20.5, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 100, "Weight_in_lbs": 3430, "Acceleration": 17.2, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc concord", "Miles_per_Gallon": 19.4, "Cylinders": 6, "Displacement": 232.0, "Horsepower": 90, "Weight_in_lbs": 3210, "Acceleration": 17.2, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick century special", "Miles_per_Gallon": 20.6, "Cylinders": 6, "Displacement": 231.0, "Horsepower": 105, "Weight_in_lbs": 3380, "Acceleration": 15.8, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercury zephyr", "Miles_per_Gallon": 20.8, "Cylinders": 6, "Displacement": 200.0, "Horsepower": 85, "Weight_in_lbs": 3070, "Acceleration": 16.7, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge aspen", "Miles_per_Gallon": 18.6, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 110, "Weight_in_lbs": 3620, "Acceleration": 18.7, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc concord d/l", "Miles_per_Gallon": 18.1, "Cylinders": 6, "Displacement": 258.0, "Horsepower": 120, "Weight_in_lbs": 3410, "Acceleration": 15.1, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet monte carlo landau", "Miles_per_Gallon": 19.2, "Cylinders": 8, "Displacement": 305.0, "Horsepower": 145, "Weight_in_lbs": 3425, "Acceleration": 13.2, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick regal sport coupe (turbo)", "Miles_per_Gallon": 17.7, "Cylinders": 6, "Displacement": 231.0, "Horsepower": 165, "Weight_in_lbs": 3445, "Acceleration": 13.4, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford futura", "Miles_per_Gallon": 18.1, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 139, "Weight_in_lbs": 3205, "Acceleration": 11.2, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge magnum xe", "Miles_per_Gallon": 17.5, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 140, "Weight_in_lbs": 4080, "Acceleration": 13.7, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet chevette", "Miles_per_Gallon": 30.0, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 68, "Weight_in_lbs": 2155, "Acceleration": 16.5, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota corona", "Miles_per_Gallon": 27.5, "Cylinders": 4, "Displacement": 134.0, "Horsepower": 95, "Weight_in_lbs": 2560, "Acceleration": 14.2, "Year": "1978-01-01T00:00:00", "Origin": "Japan"}, {"Name": "datsun 510", "Miles_per_Gallon": 27.2, "Cylinders": 4, "Displacement": 119.0, "Horsepower": 97, "Weight_in_lbs": 2300, "Acceleration": 14.7, "Year": "1978-01-01T00:00:00", "Origin": "Japan"}, {"Name": "dodge omni", "Miles_per_Gallon": 30.9, "Cylinders": 4, "Displacement": 105.0, "Horsepower": 75, "Weight_in_lbs": 2230, "Acceleration": 14.5, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota celica gt liftback", "Miles_per_Gallon": 21.1, "Cylinders": 4, "Displacement": 134.0, "Horsepower": 95, "Weight_in_lbs": 2515, "Acceleration": 14.8, "Year": "1978-01-01T00:00:00", "Origin": "Japan"}, {"Name": "plymouth sapporo", "Miles_per_Gallon": 23.2, "Cylinders": 4, "Displacement": 156.0, "Horsepower": 105, "Weight_in_lbs": 2745, "Acceleration": 16.7, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "oldsmobile starfire sx", "Miles_per_Gallon": 23.8, "Cylinders": 4, "Displacement": 151.0, "Horsepower": 85, "Weight_in_lbs": 2855, "Acceleration": 17.6, "Year": "1978-01-01T00:00:00", "Origin": "USA"}, {"Name": "datsun 200-sx", "Miles_per_Gallon": 23.9, "Cylinders": 4, "Displacement": 119.0, "Horsepower": 97, "Weight_in_lbs": 2405, "Acceleration": 14.9, "Year": "1978-01-01T00:00:00", "Origin": "Japan"}, {"Name": "audi 5000", "Miles_per_Gallon": 20.3, "Cylinders": 5, "Displacement": 131.0, "Horsepower": 103, "Weight_in_lbs": 2830, "Acceleration": 15.9, "Year": "1978-01-01T00:00:00", "Origin": "Europe"}, {"Name": "volvo 264gl", "Miles_per_Gallon": 17.0, "Cylinders": 6, "Displacement": 163.0, "Horsepower": 125, "Weight_in_lbs": 3140, "Acceleration": 13.6, "Year": "1978-01-01T00:00:00", "Origin": "Europe"}, {"Name": "saab 99gle", "Miles_per_Gallon": 21.6, "Cylinders": 4, "Displacement": 121.0, "Horsepower": 115, "Weight_in_lbs": 2795, "Acceleration": 15.7, "Year": "1978-01-01T00:00:00", "Origin": "Europe"}, {"Name": "peugeot 604sl", "Miles_per_Gallon": 16.2, "Cylinders": 6, "Displacement": 163.0, "Horsepower": 133, "Weight_in_lbs": 3410, "Acceleration": 15.8, "Year": "1978-01-01T00:00:00", "Origin": "Europe"}, {"Name": "volkswagen scirocco", "Miles_per_Gallon": 31.5, "Cylinders": 4, "Displacement": 89.0, "Horsepower": 71, "Weight_in_lbs": 1990, "Acceleration": 14.9, "Year": "1978-01-01T00:00:00", "Origin": "Europe"}, {"Name": "honda Accelerationord lx", "Miles_per_Gallon": 29.5, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 68, "Weight_in_lbs": 2135, "Acceleration": 16.6, "Year": "1978-01-01T00:00:00", "Origin": "Japan"}, {"Name": "pontiac lemans v6", "Miles_per_Gallon": 21.5, "Cylinders": 6, "Displacement": 231.0, "Horsepower": 115, "Weight_in_lbs": 3245, "Acceleration": 15.4, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercury zephyr 6", "Miles_per_Gallon": 19.8, "Cylinders": 6, "Displacement": 200.0, "Horsepower": 85, "Weight_in_lbs": 2990, "Acceleration": 18.2, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford fairmont 4", "Miles_per_Gallon": 22.3, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 88, "Weight_in_lbs": 2890, "Acceleration": 17.3, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc concord dl 6", "Miles_per_Gallon": 20.2, "Cylinders": 6, "Displacement": 232.0, "Horsepower": 90, "Weight_in_lbs": 3265, "Acceleration": 18.2, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge aspen 6", "Miles_per_Gallon": 20.6, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 110, "Weight_in_lbs": 3360, "Acceleration": 16.6, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet caprice classic", "Miles_per_Gallon": 17.0, "Cylinders": 8, "Displacement": 305.0, "Horsepower": 130, "Weight_in_lbs": 3840, "Acceleration": 15.4, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford ltd landau", "Miles_per_Gallon": 17.6, "Cylinders": 8, "Displacement": 302.0, "Horsepower": 129, "Weight_in_lbs": 3725, "Acceleration": 13.4, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercury grand marquis", "Miles_per_Gallon": 16.5, "Cylinders": 8, "Displacement": 351.0, "Horsepower": 138, "Weight_in_lbs": 3955, "Acceleration": 13.2, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge st. regis", "Miles_per_Gallon": 18.2, "Cylinders": 8, "Displacement": 318.0, "Horsepower": 135, "Weight_in_lbs": 3830, "Acceleration": 15.2, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick estate wagon (sw)", "Miles_per_Gallon": 16.9, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 155, "Weight_in_lbs": 4360, "Acceleration": 14.9, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford country squire (sw)", "Miles_per_Gallon": 15.5, "Cylinders": 8, "Displacement": 351.0, "Horsepower": 142, "Weight_in_lbs": 4054, "Acceleration": 14.3, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet malibu classic (sw)", "Miles_per_Gallon": 19.2, "Cylinders": 8, "Displacement": 267.0, "Horsepower": 125, "Weight_in_lbs": 3605, "Acceleration": 15.0, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "chrysler lebaron town @ country (sw)", "Miles_per_Gallon": 18.5, "Cylinders": 8, "Displacement": 360.0, "Horsepower": 150, "Weight_in_lbs": 3940, "Acceleration": 13.0, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "vw rabbit custom", "Miles_per_Gallon": 31.9, "Cylinders": 4, "Displacement": 89.0, "Horsepower": 71, "Weight_in_lbs": 1925, "Acceleration": 14.0, "Year": "1979-01-01T00:00:00", "Origin": "Europe"}, {"Name": "maxda glc deluxe", "Miles_per_Gallon": 34.1, "Cylinders": 4, "Displacement": 86.0, "Horsepower": 65, "Weight_in_lbs": 1975, "Acceleration": 15.2, "Year": "1979-01-01T00:00:00", "Origin": "Japan"}, {"Name": "dodge colt hatchback custom", "Miles_per_Gallon": 35.7, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 80, "Weight_in_lbs": 1915, "Acceleration": 14.4, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc spirit dl", "Miles_per_Gallon": 27.4, "Cylinders": 4, "Displacement": 121.0, "Horsepower": 80, "Weight_in_lbs": 2670, "Acceleration": 15.0, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercedes benz 300d", "Miles_per_Gallon": 25.4, "Cylinders": 5, "Displacement": 183.0, "Horsepower": 77, "Weight_in_lbs": 3530, "Acceleration": 20.1, "Year": "1979-01-01T00:00:00", "Origin": "Europe"}, {"Name": "cadillac eldorado", "Miles_per_Gallon": 23.0, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 125, "Weight_in_lbs": 3900, "Acceleration": 17.4, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "peugeot 504", "Miles_per_Gallon": 27.2, "Cylinders": 4, "Displacement": 141.0, "Horsepower": 71, "Weight_in_lbs": 3190, "Acceleration": 24.8, "Year": "1979-01-01T00:00:00", "Origin": "Europe"}, {"Name": "oldsmobile cutlass salon brougham", "Miles_per_Gallon": 23.9, "Cylinders": 8, "Displacement": 260.0, "Horsepower": 90, "Weight_in_lbs": 3420, "Acceleration": 22.2, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth horizon", "Miles_per_Gallon": 34.2, "Cylinders": 4, "Displacement": 105.0, "Horsepower": 70, "Weight_in_lbs": 2200, "Acceleration": 13.2, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth horizon tc3", "Miles_per_Gallon": 34.5, "Cylinders": 4, "Displacement": 105.0, "Horsepower": 70, "Weight_in_lbs": 2150, "Acceleration": 14.9, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "datsun 210", "Miles_per_Gallon": 31.8, "Cylinders": 4, "Displacement": 85.0, "Horsepower": 65, "Weight_in_lbs": 2020, "Acceleration": 19.2, "Year": "1979-01-01T00:00:00", "Origin": "Japan"}, {"Name": "fiat strada custom", "Miles_per_Gallon": 37.3, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 69, "Weight_in_lbs": 2130, "Acceleration": 14.7, "Year": "1979-01-01T00:00:00", "Origin": "Europe"}, {"Name": "buick skylark limited", "Miles_per_Gallon": 28.4, "Cylinders": 4, "Displacement": 151.0, "Horsepower": 90, "Weight_in_lbs": 2670, "Acceleration": 16.0, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet citation", "Miles_per_Gallon": 28.8, "Cylinders": 6, "Displacement": 173.0, "Horsepower": 115, "Weight_in_lbs": 2595, "Acceleration": 11.3, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "oldsmobile omega brougham", "Miles_per_Gallon": 26.8, "Cylinders": 6, "Displacement": 173.0, "Horsepower": 115, "Weight_in_lbs": 2700, "Acceleration": 12.9, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac phoenix", "Miles_per_Gallon": 33.5, "Cylinders": 4, "Displacement": 151.0, "Horsepower": 90, "Weight_in_lbs": 2556, "Acceleration": 13.2, "Year": "1979-01-01T00:00:00", "Origin": "USA"}, {"Name": "vw rabbit", "Miles_per_Gallon": 41.5, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 76, "Weight_in_lbs": 2144, "Acceleration": 14.7, "Year": "1980-01-01T00:00:00", "Origin": "Europe"}, {"Name": "toyota corolla tercel", "Miles_per_Gallon": 38.1, "Cylinders": 4, "Displacement": 89.0, "Horsepower": 60, "Weight_in_lbs": 1968, "Acceleration": 18.8, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "chevrolet chevette", "Miles_per_Gallon": 32.1, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 70, "Weight_in_lbs": 2120, "Acceleration": 15.5, "Year": "1980-01-01T00:00:00", "Origin": "USA"}, {"Name": "datsun 310", "Miles_per_Gallon": 37.2, "Cylinders": 4, "Displacement": 86.0, "Horsepower": 65, "Weight_in_lbs": 2019, "Acceleration": 16.4, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "chevrolet citation", "Miles_per_Gallon": 28.0, "Cylinders": 4, "Displacement": 151.0, "Horsepower": 90, "Weight_in_lbs": 2678, "Acceleration": 16.5, "Year": "1980-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford fairmont", "Miles_per_Gallon": 26.4, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 88, "Weight_in_lbs": 2870, "Acceleration": 18.1, "Year": "1980-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc concord", "Miles_per_Gallon": 24.3, "Cylinders": 4, "Displacement": 151.0, "Horsepower": 90, "Weight_in_lbs": 3003, "Acceleration": 20.1, "Year": "1980-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge aspen", "Miles_per_Gallon": 19.1, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 90, "Weight_in_lbs": 3381, "Acceleration": 18.7, "Year": "1980-01-01T00:00:00", "Origin": "USA"}, {"Name": "audi 4000", "Miles_per_Gallon": 34.3, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 78, "Weight_in_lbs": 2188, "Acceleration": 15.8, "Year": "1980-01-01T00:00:00", "Origin": "Europe"}, {"Name": "toyota corona liftback", "Miles_per_Gallon": 29.8, "Cylinders": 4, "Displacement": 134.0, "Horsepower": 90, "Weight_in_lbs": 2711, "Acceleration": 15.5, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "mazda 626", "Miles_per_Gallon": 31.3, "Cylinders": 4, "Displacement": 120.0, "Horsepower": 75, "Weight_in_lbs": 2542, "Acceleration": 17.5, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "datsun 510 hatchback", "Miles_per_Gallon": 37.0, "Cylinders": 4, "Displacement": 119.0, "Horsepower": 92, "Weight_in_lbs": 2434, "Acceleration": 15.0, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "toyota corolla", "Miles_per_Gallon": 32.2, "Cylinders": 4, "Displacement": 108.0, "Horsepower": 75, "Weight_in_lbs": 2265, "Acceleration": 15.2, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "mazda glc", "Miles_per_Gallon": 46.6, "Cylinders": 4, "Displacement": 86.0, "Horsepower": 65, "Weight_in_lbs": 2110, "Acceleration": 17.9, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "dodge colt", "Miles_per_Gallon": 27.9, "Cylinders": 4, "Displacement": 156.0, "Horsepower": 105, "Weight_in_lbs": 2800, "Acceleration": 14.4, "Year": "1980-01-01T00:00:00", "Origin": "USA"}, {"Name": "datsun 210", "Miles_per_Gallon": 40.8, "Cylinders": 4, "Displacement": 85.0, "Horsepower": 65, "Weight_in_lbs": 2110, "Acceleration": 19.2, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "vw rabbit c (diesel)", "Miles_per_Gallon": 44.3, "Cylinders": 4, "Displacement": 90.0, "Horsepower": 48, "Weight_in_lbs": 2085, "Acceleration": 21.7, "Year": "1980-01-01T00:00:00", "Origin": "Europe"}, {"Name": "vw dasher (diesel)", "Miles_per_Gallon": 43.4, "Cylinders": 4, "Displacement": 90.0, "Horsepower": 48, "Weight_in_lbs": 2335, "Acceleration": 23.7, "Year": "1980-01-01T00:00:00", "Origin": "Europe"}, {"Name": "audi 5000s (diesel)", "Miles_per_Gallon": 36.4, "Cylinders": 5, "Displacement": 121.0, "Horsepower": 67, "Weight_in_lbs": 2950, "Acceleration": 19.9, "Year": "1980-01-01T00:00:00", "Origin": "Europe"}, {"Name": "mercedes-benz 240d", "Miles_per_Gallon": 30.0, "Cylinders": 4, "Displacement": 146.0, "Horsepower": 67, "Weight_in_lbs": 3250, "Acceleration": 21.8, "Year": "1980-01-01T00:00:00", "Origin": "Europe"}, {"Name": "honda civic 1500 gl", "Miles_per_Gallon": 44.6, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 67, "Weight_in_lbs": 1850, "Acceleration": 13.8, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "renault lecar deluxe", "Miles_per_Gallon": 40.9, "Cylinders": 4, "Displacement": 85.0, "Horsepower": null, "Weight_in_lbs": 1835, "Acceleration": 17.3, "Year": "1980-01-01T00:00:00", "Origin": "Europe"}, {"Name": "subaru dl", "Miles_per_Gallon": 33.8, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 67, "Weight_in_lbs": 2145, "Acceleration": 18.0, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "vokswagen rabbit", "Miles_per_Gallon": 29.8, "Cylinders": 4, "Displacement": 89.0, "Horsepower": 62, "Weight_in_lbs": 1845, "Acceleration": 15.3, "Year": "1980-01-01T00:00:00", "Origin": "Europe"}, {"Name": "datsun 280-zx", "Miles_per_Gallon": 32.7, "Cylinders": 6, "Displacement": 168.0, "Horsepower": 132, "Weight_in_lbs": 2910, "Acceleration": 11.4, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "mazda rx-7 gs", "Miles_per_Gallon": 23.7, "Cylinders": 3, "Displacement": 70.0, "Horsepower": 100, "Weight_in_lbs": 2420, "Acceleration": 12.5, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "triumph tr7 coupe", "Miles_per_Gallon": 35.0, "Cylinders": 4, "Displacement": 122.0, "Horsepower": 88, "Weight_in_lbs": 2500, "Acceleration": 15.1, "Year": "1980-01-01T00:00:00", "Origin": "Europe"}, {"Name": "ford mustang cobra", "Miles_per_Gallon": 23.6, "Cylinders": 4, "Displacement": 140.0, "Horsepower": null, "Weight_in_lbs": 2905, "Acceleration": 14.3, "Year": "1980-01-01T00:00:00", "Origin": "USA"}, {"Name": "honda Accelerationord", "Miles_per_Gallon": 32.4, "Cylinders": 4, "Displacement": 107.0, "Horsepower": 72, "Weight_in_lbs": 2290, "Acceleration": 17.0, "Year": "1980-01-01T00:00:00", "Origin": "Japan"}, {"Name": "plymouth reliant", "Miles_per_Gallon": 27.2, "Cylinders": 4, "Displacement": 135.0, "Horsepower": 84, "Weight_in_lbs": 2490, "Acceleration": 15.7, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "buick skylark", "Miles_per_Gallon": 26.6, "Cylinders": 4, "Displacement": 151.0, "Horsepower": 84, "Weight_in_lbs": 2635, "Acceleration": 16.4, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge aries wagon (sw)", "Miles_per_Gallon": 25.8, "Cylinders": 4, "Displacement": 156.0, "Horsepower": 92, "Weight_in_lbs": 2620, "Acceleration": 14.4, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet citation", "Miles_per_Gallon": 23.5, "Cylinders": 6, "Displacement": 173.0, "Horsepower": 110, "Weight_in_lbs": 2725, "Acceleration": 12.6, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "plymouth reliant", "Miles_per_Gallon": 30.0, "Cylinders": 4, "Displacement": 135.0, "Horsepower": 84, "Weight_in_lbs": 2385, "Acceleration": 12.9, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota starlet", "Miles_per_Gallon": 39.1, "Cylinders": 4, "Displacement": 79.0, "Horsepower": 58, "Weight_in_lbs": 1755, "Acceleration": 16.9, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "plymouth champ", "Miles_per_Gallon": 39.0, "Cylinders": 4, "Displacement": 86.0, "Horsepower": 64, "Weight_in_lbs": 1875, "Acceleration": 16.4, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "honda civic 1300", "Miles_per_Gallon": 35.1, "Cylinders": 4, "Displacement": 81.0, "Horsepower": 60, "Weight_in_lbs": 1760, "Acceleration": 16.1, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "subaru", "Miles_per_Gallon": 32.3, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 67, "Weight_in_lbs": 2065, "Acceleration": 17.8, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "datsun 210", "Miles_per_Gallon": 37.0, "Cylinders": 4, "Displacement": 85.0, "Horsepower": 65, "Weight_in_lbs": 1975, "Acceleration": 19.4, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "toyota tercel", "Miles_per_Gallon": 37.7, "Cylinders": 4, "Displacement": 89.0, "Horsepower": 62, "Weight_in_lbs": 2050, "Acceleration": 17.3, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "mazda glc 4", "Miles_per_Gallon": 34.1, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 68, "Weight_in_lbs": 1985, "Acceleration": 16.0, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "plymouth horizon 4", "Miles_per_Gallon": 34.7, "Cylinders": 4, "Displacement": 105.0, "Horsepower": 63, "Weight_in_lbs": 2215, "Acceleration": 14.9, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford escort 4w", "Miles_per_Gallon": 34.4, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 65, "Weight_in_lbs": 2045, "Acceleration": 16.2, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford escort 2h", "Miles_per_Gallon": 29.9, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 65, "Weight_in_lbs": 2380, "Acceleration": 20.7, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "volkswagen jetta", "Miles_per_Gallon": 33.0, "Cylinders": 4, "Displacement": 105.0, "Horsepower": 74, "Weight_in_lbs": 2190, "Acceleration": 14.2, "Year": "1982-01-01T00:00:00", "Origin": "Europe"}, {"Name": "renault 18i", "Miles_per_Gallon": 34.5, "Cylinders": 4, "Displacement": 100.0, "Horsepower": null, "Weight_in_lbs": 2320, "Acceleration": 15.8, "Year": "1982-01-01T00:00:00", "Origin": "Europe"}, {"Name": "honda prelude", "Miles_per_Gallon": 33.7, "Cylinders": 4, "Displacement": 107.0, "Horsepower": 75, "Weight_in_lbs": 2210, "Acceleration": 14.4, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "toyota corolla", "Miles_per_Gallon": 32.4, "Cylinders": 4, "Displacement": 108.0, "Horsepower": 75, "Weight_in_lbs": 2350, "Acceleration": 16.8, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "datsun 200sx", "Miles_per_Gallon": 32.9, "Cylinders": 4, "Displacement": 119.0, "Horsepower": 100, "Weight_in_lbs": 2615, "Acceleration": 14.8, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "mazda 626", "Miles_per_Gallon": 31.6, "Cylinders": 4, "Displacement": 120.0, "Horsepower": 74, "Weight_in_lbs": 2635, "Acceleration": 18.3, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "peugeot 505s turbo diesel", "Miles_per_Gallon": 28.1, "Cylinders": 4, "Displacement": 141.0, "Horsepower": 80, "Weight_in_lbs": 3230, "Acceleration": 20.4, "Year": "1982-01-01T00:00:00", "Origin": "Europe"}, {"Name": "saab 900s", "Miles_per_Gallon": null, "Cylinders": 4, "Displacement": 121.0, "Horsepower": 110, "Weight_in_lbs": 2800, "Acceleration": 15.4, "Year": "1982-01-01T00:00:00", "Origin": "Europe"}, {"Name": "volvo diesel", "Miles_per_Gallon": 30.7, "Cylinders": 6, "Displacement": 145.0, "Horsepower": 76, "Weight_in_lbs": 3160, "Acceleration": 19.6, "Year": "1982-01-01T00:00:00", "Origin": "Europe"}, {"Name": "toyota cressida", "Miles_per_Gallon": 25.4, "Cylinders": 6, "Displacement": 168.0, "Horsepower": 116, "Weight_in_lbs": 2900, "Acceleration": 12.6, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "datsun 810 maxima", "Miles_per_Gallon": 24.2, "Cylinders": 6, "Displacement": 146.0, "Horsepower": 120, "Weight_in_lbs": 2930, "Acceleration": 13.8, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "buick century", "Miles_per_Gallon": 22.4, "Cylinders": 6, "Displacement": 231.0, "Horsepower": 110, "Weight_in_lbs": 3415, "Acceleration": 15.8, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "oldsmobile cutlass ls", "Miles_per_Gallon": 26.6, "Cylinders": 8, "Displacement": 350.0, "Horsepower": 105, "Weight_in_lbs": 3725, "Acceleration": 19.0, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford granada gl", "Miles_per_Gallon": 20.2, "Cylinders": 6, "Displacement": 200.0, "Horsepower": 88, "Weight_in_lbs": 3060, "Acceleration": 17.1, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "chrysler lebaron salon", "Miles_per_Gallon": 17.6, "Cylinders": 6, "Displacement": 225.0, "Horsepower": 85, "Weight_in_lbs": 3465, "Acceleration": 16.6, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet cavalier", "Miles_per_Gallon": 28.0, "Cylinders": 4, "Displacement": 112.0, "Horsepower": 88, "Weight_in_lbs": 2605, "Acceleration": 19.6, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet cavalier wagon", "Miles_per_Gallon": 27.0, "Cylinders": 4, "Displacement": 112.0, "Horsepower": 88, "Weight_in_lbs": 2640, "Acceleration": 18.6, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet cavalier 2-door", "Miles_per_Gallon": 34.0, "Cylinders": 4, "Displacement": 112.0, "Horsepower": 88, "Weight_in_lbs": 2395, "Acceleration": 18.0, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac j2000 se hatchback", "Miles_per_Gallon": 31.0, "Cylinders": 4, "Displacement": 112.0, "Horsepower": 85, "Weight_in_lbs": 2575, "Acceleration": 16.2, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "dodge aries se", "Miles_per_Gallon": 29.0, "Cylinders": 4, "Displacement": 135.0, "Horsepower": 84, "Weight_in_lbs": 2525, "Acceleration": 16.0, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "pontiac phoenix", "Miles_per_Gallon": 27.0, "Cylinders": 4, "Displacement": 151.0, "Horsepower": 90, "Weight_in_lbs": 2735, "Acceleration": 18.0, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford fairmont futura", "Miles_per_Gallon": 24.0, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 92, "Weight_in_lbs": 2865, "Acceleration": 16.4, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "amc concord dl", "Miles_per_Gallon": 23.0, "Cylinders": 4, "Displacement": 151.0, "Horsepower": null, "Weight_in_lbs": 3035, "Acceleration": 20.5, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "volkswagen rabbit l", "Miles_per_Gallon": 36.0, "Cylinders": 4, "Displacement": 105.0, "Horsepower": 74, "Weight_in_lbs": 1980, "Acceleration": 15.3, "Year": "1982-01-01T00:00:00", "Origin": "Europe"}, {"Name": "mazda glc custom l", "Miles_per_Gallon": 37.0, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 68, "Weight_in_lbs": 2025, "Acceleration": 18.2, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "mazda glc custom", "Miles_per_Gallon": 31.0, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 68, "Weight_in_lbs": 1970, "Acceleration": 17.6, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "plymouth horizon miser", "Miles_per_Gallon": 38.0, "Cylinders": 4, "Displacement": 105.0, "Horsepower": 63, "Weight_in_lbs": 2125, "Acceleration": 14.7, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "mercury lynx l", "Miles_per_Gallon": 36.0, "Cylinders": 4, "Displacement": 98.0, "Horsepower": 70, "Weight_in_lbs": 2125, "Acceleration": 17.3, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "nissan stanza xe", "Miles_per_Gallon": 36.0, "Cylinders": 4, "Displacement": 120.0, "Horsepower": 88, "Weight_in_lbs": 2160, "Acceleration": 14.5, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "honda Accelerationord", "Miles_per_Gallon": 36.0, "Cylinders": 4, "Displacement": 107.0, "Horsepower": 75, "Weight_in_lbs": 2205, "Acceleration": 14.5, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "toyota corolla", "Miles_per_Gallon": 34.0, "Cylinders": 4, "Displacement": 108.0, "Horsepower": 70, "Weight_in_lbs": 2245, "Acceleration": 16.9, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "honda civic", "Miles_per_Gallon": 38.0, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 67, "Weight_in_lbs": 1965, "Acceleration": 15.0, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "honda civic (auto)", "Miles_per_Gallon": 32.0, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 67, "Weight_in_lbs": 1965, "Acceleration": 15.7, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "datsun 310 gx", "Miles_per_Gallon": 38.0, "Cylinders": 4, "Displacement": 91.0, "Horsepower": 67, "Weight_in_lbs": 1995, "Acceleration": 16.2, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "buick century limited", "Miles_per_Gallon": 25.0, "Cylinders": 6, "Displacement": 181.0, "Horsepower": 110, "Weight_in_lbs": 2945, "Acceleration": 16.4, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "oldsmobile cutlass ciera (diesel)", "Miles_per_Gallon": 38.0, "Cylinders": 6, "Displacement": 262.0, "Horsepower": 85, "Weight_in_lbs": 3015, "Acceleration": 17.0, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "chrysler lebaron medallion", "Miles_per_Gallon": 26.0, "Cylinders": 4, "Displacement": 156.0, "Horsepower": 92, "Weight_in_lbs": 2585, "Acceleration": 14.5, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford granada l", "Miles_per_Gallon": 22.0, "Cylinders": 6, "Displacement": 232.0, "Horsepower": 112, "Weight_in_lbs": 2835, "Acceleration": 14.7, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "toyota celica gt", "Miles_per_Gallon": 32.0, "Cylinders": 4, "Displacement": 144.0, "Horsepower": 96, "Weight_in_lbs": 2665, "Acceleration": 13.9, "Year": "1982-01-01T00:00:00", "Origin": "Japan"}, {"Name": "dodge charger 2.2", "Miles_per_Gallon": 36.0, "Cylinders": 4, "Displacement": 135.0, "Horsepower": 84, "Weight_in_lbs": 2370, "Acceleration": 13.0, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevrolet camaro", "Miles_per_Gallon": 27.0, "Cylinders": 4, "Displacement": 151.0, "Horsepower": 90, "Weight_in_lbs": 2950, "Acceleration": 17.3, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford mustang gl", "Miles_per_Gallon": 27.0, "Cylinders": 4, "Displacement": 140.0, "Horsepower": 86, "Weight_in_lbs": 2790, "Acceleration": 15.6, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "vw pickup", "Miles_per_Gallon": 44.0, "Cylinders": 4, "Displacement": 97.0, "Horsepower": 52, "Weight_in_lbs": 2130, "Acceleration": 24.6, "Year": "1982-01-01T00:00:00", "Origin": "Europe"}, {"Name": "dodge rampage", "Miles_per_Gallon": 32.0, "Cylinders": 4, "Displacement": 135.0, "Horsepower": 84, "Weight_in_lbs": 2295, "Acceleration": 11.6, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "ford ranger", "Miles_per_Gallon": 28.0, "Cylinders": 4, "Displacement": 120.0, "Horsepower": 79, "Weight_in_lbs": 2625, "Acceleration": 18.6, "Year": "1982-01-01T00:00:00", "Origin": "USA"}, {"Name": "chevy s-10", "Miles_per_Gallon": 31.0, "Cylinders": 4, "Displacement": 119.0, "Horsepower": 82, "Weight_in_lbs": 2720, "Acceleration": 19.4, "Year": "1982-01-01T00:00:00", "Origin": "USA"}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#large_datasets-rst-altair-plot-5', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>If you have a lot of data, you can perform the necessary calculations in pandas and only
+pass the resulting summary statistics to Altair.</p>
+<p>First, let’s define a few parameters where <code class="docutils literal notranslate"><span class="pre">k</span></code> stands for the multiplier which is used
+to calculate the boundaries of the whiskers.</p>
+<div class="highlight-python notranslate" id="large_datasets-rst-altair-source-6"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">group_by_column</span> <span class="o">=</span> <span class="s2">&quot;Origin&quot;</span>
+<span class="n">value_column</span> <span class="o">=</span> <span class="s2">&quot;Miles_per_Gallon&quot;</span>
+</pre></div>
+</div>
+<p>In the next step, we will calculate the summary statistics which are needed for the boxplot.</p>
+<div class="highlight-python notranslate" id="large_datasets-rst-altair-source-7"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="p">()</span>
+
+<span class="n">agg_stats</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_by_column</span><span class="p">)[</span><span class="n">value_column</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;iqr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;75%&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;25%&quot;</span><span class="p">]</span>
+<span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;min_&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;25%&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">k</span> <span class="o">*</span> <span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;iqr&quot;</span><span class="p">]</span>
+<span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;max_&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;75%&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;iqr&quot;</span><span class="p">]</span>
+<span class="n">data_points</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">value_column</span><span class="p">,</span> <span class="n">group_by_column</span><span class="p">]]</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">agg_stats</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[[</span><span class="n">group_by_column</span><span class="p">,</span> <span class="s2">&quot;min_&quot;</span><span class="p">,</span> <span class="s2">&quot;max_&quot;</span><span class="p">]]</span>
+<span class="p">)</span>
+<span class="c1"># Lowest data point which is still above or equal to min_</span>
+<span class="c1"># This will be the lower end of the whisker</span>
+<span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;lower&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">data_points</span><span class="p">[</span><span class="n">data_points</span><span class="p">[</span><span class="n">value_column</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">data_points</span><span class="p">[</span><span class="s2">&quot;min_&quot;</span><span class="p">]]</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_by_column</span><span class="p">)[</span><span class="n">value_column</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="c1"># Highest data point which is still below or equal to max_</span>
+<span class="c1"># This will be the upper end of the whisker</span>
+<span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;upper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">data_points</span><span class="p">[</span><span class="n">data_points</span><span class="p">[</span><span class="n">value_column</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">data_points</span><span class="p">[</span><span class="s2">&quot;max_&quot;</span><span class="p">]]</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_by_column</span><span class="p">)[</span><span class="n">value_column</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="c1"># Store all outliers as a list</span>
+<span class="n">agg_stats</span><span class="p">[</span><span class="s2">&quot;outliers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">data_points</span><span class="p">[</span>
+        <span class="p">(</span><span class="n">data_points</span><span class="p">[</span><span class="n">value_column</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">data_points</span><span class="p">[</span><span class="s2">&quot;min_&quot;</span><span class="p">])</span>
+        <span class="o">|</span> <span class="p">(</span><span class="n">data_points</span><span class="p">[</span><span class="n">value_column</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">data_points</span><span class="p">[</span><span class="s2">&quot;max_&quot;</span><span class="p">])</span>
+    <span class="p">]</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_by_column</span><span class="p">)[</span><span class="n">value_column</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">agg_stats</span> <span class="o">=</span> <span class="n">agg_stats</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># Show whole dataframe</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.max_columns&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">agg_stats</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>       Origin  count       mean       std   min   25%   50%    75%   max   iqr  \
+    0  Europe   70.0  27.891429   6.72393  16.2  24.0  26.5  30.65  44.3  6.65   
+    1   Japan   79.0  30.450633  6.090048  18.0  25.7  31.6  34.05  46.6  8.35   
+    2     USA  249.0  20.083534  6.402892   9.0  15.0  18.5   24.0  39.0   9.0   
+    
+         min_    max_  lower  upper                              outliers  
+    0  14.025  40.625   16.2   37.3  [43.1, 41.5, 44.3, 43.4, 40.9, 44.0]  
+    1  13.175  46.575   18.0   44.6                                [46.6]  
+    2     1.5    37.5    9.0   36.1                    [39.0, 38.0, 38.0]  
+</pre></div>
+</div>
+<p>And finally, we can create the same boxplot as above but we only pass the calculated
+summary statistics to Altair instead of the full dataset.</p>
+<div class="highlight-python notranslate" id="large_datasets-rst-altair-source-8"><div class="highlight"><pre><span></span><span class="n">base</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">agg_stats</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Origin:N&quot;</span>
+<span class="p">)</span>
+
+<span class="n">rules</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">mark_rule</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">&quot;lower&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Miles_per_Gallon&quot;</span><span class="p">),</span>
+    <span class="n">x2</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">bars</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;25%&quot;</span><span class="p">,</span>
+    <span class="n">x2</span><span class="o">=</span><span class="s2">&quot;75%&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s2">&quot;Origin&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">ticks</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">mark_tick</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span>
+<span class="p">)</span>
+
+<span class="n">outliers</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">transform_flatten</span><span class="p">(</span>
+    <span class="n">flatten</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;outliers&quot;</span><span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">(</span>
+    <span class="n">style</span><span class="o">=</span><span class="s2">&quot;boxplot-outliers&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;outliers:Q&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Origin&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">rules</span> <span class="o">+</span> <span class="n">bars</span> <span class="o">+</span> <span class="n">ticks</span> <span class="o">+</span> <span class="n">outliers</span>
+</pre></div>
+</div>
+
+<div id="large_datasets-rst-altair-plot-8">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"mark": {"type": "rule"}, "encoding": {"x": {"field": "lower", "title": "Miles_per_Gallon", "type": "quantitative"}, "x2": {"field": "upper"}, "y": {"field": "Origin", "type": "nominal"}}}, {"mark": {"type": "bar", "size": 14}, "encoding": {"color": {"field": "Origin", "legend": null, "type": "nominal"}, "x": {"field": "25%", "type": "quantitative"}, "x2": {"field": "75%"}, "y": {"field": "Origin", "type": "nominal"}}}, {"mark": {"type": "tick", "color": "white", "size": 14}, "encoding": {"x": {"field": "50%", "type": "quantitative"}, "y": {"field": "Origin", "type": "nominal"}}}, {"mark": {"type": "point", "style": "boxplot-outliers"}, "encoding": {"color": {"field": "Origin", "type": "nominal"}, "x": {"field": "outliers", "type": "quantitative"}, "y": {"field": "Origin", "type": "nominal"}}, "transform": [{"flatten": ["outliers"]}]}], "data": {"name": "data-dbd3509ef96c7ca32011e3332302dcd9"}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-dbd3509ef96c7ca32011e3332302dcd9": [{"Origin": "Europe", "count": 70.0, "mean": 27.891428571428573, "std": 6.7239296407431715, "min": 16.2, "25%": 24.0, "50%": 26.5, "75%": 30.65, "max": 44.3, "iqr": 6.649999999999999, "min_": 14.025000000000002, "max_": 40.625, "lower": 16.2, "upper": 37.3, "outliers": [43.1, 41.5, 44.3, 43.4, 40.9, 44.0]}, {"Origin": "Japan", "count": 79.0, "mean": 30.450632911392404, "std": 6.090048069738324, "min": 18.0, "25%": 25.7, "50%": 31.6, "75%": 34.05, "max": 46.6, "iqr": 8.349999999999998, "min_": 13.175000000000002, "max_": 46.574999999999996, "lower": 18.0, "upper": 44.6, "outliers": [46.6]}, {"Origin": "USA", "count": 249.0, "mean": 20.08353413654618, "std": 6.402892016049693, "min": 9.0, "25%": 15.0, "50%": 18.5, "75%": 24.0, "max": 39.0, "iqr": 9.0, "min_": 1.5, "max_": 37.5, "lower": 9.0, "upper": 36.1, "outliers": [39.0, 38.0, 38.0]}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#large_datasets-rst-altair-plot-8', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="data_transformers.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data Transformers</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../gallery/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Example Gallery</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges">Challenges</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vegafusion-data-transformer">VegaFusion Data Transformer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-vegafusion">Installing VegaFusion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enabling-the-vegafusion-data-transformer">Enabling the VegaFusion Data Transformer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-to-json-or-dictionary">Converting to JSON or dictionary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-timezone-configuration">Local Timezone Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#duckdb-integration">DuckDB Integration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactivity">Interactivity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#passing-data-by-url">Passing Data by URL</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-data-server">Local Data Server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filesystem">Local Filesystem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vega-datasets">Vega Datasets</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#png-and-svg-renderers">PNG and SVG Renderers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preaggregate-and-filter-in-pandas">Preaggregate and Filter in pandas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preaggregate-boxplot">Preaggregate Boxplot</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

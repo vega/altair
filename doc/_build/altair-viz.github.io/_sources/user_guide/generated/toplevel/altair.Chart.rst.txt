@@ -1,0 +1,146 @@
+﻿altair.Chart
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Chart
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Chart.__init__
+      ~Chart.add_params
+      ~Chart.add_selection
+      ~Chart.configure
+      ~Chart.configure_arc
+      ~Chart.configure_area
+      ~Chart.configure_axis
+      ~Chart.configure_axisBand
+      ~Chart.configure_axisBottom
+      ~Chart.configure_axisDiscrete
+      ~Chart.configure_axisLeft
+      ~Chart.configure_axisPoint
+      ~Chart.configure_axisQuantitative
+      ~Chart.configure_axisRight
+      ~Chart.configure_axisTemporal
+      ~Chart.configure_axisTop
+      ~Chart.configure_axisX
+      ~Chart.configure_axisXBand
+      ~Chart.configure_axisXDiscrete
+      ~Chart.configure_axisXPoint
+      ~Chart.configure_axisXQuantitative
+      ~Chart.configure_axisXTemporal
+      ~Chart.configure_axisY
+      ~Chart.configure_axisYBand
+      ~Chart.configure_axisYDiscrete
+      ~Chart.configure_axisYPoint
+      ~Chart.configure_axisYQuantitative
+      ~Chart.configure_axisYTemporal
+      ~Chart.configure_bar
+      ~Chart.configure_boxplot
+      ~Chart.configure_circle
+      ~Chart.configure_concat
+      ~Chart.configure_errorband
+      ~Chart.configure_errorbar
+      ~Chart.configure_facet
+      ~Chart.configure_geoshape
+      ~Chart.configure_header
+      ~Chart.configure_headerColumn
+      ~Chart.configure_headerFacet
+      ~Chart.configure_headerRow
+      ~Chart.configure_image
+      ~Chart.configure_legend
+      ~Chart.configure_line
+      ~Chart.configure_mark
+      ~Chart.configure_point
+      ~Chart.configure_projection
+      ~Chart.configure_range
+      ~Chart.configure_rect
+      ~Chart.configure_rule
+      ~Chart.configure_scale
+      ~Chart.configure_selection
+      ~Chart.configure_square
+      ~Chart.configure_text
+      ~Chart.configure_tick
+      ~Chart.configure_title
+      ~Chart.configure_tooltipFormat
+      ~Chart.configure_trail
+      ~Chart.configure_view
+      ~Chart.copy
+      ~Chart.display
+      ~Chart.encode
+      ~Chart.facet
+      ~Chart.from_dict
+      ~Chart.from_json
+      ~Chart.interactive
+      ~Chart.mark_arc
+      ~Chart.mark_area
+      ~Chart.mark_bar
+      ~Chart.mark_boxplot
+      ~Chart.mark_circle
+      ~Chart.mark_errorband
+      ~Chart.mark_errorbar
+      ~Chart.mark_geoshape
+      ~Chart.mark_image
+      ~Chart.mark_line
+      ~Chart.mark_point
+      ~Chart.mark_rect
+      ~Chart.mark_rule
+      ~Chart.mark_square
+      ~Chart.mark_text
+      ~Chart.mark_tick
+      ~Chart.mark_trail
+      ~Chart.open_editor
+      ~Chart.project
+      ~Chart.properties
+      ~Chart.repeat
+      ~Chart.resolve_axis
+      ~Chart.resolve_legend
+      ~Chart.resolve_references
+      ~Chart.resolve_scale
+      ~Chart.save
+      ~Chart.serve
+      ~Chart.show
+      ~Chart.to_dict
+      ~Chart.to_html
+      ~Chart.to_json
+      ~Chart.to_url
+      ~Chart.transform_aggregate
+      ~Chart.transform_bin
+      ~Chart.transform_calculate
+      ~Chart.transform_density
+      ~Chart.transform_extent
+      ~Chart.transform_filter
+      ~Chart.transform_flatten
+      ~Chart.transform_fold
+      ~Chart.transform_impute
+      ~Chart.transform_joinaggregate
+      ~Chart.transform_loess
+      ~Chart.transform_lookup
+      ~Chart.transform_pivot
+      ~Chart.transform_quantile
+      ~Chart.transform_regression
+      ~Chart.transform_sample
+      ~Chart.transform_stack
+      ~Chart.transform_timeunit
+      ~Chart.transform_window
+      ~Chart.transformed_data
+      ~Chart.validate
+      ~Chart.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Chart.data
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.GeoJsonFeature
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: GeoJsonFeature
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GeoJsonFeature.__init__
+      ~GeoJsonFeature.copy
+      ~GeoJsonFeature.from_dict
+      ~GeoJsonFeature.from_json
+      ~GeoJsonFeature.resolve_references
+      ~GeoJsonFeature.to_dict
+      ~GeoJsonFeature.to_json
+      ~GeoJsonFeature.validate
+      ~GeoJsonFeature.validate_property
+   
+   
+
+   
+   
+   

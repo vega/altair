@@ -1,0 +1,37 @@
+﻿altair.StrokeDashValue
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeDashValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeDashValue.__init__
+      ~StrokeDashValue.copy
+      ~StrokeDashValue.from_dict
+      ~StrokeDashValue.from_json
+      ~StrokeDashValue.resolve_references
+      ~StrokeDashValue.to_dict
+      ~StrokeDashValue.to_json
+      ~StrokeDashValue.validate
+      ~StrokeDashValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StrokeDashValue.condition
+      ~StrokeDashValue.value
+   
+   

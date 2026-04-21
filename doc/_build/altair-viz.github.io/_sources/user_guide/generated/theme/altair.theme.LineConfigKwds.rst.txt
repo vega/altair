@@ -1,0 +1,109 @@
+﻿altair.theme.LineConfigKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: LineConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LineConfigKwds.__init__
+      ~LineConfigKwds.clear
+      ~LineConfigKwds.copy
+      ~LineConfigKwds.fromkeys
+      ~LineConfigKwds.get
+      ~LineConfigKwds.items
+      ~LineConfigKwds.keys
+      ~LineConfigKwds.pop
+      ~LineConfigKwds.popitem
+      ~LineConfigKwds.setdefault
+      ~LineConfigKwds.update
+      ~LineConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LineConfigKwds.align
+      ~LineConfigKwds.angle
+      ~LineConfigKwds.aria
+      ~LineConfigKwds.ariaRole
+      ~LineConfigKwds.ariaRoleDescription
+      ~LineConfigKwds.aspect
+      ~LineConfigKwds.baseline
+      ~LineConfigKwds.blend
+      ~LineConfigKwds.color
+      ~LineConfigKwds.cornerRadius
+      ~LineConfigKwds.cornerRadiusBottomLeft
+      ~LineConfigKwds.cornerRadiusBottomRight
+      ~LineConfigKwds.cornerRadiusTopLeft
+      ~LineConfigKwds.cornerRadiusTopRight
+      ~LineConfigKwds.cursor
+      ~LineConfigKwds.description
+      ~LineConfigKwds.dir
+      ~LineConfigKwds.dx
+      ~LineConfigKwds.dy
+      ~LineConfigKwds.ellipsis
+      ~LineConfigKwds.endAngle
+      ~LineConfigKwds.fill
+      ~LineConfigKwds.fillOpacity
+      ~LineConfigKwds.filled
+      ~LineConfigKwds.font
+      ~LineConfigKwds.fontSize
+      ~LineConfigKwds.fontStyle
+      ~LineConfigKwds.fontWeight
+      ~LineConfigKwds.height
+      ~LineConfigKwds.href
+      ~LineConfigKwds.innerRadius
+      ~LineConfigKwds.interpolate
+      ~LineConfigKwds.invalid
+      ~LineConfigKwds.limit
+      ~LineConfigKwds.lineBreak
+      ~LineConfigKwds.lineHeight
+      ~LineConfigKwds.opacity
+      ~LineConfigKwds.order
+      ~LineConfigKwds.orient
+      ~LineConfigKwds.outerRadius
+      ~LineConfigKwds.padAngle
+      ~LineConfigKwds.point
+      ~LineConfigKwds.radius
+      ~LineConfigKwds.radius2
+      ~LineConfigKwds.shape
+      ~LineConfigKwds.size
+      ~LineConfigKwds.smooth
+      ~LineConfigKwds.startAngle
+      ~LineConfigKwds.stroke
+      ~LineConfigKwds.strokeCap
+      ~LineConfigKwds.strokeDash
+      ~LineConfigKwds.strokeDashOffset
+      ~LineConfigKwds.strokeJoin
+      ~LineConfigKwds.strokeMiterLimit
+      ~LineConfigKwds.strokeOffset
+      ~LineConfigKwds.strokeOpacity
+      ~LineConfigKwds.strokeWidth
+      ~LineConfigKwds.tension
+      ~LineConfigKwds.text
+      ~LineConfigKwds.theta
+      ~LineConfigKwds.theta2
+      ~LineConfigKwds.time
+      ~LineConfigKwds.timeUnitBandPosition
+      ~LineConfigKwds.timeUnitBandSize
+      ~LineConfigKwds.tooltip
+      ~LineConfigKwds.url
+      ~LineConfigKwds.width
+      ~LineConfigKwds.x
+      ~LineConfigKwds.x2
+      ~LineConfigKwds.y
+      ~LineConfigKwds.y2
+   
+   

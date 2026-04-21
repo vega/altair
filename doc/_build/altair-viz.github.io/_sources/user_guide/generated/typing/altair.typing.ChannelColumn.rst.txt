@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelColumn
+===========================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelColumn

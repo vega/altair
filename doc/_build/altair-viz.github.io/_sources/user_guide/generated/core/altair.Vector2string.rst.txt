@@ -1,0 +1,30 @@
+﻿altair.Vector2string
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: Vector2string
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Vector2string.__init__
+      ~Vector2string.copy
+      ~Vector2string.from_dict
+      ~Vector2string.from_json
+      ~Vector2string.resolve_references
+      ~Vector2string.to_dict
+      ~Vector2string.to_json
+      ~Vector2string.validate
+      ~Vector2string.validate_property
+   
+   
+
+   
+   
+   

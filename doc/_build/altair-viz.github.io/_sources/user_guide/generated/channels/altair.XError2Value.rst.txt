@@ -1,0 +1,36 @@
+﻿altair.XError2Value
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: XError2Value
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~XError2Value.__init__
+      ~XError2Value.copy
+      ~XError2Value.from_dict
+      ~XError2Value.from_json
+      ~XError2Value.resolve_references
+      ~XError2Value.to_dict
+      ~XError2Value.to_json
+      ~XError2Value.validate
+      ~XError2Value.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~XError2Value.value
+   
+   

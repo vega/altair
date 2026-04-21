@@ -1,0 +1,30 @@
+﻿altair.TopLevelUnitSpec
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: TopLevelUnitSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TopLevelUnitSpec.__init__
+      ~TopLevelUnitSpec.copy
+      ~TopLevelUnitSpec.from_dict
+      ~TopLevelUnitSpec.from_json
+      ~TopLevelUnitSpec.resolve_references
+      ~TopLevelUnitSpec.to_dict
+      ~TopLevelUnitSpec.to_json
+      ~TopLevelUnitSpec.validate
+      ~TopLevelUnitSpec.validate_property
+   
+   
+
+   
+   
+   

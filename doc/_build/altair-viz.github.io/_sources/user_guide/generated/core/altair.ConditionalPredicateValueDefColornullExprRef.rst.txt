@@ -1,0 +1,30 @@
+﻿altair.ConditionalPredicateValueDefColornullExprRef
+===================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalPredicateValueDefColornullExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalPredicateValueDefColornullExprRef.__init__
+      ~ConditionalPredicateValueDefColornullExprRef.copy
+      ~ConditionalPredicateValueDefColornullExprRef.from_dict
+      ~ConditionalPredicateValueDefColornullExprRef.from_json
+      ~ConditionalPredicateValueDefColornullExprRef.resolve_references
+      ~ConditionalPredicateValueDefColornullExprRef.to_dict
+      ~ConditionalPredicateValueDefColornullExprRef.to_json
+      ~ConditionalPredicateValueDefColornullExprRef.validate
+      ~ConditionalPredicateValueDefColornullExprRef.validate_property
+   
+   
+
+   
+   
+   

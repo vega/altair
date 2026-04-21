@@ -1,0 +1,916 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Expressions &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/interactions/expressions';</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="JupyterChart" href="jupyter_chart.html" />
+    <link rel="prev" title="Bindings &amp; Widgets" href="bindings_widgets.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../data.html">Specifying Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../encodings/index.html">Encodings</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../encodings/channels.html">Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../encodings/channel_options.html">Channel Options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../marks/index.html">Marks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../marks/arc.html">Arc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/area.html">Area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/bar.html">Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/boxplot.html">Box Plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/circle.html">Circle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/errorband.html">Error Band</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/errorbar.html">Error Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/geoshape.html">Geoshape</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../marks/image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/line.html">Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/rule.html">Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/square.html">Square</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/text.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/tick.html">Tick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/trail.html">Trail</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../transform/index.html">Data Transformations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../transform/aggregate.html">Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/bin.html">Bin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/calculate.html">Calculate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/density.html">Density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/extent.html">Extent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/filter.html">Filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/flatten.html">Flatten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/fold.html">Fold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/impute.html">Impute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/joinaggregate.html">Join Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/lookup.html">Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/loess.html">LOESS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/pivot.html">Pivot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/quantile.html">Quantile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/sample.html">Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/stack.html">Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/timeunit.html">TimeUnit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transform/window.html">Window</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Interactive Charts</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="parameters.html">Parameters, Conditions, &amp; Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bindings_widgets.html">Bindings &amp; Widgets</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jupyter_chart.html">JupyterChart</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../compound_charts.html">Layered &amp; Multi-View Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scale_resolve.html">Scale &amp; Guide Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../times_and_dates.html">Times &amp; Dates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../customization.html">Customizing Visualizations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Top-Level Chart Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../saving_charts.html">Saving Altair Charts</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../internals.html">Altair Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../display_frontends.html">Displaying Altair Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../custom_renderers.html">Customizing Renderers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_transformers.html">Data Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../large_datasets.html">Large Datasets</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../data.html" class="nav-link">Specifying Data</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Interactive Charts</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Expressions</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="expressions">
+<span id="id1"></span><h1>Expressions<a class="headerlink" href="#expressions" title="Link to this heading">#</a></h1>
+<p>Altair allows custom interactions by utilizing the <a class="reference external" href="https://vega.github.io/vega/docs/expressions/">expression language of Vega</a> for writing basic formulas. A Vega expression string is a well-defined set of JavaScript-style operations.
+To simplify building these expressions in Python, Altair provides the <code class="docutils literal notranslate"><span class="pre">expr</span></code> module, which offers constants and functions to construct expressions using Python syntax. Both JavaScript-syntax and Python-syntax are supported within Altair to define an expression
+and an introductory example of each is available in the <a class="reference internal" href="../transform/calculate.html#user-guide-calculate-transform"><span class="std std-ref">Calculate</span></a> transform documentation so we recommend checking out that page before continuing.</p>
+<section id="expressions-inside-parameters">
+<h2>Expressions inside Parameters<a class="headerlink" href="#expressions-inside-parameters" title="Link to this heading">#</a></h2>
+<p>In the following example, we define a range connected to a parameter named <code class="docutils literal notranslate"><span class="pre">param_width</span></code>. We then assign two expressions via <code class="docutils literal notranslate"><span class="pre">param</span></code> using both JavaScript and Python-syntax.
+As previously,
+we access the parameter values by referencing the parameters by name;
+in JavaScript that is done via <code class="docutils literal notranslate"><span class="pre">f&quot;{param_width.name}&quot;</span></code>
+whereas in Python it is sufficient to just type the variable name.
+Using these two expressions defined inside parameters, we can connect them to an encoding channel option, such as the title color of the axis. If the width is below <code class="docutils literal notranslate"><span class="pre">200</span></code>, then the color is <code class="docutils literal notranslate"><span class="pre">red</span></code>; otherwise, the color is <code class="docutils literal notranslate"><span class="pre">blue</span></code>.</p>
+<div class="highlight-python notranslate" id="expressions-rst-altair-source-0"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;xval&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;yval&#39;</span><span class="p">:</span> <span class="n">rand</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="p">})</span>
+
+<span class="n">bind_range</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_range</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Slider value:  &#39;</span><span class="p">)</span>
+<span class="n">param_width</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">bind_range</span><span class="p">)</span>
+
+<span class="c1"># Examples of how to write both js and python expressions</span>
+<span class="n">param_color_js_expr</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">param_width</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> &lt; 200 ? &#39;red&#39; : &#39;black&#39;&quot;</span><span class="p">)</span>
+<span class="n">param_color_py_expr</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">(</span><span class="n">param_width</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">))</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;xval&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="n">titleColor</span><span class="o">=</span><span class="n">param_color_js_expr</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;yval&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="n">titleColor</span><span class="o">=</span><span class="n">param_color_py_expr</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">param_width</span><span class="p">,</span>
+    <span class="n">param_color_js_expr</span><span class="p">,</span>
+    <span class="n">param_color_py_expr</span>
+<span class="p">)</span>
+<span class="n">chart</span>
+</pre></div>
+</div>
+
+<div id="expressions-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-9bcd23497acf218d98e56ccbddd728ce"}, "mark": {"type": "point"}, "encoding": {"x": {"axis": {"titleColor": {"expr": "param_aa1ea4e1fda1ddea"}}, "field": "xval", "type": "quantitative"}, "y": {"axis": {"titleColor": {"expr": "param_4160ec2163b940ba"}}, "field": "yval", "type": "quantitative"}}, "params": [{"name": "param_5f426aec350d9ebc", "bind": {"input": "range", "max": 300, "min": 100, "name": "Slider value:  "}}, {"name": "param_aa1ea4e1fda1ddea", "expr": "param_5f426aec350d9ebc < 200 ? 'red' : 'black'"}, {"name": "param_4160ec2163b940ba", "expr": "if((param_5f426aec350d9ebc < 200),'red','black')"}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-9bcd23497acf218d98e56ccbddd728ce": [{"xval": 0, "yval": 0.4967141530112327}, {"xval": 1, "yval": 0.358449851840048}, {"xval": 2, "yval": 1.0061383899407406}, {"xval": 3, "yval": 2.5291682463487657}, {"xval": 4, "yval": 2.2950148716254297}, {"xval": 5, "yval": 2.060877914676249}, {"xval": 6, "yval": 3.6400907301836405}, {"xval": 7, "yval": 4.407525459336549}, {"xval": 8, "yval": 3.938051073401597}, {"xval": 9, "yval": 4.4806111169875615}, {"xval": 10, "yval": 4.017193424175099}, {"xval": 11, "yval": 3.5514636706048424}, {"xval": 12, "yval": 3.7934259421708765}, {"xval": 13, "yval": 1.8801456975130786}, {"xval": 14, "yval": 0.15522786500004582}, {"xval": 15, "yval": -0.4070596642409269}, {"xval": 16, "yval": -1.4198907845753506}, {"xval": 17, "yval": -1.1056434519800766}, {"xval": 18, "yval": -2.0136675275012874}, {"xval": 19, "yval": -3.4259712288365787}, {"xval": 20, "yval": -1.9603224599150246}, {"xval": 21, "yval": -2.1860987604015603}, {"xval": 22, "yval": -2.1185705557136365}, {"xval": 23, "yval": -3.5433187419270933}, {"xval": 24, "yval": -4.087701466452276}, {"xval": 25, "yval": -3.9767788767424097}, {"xval": 26, "yval": -5.127772454164712}, {"xval": 27, "yval": -4.75207443581904}, {"xval": 28, "yval": -5.352713125737845}, {"xval": 29, "yval": -5.644406875531121}, {"xval": 30, "yval": -6.2461134877605184}, {"xval": 31, "yval": -4.3938353032515804}, {"xval": 32, "yval": -4.407332527989515}, {"xval": 33, "yval": -5.4650434569454145}, {"xval": 34, "yval": -4.642498544842225}, {"xval": 35, "yval": -5.863342194813248}, {"xval": 36, "yval": -5.654478599808492}, {"xval": 37, "yval": -7.614148723688268}, {"xval": 38, "yval": -8.942334772586698}, {"xval": 39, "yval": -8.745473536717574}, {"xval": 40, "yval": -8.007006956722163}, {"xval": 41, "yval": -7.835638675532193}, {"xval": 42, "yval": -7.951286957920433}, {"xval": 43, "yval": -8.252390653509723}, {"xval": 44, "yval": -9.73091264387715}, {"xval": 45, "yval": -10.450756852271859}, {"xval": 46, "yval": -10.911395623231646}, {"xval": 47, "yval": -9.854273397012731}, {"xval": 48, "yval": -9.51065510744427}, {"xval": 49, "yval": -11.273695262807005}, {"xval": 50, "yval": -10.94961129341221}, {"xval": 51, "yval": -11.334693573828526}, {"xval": 52, "yval": -12.011615574134485}, {"xval": 53, "yval": -11.399939285293616}, {"xval": 54, "yval": -10.368939762797666}, {"xval": 55, "yval": -9.437659643681467}, {"xval": 56, "yval": -10.276877166904105}, {"xval": 57, "yval": -10.58608954275532}, {"xval": 58, "yval": -10.254826111351756}, {"xval": 59, "yval": -9.279280984229397}, {"xval": 60, "yval": -9.758455222074687}, {"xval": 61, "yval": -9.944114198738504}, {"xval": 62, "yval": -11.050449172744532}, {"xval": 63, "yval": -12.246655796825202}, {"xval": 64, "yval": -11.434129974431004}, {"xval": 65, "yval": -10.07788994586018}, {"xval": 66, "yval": -10.149900067440514}, {"xval": 67, "yval": -9.14636716954849}, {"xval": 68, "yval": -8.784731144500856}, {"xval": 69, "yval": -9.42985089910598}, {"xval": 70, "yval": -9.068455293597568}, {"xval": 71, "yval": -7.5304187271315985}, {"xval": 72, "yval": -7.56624476624155}, {"xval": 73, "yval": -6.001601110427544}, {"xval": 74, "yval": -8.621346214517288}, {"xval": 75, "yval": -7.799443710142064}, {"xval": 76, "yval": -7.712396641903893}, {"xval": 77, "yval": -8.011403992369761}, {"xval": 78, "yval": -7.919643215834259}, {"xval": 79, "yval": -9.907212130435152}, {"xval": 80, "yval": -10.126884018272664}, {"xval": 81, "yval": -9.769771446760917}, {"xval": 82, "yval": -8.2918774020194}, {"xval": 83, "yval": -8.810147620293048}, {"xval": 84, "yval": -9.618641223186236}, {"xval": 85, "yval": -10.120398266770772}, {"xval": 86, "yval": -9.204996149068698}, {"xval": 87, "yval": -8.876245039409014}, {"xval": 88, "yval": -9.406005243176052}, {"xval": 89, "yval": -8.892737810062696}, {"xval": 90, "yval": -8.795660260714657}, {"xval": 91, "yval": -7.827015270181768}, {"xval": 92, "yval": -8.529068364059121}, {"xval": 93, "yval": -8.85673051065689}, {"xval": 94, "yval": -9.248838663789048}, {"xval": 95, "yval": -10.712353611921166}, {"xval": 96, "yval": -10.41623333485659}, {"xval": 97, "yval": -10.1551780626767}, {"xval": 98, "yval": -10.15006460603424}, {"xval": 99, "yval": -10.384651739409387}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#expressions-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>In the example above, we used a JavaScript-style ternary operator <code class="docutils literal notranslate"><span class="pre">f&quot;{param_width.name}</span> <span class="pre">&lt;</span> <span class="pre">200</span> <span class="pre">?</span> <span class="pre">'red'</span> <span class="pre">:</span> <span class="pre">'blue'&quot;</span></code> which is equivalent to the Python function <code class="docutils literal notranslate"><span class="pre">expr.if_(param_width</span> <span class="pre">&lt;</span> <span class="pre">200,</span> <span class="pre">'red',</span> <span class="pre">'blue')</span></code>.
+The expressions defined as parameters also needed to be added to the chart within <code class="docutils literal notranslate"><span class="pre">.add_params()</span></code>.</p>
+</section>
+<section id="inline-expressions">
+<h2>Inline Expressions<a class="headerlink" href="#inline-expressions" title="Link to this heading">#</a></h2>
+<p>In addition to assigning an expression within a parameter definition as shown above,
+the <code class="docutils literal notranslate"><span class="pre">expr()</span></code> utility function allows us to define inline expressions.
+Inline expressions are not parameters,
+so they can be added directly in the chart spec instead of via <code class="docutils literal notranslate"><span class="pre">add_params</span></code>,
+which is a convenient shorthand for writing out the full parameter code.</p>
+<p>In this example, we modify the chart above to change the size of the points based on an inline expression. Instead of creating a conditional statement, we use the value of the expression as the size directly and therefore only need to specify the name of the parameter.</p>
+<div class="highlight-python notranslate" id="expressions-rst-altair-source-1"><div class="highlight"><pre><span></span><span class="n">chart</span><span class="o">.</span><span class="n">mark_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">param_width</span><span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="expressions-rst-altair-plot-1">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-9bcd23497acf218d98e56ccbddd728ce"}, "mark": {"type": "point", "size": {"expr": "param_5f426aec350d9ebc"}}, "encoding": {"x": {"axis": {"titleColor": {"expr": "param_aa1ea4e1fda1ddea"}}, "field": "xval", "type": "quantitative"}, "y": {"axis": {"titleColor": {"expr": "param_4160ec2163b940ba"}}, "field": "yval", "type": "quantitative"}}, "params": [{"name": "param_5f426aec350d9ebc", "bind": {"input": "range", "max": 300, "min": 100, "name": "Slider value:  "}}, {"name": "param_aa1ea4e1fda1ddea", "expr": "param_5f426aec350d9ebc < 200 ? 'red' : 'black'"}, {"name": "param_4160ec2163b940ba", "expr": "if((param_5f426aec350d9ebc < 200),'red','black')"}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-9bcd23497acf218d98e56ccbddd728ce": [{"xval": 0, "yval": 0.4967141530112327}, {"xval": 1, "yval": 0.358449851840048}, {"xval": 2, "yval": 1.0061383899407406}, {"xval": 3, "yval": 2.5291682463487657}, {"xval": 4, "yval": 2.2950148716254297}, {"xval": 5, "yval": 2.060877914676249}, {"xval": 6, "yval": 3.6400907301836405}, {"xval": 7, "yval": 4.407525459336549}, {"xval": 8, "yval": 3.938051073401597}, {"xval": 9, "yval": 4.4806111169875615}, {"xval": 10, "yval": 4.017193424175099}, {"xval": 11, "yval": 3.5514636706048424}, {"xval": 12, "yval": 3.7934259421708765}, {"xval": 13, "yval": 1.8801456975130786}, {"xval": 14, "yval": 0.15522786500004582}, {"xval": 15, "yval": -0.4070596642409269}, {"xval": 16, "yval": -1.4198907845753506}, {"xval": 17, "yval": -1.1056434519800766}, {"xval": 18, "yval": -2.0136675275012874}, {"xval": 19, "yval": -3.4259712288365787}, {"xval": 20, "yval": -1.9603224599150246}, {"xval": 21, "yval": -2.1860987604015603}, {"xval": 22, "yval": -2.1185705557136365}, {"xval": 23, "yval": -3.5433187419270933}, {"xval": 24, "yval": -4.087701466452276}, {"xval": 25, "yval": -3.9767788767424097}, {"xval": 26, "yval": -5.127772454164712}, {"xval": 27, "yval": -4.75207443581904}, {"xval": 28, "yval": -5.352713125737845}, {"xval": 29, "yval": -5.644406875531121}, {"xval": 30, "yval": -6.2461134877605184}, {"xval": 31, "yval": -4.3938353032515804}, {"xval": 32, "yval": -4.407332527989515}, {"xval": 33, "yval": -5.4650434569454145}, {"xval": 34, "yval": -4.642498544842225}, {"xval": 35, "yval": -5.863342194813248}, {"xval": 36, "yval": -5.654478599808492}, {"xval": 37, "yval": -7.614148723688268}, {"xval": 38, "yval": -8.942334772586698}, {"xval": 39, "yval": -8.745473536717574}, {"xval": 40, "yval": -8.007006956722163}, {"xval": 41, "yval": -7.835638675532193}, {"xval": 42, "yval": -7.951286957920433}, {"xval": 43, "yval": -8.252390653509723}, {"xval": 44, "yval": -9.73091264387715}, {"xval": 45, "yval": -10.450756852271859}, {"xval": 46, "yval": -10.911395623231646}, {"xval": 47, "yval": -9.854273397012731}, {"xval": 48, "yval": -9.51065510744427}, {"xval": 49, "yval": -11.273695262807005}, {"xval": 50, "yval": -10.94961129341221}, {"xval": 51, "yval": -11.334693573828526}, {"xval": 52, "yval": -12.011615574134485}, {"xval": 53, "yval": -11.399939285293616}, {"xval": 54, "yval": -10.368939762797666}, {"xval": 55, "yval": -9.437659643681467}, {"xval": 56, "yval": -10.276877166904105}, {"xval": 57, "yval": -10.58608954275532}, {"xval": 58, "yval": -10.254826111351756}, {"xval": 59, "yval": -9.279280984229397}, {"xval": 60, "yval": -9.758455222074687}, {"xval": 61, "yval": -9.944114198738504}, {"xval": 62, "yval": -11.050449172744532}, {"xval": 63, "yval": -12.246655796825202}, {"xval": 64, "yval": -11.434129974431004}, {"xval": 65, "yval": -10.07788994586018}, {"xval": 66, "yval": -10.149900067440514}, {"xval": 67, "yval": -9.14636716954849}, {"xval": 68, "yval": -8.784731144500856}, {"xval": 69, "yval": -9.42985089910598}, {"xval": 70, "yval": -9.068455293597568}, {"xval": 71, "yval": -7.5304187271315985}, {"xval": 72, "yval": -7.56624476624155}, {"xval": 73, "yval": -6.001601110427544}, {"xval": 74, "yval": -8.621346214517288}, {"xval": 75, "yval": -7.799443710142064}, {"xval": 76, "yval": -7.712396641903893}, {"xval": 77, "yval": -8.011403992369761}, {"xval": 78, "yval": -7.919643215834259}, {"xval": 79, "yval": -9.907212130435152}, {"xval": 80, "yval": -10.126884018272664}, {"xval": 81, "yval": -9.769771446760917}, {"xval": 82, "yval": -8.2918774020194}, {"xval": 83, "yval": -8.810147620293048}, {"xval": 84, "yval": -9.618641223186236}, {"xval": 85, "yval": -10.120398266770772}, {"xval": 86, "yval": -9.204996149068698}, {"xval": 87, "yval": -8.876245039409014}, {"xval": 88, "yval": -9.406005243176052}, {"xval": 89, "yval": -8.892737810062696}, {"xval": 90, "yval": -8.795660260714657}, {"xval": 91, "yval": -7.827015270181768}, {"xval": 92, "yval": -8.529068364059121}, {"xval": 93, "yval": -8.85673051065689}, {"xval": 94, "yval": -9.248838663789048}, {"xval": 95, "yval": -10.712353611921166}, {"xval": 96, "yval": -10.41623333485659}, {"xval": 97, "yval": -10.1551780626767}, {"xval": 98, "yval": -10.15006460603424}, {"xval": 99, "yval": -10.384651739409387}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#expressions-rst-altair-plot-1', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>In addition to modifying the <code class="docutils literal notranslate"><span class="pre">mark_*</span></code> parameters,
+inline expressions can be passed to encoding channels as a value definition.
+Here, we make the exact same modification to the chart as in the previous example
+via this alternate approach:</p>
+<div class="highlight-python notranslate" id="expressions-rst-altair-source-2"><div class="highlight"><pre><span></span><span class="n">chart</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">param_width</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://vega.github.io/vega-lite/docs/parameter.html#built-in-variable-parameters">Some parameter names have special meaning in Vega-Lite</a>, for example, naming a parameter <code class="docutils literal notranslate"><span class="pre">width</span></code> will automatically link it to the width of the chart.</p>
+<div class="highlight-python notranslate" id="expressions-rst-altair-source-3"><div class="highlight"><pre><span></span><span class="n">bind_range</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_range</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Chart width: &#39;</span><span class="p">)</span>
+<span class="n">param_width</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="n">bind_range</span><span class="p">)</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;xval&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;yval&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">param_width</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="expressions-rst-altair-plot-3">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-9bcd23497acf218d98e56ccbddd728ce"}, "mark": {"type": "point"}, "encoding": {"x": {"field": "xval", "type": "quantitative"}, "y": {"field": "yval", "type": "quantitative"}}, "params": [{"name": "width", "bind": {"input": "range", "max": 300, "min": 100, "name": "Chart width: "}}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-9bcd23497acf218d98e56ccbddd728ce": [{"xval": 0, "yval": 0.4967141530112327}, {"xval": 1, "yval": 0.358449851840048}, {"xval": 2, "yval": 1.0061383899407406}, {"xval": 3, "yval": 2.5291682463487657}, {"xval": 4, "yval": 2.2950148716254297}, {"xval": 5, "yval": 2.060877914676249}, {"xval": 6, "yval": 3.6400907301836405}, {"xval": 7, "yval": 4.407525459336549}, {"xval": 8, "yval": 3.938051073401597}, {"xval": 9, "yval": 4.4806111169875615}, {"xval": 10, "yval": 4.017193424175099}, {"xval": 11, "yval": 3.5514636706048424}, {"xval": 12, "yval": 3.7934259421708765}, {"xval": 13, "yval": 1.8801456975130786}, {"xval": 14, "yval": 0.15522786500004582}, {"xval": 15, "yval": -0.4070596642409269}, {"xval": 16, "yval": -1.4198907845753506}, {"xval": 17, "yval": -1.1056434519800766}, {"xval": 18, "yval": -2.0136675275012874}, {"xval": 19, "yval": -3.4259712288365787}, {"xval": 20, "yval": -1.9603224599150246}, {"xval": 21, "yval": -2.1860987604015603}, {"xval": 22, "yval": -2.1185705557136365}, {"xval": 23, "yval": -3.5433187419270933}, {"xval": 24, "yval": -4.087701466452276}, {"xval": 25, "yval": -3.9767788767424097}, {"xval": 26, "yval": -5.127772454164712}, {"xval": 27, "yval": -4.75207443581904}, {"xval": 28, "yval": -5.352713125737845}, {"xval": 29, "yval": -5.644406875531121}, {"xval": 30, "yval": -6.2461134877605184}, {"xval": 31, "yval": -4.3938353032515804}, {"xval": 32, "yval": -4.407332527989515}, {"xval": 33, "yval": -5.4650434569454145}, {"xval": 34, "yval": -4.642498544842225}, {"xval": 35, "yval": -5.863342194813248}, {"xval": 36, "yval": -5.654478599808492}, {"xval": 37, "yval": -7.614148723688268}, {"xval": 38, "yval": -8.942334772586698}, {"xval": 39, "yval": -8.745473536717574}, {"xval": 40, "yval": -8.007006956722163}, {"xval": 41, "yval": -7.835638675532193}, {"xval": 42, "yval": -7.951286957920433}, {"xval": 43, "yval": -8.252390653509723}, {"xval": 44, "yval": -9.73091264387715}, {"xval": 45, "yval": -10.450756852271859}, {"xval": 46, "yval": -10.911395623231646}, {"xval": 47, "yval": -9.854273397012731}, {"xval": 48, "yval": -9.51065510744427}, {"xval": 49, "yval": -11.273695262807005}, {"xval": 50, "yval": -10.94961129341221}, {"xval": 51, "yval": -11.334693573828526}, {"xval": 52, "yval": -12.011615574134485}, {"xval": 53, "yval": -11.399939285293616}, {"xval": 54, "yval": -10.368939762797666}, {"xval": 55, "yval": -9.437659643681467}, {"xval": 56, "yval": -10.276877166904105}, {"xval": 57, "yval": -10.58608954275532}, {"xval": 58, "yval": -10.254826111351756}, {"xval": 59, "yval": -9.279280984229397}, {"xval": 60, "yval": -9.758455222074687}, {"xval": 61, "yval": -9.944114198738504}, {"xval": 62, "yval": -11.050449172744532}, {"xval": 63, "yval": -12.246655796825202}, {"xval": 64, "yval": -11.434129974431004}, {"xval": 65, "yval": -10.07788994586018}, {"xval": 66, "yval": -10.149900067440514}, {"xval": 67, "yval": -9.14636716954849}, {"xval": 68, "yval": -8.784731144500856}, {"xval": 69, "yval": -9.42985089910598}, {"xval": 70, "yval": -9.068455293597568}, {"xval": 71, "yval": -7.5304187271315985}, {"xval": 72, "yval": -7.56624476624155}, {"xval": 73, "yval": -6.001601110427544}, {"xval": 74, "yval": -8.621346214517288}, {"xval": 75, "yval": -7.799443710142064}, {"xval": 76, "yval": -7.712396641903893}, {"xval": 77, "yval": -8.011403992369761}, {"xval": 78, "yval": -7.919643215834259}, {"xval": 79, "yval": -9.907212130435152}, {"xval": 80, "yval": -10.126884018272664}, {"xval": 81, "yval": -9.769771446760917}, {"xval": 82, "yval": -8.2918774020194}, {"xval": 83, "yval": -8.810147620293048}, {"xval": 84, "yval": -9.618641223186236}, {"xval": 85, "yval": -10.120398266770772}, {"xval": 86, "yval": -9.204996149068698}, {"xval": 87, "yval": -8.876245039409014}, {"xval": 88, "yval": -9.406005243176052}, {"xval": 89, "yval": -8.892737810062696}, {"xval": 90, "yval": -8.795660260714657}, {"xval": 91, "yval": -7.827015270181768}, {"xval": 92, "yval": -8.529068364059121}, {"xval": 93, "yval": -8.85673051065689}, {"xval": 94, "yval": -9.248838663789048}, {"xval": 95, "yval": -10.712353611921166}, {"xval": 96, "yval": -10.41623333485659}, {"xval": 97, "yval": -10.1551780626767}, {"xval": 98, "yval": -10.15006460603424}, {"xval": 99, "yval": -10.384651739409387}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#expressions-rst-altair-plot-3', spec, opt).catch(console.err);
+  });
+</script>
+</div><section id="inline-expressions-in-titles">
+<span id="accessing-parameter-values"></span><h3>Inline Expressions in Titles<a class="headerlink" href="#inline-expressions-in-titles" title="Link to this heading">#</a></h3>
+<p>An inline expression can be used to
+update the chart title to show the current value of the parameter.
+Here, we extend the code from the previous example
+by using an f-string inside an inline expression.
+The additional quotations and plus signs are needed
+for the parameter value to be interpreted correctly.</p>
+<div class="highlight-python notranslate" id="expressions-rst-altair-source-4"><div class="highlight"><pre><span></span><span class="n">bind_range</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_range</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Chart width: &#39;</span><span class="p">)</span>
+<span class="n">param_width</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="n">bind_range</span><span class="p">)</span>
+
+<span class="c1"># In Javascript, a number is converted to a string when added to an existing string,</span>
+<span class="c1"># which is why we use this nested quotation.</span>
+<span class="n">title</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Title</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;This chart is &quot; + </span><span class="si">{</span><span class="n">param_width</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> + &quot; px wide&quot;&#39;</span><span class="p">))</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;xval&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;yval&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">param_width</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="expressions-rst-altair-plot-4">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-9bcd23497acf218d98e56ccbddd728ce"}, "mark": {"type": "point"}, "encoding": {"x": {"field": "xval", "type": "quantitative"}, "y": {"field": "yval", "type": "quantitative"}}, "params": [{"name": "width", "bind": {"input": "range", "max": 300, "min": 100, "name": "Chart width: "}}], "title": {"text": {"expr": "\"This chart is \" + width + \" px wide\""}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-9bcd23497acf218d98e56ccbddd728ce": [{"xval": 0, "yval": 0.4967141530112327}, {"xval": 1, "yval": 0.358449851840048}, {"xval": 2, "yval": 1.0061383899407406}, {"xval": 3, "yval": 2.5291682463487657}, {"xval": 4, "yval": 2.2950148716254297}, {"xval": 5, "yval": 2.060877914676249}, {"xval": 6, "yval": 3.6400907301836405}, {"xval": 7, "yval": 4.407525459336549}, {"xval": 8, "yval": 3.938051073401597}, {"xval": 9, "yval": 4.4806111169875615}, {"xval": 10, "yval": 4.017193424175099}, {"xval": 11, "yval": 3.5514636706048424}, {"xval": 12, "yval": 3.7934259421708765}, {"xval": 13, "yval": 1.8801456975130786}, {"xval": 14, "yval": 0.15522786500004582}, {"xval": 15, "yval": -0.4070596642409269}, {"xval": 16, "yval": -1.4198907845753506}, {"xval": 17, "yval": -1.1056434519800766}, {"xval": 18, "yval": -2.0136675275012874}, {"xval": 19, "yval": -3.4259712288365787}, {"xval": 20, "yval": -1.9603224599150246}, {"xval": 21, "yval": -2.1860987604015603}, {"xval": 22, "yval": -2.1185705557136365}, {"xval": 23, "yval": -3.5433187419270933}, {"xval": 24, "yval": -4.087701466452276}, {"xval": 25, "yval": -3.9767788767424097}, {"xval": 26, "yval": -5.127772454164712}, {"xval": 27, "yval": -4.75207443581904}, {"xval": 28, "yval": -5.352713125737845}, {"xval": 29, "yval": -5.644406875531121}, {"xval": 30, "yval": -6.2461134877605184}, {"xval": 31, "yval": -4.3938353032515804}, {"xval": 32, "yval": -4.407332527989515}, {"xval": 33, "yval": -5.4650434569454145}, {"xval": 34, "yval": -4.642498544842225}, {"xval": 35, "yval": -5.863342194813248}, {"xval": 36, "yval": -5.654478599808492}, {"xval": 37, "yval": -7.614148723688268}, {"xval": 38, "yval": -8.942334772586698}, {"xval": 39, "yval": -8.745473536717574}, {"xval": 40, "yval": -8.007006956722163}, {"xval": 41, "yval": -7.835638675532193}, {"xval": 42, "yval": -7.951286957920433}, {"xval": 43, "yval": -8.252390653509723}, {"xval": 44, "yval": -9.73091264387715}, {"xval": 45, "yval": -10.450756852271859}, {"xval": 46, "yval": -10.911395623231646}, {"xval": 47, "yval": -9.854273397012731}, {"xval": 48, "yval": -9.51065510744427}, {"xval": 49, "yval": -11.273695262807005}, {"xval": 50, "yval": -10.94961129341221}, {"xval": 51, "yval": -11.334693573828526}, {"xval": 52, "yval": -12.011615574134485}, {"xval": 53, "yval": -11.399939285293616}, {"xval": 54, "yval": -10.368939762797666}, {"xval": 55, "yval": -9.437659643681467}, {"xval": 56, "yval": -10.276877166904105}, {"xval": 57, "yval": -10.58608954275532}, {"xval": 58, "yval": -10.254826111351756}, {"xval": 59, "yval": -9.279280984229397}, {"xval": 60, "yval": -9.758455222074687}, {"xval": 61, "yval": -9.944114198738504}, {"xval": 62, "yval": -11.050449172744532}, {"xval": 63, "yval": -12.246655796825202}, {"xval": 64, "yval": -11.434129974431004}, {"xval": 65, "yval": -10.07788994586018}, {"xval": 66, "yval": -10.149900067440514}, {"xval": 67, "yval": -9.14636716954849}, {"xval": 68, "yval": -8.784731144500856}, {"xval": 69, "yval": -9.42985089910598}, {"xval": 70, "yval": -9.068455293597568}, {"xval": 71, "yval": -7.5304187271315985}, {"xval": 72, "yval": -7.56624476624155}, {"xval": 73, "yval": -6.001601110427544}, {"xval": 74, "yval": -8.621346214517288}, {"xval": 75, "yval": -7.799443710142064}, {"xval": 76, "yval": -7.712396641903893}, {"xval": 77, "yval": -8.011403992369761}, {"xval": 78, "yval": -7.919643215834259}, {"xval": 79, "yval": -9.907212130435152}, {"xval": 80, "yval": -10.126884018272664}, {"xval": 81, "yval": -9.769771446760917}, {"xval": 82, "yval": -8.2918774020194}, {"xval": 83, "yval": -8.810147620293048}, {"xval": 84, "yval": -9.618641223186236}, {"xval": 85, "yval": -10.120398266770772}, {"xval": 86, "yval": -9.204996149068698}, {"xval": 87, "yval": -8.876245039409014}, {"xval": 88, "yval": -9.406005243176052}, {"xval": 89, "yval": -8.892737810062696}, {"xval": 90, "yval": -8.795660260714657}, {"xval": 91, "yval": -7.827015270181768}, {"xval": 92, "yval": -8.529068364059121}, {"xval": 93, "yval": -8.85673051065689}, {"xval": 94, "yval": -9.248838663789048}, {"xval": 95, "yval": -10.712353611921166}, {"xval": 96, "yval": -10.41623333485659}, {"xval": 97, "yval": -10.1551780626767}, {"xval": 98, "yval": -10.15006460603424}, {"xval": 99, "yval": -10.384651739409387}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#expressions-rst-altair-plot-4', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>In the example above,
+we accessed the value of a variable parameter
+and inserted it into the chart title.
+If we instead want our chart title to reflect the value from a selection parameter,
+it is not enough to reference only the name of the parameter.
+We also need to reference the field specified by the selection parameter
+(i.e. <code class="docutils literal notranslate"><span class="pre">Origin</span></code> in the example below):</p>
+<div class="highlight-python notranslate" id="expressions-rst-altair-source-5"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">cars</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="o">.</span><span class="n">url</span>
+<span class="n">input_dropdown</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">binding_select</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Europe&#39;</span><span class="p">,</span> <span class="s1">&#39;Japan&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Region &#39;</span><span class="p">)</span>
+<span class="n">selection</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_point</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Origin&#39;</span><span class="p">],</span> <span class="n">bind</span><span class="o">=</span><span class="n">input_dropdown</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;Europe&#39;</span><span class="p">)</span>
+
+<span class="n">title</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Title</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;Cars from &quot; + </span><span class="si">{</span><span class="n">selection</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">.Origin&#39;</span><span class="p">))</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">cars</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon:Q&#39;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span>
+    <span class="n">selection</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">selection</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="expressions-rst-altair-plot-5">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/cars.json"}, "mark": {"type": "point"}, "encoding": {"x": {"field": "Horsepower", "type": "quantitative"}, "y": {"field": "Miles_per_Gallon", "type": "quantitative"}}, "params": [{"name": "param_5e9e1a46a7017698", "select": {"type": "point", "fields": ["Origin"]}, "bind": {"input": "select", "options": ["Europe", "Japan", "USA"], "name": "Region "}, "value": "Europe"}], "title": {"text": {"expr": "\"Cars from \" + param_5e9e1a46a7017698.Origin"}}, "transform": [{"filter": {"param": "param_5e9e1a46a7017698"}}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#expressions-rst-altair-plot-5', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+<section id="a-regex-search-widget">
+<h3>A Regex Search Widget<a class="headerlink" href="#a-regex-search-widget" title="Link to this heading">#</a></h3>
+<p>Now that we know the basics of expressions,
+let’s see how we can improve on our search input example
+to make the search string match via a regex pattern.
+To do this we need to use <code class="docutils literal notranslate"><span class="pre">expr.regex</span></code> to define the regex string,
+and <code class="docutils literal notranslate"><span class="pre">expr.test</span></code> to test it against another string
+(in this case the string in the <code class="docutils literal notranslate"><span class="pre">Name</span></code> column).
+The <code class="docutils literal notranslate"><span class="pre">i</span></code> option makes the regex case insensitive,
+and you can see that we have switched to using <code class="docutils literal notranslate"><span class="pre">param</span></code> instead of <code class="docutils literal notranslate"><span class="pre">selection_point</span></code>
+since we are doing something more complex
+than looking up values with an exact match in the data.
+To try this out, you can type <code class="docutils literal notranslate"><span class="pre">mazda|ford</span></code> in the search input box below.</p>
+<div class="highlight-python notranslate" id="expressions-rst-altair-source-6"><div class="highlight"><pre><span></span><span class="n">search_input</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
+    <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">bind</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">binding</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="s1">&#39;search&#39;</span><span class="p">,</span>
+        <span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Car model&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Search &#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">search_matches</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">regexp</span><span class="p">(</span><span class="n">search_input</span><span class="p">,</span> <span class="s2">&quot;i&quot;</span><span class="p">),</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon:Q&#39;</span><span class="p">,</span>
+    <span class="n">tooltip</span><span class="o">=</span><span class="s1">&#39;Name:N&#39;</span><span class="p">,</span>
+    <span class="n">opacity</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">search_matches</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">search_input</span><span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="expressions-rst-altair-plot-6">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/cars.json"}, "mark": {"type": "point", "size": 60}, "encoding": {"opacity": {"condition": [{"test": "test(regexp(param_e1c0434eabf60dd4,'i'),datum.Name)", "value": 1}], "value": 0.05}, "tooltip": {"field": "Name", "type": "nominal"}, "x": {"field": "Horsepower", "type": "quantitative"}, "y": {"field": "Miles_per_Gallon", "type": "quantitative"}}, "params": [{"name": "param_e1c0434eabf60dd4", "bind": {"input": "search", "name": "Search ", "placeholder": "Car model"}, "value": ""}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#expressions-rst-altair-plot-6', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>And remember, all this interactivity is client side.
+You can save this chart as an HTML file or put it on a static site generator such as GitHub/GitLab pages
+and anyone can interact with it without having to install Python.
+Quite powerful!</p>
+</section>
+</section>
+<section id="summary-of-expressions">
+<h2>Summary of Expressions<a class="headerlink" href="#summary-of-expressions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Altair can utilize the expression language of Vega for writing basic formulas to enable custom interactions.</p></li>
+<li><p>Both JavaScript-style syntax and Python-style syntax are supported in Altair to define expressions.</p></li>
+<li><p>Altair provides the <code class="docutils literal notranslate"><span class="pre">expr</span></code> module which allows expressions to be constructed with Python syntax.</p></li>
+<li><p>Expressions can be included within a chart specification using two approaches: through a <code class="docutils literal notranslate"><span class="pre">param(expr=...)</span></code> parameter definition or inline using the <code class="docutils literal notranslate"><span class="pre">expr(...)</span></code> utility function.</p></li>
+<li><p>Expressions can be used anywhere the documentation mentions that an <cite>ExprRef</cite> is an accepted value. This is mainly in three locations within a chart specification: mark properties, encoding channel options, and within a value definition for an encoding channel. They are also supported in the chart title, but not yet for subtitles or guide titles (i.e. axis and legends, see <a class="github reference external" href="https://github.com/vega/vega-lite/issues/7408">vega/vega-lite#7408</a> for details).</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="bindings_widgets.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Bindings &amp; Widgets</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="jupyter_chart.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">JupyterChart</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressions-inside-parameters">Expressions inside Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inline-expressions">Inline Expressions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inline-expressions-in-titles">Inline Expressions in Titles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-regex-search-widget">A Regex Search Widget</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-expressions">Summary of Expressions</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

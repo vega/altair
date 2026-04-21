@@ -1,0 +1,30 @@
+﻿altair.ConditionalMarkPropFieldOrDatumDef
+=========================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalMarkPropFieldOrDatumDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalMarkPropFieldOrDatumDef.__init__
+      ~ConditionalMarkPropFieldOrDatumDef.copy
+      ~ConditionalMarkPropFieldOrDatumDef.from_dict
+      ~ConditionalMarkPropFieldOrDatumDef.from_json
+      ~ConditionalMarkPropFieldOrDatumDef.resolve_references
+      ~ConditionalMarkPropFieldOrDatumDef.to_dict
+      ~ConditionalMarkPropFieldOrDatumDef.to_json
+      ~ConditionalMarkPropFieldOrDatumDef.validate
+      ~ConditionalMarkPropFieldOrDatumDef.validate_property
+   
+   
+
+   
+   
+   

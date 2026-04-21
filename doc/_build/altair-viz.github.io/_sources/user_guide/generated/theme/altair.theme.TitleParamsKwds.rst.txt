@@ -1,0 +1,66 @@
+﻿altair.theme.TitleParamsKwds
+============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: TitleParamsKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TitleParamsKwds.__init__
+      ~TitleParamsKwds.clear
+      ~TitleParamsKwds.copy
+      ~TitleParamsKwds.fromkeys
+      ~TitleParamsKwds.get
+      ~TitleParamsKwds.items
+      ~TitleParamsKwds.keys
+      ~TitleParamsKwds.pop
+      ~TitleParamsKwds.popitem
+      ~TitleParamsKwds.setdefault
+      ~TitleParamsKwds.update
+      ~TitleParamsKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TitleParamsKwds.text
+      ~TitleParamsKwds.align
+      ~TitleParamsKwds.anchor
+      ~TitleParamsKwds.angle
+      ~TitleParamsKwds.aria
+      ~TitleParamsKwds.baseline
+      ~TitleParamsKwds.color
+      ~TitleParamsKwds.dx
+      ~TitleParamsKwds.dy
+      ~TitleParamsKwds.font
+      ~TitleParamsKwds.fontSize
+      ~TitleParamsKwds.fontStyle
+      ~TitleParamsKwds.fontWeight
+      ~TitleParamsKwds.frame
+      ~TitleParamsKwds.limit
+      ~TitleParamsKwds.lineHeight
+      ~TitleParamsKwds.offset
+      ~TitleParamsKwds.orient
+      ~TitleParamsKwds.style
+      ~TitleParamsKwds.subtitle
+      ~TitleParamsKwds.subtitleColor
+      ~TitleParamsKwds.subtitleFont
+      ~TitleParamsKwds.subtitleFontSize
+      ~TitleParamsKwds.subtitleFontStyle
+      ~TitleParamsKwds.subtitleFontWeight
+      ~TitleParamsKwds.subtitleLineHeight
+      ~TitleParamsKwds.subtitlePadding
+      ~TitleParamsKwds.zindex
+   
+   

@@ -1,0 +1,45 @@
+﻿altair.Url
+==========
+
+.. currentmodule:: altair
+
+.. autoclass:: Url
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Url.__init__
+      ~Url.copy
+      ~Url.from_dict
+      ~Url.from_json
+      ~Url.resolve_references
+      ~Url.to_dict
+      ~Url.to_json
+      ~Url.validate
+      ~Url.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Url.aggregate
+      ~Url.bandPosition
+      ~Url.bin
+      ~Url.condition
+      ~Url.field
+      ~Url.format
+      ~Url.formatType
+      ~Url.timeUnit
+      ~Url.title
+      ~Url.type
+   
+   

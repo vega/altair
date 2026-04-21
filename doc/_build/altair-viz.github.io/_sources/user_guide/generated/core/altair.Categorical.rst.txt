@@ -1,0 +1,30 @@
+﻿altair.Categorical
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: Categorical
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Categorical.__init__
+      ~Categorical.copy
+      ~Categorical.from_dict
+      ~Categorical.from_json
+      ~Categorical.resolve_references
+      ~Categorical.to_dict
+      ~Categorical.to_json
+      ~Categorical.validate
+      ~Categorical.validate_property
+   
+   
+
+   
+   
+   

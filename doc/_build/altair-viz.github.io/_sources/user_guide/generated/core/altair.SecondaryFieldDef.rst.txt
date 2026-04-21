@@ -1,0 +1,30 @@
+﻿altair.SecondaryFieldDef
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: SecondaryFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SecondaryFieldDef.__init__
+      ~SecondaryFieldDef.copy
+      ~SecondaryFieldDef.from_dict
+      ~SecondaryFieldDef.from_json
+      ~SecondaryFieldDef.resolve_references
+      ~SecondaryFieldDef.to_dict
+      ~SecondaryFieldDef.to_json
+      ~SecondaryFieldDef.validate
+      ~SecondaryFieldDef.validate_property
+   
+   
+
+   
+   
+   

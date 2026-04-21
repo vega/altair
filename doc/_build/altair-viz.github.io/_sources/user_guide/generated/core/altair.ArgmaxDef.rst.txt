@@ -1,0 +1,30 @@
+﻿altair.ArgmaxDef
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: ArgmaxDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ArgmaxDef.__init__
+      ~ArgmaxDef.copy
+      ~ArgmaxDef.from_dict
+      ~ArgmaxDef.from_json
+      ~ArgmaxDef.resolve_references
+      ~ArgmaxDef.to_dict
+      ~ArgmaxDef.to_json
+      ~ArgmaxDef.validate
+      ~ArgmaxDef.validate_property
+   
+   
+
+   
+   
+   

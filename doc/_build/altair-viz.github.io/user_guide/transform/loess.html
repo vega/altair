@@ -1,0 +1,733 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>LOESS &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/transform/loess';</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Pivot" href="pivot.html" />
+    <link rel="prev" title="Lookup" href="lookup.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../data.html">Specifying Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../encodings/index.html">Encodings</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../encodings/channels.html">Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../encodings/channel_options.html">Channel Options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../marks/index.html">Marks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../marks/arc.html">Arc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/area.html">Area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/bar.html">Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/boxplot.html">Box Plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/circle.html">Circle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/errorband.html">Error Band</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/errorbar.html">Error Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/geoshape.html">Geoshape</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../marks/image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/line.html">Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/rule.html">Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/square.html">Square</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/text.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/tick.html">Tick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../marks/trail.html">Trail</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Data Transformations</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="aggregate.html">Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bin.html">Bin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calculate.html">Calculate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="density.html">Density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extent.html">Extent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filter.html">Filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flatten.html">Flatten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fold.html">Fold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="impute.html">Impute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="joinaggregate.html">Join Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lookup.html">Lookup</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">LOESS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pivot.html">Pivot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quantile.html">Quantile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample.html">Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stack.html">Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeunit.html">TimeUnit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="window.html">Window</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../interactions/index.html">Interactive Charts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../interactions/parameters.html">Parameters, Conditions, &amp; Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interactions/bindings_widgets.html">Bindings &amp; Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interactions/expressions.html">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interactions/jupyter_chart.html">JupyterChart</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../compound_charts.html">Layered &amp; Multi-View Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scale_resolve.html">Scale &amp; Guide Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../times_and_dates.html">Times &amp; Dates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../customization.html">Customizing Visualizations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Top-Level Chart Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../saving_charts.html">Saving Altair Charts</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../internals.html">Altair Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../display_frontends.html">Displaying Altair Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../custom_renderers.html">Customizing Renderers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_transformers.html">Data Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../large_datasets.html">Large Datasets</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../data.html" class="nav-link">Specifying Data</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Data Transformations</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">LOESS</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="loess">
+<span id="user-guide-loess-transform"></span><h1>LOESS<a class="headerlink" href="#loess" title="Link to this heading">#</a></h1>
+<p>The LOESS transform (LOcally Estimated Scatterplot Smoothing) uses a
+locally-estimated regression  to produce a trend line.
+LOESS performs a sequence of local weighted regressions over a sliding
+window of nearest-neighbor points. For standard parametric regression options,
+see the <a class="reference internal" href="regression.html#user-guide-regression-transform"><span class="std std-ref">Regression</span></a>.</p>
+<p>Here is an example of using LOESS to smooth samples from a Gaussian random walk:</p>
+<div class="highlight-python notranslate" id="loess-rst-altair-source-0"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="p">})</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y&#39;</span>
+<span class="p">)</span>
+
+<span class="n">chart</span> <span class="o">+</span> <span class="n">chart</span><span class="o">.</span><span class="n">transform_loess</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span>
+</pre></div>
+</div>
+
+<div id="loess-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"mark": {"type": "point"}, "encoding": {"x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}}}, {"mark": {"type": "line"}, "encoding": {"x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}}, "transform": [{"loess": "y", "on": "x"}]}], "data": {"name": "data-98734ef6a34fd9b6946f6abba6bf3aa6"}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-98734ef6a34fd9b6946f6abba6bf3aa6": [{"x": 0, "y": 0.4967141530112327}, {"x": 1, "y": 0.358449851840048}, {"x": 2, "y": 1.0061383899407406}, {"x": 3, "y": 2.5291682463487657}, {"x": 4, "y": 2.2950148716254297}, {"x": 5, "y": 2.060877914676249}, {"x": 6, "y": 3.6400907301836405}, {"x": 7, "y": 4.407525459336549}, {"x": 8, "y": 3.938051073401597}, {"x": 9, "y": 4.4806111169875615}, {"x": 10, "y": 4.017193424175099}, {"x": 11, "y": 3.5514636706048424}, {"x": 12, "y": 3.7934259421708765}, {"x": 13, "y": 1.8801456975130786}, {"x": 14, "y": 0.15522786500004582}, {"x": 15, "y": -0.4070596642409269}, {"x": 16, "y": -1.4198907845753506}, {"x": 17, "y": -1.1056434519800766}, {"x": 18, "y": -2.0136675275012874}, {"x": 19, "y": -3.4259712288365787}, {"x": 20, "y": -1.9603224599150246}, {"x": 21, "y": -2.1860987604015603}, {"x": 22, "y": -2.1185705557136365}, {"x": 23, "y": -3.5433187419270933}, {"x": 24, "y": -4.087701466452276}, {"x": 25, "y": -3.9767788767424097}, {"x": 26, "y": -5.127772454164712}, {"x": 27, "y": -4.75207443581904}, {"x": 28, "y": -5.352713125737845}, {"x": 29, "y": -5.644406875531121}, {"x": 30, "y": -6.2461134877605184}, {"x": 31, "y": -4.3938353032515804}, {"x": 32, "y": -4.407332527989515}, {"x": 33, "y": -5.4650434569454145}, {"x": 34, "y": -4.642498544842225}, {"x": 35, "y": -5.863342194813248}, {"x": 36, "y": -5.654478599808492}, {"x": 37, "y": -7.614148723688268}, {"x": 38, "y": -8.942334772586698}, {"x": 39, "y": -8.745473536717574}, {"x": 40, "y": -8.007006956722163}, {"x": 41, "y": -7.835638675532193}, {"x": 42, "y": -7.951286957920433}, {"x": 43, "y": -8.252390653509723}, {"x": 44, "y": -9.73091264387715}, {"x": 45, "y": -10.450756852271859}, {"x": 46, "y": -10.911395623231646}, {"x": 47, "y": -9.854273397012731}, {"x": 48, "y": -9.51065510744427}, {"x": 49, "y": -11.273695262807005}, {"x": 50, "y": -10.94961129341221}, {"x": 51, "y": -11.334693573828526}, {"x": 52, "y": -12.011615574134485}, {"x": 53, "y": -11.399939285293616}, {"x": 54, "y": -10.368939762797666}, {"x": 55, "y": -9.437659643681467}, {"x": 56, "y": -10.276877166904105}, {"x": 57, "y": -10.58608954275532}, {"x": 58, "y": -10.254826111351756}, {"x": 59, "y": -9.279280984229397}, {"x": 60, "y": -9.758455222074687}, {"x": 61, "y": -9.944114198738504}, {"x": 62, "y": -11.050449172744532}, {"x": 63, "y": -12.246655796825202}, {"x": 64, "y": -11.434129974431004}, {"x": 65, "y": -10.07788994586018}, {"x": 66, "y": -10.149900067440514}, {"x": 67, "y": -9.14636716954849}, {"x": 68, "y": -8.784731144500856}, {"x": 69, "y": -9.42985089910598}, {"x": 70, "y": -9.068455293597568}, {"x": 71, "y": -7.5304187271315985}, {"x": 72, "y": -7.56624476624155}, {"x": 73, "y": -6.001601110427544}, {"x": 74, "y": -8.621346214517288}, {"x": 75, "y": -7.799443710142064}, {"x": 76, "y": -7.712396641903893}, {"x": 77, "y": -8.011403992369761}, {"x": 78, "y": -7.919643215834259}, {"x": 79, "y": -9.907212130435152}, {"x": 80, "y": -10.126884018272664}, {"x": 81, "y": -9.769771446760917}, {"x": 82, "y": -8.2918774020194}, {"x": 83, "y": -8.810147620293048}, {"x": 84, "y": -9.618641223186236}, {"x": 85, "y": -10.120398266770772}, {"x": 86, "y": -9.204996149068698}, {"x": 87, "y": -8.876245039409014}, {"x": 88, "y": -9.406005243176052}, {"x": 89, "y": -8.892737810062696}, {"x": 90, "y": -8.795660260714657}, {"x": 91, "y": -7.827015270181768}, {"x": 92, "y": -8.529068364059121}, {"x": 93, "y": -8.85673051065689}, {"x": 94, "y": -9.248838663789048}, {"x": 95, "y": -10.712353611921166}, {"x": 96, "y": -10.41623333485659}, {"x": 97, "y": -10.1551780626767}, {"x": 98, "y": -10.15006460603424}, {"x": 99, "y": -10.384651739409387}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#loess-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><section id="transform-options">
+<h2>Transform Options<a class="headerlink" href="#transform-options" title="Link to this heading">#</a></h2>
+<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">transform_loess()</span></code> method is built on the
+<a class="reference internal" href="../generated/core/altair.LoessTransform.html#altair.LoessTransform" title="altair.LoessTransform"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoessTransform</span></code></a> class, which has the following options:</p>
+<details><summary><a>Click to show table</a></summary><div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="vl-prop"><p>as</p></td>
+<td class="vl-type-def"><p>array(<a class="reference internal" href="../generated/core/altair.FieldName.html#altair.FieldName" title="altair.FieldName"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldName</span></code></a>)</p></td>
+<td class="vl-decsr"><p>The output field names for the smoothed points generated by the loess transform.</p>
+<p><strong>Default value:</strong> The field names of the input x and y values.</p>
+</td>
+</tr>
+<tr class="row-odd"><td class="vl-prop"><p>bandwidth</p></td>
+<td class="vl-type-def"><p><code class="docutils literal notranslate"><span class="pre">number</span></code></p></td>
+<td class="vl-decsr"><p>A bandwidth parameter in the range <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1]</span></code> that determines the amount of smoothing.</p>
+<p><strong>Default value:</strong> <code class="docutils literal notranslate"><span class="pre">0.3</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td class="vl-prop"><p>groupby</p></td>
+<td class="vl-type-def"><p>array(<a class="reference internal" href="../generated/core/altair.FieldName.html#altair.FieldName" title="altair.FieldName"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldName</span></code></a>)</p></td>
+<td class="vl-decsr"><p>The data fields to group by. If not specified, a single group containing all data objects will be used.</p></td>
+</tr>
+<tr class="row-odd"><td class="vl-prop"><p>loess</p></td>
+<td class="vl-type-def"><p><a class="reference internal" href="../generated/core/altair.FieldName.html#altair.FieldName" title="altair.FieldName"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldName</span></code></a></p></td>
+<td class="vl-decsr"><p>The data field of the dependent variable to smooth.</p></td>
+</tr>
+<tr class="row-even"><td class="vl-prop"><p>on</p></td>
+<td class="vl-type-def"><p><a class="reference internal" href="../generated/core/altair.FieldName.html#altair.FieldName" title="altair.FieldName"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldName</span></code></a></p></td>
+<td class="vl-decsr"><p>The data field of the independent variable to use a predictor.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lookup.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lookup</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pivot.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Pivot</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-options">Transform Options</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

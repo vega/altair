@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsstrokeOpacity
+==========================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsstrokeOpacity
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsstrokeOpacity.__init__
+      ~ScaleInvalidDataShowAsstrokeOpacity.copy
+      ~ScaleInvalidDataShowAsstrokeOpacity.from_dict
+      ~ScaleInvalidDataShowAsstrokeOpacity.from_json
+      ~ScaleInvalidDataShowAsstrokeOpacity.resolve_references
+      ~ScaleInvalidDataShowAsstrokeOpacity.to_dict
+      ~ScaleInvalidDataShowAsstrokeOpacity.to_json
+      ~ScaleInvalidDataShowAsstrokeOpacity.validate
+      ~ScaleInvalidDataShowAsstrokeOpacity.validate_property
+   
+   
+
+   
+   
+   

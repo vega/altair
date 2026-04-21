@@ -1,0 +1,30 @@
+﻿altair.CompositionConfig
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: CompositionConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CompositionConfig.__init__
+      ~CompositionConfig.copy
+      ~CompositionConfig.from_dict
+      ~CompositionConfig.from_json
+      ~CompositionConfig.resolve_references
+      ~CompositionConfig.to_dict
+      ~CompositionConfig.to_json
+      ~CompositionConfig.validate
+      ~CompositionConfig.validate_property
+   
+   
+
+   
+   
+   

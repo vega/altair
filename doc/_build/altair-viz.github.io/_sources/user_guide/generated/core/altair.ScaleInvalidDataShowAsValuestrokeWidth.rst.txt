@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsValuestrokeWidth
+=============================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsValuestrokeWidth
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsValuestrokeWidth.__init__
+      ~ScaleInvalidDataShowAsValuestrokeWidth.copy
+      ~ScaleInvalidDataShowAsValuestrokeWidth.from_dict
+      ~ScaleInvalidDataShowAsValuestrokeWidth.from_json
+      ~ScaleInvalidDataShowAsValuestrokeWidth.resolve_references
+      ~ScaleInvalidDataShowAsValuestrokeWidth.to_dict
+      ~ScaleInvalidDataShowAsValuestrokeWidth.to_json
+      ~ScaleInvalidDataShowAsValuestrokeWidth.validate
+      ~ScaleInvalidDataShowAsValuestrokeWidth.validate_property
+   
+   
+
+   
+   
+   

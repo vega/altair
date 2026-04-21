@@ -1,0 +1,30 @@
+﻿altair.Stream
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: Stream
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Stream.__init__
+      ~Stream.copy
+      ~Stream.from_dict
+      ~Stream.from_json
+      ~Stream.resolve_references
+      ~Stream.to_dict
+      ~Stream.to_json
+      ~Stream.validate
+      ~Stream.validate_property
+   
+   
+
+   
+   
+   

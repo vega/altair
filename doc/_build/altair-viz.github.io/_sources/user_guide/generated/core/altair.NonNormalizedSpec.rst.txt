@@ -1,0 +1,30 @@
+﻿altair.NonNormalizedSpec
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: NonNormalizedSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NonNormalizedSpec.__init__
+      ~NonNormalizedSpec.copy
+      ~NonNormalizedSpec.from_dict
+      ~NonNormalizedSpec.from_json
+      ~NonNormalizedSpec.resolve_references
+      ~NonNormalizedSpec.to_dict
+      ~NonNormalizedSpec.to_json
+      ~NonNormalizedSpec.validate
+      ~NonNormalizedSpec.validate_property
+   
+   
+
+   
+   
+   

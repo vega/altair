@@ -1,0 +1,30 @@
+﻿altair.DomainUnionWith
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: DomainUnionWith
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DomainUnionWith.__init__
+      ~DomainUnionWith.copy
+      ~DomainUnionWith.from_dict
+      ~DomainUnionWith.from_json
+      ~DomainUnionWith.resolve_references
+      ~DomainUnionWith.to_dict
+      ~DomainUnionWith.to_json
+      ~DomainUnionWith.validate
+      ~DomainUnionWith.validate_property
+   
+   
+
+   
+   
+   

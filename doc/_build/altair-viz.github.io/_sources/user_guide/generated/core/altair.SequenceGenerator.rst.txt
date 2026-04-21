@@ -1,0 +1,30 @@
+﻿altair.SequenceGenerator
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: SequenceGenerator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SequenceGenerator.__init__
+      ~SequenceGenerator.copy
+      ~SequenceGenerator.from_dict
+      ~SequenceGenerator.from_json
+      ~SequenceGenerator.resolve_references
+      ~SequenceGenerator.to_dict
+      ~SequenceGenerator.to_json
+      ~SequenceGenerator.validate
+      ~SequenceGenerator.validate_property
+   
+   
+
+   
+   
+   

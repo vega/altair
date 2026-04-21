@@ -1,0 +1,30 @@
+﻿altair.LineString
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: LineString
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LineString.__init__
+      ~LineString.copy
+      ~LineString.from_dict
+      ~LineString.from_json
+      ~LineString.resolve_references
+      ~LineString.to_dict
+      ~LineString.to_json
+      ~LineString.validate
+      ~LineString.validate_property
+   
+   
+
+   
+   
+   

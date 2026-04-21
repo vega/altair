@@ -1,0 +1,30 @@
+﻿altair.Locale
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: Locale
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Locale.__init__
+      ~Locale.copy
+      ~Locale.from_dict
+      ~Locale.from_json
+      ~Locale.resolve_references
+      ~Locale.to_dict
+      ~Locale.to_json
+      ~Locale.validate
+      ~Locale.validate_property
+   
+   
+
+   
+   
+   

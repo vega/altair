@@ -1,0 +1,30 @@
+﻿altair.LayerRepeatSpec
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: LayerRepeatSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LayerRepeatSpec.__init__
+      ~LayerRepeatSpec.copy
+      ~LayerRepeatSpec.from_dict
+      ~LayerRepeatSpec.from_json
+      ~LayerRepeatSpec.resolve_references
+      ~LayerRepeatSpec.to_dict
+      ~LayerRepeatSpec.to_json
+      ~LayerRepeatSpec.validate
+      ~LayerRepeatSpec.validate_property
+   
+   
+
+   
+   
+   

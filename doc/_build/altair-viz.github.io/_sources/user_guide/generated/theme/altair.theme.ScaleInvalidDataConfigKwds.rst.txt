@@ -1,0 +1,56 @@
+﻿altair.theme.ScaleInvalidDataConfigKwds
+=======================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ScaleInvalidDataConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataConfigKwds.__init__
+      ~ScaleInvalidDataConfigKwds.clear
+      ~ScaleInvalidDataConfigKwds.copy
+      ~ScaleInvalidDataConfigKwds.fromkeys
+      ~ScaleInvalidDataConfigKwds.get
+      ~ScaleInvalidDataConfigKwds.items
+      ~ScaleInvalidDataConfigKwds.keys
+      ~ScaleInvalidDataConfigKwds.pop
+      ~ScaleInvalidDataConfigKwds.popitem
+      ~ScaleInvalidDataConfigKwds.setdefault
+      ~ScaleInvalidDataConfigKwds.update
+      ~ScaleInvalidDataConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataConfigKwds.angle
+      ~ScaleInvalidDataConfigKwds.color
+      ~ScaleInvalidDataConfigKwds.fill
+      ~ScaleInvalidDataConfigKwds.fillOpacity
+      ~ScaleInvalidDataConfigKwds.opacity
+      ~ScaleInvalidDataConfigKwds.radius
+      ~ScaleInvalidDataConfigKwds.shape
+      ~ScaleInvalidDataConfigKwds.size
+      ~ScaleInvalidDataConfigKwds.stroke
+      ~ScaleInvalidDataConfigKwds.strokeDash
+      ~ScaleInvalidDataConfigKwds.strokeOpacity
+      ~ScaleInvalidDataConfigKwds.strokeWidth
+      ~ScaleInvalidDataConfigKwds.theta
+      ~ScaleInvalidDataConfigKwds.time
+      ~ScaleInvalidDataConfigKwds.x
+      ~ScaleInvalidDataConfigKwds.xOffset
+      ~ScaleInvalidDataConfigKwds.y
+      ~ScaleInvalidDataConfigKwds.yOffset
+   
+   

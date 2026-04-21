@@ -1,0 +1,30 @@
+﻿altair.UnitSpec
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: UnitSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~UnitSpec.__init__
+      ~UnitSpec.copy
+      ~UnitSpec.from_dict
+      ~UnitSpec.from_json
+      ~UnitSpec.resolve_references
+      ~UnitSpec.to_dict
+      ~UnitSpec.to_json
+      ~UnitSpec.validate
+      ~UnitSpec.validate_property
+   
+   
+
+   
+   
+   

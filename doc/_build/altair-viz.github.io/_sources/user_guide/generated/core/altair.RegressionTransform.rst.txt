@@ -1,0 +1,30 @@
+﻿altair.RegressionTransform
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: RegressionTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RegressionTransform.__init__
+      ~RegressionTransform.copy
+      ~RegressionTransform.from_dict
+      ~RegressionTransform.from_json
+      ~RegressionTransform.resolve_references
+      ~RegressionTransform.to_dict
+      ~RegressionTransform.to_json
+      ~RegressionTransform.validate
+      ~RegressionTransform.validate_property
+   
+   
+
+   
+   
+   

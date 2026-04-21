@@ -1,0 +1,45 @@
+﻿altair.Time
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Time
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Time.__init__
+      ~Time.copy
+      ~Time.from_dict
+      ~Time.from_json
+      ~Time.resolve_references
+      ~Time.to_dict
+      ~Time.to_json
+      ~Time.validate
+      ~Time.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Time.aggregate
+      ~Time.bandPosition
+      ~Time.bin
+      ~Time.field
+      ~Time.rescale
+      ~Time.scale
+      ~Time.sort
+      ~Time.timeUnit
+      ~Time.title
+      ~Time.type
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.SortArray
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: SortArray
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SortArray.__init__
+      ~SortArray.copy
+      ~SortArray.from_dict
+      ~SortArray.from_json
+      ~SortArray.resolve_references
+      ~SortArray.to_dict
+      ~SortArray.to_json
+      ~SortArray.validate
+      ~SortArray.validate_property
+   
+   
+
+   
+   
+   

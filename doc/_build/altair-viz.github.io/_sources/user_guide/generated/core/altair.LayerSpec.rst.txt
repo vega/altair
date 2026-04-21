@@ -1,0 +1,30 @@
+﻿altair.LayerSpec
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: LayerSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LayerSpec.__init__
+      ~LayerSpec.copy
+      ~LayerSpec.from_dict
+      ~LayerSpec.from_json
+      ~LayerSpec.resolve_references
+      ~LayerSpec.to_dict
+      ~LayerSpec.to_json
+      ~LayerSpec.validate
+      ~LayerSpec.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.TickCount
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: TickCount
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TickCount.__init__
+      ~TickCount.copy
+      ~TickCount.from_dict
+      ~TickCount.from_json
+      ~TickCount.resolve_references
+      ~TickCount.to_dict
+      ~TickCount.to_json
+      ~TickCount.validate
+      ~TickCount.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.ScaleResolveMap
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleResolveMap
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleResolveMap.__init__
+      ~ScaleResolveMap.copy
+      ~ScaleResolveMap.from_dict
+      ~ScaleResolveMap.from_json
+      ~ScaleResolveMap.resolve_references
+      ~ScaleResolveMap.to_dict
+      ~ScaleResolveMap.to_json
+      ~ScaleResolveMap.validate
+      ~ScaleResolveMap.validate_property
+   
+   
+
+   
+   
+   

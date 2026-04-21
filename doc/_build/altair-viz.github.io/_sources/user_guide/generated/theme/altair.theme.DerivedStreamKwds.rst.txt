@@ -1,0 +1,46 @@
+﻿altair.theme.DerivedStreamKwds
+==============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: DerivedStreamKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DerivedStreamKwds.__init__
+      ~DerivedStreamKwds.clear
+      ~DerivedStreamKwds.copy
+      ~DerivedStreamKwds.fromkeys
+      ~DerivedStreamKwds.get
+      ~DerivedStreamKwds.items
+      ~DerivedStreamKwds.keys
+      ~DerivedStreamKwds.pop
+      ~DerivedStreamKwds.popitem
+      ~DerivedStreamKwds.setdefault
+      ~DerivedStreamKwds.update
+      ~DerivedStreamKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~DerivedStreamKwds.stream
+      ~DerivedStreamKwds.between
+      ~DerivedStreamKwds.consume
+      ~DerivedStreamKwds.debounce
+      ~DerivedStreamKwds.filter
+      ~DerivedStreamKwds.markname
+      ~DerivedStreamKwds.marktype
+      ~DerivedStreamKwds.throttle
+   
+   

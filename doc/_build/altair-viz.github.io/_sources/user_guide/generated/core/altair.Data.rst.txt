@@ -1,0 +1,30 @@
+﻿altair.Data
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Data
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Data.__init__
+      ~Data.copy
+      ~Data.from_dict
+      ~Data.from_json
+      ~Data.resolve_references
+      ~Data.to_dict
+      ~Data.to_json
+      ~Data.validate
+      ~Data.validate_property
+   
+   
+
+   
+   
+   

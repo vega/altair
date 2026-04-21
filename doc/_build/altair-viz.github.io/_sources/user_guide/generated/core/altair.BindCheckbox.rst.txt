@@ -1,0 +1,30 @@
+﻿altair.BindCheckbox
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: BindCheckbox
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BindCheckbox.__init__
+      ~BindCheckbox.copy
+      ~BindCheckbox.from_dict
+      ~BindCheckbox.from_json
+      ~BindCheckbox.resolve_references
+      ~BindCheckbox.to_dict
+      ~BindCheckbox.to_json
+      ~BindCheckbox.validate
+      ~BindCheckbox.validate_property
+   
+   
+
+   
+   
+   

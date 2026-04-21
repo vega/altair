@@ -1,0 +1,30 @@
+﻿altair.ConditionalAxisColor
+===========================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalAxisColor
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalAxisColor.__init__
+      ~ConditionalAxisColor.copy
+      ~ConditionalAxisColor.from_dict
+      ~ConditionalAxisColor.from_json
+      ~ConditionalAxisColor.resolve_references
+      ~ConditionalAxisColor.to_dict
+      ~ConditionalAxisColor.to_json
+      ~ConditionalAxisColor.validate
+      ~ConditionalAxisColor.validate_property
+   
+   
+
+   
+   
+   

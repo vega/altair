@@ -1,0 +1,42 @@
+﻿altair.Longitude
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: Longitude
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Longitude.__init__
+      ~Longitude.copy
+      ~Longitude.from_dict
+      ~Longitude.from_json
+      ~Longitude.resolve_references
+      ~Longitude.to_dict
+      ~Longitude.to_json
+      ~Longitude.validate
+      ~Longitude.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Longitude.aggregate
+      ~Longitude.bandPosition
+      ~Longitude.bin
+      ~Longitude.field
+      ~Longitude.timeUnit
+      ~Longitude.title
+      ~Longitude.type
+   
+   

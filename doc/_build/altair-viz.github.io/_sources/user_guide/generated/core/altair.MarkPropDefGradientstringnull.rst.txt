@@ -1,0 +1,30 @@
+﻿altair.MarkPropDefGradientstringnull
+====================================
+
+.. currentmodule:: altair
+
+.. autoclass:: MarkPropDefGradientstringnull
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MarkPropDefGradientstringnull.__init__
+      ~MarkPropDefGradientstringnull.copy
+      ~MarkPropDefGradientstringnull.from_dict
+      ~MarkPropDefGradientstringnull.from_json
+      ~MarkPropDefGradientstringnull.resolve_references
+      ~MarkPropDefGradientstringnull.to_dict
+      ~MarkPropDefGradientstringnull.to_json
+      ~MarkPropDefGradientstringnull.validate
+      ~MarkPropDefGradientstringnull.validate_property
+   
+   
+
+   
+   
+   

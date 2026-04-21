@@ -1,0 +1,30 @@
+﻿altair.OverlayMarkDef
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: OverlayMarkDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OverlayMarkDef.__init__
+      ~OverlayMarkDef.copy
+      ~OverlayMarkDef.from_dict
+      ~OverlayMarkDef.from_json
+      ~OverlayMarkDef.resolve_references
+      ~OverlayMarkDef.to_dict
+      ~OverlayMarkDef.to_json
+      ~OverlayMarkDef.validate
+      ~OverlayMarkDef.validate_property
+   
+   
+
+   
+   
+   

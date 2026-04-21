@@ -1,0 +1,30 @@
+﻿altair.Axis
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Axis
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Axis.__init__
+      ~Axis.copy
+      ~Axis.from_dict
+      ~Axis.from_json
+      ~Axis.resolve_references
+      ~Axis.to_dict
+      ~Axis.to_json
+      ~Axis.validate
+      ~Axis.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.AggregateTransform
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: AggregateTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AggregateTransform.__init__
+      ~AggregateTransform.copy
+      ~AggregateTransform.from_dict
+      ~AggregateTransform.from_json
+      ~AggregateTransform.resolve_references
+      ~AggregateTransform.to_dict
+      ~AggregateTransform.to_json
+      ~AggregateTransform.validate
+      ~AggregateTransform.validate_property
+   
+   
+
+   
+   
+   

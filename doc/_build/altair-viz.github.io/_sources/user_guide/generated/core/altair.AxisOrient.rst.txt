@@ -1,0 +1,30 @@
+﻿altair.AxisOrient
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: AxisOrient
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AxisOrient.__init__
+      ~AxisOrient.copy
+      ~AxisOrient.from_dict
+      ~AxisOrient.from_json
+      ~AxisOrient.resolve_references
+      ~AxisOrient.to_dict
+      ~AxisOrient.to_json
+      ~AxisOrient.validate
+      ~AxisOrient.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.WindowTransform
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: WindowTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~WindowTransform.__init__
+      ~WindowTransform.copy
+      ~WindowTransform.from_dict
+      ~WindowTransform.from_json
+      ~WindowTransform.resolve_references
+      ~WindowTransform.to_dict
+      ~WindowTransform.to_json
+      ~WindowTransform.validate
+      ~WindowTransform.validate_property
+   
+   
+
+   
+   
+   

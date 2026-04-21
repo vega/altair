@@ -1,0 +1,30 @@
+﻿altair.TickConfig
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: TickConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TickConfig.__init__
+      ~TickConfig.copy
+      ~TickConfig.from_dict
+      ~TickConfig.from_json
+      ~TickConfig.resolve_references
+      ~TickConfig.to_dict
+      ~TickConfig.to_json
+      ~TickConfig.validate
+      ~TickConfig.validate_property
+   
+   
+
+   
+   
+   

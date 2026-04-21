@@ -1,0 +1,30 @@
+﻿altair.PolarDef
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: PolarDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PolarDef.__init__
+      ~PolarDef.copy
+      ~PolarDef.from_dict
+      ~PolarDef.from_json
+      ~PolarDef.resolve_references
+      ~PolarDef.to_dict
+      ~PolarDef.to_json
+      ~PolarDef.validate
+      ~PolarDef.validate_property
+   
+   
+
+   
+   
+   

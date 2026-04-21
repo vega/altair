@@ -1,0 +1,30 @@
+﻿altair.Vector10string
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: Vector10string
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Vector10string.__init__
+      ~Vector10string.copy
+      ~Vector10string.from_dict
+      ~Vector10string.from_json
+      ~Vector10string.resolve_references
+      ~Vector10string.to_dict
+      ~Vector10string.to_json
+      ~Vector10string.validate
+      ~Vector10string.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,110 @@
+﻿altair.theme.AreaConfigKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: AreaConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AreaConfigKwds.__init__
+      ~AreaConfigKwds.clear
+      ~AreaConfigKwds.copy
+      ~AreaConfigKwds.fromkeys
+      ~AreaConfigKwds.get
+      ~AreaConfigKwds.items
+      ~AreaConfigKwds.keys
+      ~AreaConfigKwds.pop
+      ~AreaConfigKwds.popitem
+      ~AreaConfigKwds.setdefault
+      ~AreaConfigKwds.update
+      ~AreaConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AreaConfigKwds.align
+      ~AreaConfigKwds.angle
+      ~AreaConfigKwds.aria
+      ~AreaConfigKwds.ariaRole
+      ~AreaConfigKwds.ariaRoleDescription
+      ~AreaConfigKwds.aspect
+      ~AreaConfigKwds.baseline
+      ~AreaConfigKwds.blend
+      ~AreaConfigKwds.color
+      ~AreaConfigKwds.cornerRadius
+      ~AreaConfigKwds.cornerRadiusBottomLeft
+      ~AreaConfigKwds.cornerRadiusBottomRight
+      ~AreaConfigKwds.cornerRadiusTopLeft
+      ~AreaConfigKwds.cornerRadiusTopRight
+      ~AreaConfigKwds.cursor
+      ~AreaConfigKwds.description
+      ~AreaConfigKwds.dir
+      ~AreaConfigKwds.dx
+      ~AreaConfigKwds.dy
+      ~AreaConfigKwds.ellipsis
+      ~AreaConfigKwds.endAngle
+      ~AreaConfigKwds.fill
+      ~AreaConfigKwds.fillOpacity
+      ~AreaConfigKwds.filled
+      ~AreaConfigKwds.font
+      ~AreaConfigKwds.fontSize
+      ~AreaConfigKwds.fontStyle
+      ~AreaConfigKwds.fontWeight
+      ~AreaConfigKwds.height
+      ~AreaConfigKwds.href
+      ~AreaConfigKwds.innerRadius
+      ~AreaConfigKwds.interpolate
+      ~AreaConfigKwds.invalid
+      ~AreaConfigKwds.limit
+      ~AreaConfigKwds.line
+      ~AreaConfigKwds.lineBreak
+      ~AreaConfigKwds.lineHeight
+      ~AreaConfigKwds.opacity
+      ~AreaConfigKwds.order
+      ~AreaConfigKwds.orient
+      ~AreaConfigKwds.outerRadius
+      ~AreaConfigKwds.padAngle
+      ~AreaConfigKwds.point
+      ~AreaConfigKwds.radius
+      ~AreaConfigKwds.radius2
+      ~AreaConfigKwds.shape
+      ~AreaConfigKwds.size
+      ~AreaConfigKwds.smooth
+      ~AreaConfigKwds.startAngle
+      ~AreaConfigKwds.stroke
+      ~AreaConfigKwds.strokeCap
+      ~AreaConfigKwds.strokeDash
+      ~AreaConfigKwds.strokeDashOffset
+      ~AreaConfigKwds.strokeJoin
+      ~AreaConfigKwds.strokeMiterLimit
+      ~AreaConfigKwds.strokeOffset
+      ~AreaConfigKwds.strokeOpacity
+      ~AreaConfigKwds.strokeWidth
+      ~AreaConfigKwds.tension
+      ~AreaConfigKwds.text
+      ~AreaConfigKwds.theta
+      ~AreaConfigKwds.theta2
+      ~AreaConfigKwds.time
+      ~AreaConfigKwds.timeUnitBandPosition
+      ~AreaConfigKwds.timeUnitBandSize
+      ~AreaConfigKwds.tooltip
+      ~AreaConfigKwds.url
+      ~AreaConfigKwds.width
+      ~AreaConfigKwds.x
+      ~AreaConfigKwds.x2
+      ~AreaConfigKwds.y
+      ~AreaConfigKwds.y2
+   
+   

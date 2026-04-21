@@ -1,0 +1,30 @@
+﻿altair.Gradient
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: Gradient
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Gradient.__init__
+      ~Gradient.copy
+      ~Gradient.from_dict
+      ~Gradient.from_json
+      ~Gradient.resolve_references
+      ~Gradient.to_dict
+      ~Gradient.to_json
+      ~Gradient.validate
+      ~Gradient.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,114 @@
+﻿altair.theme.TickConfigKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: TickConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TickConfigKwds.__init__
+      ~TickConfigKwds.clear
+      ~TickConfigKwds.copy
+      ~TickConfigKwds.fromkeys
+      ~TickConfigKwds.get
+      ~TickConfigKwds.items
+      ~TickConfigKwds.keys
+      ~TickConfigKwds.pop
+      ~TickConfigKwds.popitem
+      ~TickConfigKwds.setdefault
+      ~TickConfigKwds.update
+      ~TickConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TickConfigKwds.align
+      ~TickConfigKwds.angle
+      ~TickConfigKwds.aria
+      ~TickConfigKwds.ariaRole
+      ~TickConfigKwds.ariaRoleDescription
+      ~TickConfigKwds.aspect
+      ~TickConfigKwds.bandSize
+      ~TickConfigKwds.baseline
+      ~TickConfigKwds.binSpacing
+      ~TickConfigKwds.blend
+      ~TickConfigKwds.color
+      ~TickConfigKwds.continuousBandSize
+      ~TickConfigKwds.cornerRadius
+      ~TickConfigKwds.cornerRadiusBottomLeft
+      ~TickConfigKwds.cornerRadiusBottomRight
+      ~TickConfigKwds.cornerRadiusTopLeft
+      ~TickConfigKwds.cornerRadiusTopRight
+      ~TickConfigKwds.cursor
+      ~TickConfigKwds.description
+      ~TickConfigKwds.dir
+      ~TickConfigKwds.discreteBandSize
+      ~TickConfigKwds.dx
+      ~TickConfigKwds.dy
+      ~TickConfigKwds.ellipsis
+      ~TickConfigKwds.endAngle
+      ~TickConfigKwds.fill
+      ~TickConfigKwds.fillOpacity
+      ~TickConfigKwds.filled
+      ~TickConfigKwds.font
+      ~TickConfigKwds.fontSize
+      ~TickConfigKwds.fontStyle
+      ~TickConfigKwds.fontWeight
+      ~TickConfigKwds.height
+      ~TickConfigKwds.href
+      ~TickConfigKwds.innerRadius
+      ~TickConfigKwds.interpolate
+      ~TickConfigKwds.invalid
+      ~TickConfigKwds.limit
+      ~TickConfigKwds.lineBreak
+      ~TickConfigKwds.lineHeight
+      ~TickConfigKwds.minBandSize
+      ~TickConfigKwds.opacity
+      ~TickConfigKwds.order
+      ~TickConfigKwds.orient
+      ~TickConfigKwds.outerRadius
+      ~TickConfigKwds.padAngle
+      ~TickConfigKwds.radius
+      ~TickConfigKwds.radius2
+      ~TickConfigKwds.shape
+      ~TickConfigKwds.size
+      ~TickConfigKwds.smooth
+      ~TickConfigKwds.startAngle
+      ~TickConfigKwds.stroke
+      ~TickConfigKwds.strokeCap
+      ~TickConfigKwds.strokeDash
+      ~TickConfigKwds.strokeDashOffset
+      ~TickConfigKwds.strokeJoin
+      ~TickConfigKwds.strokeMiterLimit
+      ~TickConfigKwds.strokeOffset
+      ~TickConfigKwds.strokeOpacity
+      ~TickConfigKwds.strokeWidth
+      ~TickConfigKwds.tension
+      ~TickConfigKwds.text
+      ~TickConfigKwds.theta
+      ~TickConfigKwds.theta2
+      ~TickConfigKwds.thickness
+      ~TickConfigKwds.time
+      ~TickConfigKwds.timeUnitBandPosition
+      ~TickConfigKwds.timeUnitBandSize
+      ~TickConfigKwds.tooltip
+      ~TickConfigKwds.url
+      ~TickConfigKwds.width
+      ~TickConfigKwds.x
+      ~TickConfigKwds.x2
+      ~TickConfigKwds.y
+      ~TickConfigKwds.y2
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.EncodingSortField
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: EncodingSortField
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~EncodingSortField.__init__
+      ~EncodingSortField.copy
+      ~EncodingSortField.from_dict
+      ~EncodingSortField.from_json
+      ~EncodingSortField.resolve_references
+      ~EncodingSortField.to_dict
+      ~EncodingSortField.to_json
+      ~EncodingSortField.validate
+      ~EncodingSortField.validate_property
+   
+   
+
+   
+   
+   

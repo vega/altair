@@ -1,0 +1,30 @@
+﻿altair.ConditionalPredicateStringFieldDef
+=========================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalPredicateStringFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalPredicateStringFieldDef.__init__
+      ~ConditionalPredicateStringFieldDef.copy
+      ~ConditionalPredicateStringFieldDef.from_dict
+      ~ConditionalPredicateStringFieldDef.from_json
+      ~ConditionalPredicateStringFieldDef.resolve_references
+      ~ConditionalPredicateStringFieldDef.to_dict
+      ~ConditionalPredicateStringFieldDef.to_json
+      ~ConditionalPredicateStringFieldDef.validate
+      ~ConditionalPredicateStringFieldDef.validate_property
+   
+   
+
+   
+   
+   

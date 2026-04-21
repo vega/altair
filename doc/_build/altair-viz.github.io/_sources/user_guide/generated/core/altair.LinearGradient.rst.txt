@@ -1,0 +1,30 @@
+﻿altair.LinearGradient
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: LinearGradient
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LinearGradient.__init__
+      ~LinearGradient.copy
+      ~LinearGradient.from_dict
+      ~LinearGradient.from_json
+      ~LinearGradient.resolve_references
+      ~LinearGradient.to_dict
+      ~LinearGradient.to_json
+      ~LinearGradient.validate
+      ~LinearGradient.validate_property
+   
+   
+
+   
+   
+   

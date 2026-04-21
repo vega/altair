@@ -1,0 +1,30 @@
+﻿altair.SelectionResolution
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: SelectionResolution
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SelectionResolution.__init__
+      ~SelectionResolution.copy
+      ~SelectionResolution.from_dict
+      ~SelectionResolution.from_json
+      ~SelectionResolution.resolve_references
+      ~SelectionResolution.to_dict
+      ~SelectionResolution.to_json
+      ~SelectionResolution.validate
+      ~SelectionResolution.validate_property
+   
+   
+
+   
+   
+   

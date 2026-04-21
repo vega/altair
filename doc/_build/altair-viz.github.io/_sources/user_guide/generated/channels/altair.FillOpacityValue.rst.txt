@@ -1,0 +1,37 @@
+﻿altair.FillOpacityValue
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: FillOpacityValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FillOpacityValue.__init__
+      ~FillOpacityValue.copy
+      ~FillOpacityValue.from_dict
+      ~FillOpacityValue.from_json
+      ~FillOpacityValue.resolve_references
+      ~FillOpacityValue.to_dict
+      ~FillOpacityValue.to_json
+      ~FillOpacityValue.validate
+      ~FillOpacityValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~FillOpacityValue.condition
+      ~FillOpacityValue.value
+   
+   

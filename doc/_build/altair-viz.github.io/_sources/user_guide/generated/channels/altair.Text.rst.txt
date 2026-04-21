@@ -1,0 +1,45 @@
+﻿altair.Text
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Text
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Text.__init__
+      ~Text.copy
+      ~Text.from_dict
+      ~Text.from_json
+      ~Text.resolve_references
+      ~Text.to_dict
+      ~Text.to_json
+      ~Text.validate
+      ~Text.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Text.aggregate
+      ~Text.bandPosition
+      ~Text.bin
+      ~Text.condition
+      ~Text.field
+      ~Text.format
+      ~Text.formatType
+      ~Text.timeUnit
+      ~Text.title
+      ~Text.type
+   
+   

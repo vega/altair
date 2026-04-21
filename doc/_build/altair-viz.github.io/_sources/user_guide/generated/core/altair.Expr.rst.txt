@@ -1,0 +1,30 @@
+﻿altair.Expr
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Expr
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Expr.__init__
+      ~Expr.copy
+      ~Expr.from_dict
+      ~Expr.from_json
+      ~Expr.resolve_references
+      ~Expr.to_dict
+      ~Expr.to_json
+      ~Expr.validate
+      ~Expr.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,1494 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Specifying Data &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/data';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Encodings" href="encodings/index.html" />
+    <link rel="prev" title="Project Philosophy" href="../getting_started/project_philosophy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Specifying Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="encodings/index.html">Encodings</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="encodings/channels.html">Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encodings/channel_options.html">Channel Options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="marks/index.html">Marks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="marks/arc.html">Arc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/area.html">Area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/bar.html">Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/boxplot.html">Box Plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/circle.html">Circle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/errorband.html">Error Band</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/errorbar.html">Error Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/geoshape.html">Geoshape</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="marks/image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/line.html">Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/point.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/rect.html">Rect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/rule.html">Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/square.html">Square</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/text.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/tick.html">Tick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="marks/trail.html">Trail</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="transform/index.html">Data Transformations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="transform/aggregate.html">Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/bin.html">Bin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/calculate.html">Calculate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/density.html">Density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/extent.html">Extent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/filter.html">Filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/flatten.html">Flatten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/fold.html">Fold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/impute.html">Impute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/joinaggregate.html">Join Aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/lookup.html">Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/loess.html">LOESS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/pivot.html">Pivot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/quantile.html">Quantile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/sample.html">Sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/stack.html">Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/timeunit.html">TimeUnit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform/window.html">Window</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="interactions/index.html">Interactive Charts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="interactions/parameters.html">Parameters, Conditions, &amp; Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interactions/bindings_widgets.html">Bindings &amp; Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interactions/expressions.html">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interactions/jupyter_chart.html">JupyterChart</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="compound_charts.html">Layered &amp; Multi-View Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scale_resolve.html">Scale &amp; Guide Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="times_and_dates.html">Times &amp; Dates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">Customizing Visualizations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Top-Level Chart Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saving_charts.html">Saving Altair Charts</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="internals.html">Altair Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="display_frontends.html">Displaying Altair Charts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_renderers.html">Customizing Renderers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_transformers.html">Data Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="large_datasets.html">Large Datasets</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Specifying Data</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="specifying-data">
+<span id="user-guide-data"></span><h1>Specifying Data<a class="headerlink" href="#specifying-data" title="Link to this heading">#</a></h1>
+<p>The basic data model used by Altair is tabular data,
+similar to a spreadsheet or database table.
+Individual datasets are assumed to contain a collection of records (rows),
+which may contain any number of named data fields (columns).
+Each top-level chart object (i.e. <a class="reference internal" href="generated/toplevel/altair.Chart.html#altair.Chart" title="altair.Chart"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chart</span></code></a>, <a class="reference internal" href="generated/toplevel/altair.LayerChart.html#altair.LayerChart" title="altair.LayerChart"><code class="xref py py-class docutils literal notranslate"><span class="pre">LayerChart</span></code></a>,
+<a class="reference internal" href="generated/toplevel/altair.VConcatChart.html#altair.VConcatChart" title="altair.VConcatChart"><code class="xref py py-class docutils literal notranslate"><span class="pre">VConcatChart</span></code></a>, <a class="reference internal" href="generated/toplevel/altair.HConcatChart.html#altair.HConcatChart" title="altair.HConcatChart"><code class="xref py py-class docutils literal notranslate"><span class="pre">HConcatChart</span></code></a>, <a class="reference internal" href="generated/toplevel/altair.RepeatChart.html#altair.RepeatChart" title="altair.RepeatChart"><code class="xref py py-class docutils literal notranslate"><span class="pre">RepeatChart</span></code></a>,
+and <a class="reference internal" href="generated/toplevel/altair.FacetChart.html#altair.FacetChart" title="altair.FacetChart"><code class="xref py py-class docutils literal notranslate"><span class="pre">FacetChart</span></code></a>) accepts a dataset as its first argument.</p>
+<p>There are many different ways of specifying a dataset:</p>
+<ul class="simple">
+<li><p>as a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html">pandas DataFrame</a></p></li>
+<li><p>as a DataFrame that supports the DataFrame Interchange Protocol (contains a <code class="docutils literal notranslate"><span class="pre">__dataframe__</span></code> attribute), e.g. polars and pyarrow. This is experimental.</p></li>
+<li><p>as a <a class="reference internal" href="generated/core/altair.Data.html#altair.Data" title="altair.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a> or related object (i.e. <a class="reference internal" href="generated/core/altair.UrlData.html#altair.UrlData" title="altair.UrlData"><code class="xref py py-class docutils literal notranslate"><span class="pre">UrlData</span></code></a>, <a class="reference internal" href="generated/core/altair.InlineData.html#altair.InlineData" title="altair.InlineData"><code class="xref py py-class docutils literal notranslate"><span class="pre">InlineData</span></code></a>, <a class="reference internal" href="generated/core/altair.NamedData.html#altair.NamedData" title="altair.NamedData"><code class="xref py py-class docutils literal notranslate"><span class="pre">NamedData</span></code></a>)</p></li>
+<li><p>as a url string pointing to a <code class="docutils literal notranslate"><span class="pre">json</span></code> or <code class="docutils literal notranslate"><span class="pre">csv</span></code> formatted text file</p></li>
+<li><p>as a <a class="reference external" href="http://geopandas.org/data_structures.html#geodataframe">geopandas GeoDataFrame</a>, <a class="reference external" href="https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects">Shapely Geometries</a>, <a class="reference external" href="https://github.com/jazzband/geojson#geojson-objects">GeoJSON Objects</a> or other objects that support the <code class="docutils literal notranslate"><span class="pre">__geo_interface__</span></code></p></li>
+<li><p>as a generated dataset such as numerical sequences or geographic reference elements</p></li>
+</ul>
+<p>When data is specified as a pandas DataFrame, Altair
+uses the data type information provided by pandas to automatically determine
+the data types required in the encoding. For example, here we specify data via a pandas DataFrame
+and Altair automatically detects that the x-column should be visualized on a categorical (nominal) scale
+and that the y-column should be visualized on a quantitative scale:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-0"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">],</span>
+                     <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">]})</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-15e530623d0348d54a5a14f436727b31"}, "mark": {"type": "bar"}, "encoding": {"x": {"field": "x", "type": "nominal"}, "y": {"field": "y", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-15e530623d0348d54a5a14f436727b31": [{"x": "A", "y": 5}, {"x": "B", "y": 3}, {"x": "C", "y": 6}, {"x": "D", "y": 7}, {"x": "E", "y": 2}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>By comparison,
+all other ways of specifying the data (including non-pandas DataFrames)
+requires encoding types to be declared explicitly.
+Here we create the same chart as above using a <a class="reference internal" href="generated/core/altair.Data.html#altair.Data" title="altair.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a> object,
+with the data specified as a JSON-style list of records:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-1"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+                        <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+                        <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">},</span>
+                        <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+                        <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}])</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x:N&#39;</span><span class="p">,</span>  <span class="c1"># specify nominal data</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y:Q&#39;</span><span class="p">,</span>  <span class="c1"># specify quantitative data</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-1">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"values": [{"x": "A", "y": 5}, {"x": "B", "y": 3}, {"x": "C", "y": 6}, {"x": "D", "y": 7}, {"x": "E", "y": 2}]}, "mark": {"type": "bar"}, "encoding": {"x": {"field": "x", "type": "nominal"}, "y": {"field": "y", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-1', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>Notice the extra markup required in the encoding; because Altair cannot infer
+the types within a <a class="reference internal" href="generated/core/altair.Data.html#altair.Data" title="altair.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a> object, we must specify them manually
+(here we use <a class="reference internal" href="encodings/index.html#shorthand-description"><span class="std std-ref">Encoding Shorthands</span></a> to specify <em>nominal</em> (<code class="docutils literal notranslate"><span class="pre">N</span></code>) for <code class="docutils literal notranslate"><span class="pre">x</span></code>
+and <em>quantitative</em> (<code class="docutils literal notranslate"><span class="pre">Q</span></code>) for <code class="docutils literal notranslate"><span class="pre">y</span></code>; see <a class="reference internal" href="encodings/index.html#encoding-data-types"><span class="std std-ref">Encoding Data Types</span></a>).</p>
+<p>Similarly, we must also specify the data type when referencing data by URL:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-2"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cars</span><span class="o">.</span><span class="n">url</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">mark_point</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Horsepower:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Miles_per_Gallon:Q&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-2">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/cars.json"}, "mark": {"type": "point"}, "encoding": {"x": {"field": "Horsepower", "type": "quantitative"}, "y": {"field": "Miles_per_Gallon", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-2', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>Encodings and their associated types are further discussed in <a class="reference internal" href="encodings/index.html#user-guide-encoding"><span class="std std-ref">Encodings</span></a>.
+Below we go into more detail about the different ways of specifying data in an Altair chart.</p>
+<section id="id1">
+<h2>pandas DataFrame<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="including-index-data">
+<span id="data-in-index"></span><h3>Including Index Data<a class="headerlink" href="#including-index-data" title="Link to this heading">#</a></h3>
+<p>By design Altair only accesses dataframe columns, not dataframe indices.
+At times, relevant data appears in the index. For example:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-3"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">rand</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()},</span>
+                    <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">&#39;2018&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                   value
+    2018-01-01  1.764052
+    2018-01-02  2.164210
+    2018-01-03  3.142948
+    2018-01-04  5.383841
+    2018-01-05  7.251399
+</pre></div>
+</div>
+<p>If you would like the index to be available to the chart, you can explicitly
+turn it into a column using the <code class="docutils literal notranslate"><span class="pre">reset_index()</span></code> method of pandas dataframes:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-4"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">())</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;index:T&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;value:Q&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-4">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-ca2b6ac8bc1795a799dce16cc90b44df"}, "mark": {"type": "line"}, "encoding": {"x": {"field": "index", "type": "temporal"}, "y": {"field": "value", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-ca2b6ac8bc1795a799dce16cc90b44df": [{"index": "2018-01-01T00:00:00", "value": 1.764052345967664}, {"index": "2018-01-02T00:00:00", "value": 2.1642095543348874}, {"index": "2018-01-03T00:00:00", "value": 3.1429475384406267}, {"index": "2018-01-04T00:00:00", "value": 5.3838407376420845}, {"index": "2018-01-05T00:00:00", "value": 7.251398727792052}, {"index": "2018-01-06T00:00:00", "value": 6.274120847915642}, {"index": "2018-01-07T00:00:00", "value": 7.224209265441231}, {"index": "2018-01-08T00:00:00", "value": 7.072852057143533}, {"index": "2018-01-09T00:00:00", "value": 6.969633205349975}, {"index": "2018-01-10T00:00:00", "value": 7.380231707288347}, {"index": "2018-01-11T00:00:00", "value": 7.524275278449225}, {"index": "2018-01-12T00:00:00", "value": 8.9785487854122}, {"index": "2018-01-13T00:00:00", "value": 9.739586510559192}, {"index": "2018-01-14T00:00:00", "value": 9.86126152705202}, {"index": "2018-01-15T00:00:00", "value": 10.305124759797446}, {"index": "2018-01-16T00:00:00", "value": 10.638799087171712}, {"index": "2018-01-17T00:00:00", "value": 12.132878160329318}, {"index": "2018-01-18T00:00:00", "value": 11.927719896563516}, {"index": "2018-01-19T00:00:00", "value": 12.240787598214418}, {"index": "2018-01-20T00:00:00", "value": 11.386691858912693}, {"index": "2018-01-21T00:00:00", "value": 8.833702043078613}, {"index": "2018-01-22T00:00:00", "value": 9.487320638518973}, {"index": "2018-01-23T00:00:00", "value": 10.35175683737848}, {"index": "2018-01-24T00:00:00", "value": 9.609591816972037}, {"index": "2018-01-25T00:00:00", "value": 11.879346440959644}, {"index": "2018-01-26T00:00:00", "value": 10.424980766360878}, {"index": "2018-01-27T00:00:00", "value": 10.470739283662324}, {"index": "2018-01-28T00:00:00", "value": 10.28355543363649}, {"index": "2018-01-29T00:00:00", "value": 11.816334647994948}, {"index": "2018-01-30T00:00:00", "value": 13.285693417895233}, {"index": "2018-01-31T00:00:00", "value": 13.44064084359215}, {"index": "2018-02-01T00:00:00", "value": 13.818803363194323}, {"index": "2018-02-02T00:00:00", "value": 12.93101761556421}, {"index": "2018-02-03T00:00:00", "value": 10.950221147340283}, {"index": "2018-02-04T00:00:00", "value": 10.60230899801413}, {"index": "2018-02-05T00:00:00", "value": 10.758657967118111}, {"index": "2018-02-06T00:00:00", "value": 11.988948647845833}, {"index": "2018-02-07T00:00:00", "value": 13.191328496630245}, {"index": "2018-02-08T00:00:00", "value": 12.804001679222292}, {"index": "2018-02-09T00:00:00", "value": 12.501698928646956}, {"index": "2018-02-10T00:00:00", "value": 11.453145963579864}, {"index": "2018-02-11T00:00:00", "value": 10.033128026400888}, {"index": "2018-02-12T00:00:00", "value": 8.326857835775876}, {"index": "2018-02-13T00:00:00", "value": 10.277633231007666}, {"index": "2018-02-14T00:00:00", "value": 9.767981049256013}, {"index": "2018-02-15T00:00:00", "value": 9.329906747644827}, {"index": "2018-02-16T00:00:00", "value": 8.0771113875949}, {"index": "2018-02-17T00:00:00", "value": 8.85460174342681}, {"index": "2018-02-18T00:00:00", "value": 7.240703895868859}, {"index": "2018-02-19T00:00:00", "value": 7.02796361565489}, {"index": "2018-02-20T00:00:00", "value": 6.132497054461215}, {"index": "2018-02-21T00:00:00", "value": 6.519399552320477}, {"index": "2018-02-22T00:00:00", "value": 6.008594414751604}, {"index": "2018-02-23T00:00:00", "value": 4.827962230629192}, {"index": "2018-02-24T00:00:00", "value": 4.799780002290537}, {"index": "2018-02-25T00:00:00", "value": 5.228111872820954}, {"index": "2018-02-26T00:00:00", "value": 5.294629095204122}, {"index": "2018-02-27T00:00:00", "value": 5.597100992943904}, {"index": "2018-02-28T00:00:00", "value": 4.962778899262941}, {"index": "2018-03-01T00:00:00", "value": 4.600037733275802}, {"index": "2018-03-02T00:00:00", "value": 3.927577285499851}, {"index": "2018-03-03T00:00:00", "value": 3.56802412395931}, {"index": "2018-03-04T00:00:00", "value": 2.7548778419148556}, {"index": "2018-03-05T00:00:00", "value": 1.0285952395831788}, {"index": "2018-03-06T00:00:00", "value": 1.2060213818369316}, {"index": "2018-03-07T00:00:00", "value": 0.8042404456286698}, {"index": "2018-03-08T00:00:00", "value": -0.8259579013373748}, {"index": "2018-03-09T00:00:00", "value": -0.3631756458116006}, {"index": "2018-03-10T00:00:00", "value": -1.2704740101948429}, {"index": "2018-03-11T00:00:00", "value": -1.218528614398704}, {"index": "2018-03-12T00:00:00", "value": -0.4894380522211671}, {"index": "2018-03-13T00:00:00", "value": -0.36045514146375646}, {"index": "2018-03-14T00:00:00", "value": 0.7789455430795442}, {"index": "2018-03-15T00:00:00", "value": -0.4558802772741084}, {"index": "2018-03-16T00:00:00", "value": -0.0535386360965594}, {"index": "2018-03-17T00:00:00", "value": -0.7383487270368726}, {"index": "2018-03-18T00:00:00", "value": -1.6091458762187543}, {"index": "2018-03-19T00:00:00", "value": -2.1879955409831697}, {"index": "2018-03-20T00:00:00", "value": -2.4995480731105424}, {"index": "2018-03-21T00:00:00", "value": -2.443382730880797}, {"index": "2018-03-22T00:00:00", "value": -3.6085325716641536}, {"index": "2018-03-23T00:00:00", "value": -2.7077060847099665}, {"index": "2018-03-24T00:00:00", "value": -2.242043644979507}, {"index": "2018-03-25T00:00:00", "value": -3.7782873312567307}, {"index": "2018-03-26T00:00:00", "value": -2.290035137461131}, {"index": "2018-03-27T00:00:00", "value": -0.3941459614305478}, {"index": "2018-03-28T00:00:00", "value": 0.7846336097291029}, {"index": "2018-03-29T00:00:00", "value": 0.604708773916752}, {"index": "2018-03-30T00:00:00", "value": -0.4660438475937905}, {"index": "2018-03-31T00:00:00", "value": 0.5884078793373462}, {"index": "2018-04-01T00:00:00", "value": 0.18523093236416655}, {"index": "2018-04-02T00:00:00", "value": 1.407676002746594}, {"index": "2018-04-03T00:00:00", "value": 1.6159509808234542}, {"index": "2018-04-04T00:00:00", "value": 2.5925900173071668}, {"index": "2018-04-05T00:00:00", "value": 2.9489564144815685}, {"index": "2018-04-06T00:00:00", "value": 3.6555295826735166}, {"index": "2018-04-07T00:00:00", "value": 3.666029603394337}, {"index": "2018-04-08T00:00:00", "value": 5.4519000973001726}, {"index": "2018-04-09T00:00:00", "value": 5.578812190003792}, {"index": "2018-04-10T00:00:00", "value": 5.980801553448494}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-4', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>If the index object does not have a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute set, the resulting
+column will be called <code class="docutils literal notranslate"><span class="pre">&quot;index&quot;</span></code>.
+More information is available in the
+<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.reset_index.html">pandas documentation</a>.</p>
+</section>
+<section id="long-form-vs-wide-form-data">
+<span id="data-long-vs-wide"></span><h3>Long-form vs. Wide-form Data<a class="headerlink" href="#long-form-vs-wide-form-data" title="Link to this heading">#</a></h3>
+<p>There are two common conventions for storing data in a dataframe, sometimes called
+<em>long-form</em> and <em>wide-form</em>. Both are sensible patterns for storing data in
+a tabular format; briefly, the difference is this:</p>
+<ul class="simple">
+<li><p><strong>wide-form data</strong> has one row per <em>independent variable</em>, with metadata
+recorded in the <em>row and column labels</em>.</p></li>
+<li><p><strong>long-form data</strong> has one row per <em>observation</em>, with metadata recorded
+within the table as <em>values</em>.</p></li>
+</ul>
+<p>Altair’s grammar works best with <strong>long-form</strong> data, in which each row
+corresponds to a single observation along with its metadata.</p>
+<p>A concrete example will help in making this distinction more clear.
+Consider a dataset consisting of stock prices of several companies over time.
+The wide-form version of the data might be arranged as follows:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-5"><div class="highlight"><pre><span></span><span class="n">wide_form</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2007-10-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2007-11-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2007-12-01&#39;</span><span class="p">],</span>
+                          <span class="s1">&#39;AAPL&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">189.95</span><span class="p">,</span> <span class="mf">182.22</span><span class="p">,</span> <span class="mf">198.08</span><span class="p">],</span>
+                          <span class="s1">&#39;AMZN&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">89.15</span><span class="p">,</span> <span class="mf">90.56</span><span class="p">,</span> <span class="mf">92.64</span><span class="p">],</span>
+                          <span class="s1">&#39;GOOG&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">707.00</span><span class="p">,</span> <span class="mf">693.00</span><span class="p">,</span> <span class="mf">691.48</span><span class="p">]})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">wide_form</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>             Date    AAPL   AMZN    GOOG
+    0  2007-10-01  189.95  89.15  707.00
+    1  2007-11-01  182.22  90.56  693.00
+    2  2007-12-01  198.08  92.64  691.48
+</pre></div>
+</div>
+<p>Notice that each row corresponds to a single time-stamp (here time is the
+independent variable), while metadata for each observation
+(i.e. company name) is stored within the column labels.</p>
+<p>The long-form version of the same data might look like this:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-6"><div class="highlight"><pre><span></span><span class="n">long_form</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2007-10-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2007-11-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2007-12-01&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;2007-10-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2007-11-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2007-12-01&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;2007-10-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2007-11-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2007-12-01&#39;</span><span class="p">],</span>
+                          <span class="s1">&#39;company&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;AAPL&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;AMZN&#39;</span><span class="p">,</span> <span class="s1">&#39;AMZN&#39;</span><span class="p">,</span> <span class="s1">&#39;AMZN&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;GOOG&#39;</span><span class="p">,</span> <span class="s1">&#39;GOOG&#39;</span><span class="p">,</span> <span class="s1">&#39;GOOG&#39;</span><span class="p">],</span>
+                          <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">189.95</span><span class="p">,</span> <span class="mf">182.22</span><span class="p">,</span> <span class="mf">198.08</span><span class="p">,</span>
+                                     <span class="mf">89.15</span><span class="p">,</span>  <span class="mf">90.56</span><span class="p">,</span>  <span class="mf">92.64</span><span class="p">,</span>
+                                    <span class="mf">707.00</span><span class="p">,</span> <span class="mf">693.00</span><span class="p">,</span> <span class="mf">691.48</span><span class="p">]})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">long_form</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>             Date company   price
+    0  2007-10-01    AAPL  189.95
+    1  2007-11-01    AAPL  182.22
+    2  2007-12-01    AAPL  198.08
+    3  2007-10-01    AMZN   89.15
+    4  2007-11-01    AMZN   90.56
+    5  2007-12-01    AMZN   92.64
+    6  2007-10-01    GOOG  707.00
+    7  2007-11-01    GOOG  693.00
+    8  2007-12-01    GOOG  691.48
+</pre></div>
+</div>
+<p>Notice here that each row contains a single observation (i.e. price), along
+with the metadata for this observation (the date and company name).
+Importantly, the column and index labels no longer contain any useful metadata.</p>
+<p>As mentioned above, Altair works best with this long-form data, because relevant
+data and metadata are stored within the table itself, rather than within the
+labels of rows and columns:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-7"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">long_form</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+  <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Date:T&#39;</span><span class="p">,</span>
+  <span class="n">y</span><span class="o">=</span><span class="s1">&#39;price:Q&#39;</span><span class="p">,</span>
+  <span class="n">color</span><span class="o">=</span><span class="s1">&#39;company:N&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-7">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-1025915cace00f49407e797d895cd747"}, "mark": {"type": "line"}, "encoding": {"color": {"field": "company", "type": "nominal"}, "x": {"field": "Date", "type": "temporal"}, "y": {"field": "price", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-1025915cace00f49407e797d895cd747": [{"Date": "2007-10-01", "company": "AAPL", "price": 189.95}, {"Date": "2007-11-01", "company": "AAPL", "price": 182.22}, {"Date": "2007-12-01", "company": "AAPL", "price": 198.08}, {"Date": "2007-10-01", "company": "AMZN", "price": 89.15}, {"Date": "2007-11-01", "company": "AMZN", "price": 90.56}, {"Date": "2007-12-01", "company": "AMZN", "price": 92.64}, {"Date": "2007-10-01", "company": "GOOG", "price": 707.0}, {"Date": "2007-11-01", "company": "GOOG", "price": 693.0}, {"Date": "2007-12-01", "company": "GOOG", "price": 691.48}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-7', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>Wide-form data can be similarly visualized using e.g. layering
+(see <a class="reference internal" href="compound_charts.html#layer-chart"><span class="std std-ref">Layered Charts</span></a>), but it is far less convenient within Altair’s grammar.</p>
+<p>If you would like to convert data from wide-form to long-form, there are two possible
+approaches: it can be done as a preprocessing step using pandas, or as a transform
+step within the chart itself. We will detail to two approaches below.</p>
+<section id="converting-with-pandas">
+<span id="data-converting-long-form"></span><h4>Converting with pandas<a class="headerlink" href="#converting-with-pandas" title="Link to this heading">#</a></h4>
+<p>This sort of data manipulation can be done as a preprocessing step using <a class="reference external" href="http://pandas.pydata.org/">pandas</a>,
+and is discussed in detail in the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reshaping.html">Reshaping and Pivot Tables</a> section of the
+pandas documentation.</p>
+<p>For converting wide-form data to the long-form data used by Altair, the <code class="docutils literal notranslate"><span class="pre">melt</span></code>
+method of dataframes can be used. The first argument to <code class="docutils literal notranslate"><span class="pre">melt</span></code> is the column
+or list of columns to treat as index variables; the remaining columns will
+be combined into an indicator variable and a value variable whose names can
+be optionally specified:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-8"><div class="highlight"><pre><span></span><span class="n">wide_form</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;company&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>             Date company   price
+    0  2007-10-01    AAPL  189.95
+    1  2007-11-01    AAPL  182.22
+    2  2007-12-01    AAPL  198.08
+    3  2007-10-01    AMZN   89.15
+    4  2007-11-01    AMZN   90.56
+    5  2007-12-01    AMZN   92.64
+    6  2007-10-01    GOOG  707.00
+    7  2007-11-01    GOOG  693.00
+    8  2007-12-01    GOOG  691.48
+</pre></div>
+</div>
+<p>For more information on the <code class="docutils literal notranslate"><span class="pre">melt</span></code> method, see the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.melt.html#pandas.DataFrame.melt">pandas melt documentation</a>.</p>
+<p>In case you would like to undo this operation and convert from long-form back
+to wide-form, the <code class="docutils literal notranslate"><span class="pre">pivot</span></code> method of dataframes is useful.</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-9"><div class="highlight"><pre><span></span><span class="n">long_form</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;company&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;price&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    company        Date    AAPL   AMZN    GOOG
+    0        2007-10-01  189.95  89.15  707.00
+    1        2007-11-01  182.22  90.56  693.00
+    2        2007-12-01  198.08  92.64  691.48
+</pre></div>
+</div>
+<p>For more information on the <code class="docutils literal notranslate"><span class="pre">pivot</span></code> method, see the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.pivot.html">pandas pivot documentation</a>.</p>
+</section>
+<section id="converting-with-fold-transform">
+<h4>Converting with Fold Transform<a class="headerlink" href="#converting-with-fold-transform" title="Link to this heading">#</a></h4>
+<p>If you would like to avoid data preprocessing, you can reshape your data using Altair’s
+Fold Transform (see <a class="reference internal" href="transform/fold.html#user-guide-fold-transform"><span class="std std-ref">Fold</span></a> for a full discussion).
+With it, the above chart can be reproduced as follows:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-10"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">wide_form</span><span class="p">)</span><span class="o">.</span><span class="n">transform_fold</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;AMZN&#39;</span><span class="p">,</span> <span class="s1">&#39;GOOG&#39;</span><span class="p">],</span>
+    <span class="n">as_</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;company&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Date:T&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;price:Q&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;company:N&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-10">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-39699f0b7c3f92b500deb7759d9ead41"}, "mark": {"type": "line"}, "encoding": {"color": {"field": "company", "type": "nominal"}, "x": {"field": "Date", "type": "temporal"}, "y": {"field": "price", "type": "quantitative"}}, "transform": [{"fold": ["AAPL", "AMZN", "GOOG"], "as": ["company", "price"]}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-39699f0b7c3f92b500deb7759d9ead41": [{"Date": "2007-10-01", "AAPL": 189.95, "AMZN": 89.15, "GOOG": 707.0}, {"Date": "2007-11-01", "AAPL": 182.22, "AMZN": 90.56, "GOOG": 693.0}, {"Date": "2007-12-01", "AAPL": 198.08, "AMZN": 92.64, "GOOG": 691.48}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-10', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>Notice that unlike the pandas <code class="docutils literal notranslate"><span class="pre">melt</span></code> function we must explicitly specify the columns
+to be folded. The <code class="docutils literal notranslate"><span class="pre">as_</span></code> argument is optional, with the default being <code class="docutils literal notranslate"><span class="pre">[&quot;key&quot;,</span> <span class="pre">&quot;value&quot;]</span></code>.</p>
+</section>
+</section>
+</section>
+<section id="generated-data">
+<span id="data-generated"></span><h2>Generated Data<a class="headerlink" href="#generated-data" title="Link to this heading">#</a></h2>
+<p>At times it is convenient to not use an external data source, but rather generate data for
+display within the chart specification itself. The benefit is that the chart specification
+can be made much smaller for generated data than for embedded data.</p>
+<section id="sequence-generator">
+<h3>Sequence Generator<a class="headerlink" href="#sequence-generator" title="Link to this heading">#</a></h3>
+<p>Here is an example of using the <a class="reference internal" href="generated/api/altair.sequence.html#altair.sequence" title="altair.sequence"><code class="xref py py-func docutils literal notranslate"><span class="pre">sequence()</span></code></a> function to generate a sequence of  <em>x</em>
+data, along with a <a class="reference internal" href="transform/calculate.html#user-guide-calculate-transform"><span class="std std-ref">Calculate</span></a> to compute <em>y</em> data.</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-11"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+
+<span class="c1"># Note that the following generator is functionally similar to</span>
+<span class="c1"># data = pd.DataFrame({&#39;x&#39;: np.arange(0, 10, 0.1)})</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">sequence</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">as_</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;sin(datum.x)&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x:Q&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y:Q&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-11">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"sequence": {"start": 0, "stop": 10, "step": 0.1, "as": "x"}}, "mark": {"type": "line"}, "encoding": {"x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}}, "transform": [{"calculate": "sin(datum.x)", "as": "y"}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-11', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+<section id="graticule-generator">
+<h3>Graticule Generator<a class="headerlink" href="#graticule-generator" title="Link to this heading">#</a></h3>
+<p>Another type of data that is convenient to generate in the chart itself is the latitude/longitude
+lines on a geographic visualization, known as a graticule. These can be created using Altair’s
+<a class="reference internal" href="generated/api/altair.graticule.html#altair.graticule" title="altair.graticule"><code class="xref py py-func docutils literal notranslate"><span class="pre">graticule()</span></code></a> generator function. Here is a simple example:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-12"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">graticule</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span><span class="n">stroke</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+    <span class="s1">&#39;orthographic&#39;</span><span class="p">,</span>
+    <span class="n">rotate</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">45</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-12">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"graticule": {"step": [15, 15]}}, "mark": {"type": "geoshape", "stroke": "black"}, "projection": {"rotate": [0, -45, 0], "type": "orthographic"}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-12', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+<section id="sphere-generator">
+<h3>Sphere Generator<a class="headerlink" href="#sphere-generator" title="Link to this heading">#</a></h3>
+<p>Finally when visualizing the globe a sphere can be used as a background layer
+within a map to represent the extent of the Earth. This sphere data can be
+created using Altair’s <a class="reference internal" href="generated/api/altair.sphere.html#altair.sphere" title="altair.sphere"><code class="xref py py-func docutils literal notranslate"><span class="pre">sphere()</span></code></a> generator function. Here is an example:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-13"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+
+<span class="n">sphere_data</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">sphere</span><span class="p">()</span>
+<span class="n">grat_data</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">graticule</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
+
+<span class="n">background</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">sphere_data</span><span class="p">)</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s1">&#39;aliceblue&#39;</span><span class="p">)</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">grat_data</span><span class="p">)</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span><span class="n">stroke</span><span class="o">=</span><span class="s1">&#39;lightgrey&#39;</span><span class="p">)</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="n">background</span><span class="p">,</span> <span class="n">lines</span><span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="s1">&#39;naturalEarth1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-13">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"data": {"sphere": true}, "mark": {"type": "geoshape", "fill": "aliceblue"}}, {"data": {"graticule": {"step": [15, 15]}}, "mark": {"type": "geoshape", "stroke": "lightgrey"}}], "projection": {"type": "naturalEarth1"}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-13', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+</section>
+<section id="spatial-data">
+<span id="id2"></span><h2>Spatial Data<a class="headerlink" href="#spatial-data" title="Link to this heading">#</a></h2>
+<p>In this section, we explain different methods for reading spatial data into Altair.
+To learn more about how to work with this data after you have read it in,
+please see the <a class="reference internal" href="marks/geoshape.html#user-guide-geoshape-marks"><span class="std std-ref">Geoshape</span></a> mark page.</p>
+<section id="spatial-data-gdf">
+<span id="id3"></span><h3>GeoPandas GeoDataFrame<a class="headerlink" href="#spatial-data-gdf" title="Link to this heading">#</a></h3>
+<p>It is convenient to use GeoPandas as the source for your spatial data.
+GeoPandas can read many types of spatial data and Altair works well with GeoDataFrames.
+Here we define four polygon geometries into a
+GeoDataFrame and visualize these using the <code class="docutils literal notranslate"><span class="pre">mark_geoshape</span></code>.</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-14"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">shapely</span><span class="w"> </span><span class="kn">import</span> <span class="n">geometry</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">geopandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+
+<span class="n">data_geoms</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#F3C14F&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="n">geometry</span><span class="o">.</span><span class="n">Polygon</span><span class="p">([[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">]])},</span>
+    <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#4098D7&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="n">geometry</span><span class="o">.</span><span class="n">Polygon</span><span class="p">([[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.57</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.57</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])},</span>
+    <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#66B4E2&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="n">geometry</span><span class="o">.</span><span class="n">Polygon</span><span class="p">([[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.47</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.47</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.57</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])},</span>
+    <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#A9CDE0&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="n">geometry</span><span class="o">.</span><span class="n">Polygon</span><span class="p">([[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.32</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.32</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.47</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])},</span>
+<span class="p">]</span>
+
+<span class="n">gdf_geoms</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">data_geoms</span><span class="p">)</span>
+<span class="n">gdf_geoms</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>         color                                           geometry
+    0  #F3C14F      POLYGON ((1.45 3.75, 1.45 0, 0 0, 1.45 3.75))
+    1  #4098D7  POLYGON ((1.45 0, 1.45 3.75, 2.57 3.75, 2.57 0...
+    2  #66B4E2  POLYGON ((2.33 0, 2.33 2.5, 3.47 2.5, 3.47 0, ...
+    3  #A9CDE0  POLYGON ((3.2 0, 3.2 1.25, 4.32 1.25, 4.32 0, ...
+</pre></div>
+</div>
+<p>Since the spatial data in our example is not geographic,
+we use <code class="docutils literal notranslate"><span class="pre">project</span></code> configuration <code class="docutils literal notranslate"><span class="pre">type=&quot;identity&quot;,</span> <span class="pre">reflectY=True</span></code> to draw the
+geometries without applying a geographic projection. By using <code class="docutils literal notranslate"><span class="pre">alt.Color(...).scale(None)</span></code> we
+disable the automatic color assignment in Altair
+and instead directly use the provided Hex color codes.</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-15"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">gdf_geoms</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Vega-Altair&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s2">&quot;color:N&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;identity&quot;</span><span class="p">,</span> <span class="n">reflectY</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-15">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-3b50b0023c403307170e289d1a702e9f"}, "mark": {"type": "geoshape"}, "encoding": {"color": {"field": "color", "scale": null, "type": "nominal"}}, "projection": {"reflectY": true, "type": "identity"}, "title": "Vega-Altair", "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-3b50b0023c403307170e289d1a702e9f": [{"color": "#F3C14F", "type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[1.45, 3.75], [1.45, 0.0], [0.0, 0.0], [1.45, 3.75]]]}}, {"color": "#4098D7", "type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[1.45, 0.0], [1.45, 3.75], [2.57, 3.75], [2.57, 0.0], [2.33, 0.0], [1.45, 0.0]]]}}, {"color": "#66B4E2", "type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[2.33, 0.0], [2.33, 2.5], [3.47, 2.5], [3.47, 0.0], [3.2, 0.0], [2.57, 0.0], [2.33, 0.0]]]}}, {"color": "#A9CDE0", "type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[3.2, 0.0], [3.2, 1.25], [4.32, 1.25], [4.32, 0.0], [3.47, 0.0], [3.2, 0.0]]]}}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-15', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+<section id="inline-geojson-object">
+<span id="spatial-data-inline-geojson"></span><h3>Inline GeoJSON Object<a class="headerlink" href="#inline-geojson-object" title="Link to this heading">#</a></h3>
+<p>If your source data is a GeoJSON file and you do not want to load it
+into a GeoPandas GeoDataFrame you can provide it as a dictionary to the Altair <code class="docutils literal notranslate"><span class="pre">Data</span></code> class. A
+GeoJSON file normally consists of a <code class="docutils literal notranslate"><span class="pre">FeatureCollection</span></code> with a list of
+<code class="docutils literal notranslate"><span class="pre">features</span></code> where the information for each geometry is specified within a
+<code class="docutils literal notranslate"><span class="pre">properties</span></code> dictionary. In the following example a GeoJSON-like data
+object is specified into a <code class="docutils literal notranslate"><span class="pre">Data</span></code> class using the <code class="docutils literal notranslate"><span class="pre">property</span></code>
+value of the <code class="docutils literal notranslate"><span class="pre">key</span></code> that contain the nested list (here named
+<code class="docutils literal notranslate"><span class="pre">features</span></code>).</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-16"><div class="highlight"><pre><span></span><span class="n">obj_geojson</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;features&quot;</span><span class="p">:[</span>
+        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span> <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">},</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[[[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">]]]}},</span>
+        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span> <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;middle-left&quot;</span><span class="p">},</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[[[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.57</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.57</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]]}},</span>
+        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span> <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;middle-right&quot;</span><span class="p">},</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[[[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.47</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.47</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.57</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]]}},</span>
+        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span> <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;right&quot;</span><span class="p">},</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[[[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.32</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.32</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.47</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]]}}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+<span class="n">data_obj_geojson</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">obj_geojson</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">DataFormat</span><span class="p">(</span><span class="nb">property</span><span class="o">=</span><span class="s2">&quot;features&quot;</span><span class="p">))</span>
+<span class="n">data_obj_geojson</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    Data({
+      format: DataFormat({
+        property: &#39;features&#39;
+      }),
+      values: {&#39;type&#39;: &#39;FeatureCollection&#39;, &#39;features&#39;: [{&#39;type&#39;: &#39;Feature&#39;, &#39;properties&#39;: {&#39;location&#39;: &#39;left&#39;}, &#39;geometry&#39;: {&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[1.45, 3.75], [1.45, 0], [0, 0], [1.45, 3.75]]]}}, {&#39;type&#39;: &#39;Feature&#39;, &#39;properties&#39;: {&#39;location&#39;: &#39;middle-left&#39;}, &#39;geometry&#39;: {&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[1.45, 0], [1.45, 3.75], [2.57, 3.75], [2.57, 0], [2.33, 0], [1.45, 0]]]}}, {&#39;type&#39;: &#39;Feature&#39;, &#39;properties&#39;: {&#39;location&#39;: &#39;middle-right&#39;}, &#39;geometry&#39;: {&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[2.33, 0], [2.33, 2.5], [3.47, 2.5], [3.47, 0], [3.2, 0], [2.57, 0], [2.33, 0]]]}}, {&#39;type&#39;: &#39;Feature&#39;, &#39;properties&#39;: {&#39;location&#39;: &#39;right&#39;}, &#39;geometry&#39;: {&#39;type&#39;: &#39;Polygon&#39;, &#39;coordinates&#39;: [[[3.2, 0], [3.2, 1.25], [4.32, 1.25], [4.32, 0], [3.47, 0], [3.2, 0]]]}}]}
+    })
+</pre></div>
+</div>
+<p>The label for each objects location is stored within the <code class="docutils literal notranslate"><span class="pre">properties</span></code> dictionary. To access these values
+you can specify a nested variable name (here <code class="docutils literal notranslate"><span class="pre">properties.location</span></code>) within the color
+channel encoding. Here we change the coloring encoding to be based on this location label,
+and apply a <code class="docutils literal notranslate"><span class="pre">magma</span></code> color scheme instead of the default one.
+The <code class="docutils literal notranslate"><span class="pre">:O</span></code> suffix indicates that we want Altair to treat these values as ordinal,
+and you can read more about it in the <a class="reference internal" href="encodings/index.html#encoding-data-types"><span class="std std-ref">Encoding Data Types</span></a> page.
+for the ordinal structured data.</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-17"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data_obj_geojson</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Vega-Altair - ordinal scale&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s2">&quot;properties.location:O&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;identity&quot;</span><span class="p">,</span> <span class="n">reflectY</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-17">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"values": {"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"location": "left"}, "geometry": {"type": "Polygon", "coordinates": [[[1.45, 3.75], [1.45, 0], [0, 0], [1.45, 3.75]]]}}, {"type": "Feature", "properties": {"location": "middle-left"}, "geometry": {"type": "Polygon", "coordinates": [[[1.45, 0], [1.45, 3.75], [2.57, 3.75], [2.57, 0], [2.33, 0], [1.45, 0]]]}}, {"type": "Feature", "properties": {"location": "middle-right"}, "geometry": {"type": "Polygon", "coordinates": [[[2.33, 0], [2.33, 2.5], [3.47, 2.5], [3.47, 0], [3.2, 0], [2.57, 0], [2.33, 0]]]}}, {"type": "Feature", "properties": {"location": "right"}, "geometry": {"type": "Polygon", "coordinates": [[[3.2, 0], [3.2, 1.25], [4.32, 1.25], [4.32, 0], [3.47, 0], [3.2, 0]]]}}]}, "format": {"property": "features"}}, "mark": {"type": "geoshape"}, "encoding": {"color": {"field": "properties.location", "scale": {"scheme": "magma"}, "type": "ordinal"}}, "projection": {"reflectY": true, "type": "identity"}, "title": "Vega-Altair - ordinal scale", "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-17', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+<section id="geojson-file-by-url">
+<span id="spatial-data-remote-geojson"></span><h3>GeoJSON File by URL<a class="headerlink" href="#geojson-file-by-url" title="Link to this heading">#</a></h3>
+<p>Altair can load GeoJSON resources directly from a web URL. Here we use
+an example from geojson.xyz. As is explained in <a class="reference internal" href="#spatial-data-inline-geojson"><span class="std std-ref">Inline GeoJSON Object</span></a>,
+we specify <code class="docutils literal notranslate"><span class="pre">features</span></code> as
+the value for the <code class="docutils literal notranslate"><span class="pre">property</span></code> parameter in the <code class="docutils literal notranslate"><span class="pre">alt.DataFormat()</span></code> object
+and prepend the attribute we want to plot (<code class="docutils literal notranslate"><span class="pre">continent</span></code>)
+with the name of the nested dictionary where the
+information of each geometry is stored (<code class="docutils literal notranslate"><span class="pre">properties</span></code>).</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-18"><div class="highlight"><pre><span></span><span class="n">url_geojson</span> <span class="o">=</span> <span class="s2">&quot;https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson&quot;</span>
+<span class="n">data_url_geojson</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url_geojson</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">DataFormat</span><span class="p">(</span><span class="nb">property</span><span class="o">=</span><span class="s2">&quot;features&quot;</span><span class="p">))</span>
+<span class="n">data_url_geojson</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    Data({
+      format: DataFormat({
+        property: &#39;features&#39;
+      }),
+      url: &#39;https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson&#39;
+    })
+</pre></div>
+</div>
+<div class="highlight-python notranslate" id="data-rst-altair-source-19"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data_url_geojson</span><span class="p">)</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;properties.continent:N&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-19">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_110m_admin_0_countries.geojson", "format": {"property": "features"}}, "mark": {"type": "geoshape"}, "encoding": {"color": {"field": "properties.continent", "type": "nominal"}}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-19', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+<section id="inline-topojson-object">
+<span id="spatial-data-inline-topojson"></span><h3>Inline TopoJSON Object<a class="headerlink" href="#inline-topojson-object" title="Link to this heading">#</a></h3>
+<p>TopoJSON is an extension of GeoJSON, where the geometry of the features
+are referred to from a top-level object named arcs. Each shared arc is
+only stored once to reduce the size of the data. A TopoJSON file object can contain
+multiple objects (eg. boundary border and province border). When
+defining a TopoJSON object for Altair we specify the <code class="docutils literal notranslate"><span class="pre">topojson</span></code>
+data format type and the name of the object we like to visualize using the
+<code class="docutils literal notranslate"><span class="pre">feature</span></code> parameter. Here the name of this object key is <code class="docutils literal notranslate"><span class="pre">MY_DATA</span></code>,
+but this differs in each dataset.</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-20"><div class="highlight"><pre><span></span><span class="n">obj_topojson</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;arcs&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]],</span>
+        <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]],</span>
+        <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]],</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;objects&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;MY_DATA&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;geometries&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s2">&quot;arcs&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;abc&quot;</span><span class="p">},</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s2">&quot;arcs&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;def&quot;</span><span class="p">},</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">},</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;GeometryCollection&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Topology&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">data_obj_topojson</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span>
+    <span class="n">values</span><span class="o">=</span><span class="n">obj_topojson</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">DataFormat</span><span class="p">(</span><span class="n">feature</span><span class="o">=</span><span class="s2">&quot;MY_DATA&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;topojson&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">data_obj_topojson</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    Data({
+      format: DataFormat({
+        feature: &#39;MY_DATA&#39;,
+        type: &#39;topojson&#39;
+      }),
+      values: {&#39;arcs&#39;: [[[1.0, 1.0], [0.0, 1.0], [0.0, 0.0], [1.0, 0.0]], [[1.0, 0.0], [2.0, 0.0], [2.0, 1.0], [1.0, 1.0]], [[1.0, 1.0], [1.0, 0.0]]], &#39;objects&#39;: {&#39;MY_DATA&#39;: {&#39;geometries&#39;: [{&#39;arcs&#39;: [[-3, 0]], &#39;properties&#39;: {&#39;name&#39;: &#39;abc&#39;}, &#39;type&#39;: &#39;Polygon&#39;}, {&#39;arcs&#39;: [[1, 2]], &#39;properties&#39;: {&#39;name&#39;: &#39;def&#39;}, &#39;type&#39;: &#39;Polygon&#39;}], &#39;type&#39;: &#39;GeometryCollection&#39;}}, &#39;type&#39;: &#39;Topology&#39;}
+    })
+</pre></div>
+</div>
+<div class="highlight-python notranslate" id="data-rst-altair-source-21"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data_obj_topojson</span><span class="p">)</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;properties.name:N&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;identity&#39;</span><span class="p">,</span> <span class="n">reflectY</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-21">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"values": {"arcs": [[[1.0, 1.0], [0.0, 1.0], [0.0, 0.0], [1.0, 0.0]], [[1.0, 0.0], [2.0, 0.0], [2.0, 1.0], [1.0, 1.0]], [[1.0, 1.0], [1.0, 0.0]]], "objects": {"MY_DATA": {"geometries": [{"arcs": [[-3, 0]], "properties": {"name": "abc"}, "type": "Polygon"}, {"arcs": [[1, 2]], "properties": {"name": "def"}, "type": "Polygon"}], "type": "GeometryCollection"}}, "type": "Topology"}, "format": {"feature": "MY_DATA", "type": "topojson"}}, "mark": {"type": "geoshape"}, "encoding": {"color": {"field": "properties.name", "type": "nominal"}}, "projection": {"reflectY": true, "type": "identity"}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-21', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+<section id="topojson-file-by-url">
+<span id="spatial-data-remote-topojson"></span><h3>TopoJSON File by URL<a class="headerlink" href="#topojson-file-by-url" title="Link to this heading">#</a></h3>
+<p>Altair can load TopoJSON resources directly from a web URL. As
+explained in <a class="reference internal" href="#spatial-data-inline-topojson"><span class="std std-ref">Inline TopoJSON Object</span></a>, we have to use the
+<code class="docutils literal notranslate"><span class="pre">feature</span></code> parameter to specify the object name (here <code class="docutils literal notranslate"><span class="pre">boroughs</span></code>) and
+define the type of data as <code class="docutils literal notranslate"><span class="pre">topjoson</span></code> in the <code class="docutils literal notranslate"><span class="pre">alt.DataFormat()</span></code> object.</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-22"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">url_topojson</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">london_boroughs</span><span class="o">.</span><span class="n">url</span>
+
+<span class="n">data_url_topojson</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span>
+    <span class="n">url</span><span class="o">=</span><span class="n">url_topojson</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">DataFormat</span><span class="p">(</span><span class="n">feature</span><span class="o">=</span><span class="s2">&quot;boroughs&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;topojson&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">data_url_topojson</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    Data({
+      format: DataFormat({
+        feature: &#39;boroughs&#39;,
+        type: &#39;topojson&#39;
+      }),
+      url: &#39;https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/londonBoroughs.json&#39;
+    })
+</pre></div>
+</div>
+<p>Note: There also exist a shorthand to extract the objects from a
+topojson file if this file is accessible by URL:
+<code class="docutils literal notranslate"><span class="pre">alt.topo_feature(url=url_topojson,</span> <span class="pre">feature=&quot;boroughs&quot;)</span></code></p>
+<p>We color encode the Boroughs by there names as they are stored as an
+unique identifier (<code class="docutils literal notranslate"><span class="pre">id</span></code>). We use a <code class="docutils literal notranslate"><span class="pre">symbolLimit</span></code> of 33 in two
+columns to display all entries in the legend
+and change the color scheme to have more distinct colors.
+We also add a tooltip which shows the name of the borough
+as we hover over it with the mouse.</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-23"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data_url_topojson</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;London-Boroughs&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+    <span class="n">tooltip</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s2">&quot;id:N&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;tableau20&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">symbolLimit</span><span class="o">=</span><span class="mi">33</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-23">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/londonBoroughs.json", "format": {"feature": "boroughs", "type": "topojson"}}, "mark": {"type": "geoshape", "tooltip": true}, "encoding": {"color": {"field": "id", "legend": {"columns": 2, "symbolLimit": 33}, "scale": {"scheme": "tableau20"}, "type": "nominal"}}, "title": "London-Boroughs", "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-23', spec, opt).catch(console.err);
+  });
+</script>
+</div><p>Similar to the <code class="docutils literal notranslate"><span class="pre">feature</span></code> option, there also exists the <code class="docutils literal notranslate"><span class="pre">mesh</span></code>
+parameter. This parameter extracts a named TopoJSON object set.
+Unlike the feature option, the corresponding geo data is returned as
+a single, unified mesh instance, not as individual GeoJSON features.
+Extracting a mesh is useful for more efficiently drawing borders
+or other geographic elements that you do not need to associate with
+specific regions such as individual countries, states or counties.</p>
+<p>Here below we draw the same Boroughs of London, but now as mesh only.</p>
+<p>Note: you have to explicitly define <code class="docutils literal notranslate"><span class="pre">filled=False</span></code> to draw multi(lines)
+without fill color.</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-24"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">url_topojson</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">london_boroughs</span><span class="o">.</span><span class="n">url</span>
+
+<span class="n">data_url_topojson_mesh</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span>
+    <span class="n">url</span><span class="o">=</span><span class="n">url_topojson</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">DataFormat</span><span class="p">(</span><span class="n">mesh</span><span class="o">=</span><span class="s2">&quot;boroughs&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;topojson&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data_url_topojson_mesh</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Border London-Boroughs&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+    <span class="n">filled</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-24">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/londonBoroughs.json", "format": {"mesh": "boroughs", "type": "topojson"}}, "mark": {"type": "geoshape", "filled": false}, "title": "Border London-Boroughs", "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-24', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+<section id="nested-geojson-objects">
+<span id="spatial-data-nested-geojson"></span><h3>Nested GeoJSON Objects<a class="headerlink" href="#nested-geojson-objects" title="Link to this heading">#</a></h3>
+<p>GeoJSON data can also be nested within another dataset. In this case it
+is possible to use the <code class="docutils literal notranslate"><span class="pre">shape</span></code> encoding channel in combination with the
+<code class="docutils literal notranslate"><span class="pre">:G</span></code> suffix to visualize the nested features as GeoJSON objects.
+In the following example the GeoJSON object are nested within <code class="docutils literal notranslate"><span class="pre">geo</span></code>
+in the list of dictionaries:</p>
+<div class="highlight-python notranslate" id="data-rst-altair-source-25"><div class="highlight"><pre><span></span><span class="n">nested_features</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#F3C14F&quot;</span><span class="p">,</span> <span class="s2">&quot;geo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[[[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">]]]}}},</span>
+    <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#4098D7&quot;</span><span class="p">,</span> <span class="s2">&quot;geo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[[[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.57</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.57</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.45</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]]}}},</span>
+    <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#66B4E2&quot;</span><span class="p">,</span> <span class="s2">&quot;geo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[[[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.47</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.47</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.57</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.33</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]]}}},</span>
+    <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#A9CDE0&quot;</span><span class="p">,</span> <span class="s2">&quot;geo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Feature&quot;</span><span class="p">,</span> <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span> <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[[[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.32</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.32</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.47</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]]}}},</span>
+<span class="p">]</span>
+<span class="n">data_nested_features</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">nested_features</span><span class="p">)</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">data_nested_features</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Vega-Altair&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;geo:G&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s2">&quot;color:N&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;identity&quot;</span><span class="p">,</span> <span class="n">reflectY</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+
+<div id="data-rst-altair-plot-25">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"values": [{"color": "#F3C14F", "geo": {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[1.45, 3.75], [1.45, 0], [0, 0], [1.45, 3.75]]]}}}, {"color": "#4098D7", "geo": {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[1.45, 0], [1.45, 3.75], [2.57, 3.75], [2.57, 0], [2.33, 0], [1.45, 0]]]}}}, {"color": "#66B4E2", "geo": {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[2.33, 0], [2.33, 2.5], [3.47, 2.5], [3.47, 0], [3.2, 0], [2.57, 0], [2.33, 0]]]}}}, {"color": "#A9CDE0", "geo": {"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[3.2, 0], [3.2, 1.25], [4.32, 1.25], [4.32, 0], [3.47, 0], [3.2, 0]]]}}}]}, "mark": {"type": "geoshape"}, "encoding": {"color": {"field": "color", "scale": null, "type": "nominal"}, "shape": {"field": "geo", "type": "geojson"}}, "projection": {"reflectY": true, "type": "identity"}, "title": "Vega-Altair", "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json"};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#data-rst-altair-plot-25', spec, opt).catch(console.err);
+  });
+</script>
+</div></section>
+<section id="projections">
+<span id="data-projections"></span><h3>Projections<a class="headerlink" href="#projections" title="Link to this heading">#</a></h3>
+<p>For geographic data it is best to use the World Geodetic System 1984 as
+its geographic coordinate reference system with units in decimal degrees.
+Try to avoid putting projected data into Altair, but reproject your spatial data to
+EPSG:4326 first.
+If your data comes in a different projection (eg. with units in meters) and you don’t
+have the option to reproject the data, try using the project configuration
+<code class="docutils literal notranslate"><span class="pre">(type:</span> <span class="pre">'identity',</span> <span class="pre">reflectY':</span> <span class="pre">True)</span></code>. It draws the geometries without applying a projection.</p>
+</section>
+<section id="winding-order">
+<span id="data-winding-order"></span><h3>Winding Order<a class="headerlink" href="#winding-order" title="Link to this heading">#</a></h3>
+<p>LineString, Polygon and MultiPolygon geometries contain coordinates in an order: lines
+go in a certain direction, and polygon rings do too. The GeoJSON-like structure of the
+<code class="docutils literal notranslate"><span class="pre">__geo_interface__</span></code> recommends the right-hand rule winding order for Polygon and
+MultiPolygons. Meaning that the exterior rings should be counterclockwise and interior
+rings are clockwise. While it recommends the right-hand rule winding order, it does not
+reject geometries that do not use the right-hand rule.</p>
+<p>Altair does NOT follow the right-hand rule for geometries, but uses the left-hand rule.
+Meaning that exterior rings should be clockwise and interior rings should be
+counterclockwise.
+If you face a problem regarding winding order, try to force the left-hand rule on your
+data before usage in Altair using GeoPandas for example as such:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">shapely.ops</span><span class="w"> </span><span class="kn">import</span> <span class="n">orient</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">orient</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span>
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../getting_started/project_philosophy.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Project Philosophy</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="encodings/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Encodings</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">pandas DataFrame</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#including-index-data">Including Index Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#long-form-vs-wide-form-data">Long-form vs. Wide-form Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-with-pandas">Converting with pandas</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-with-fold-transform">Converting with Fold Transform</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generated-data">Generated Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sequence-generator">Sequence Generator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graticule-generator">Graticule Generator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sphere-generator">Sphere Generator</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-data">Spatial Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-data-gdf">GeoPandas GeoDataFrame</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inline-geojson-object">Inline GeoJSON Object</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geojson-file-by-url">GeoJSON File by URL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inline-topojson-object">Inline TopoJSON Object</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#topojson-file-by-url">TopoJSON File by URL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nested-geojson-objects">Nested GeoJSON Objects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#projections">Projections</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#winding-order">Winding Order</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

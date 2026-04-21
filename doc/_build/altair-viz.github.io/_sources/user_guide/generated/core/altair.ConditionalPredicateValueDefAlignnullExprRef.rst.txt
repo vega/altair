@@ -1,0 +1,30 @@
+﻿altair.ConditionalPredicateValueDefAlignnullExprRef
+===================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalPredicateValueDefAlignnullExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalPredicateValueDefAlignnullExprRef.__init__
+      ~ConditionalPredicateValueDefAlignnullExprRef.copy
+      ~ConditionalPredicateValueDefAlignnullExprRef.from_dict
+      ~ConditionalPredicateValueDefAlignnullExprRef.from_json
+      ~ConditionalPredicateValueDefAlignnullExprRef.resolve_references
+      ~ConditionalPredicateValueDefAlignnullExprRef.to_dict
+      ~ConditionalPredicateValueDefAlignnullExprRef.to_json
+      ~ConditionalPredicateValueDefAlignnullExprRef.validate
+      ~ConditionalPredicateValueDefAlignnullExprRef.validate_property
+   
+   
+
+   
+   
+   

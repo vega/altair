@@ -1,0 +1,37 @@
+﻿altair.ColorValue
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: ColorValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ColorValue.__init__
+      ~ColorValue.copy
+      ~ColorValue.from_dict
+      ~ColorValue.from_json
+      ~ColorValue.resolve_references
+      ~ColorValue.to_dict
+      ~ColorValue.to_json
+      ~ColorValue.validate
+      ~ColorValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ColorValue.condition
+      ~ColorValue.value
+   
+   

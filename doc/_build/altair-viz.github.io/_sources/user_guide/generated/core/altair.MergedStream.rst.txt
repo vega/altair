@@ -1,0 +1,30 @@
+﻿altair.MergedStream
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: MergedStream
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MergedStream.__init__
+      ~MergedStream.copy
+      ~MergedStream.from_dict
+      ~MergedStream.from_json
+      ~MergedStream.resolve_references
+      ~MergedStream.to_dict
+      ~MergedStream.to_json
+      ~MergedStream.validate
+      ~MergedStream.validate_property
+   
+   
+
+   
+   
+   

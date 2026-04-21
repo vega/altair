@@ -1,0 +1,37 @@
+﻿altair.HrefValue
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: HrefValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~HrefValue.__init__
+      ~HrefValue.copy
+      ~HrefValue.from_dict
+      ~HrefValue.from_json
+      ~HrefValue.resolve_references
+      ~HrefValue.to_dict
+      ~HrefValue.to_json
+      ~HrefValue.validate
+      ~HrefValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~HrefValue.condition
+      ~HrefValue.value
+   
+   

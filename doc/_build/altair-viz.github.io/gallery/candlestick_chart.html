@@ -1,0 +1,611 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Candlestick Chart &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/candlestick_chart';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Candlestick Chart</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="candlestick-chart">
+<span id="gallery-candlestick-chart"></span><h1>Candlestick Chart<a class="headerlink" href="#candlestick-chart" title="Link to this heading">#</a></h1>
+<p>A candlestick chart inspired from <a class="reference external" href="http://mbostock.github.io/protovis/ex/candlestick.html">Protovis</a>.
+This example shows the performance of the Chicago Board Options Exchange <a class="reference external" href="https://en.wikipedia.org/wiki/VIX">Volatility Index</a> (VIX)
+in the summer of 2009. The thick bar represents the opening and closing prices,
+while the thin bar shows intraday high and low prices; if the index closed higher on a given day, the bars are colored green rather than red.</p>
+
+<div id="candlestick_chart-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"mark": {"type": "rule"}, "encoding": {"color": {"condition": [{"test": "datum.open <= datum.close", "value": "#06982d"}], "value": "#ae1325"}, "x": {"axis": {"format": "%m/%d", "labelAngle": -45, "title": "Date in 2009"}, "field": "date", "type": "temporal"}, "y": {"field": "low", "scale": {"zero": false}, "title": "Price", "type": "quantitative"}, "y2": {"field": "high"}}}, {"mark": {"type": "bar"}, "encoding": {"color": {"condition": [{"test": "datum.open <= datum.close", "value": "#06982d"}], "value": "#ae1325"}, "x": {"axis": {"format": "%m/%d", "labelAngle": -45, "title": "Date in 2009"}, "field": "date", "type": "temporal"}, "y": {"field": "open", "type": "quantitative"}, "y2": {"field": "close"}}}], "data": {"name": "data-464333b42840ca762ea57be94a52ace1"}, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-464333b42840ca762ea57be94a52ace1": [{"date": "2009-06-01T00:00:00", "open": 28.7, "high": 30.05, "low": 28.45, "close": 30.04, "signal": "short", "ret": -4.89396411092985}, {"date": "2009-06-02T00:00:00", "open": 30.04, "high": 30.13, "low": 28.3, "close": 29.63, "signal": "short", "ret": -0.32258064516129503}, {"date": "2009-06-03T00:00:00", "open": 29.62, "high": 31.79, "low": 29.62, "close": 31.02, "signal": "short", "ret": 3.68663594470045}, {"date": "2009-06-04T00:00:00", "open": 31.02, "high": 31.02, "low": 29.92, "close": 30.18, "signal": "short", "ret": 4.51010886469673}, {"date": "2009-06-05T00:00:00", "open": 29.39, "high": 30.81, "low": 28.85, "close": 29.62, "signal": "short", "ret": 6.08424336973478}, {"date": "2009-06-08T00:00:00", "open": 30.84, "high": 31.82, "low": 26.41, "close": 29.77, "signal": "short", "ret": 1.2539184952978}, {"date": "2009-06-09T00:00:00", "open": 29.77, "high": 29.77, "low": 27.79, "close": 28.27, "signal": "short", "ret": -5.02431118314424}, {"date": "2009-06-10T00:00:00", "open": 26.9, "high": 29.74, "low": 26.9, "close": 28.46, "signal": "short", "ret": -5.46623794212217}, {"date": "2009-06-11T00:00:00", "open": 27.36, "high": 28.11, "low": 26.81, "close": 28.11, "signal": "short", "ret": -8.3743842364532}, {"date": "2009-06-12T00:00:00", "open": 28.08, "high": 28.5, "low": 27.73, "close": 28.15, "signal": "short", "ret": -5.52763819095477}, {"date": "2009-06-15T00:00:00", "open": 29.7, "high": 31.09, "low": 29.64, "close": 30.81, "signal": "long", "ret": 3.4920634920635}, {"date": "2009-06-16T00:00:00", "open": 30.81, "high": 32.75, "low": 30.07, "close": 32.68, "signal": "short", "ret": 0.155038759689914}, {"date": "2009-06-17T00:00:00", "open": 31.19, "high": 32.77, "low": 30.64, "close": 31.54, "signal": "short", "ret": 5.82822085889571}, {"date": "2009-06-18T00:00:00", "open": 31.54, "high": 31.54, "low": 29.6, "close": 30.03, "signal": "short", "ret": 8.17610062893082}, {"date": "2009-06-19T00:00:00", "open": 29.16, "high": 29.32, "low": 27.56, "close": 27.99, "signal": "short", "ret": 8.59872611464968}, {"date": "2009-06-22T00:00:00", "open": 30.4, "high": 32.05, "low": 30.3, "close": 31.17, "signal": "short", "ret": 15.4907975460123}, {"date": "2009-06-23T00:00:00", "open": 31.3, "high": 31.54, "low": 27.83, "close": 30.58, "signal": "short", "ret": 11.7370892018779}, {"date": "2009-06-24T00:00:00", "open": 30.58, "high": 30.58, "low": 28.79, "close": 29.05, "signal": "long", "ret": -10.4234527687296}, {"date": "2009-06-25T00:00:00", "open": 29.45, "high": 29.56, "low": 26.3, "close": 26.36, "signal": "long", "ret": 0.0}, {"date": "2009-06-26T00:00:00", "open": 27.09, "high": 27.22, "low": 25.76, "close": 25.93, "signal": "long", "ret": 0.0}, {"date": "2009-06-29T00:00:00", "open": 25.93, "high": 27.18, "low": 25.29, "close": 25.35, "signal": "long", "ret": 5.26315789473684}, {"date": "2009-06-30T00:00:00", "open": 25.36, "high": 27.38, "low": 25.02, "close": 26.35, "signal": "long", "ret": 6.73758865248228}, {"date": "2009-07-01T00:00:00", "open": 25.73, "high": 26.31, "low": 24.8, "close": 26.22, "signal": "long", "ret": 7.83645655877341}, {"date": "2009-07-02T00:00:00", "open": 26.22, "high": 28.62, "low": 26.22, "close": 27.95, "signal": "long", "ret": 2.7642276422764303}, {"date": "2009-07-06T00:00:00", "open": 30.32, "high": 30.6, "low": 28.99, "close": 29.0, "signal": "short", "ret": -2.14521452145214}, {"date": "2009-07-07T00:00:00", "open": 29.0, "high": 30.94, "low": 28.9, "close": 30.85, "signal": "short", "ret": 3.03514376996805}, {"date": "2009-07-08T00:00:00", "open": 30.85, "high": 33.05, "low": 30.43, "close": 31.3, "signal": "short", "ret": 5.68720379146919}, {"date": "2009-07-09T00:00:00", "open": 30.23, "high": 30.49, "low": 29.28, "close": 29.78, "signal": "short", "ret": 8.22784810126583}, {"date": "2009-07-10T00:00:00", "open": 29.78, "high": 30.34, "low": 28.82, "close": 29.02, "signal": "short", "ret": 8.64779874213836}, {"date": "2009-07-13T00:00:00", "open": 28.36, "high": 29.24, "low": 25.42, "close": 26.31, "signal": "short", "ret": 7.32899022801303}, {"date": "2009-07-14T00:00:00", "open": 26.31, "high": 26.84, "low": 24.99, "close": 25.02, "signal": "short", "ret": 7.30897009966778}, {"date": "2009-07-15T00:00:00", "open": 25.05, "high": 26.06, "low": 23.83, "close": 25.89, "signal": "neutral", "ret": 0.0}, {"date": "2009-07-16T00:00:00", "open": 25.96, "high": 26.18, "low": 24.51, "close": 25.42, "signal": "long", "ret": -9.82758620689656}, {"date": "2009-07-17T00:00:00", "open": 25.42, "high": 25.55, "low": 23.88, "close": 24.34, "signal": "long", "ret": -10.8433734939759}, {"date": "2009-07-20T00:00:00", "open": 25.06, "high": 25.42, "low": 24.26, "close": 24.4, "signal": "long", "ret": -7.55711775043936}, {"date": "2009-07-21T00:00:00", "open": 24.28, "high": 25.14, "low": 23.81, "close": 23.87, "signal": "long", "ret": -2.5089605734767}, {"date": "2009-07-22T00:00:00", "open": 24.05, "high": 24.14, "low": 23.24, "close": 23.47, "signal": "long", "ret": 0.915750915750916}, {"date": "2009-07-23T00:00:00", "open": 23.71, "high": 24.05, "low": 23.21, "close": 23.43, "signal": "long", "ret": 2.47148288973383}, {"date": "2009-07-24T00:00:00", "open": 23.87, "high": 23.87, "low": 23.0, "close": 23.09, "signal": "long", "ret": 4.22264875239922}, {"date": "2009-07-27T00:00:00", "open": 24.06, "high": 24.86, "low": 24.02, "close": 24.28, "signal": "long", "ret": -0.189393939393929}, {"date": "2009-07-28T00:00:00", "open": 24.28, "high": 25.61, "low": 24.28, "close": 25.01, "signal": "long", "ret": -4.3795620437956195}, {"date": "2009-07-29T00:00:00", "open": 25.47, "high": 26.18, "low": 25.41, "close": 25.61, "signal": "long", "ret": -4.48504983388705}, {"date": "2009-07-30T00:00:00", "open": 25.4, "high": 25.76, "low": 24.85, "close": 25.4, "signal": "long", "ret": -1.70357751277683}, {"date": "2009-07-31T00:00:00", "open": 25.4, "high": 26.22, "low": 24.93, "close": 25.92, "signal": "short", "ret": 5.06756756756757}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#candlestick_chart-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="method" for="sd-tab-item-0">
+Method syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">ohlc</span><span class="p">()</span>
+
+<span class="n">open_close_color</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="s2">&quot;datum.open &lt;= datum.close&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;#06982d&quot;</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;#ae1325&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="n">base</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;date:T&#39;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">labelAngle</span><span class="o">=-</span><span class="mi">45</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Date in 2009&#39;</span><span class="p">),</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">open_close_color</span>
+<span class="p">)</span>
+
+<span class="n">rule</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">mark_rule</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;low:Q&#39;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Price&#39;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y2</span><span class="p">(</span><span class="s1">&#39;high:Q&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">bar</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;open:Q&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y2</span><span class="p">(</span><span class="s1">&#39;close:Q&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">rule</span> <span class="o">+</span> <span class="n">bar</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="attribute" for="sd-tab-item-1">
+Attribute syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">altair.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">ohlc</span><span class="p">()</span>
+
+<span class="n">open_close_color</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="s2">&quot;datum.open &lt;= datum.close&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;#06982d&quot;</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;#ae1325&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="n">base</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s1">&#39;date:T&#39;</span><span class="p">,</span>
+          <span class="n">axis</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Axis</span><span class="p">(</span>
+              <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
+              <span class="n">labelAngle</span><span class="o">=-</span><span class="mi">45</span><span class="p">,</span>
+              <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Date in 2009&#39;</span>
+          <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">open_close_color</span>
+<span class="p">)</span>
+
+<span class="n">rule</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">mark_rule</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span>
+        <span class="s1">&#39;low:Q&#39;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Price&#39;</span><span class="p">,</span>
+        <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y2</span><span class="p">(</span><span class="s1">&#39;high:Q&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">bar</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s1">&#39;open:Q&#39;</span><span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Y2</span><span class="p">(</span><span class="s1">&#39;close:Q&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">rule</span> <span class="o">+</span> <span class="n">bar</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

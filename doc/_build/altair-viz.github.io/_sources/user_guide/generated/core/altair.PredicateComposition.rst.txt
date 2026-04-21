@@ -1,0 +1,30 @@
+﻿altair.PredicateComposition
+===========================
+
+.. currentmodule:: altair
+
+.. autoclass:: PredicateComposition
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PredicateComposition.__init__
+      ~PredicateComposition.copy
+      ~PredicateComposition.from_dict
+      ~PredicateComposition.from_json
+      ~PredicateComposition.resolve_references
+      ~PredicateComposition.to_dict
+      ~PredicateComposition.to_json
+      ~PredicateComposition.validate
+      ~PredicateComposition.validate_property
+   
+   
+
+   
+   
+   

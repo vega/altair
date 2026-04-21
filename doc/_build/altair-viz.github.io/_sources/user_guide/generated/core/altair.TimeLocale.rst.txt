@@ -1,0 +1,30 @@
+﻿altair.TimeLocale
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: TimeLocale
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TimeLocale.__init__
+      ~TimeLocale.copy
+      ~TimeLocale.from_dict
+      ~TimeLocale.from_json
+      ~TimeLocale.resolve_references
+      ~TimeLocale.to_dict
+      ~TimeLocale.to_json
+      ~TimeLocale.validate
+      ~TimeLocale.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsValuecolor
+=======================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsValuecolor
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsValuecolor.__init__
+      ~ScaleInvalidDataShowAsValuecolor.copy
+      ~ScaleInvalidDataShowAsValuecolor.from_dict
+      ~ScaleInvalidDataShowAsValuecolor.from_json
+      ~ScaleInvalidDataShowAsValuecolor.resolve_references
+      ~ScaleInvalidDataShowAsValuecolor.to_dict
+      ~ScaleInvalidDataShowAsValuecolor.to_json
+      ~ScaleInvalidDataShowAsValuecolor.validate
+      ~ScaleInvalidDataShowAsValuecolor.validate_property
+   
+   
+
+   
+   
+   

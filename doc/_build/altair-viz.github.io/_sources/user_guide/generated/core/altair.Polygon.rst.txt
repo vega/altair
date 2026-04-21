@@ -1,0 +1,30 @@
+﻿altair.Polygon
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: Polygon
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Polygon.__init__
+      ~Polygon.copy
+      ~Polygon.from_dict
+      ~Polygon.from_json
+      ~Polygon.resolve_references
+      ~Polygon.to_dict
+      ~Polygon.to_json
+      ~Polygon.validate
+      ~Polygon.validate_property
+   
+   
+
+   
+   
+   

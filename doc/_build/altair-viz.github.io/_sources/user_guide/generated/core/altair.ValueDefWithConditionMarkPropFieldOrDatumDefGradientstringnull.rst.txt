@@ -1,0 +1,30 @@
+﻿altair.ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull
+=====================================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull.__init__
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull.copy
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull.from_dict
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull.from_json
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull.resolve_references
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull.to_dict
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull.to_json
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull.validate
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefGradientstringnull.validate_property
+   
+   
+
+   
+   
+   

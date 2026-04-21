@@ -1,0 +1,46 @@
+﻿altair.FillOpacity
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: FillOpacity
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FillOpacity.__init__
+      ~FillOpacity.copy
+      ~FillOpacity.from_dict
+      ~FillOpacity.from_json
+      ~FillOpacity.resolve_references
+      ~FillOpacity.to_dict
+      ~FillOpacity.to_json
+      ~FillOpacity.validate
+      ~FillOpacity.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~FillOpacity.aggregate
+      ~FillOpacity.bandPosition
+      ~FillOpacity.bin
+      ~FillOpacity.condition
+      ~FillOpacity.field
+      ~FillOpacity.legend
+      ~FillOpacity.scale
+      ~FillOpacity.sort
+      ~FillOpacity.timeUnit
+      ~FillOpacity.title
+      ~FillOpacity.type
+   
+   

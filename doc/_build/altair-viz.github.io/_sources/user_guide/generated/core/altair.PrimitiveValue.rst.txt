@@ -1,0 +1,30 @@
+﻿altair.PrimitiveValue
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: PrimitiveValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PrimitiveValue.__init__
+      ~PrimitiveValue.copy
+      ~PrimitiveValue.from_dict
+      ~PrimitiveValue.from_json
+      ~PrimitiveValue.resolve_references
+      ~PrimitiveValue.to_dict
+      ~PrimitiveValue.to_json
+      ~PrimitiveValue.validate
+      ~PrimitiveValue.validate_property
+   
+   
+
+   
+   
+   

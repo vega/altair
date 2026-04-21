@@ -1,0 +1,30 @@
+﻿altair.OrderFieldDef
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: OrderFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OrderFieldDef.__init__
+      ~OrderFieldDef.copy
+      ~OrderFieldDef.from_dict
+      ~OrderFieldDef.from_json
+      ~OrderFieldDef.resolve_references
+      ~OrderFieldDef.to_dict
+      ~OrderFieldDef.to_json
+      ~OrderFieldDef.validate
+      ~OrderFieldDef.validate_property
+   
+   
+
+   
+   
+   

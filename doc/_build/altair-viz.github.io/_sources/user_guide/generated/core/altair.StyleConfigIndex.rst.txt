@@ -1,0 +1,30 @@
+﻿altair.StyleConfigIndex
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: StyleConfigIndex
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StyleConfigIndex.__init__
+      ~StyleConfigIndex.copy
+      ~StyleConfigIndex.from_dict
+      ~StyleConfigIndex.from_json
+      ~StyleConfigIndex.resolve_references
+      ~StyleConfigIndex.to_dict
+      ~StyleConfigIndex.to_json
+      ~StyleConfigIndex.validate
+      ~StyleConfigIndex.validate_property
+   
+   
+
+   
+   
+   

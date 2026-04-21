@@ -1,0 +1,30 @@
+﻿altair.LegendOrient
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: LegendOrient
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LegendOrient.__init__
+      ~LegendOrient.copy
+      ~LegendOrient.from_dict
+      ~LegendOrient.from_json
+      ~LegendOrient.resolve_references
+      ~LegendOrient.to_dict
+      ~LegendOrient.to_json
+      ~LegendOrient.validate
+      ~LegendOrient.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,37 @@
+﻿altair.StrokeWidthValue
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeWidthValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeWidthValue.__init__
+      ~StrokeWidthValue.copy
+      ~StrokeWidthValue.from_dict
+      ~StrokeWidthValue.from_json
+      ~StrokeWidthValue.resolve_references
+      ~StrokeWidthValue.to_dict
+      ~StrokeWidthValue.to_json
+      ~StrokeWidthValue.validate
+      ~StrokeWidthValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StrokeWidthValue.condition
+      ~StrokeWidthValue.value
+   
+   

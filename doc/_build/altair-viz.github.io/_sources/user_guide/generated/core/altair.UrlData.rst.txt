@@ -1,0 +1,30 @@
+﻿altair.UrlData
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: UrlData
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~UrlData.__init__
+      ~UrlData.copy
+      ~UrlData.from_dict
+      ~UrlData.from_json
+      ~UrlData.resolve_references
+      ~UrlData.to_dict
+      ~UrlData.to_json
+      ~UrlData.validate
+      ~UrlData.validate_property
+   
+   
+
+   
+   
+   

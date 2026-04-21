@@ -1,0 +1,30 @@
+﻿altair.TopoDataFormat
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: TopoDataFormat
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TopoDataFormat.__init__
+      ~TopoDataFormat.copy
+      ~TopoDataFormat.from_dict
+      ~TopoDataFormat.from_json
+      ~TopoDataFormat.resolve_references
+      ~TopoDataFormat.to_dict
+      ~TopoDataFormat.to_json
+      ~TopoDataFormat.validate
+      ~TopoDataFormat.validate_property
+   
+   
+
+   
+   
+   

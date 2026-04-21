@@ -1,0 +1,41 @@
+﻿altair.theme.AutoSizeParamsKwds
+===============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: AutoSizeParamsKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AutoSizeParamsKwds.__init__
+      ~AutoSizeParamsKwds.clear
+      ~AutoSizeParamsKwds.copy
+      ~AutoSizeParamsKwds.fromkeys
+      ~AutoSizeParamsKwds.get
+      ~AutoSizeParamsKwds.items
+      ~AutoSizeParamsKwds.keys
+      ~AutoSizeParamsKwds.pop
+      ~AutoSizeParamsKwds.popitem
+      ~AutoSizeParamsKwds.setdefault
+      ~AutoSizeParamsKwds.update
+      ~AutoSizeParamsKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AutoSizeParamsKwds.contains
+      ~AutoSizeParamsKwds.resize
+      ~AutoSizeParamsKwds.type
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.TimeInterval
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: TimeInterval
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TimeInterval.__init__
+      ~TimeInterval.copy
+      ~TimeInterval.from_dict
+      ~TimeInterval.from_json
+      ~TimeInterval.resolve_references
+      ~TimeInterval.to_dict
+      ~TimeInterval.to_json
+      ~TimeInterval.validate
+      ~TimeInterval.validate_property
+   
+   
+
+   
+   
+   

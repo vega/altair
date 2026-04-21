@@ -1,0 +1,30 @@
+﻿altair.ConditionalValueDefnumber
+================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalValueDefnumber
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalValueDefnumber.__init__
+      ~ConditionalValueDefnumber.copy
+      ~ConditionalValueDefnumber.from_dict
+      ~ConditionalValueDefnumber.from_json
+      ~ConditionalValueDefnumber.resolve_references
+      ~ConditionalValueDefnumber.to_dict
+      ~ConditionalValueDefnumber.to_json
+      ~ConditionalValueDefnumber.validate
+      ~ConditionalValueDefnumber.validate_property
+   
+   
+
+   
+   
+   

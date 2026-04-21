@@ -1,0 +1,48 @@
+﻿altair.theme.DateTimeKwds
+=========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: DateTimeKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DateTimeKwds.__init__
+      ~DateTimeKwds.clear
+      ~DateTimeKwds.copy
+      ~DateTimeKwds.fromkeys
+      ~DateTimeKwds.get
+      ~DateTimeKwds.items
+      ~DateTimeKwds.keys
+      ~DateTimeKwds.pop
+      ~DateTimeKwds.popitem
+      ~DateTimeKwds.setdefault
+      ~DateTimeKwds.update
+      ~DateTimeKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~DateTimeKwds.date
+      ~DateTimeKwds.day
+      ~DateTimeKwds.hours
+      ~DateTimeKwds.milliseconds
+      ~DateTimeKwds.minutes
+      ~DateTimeKwds.month
+      ~DateTimeKwds.quarter
+      ~DateTimeKwds.seconds
+      ~DateTimeKwds.utc
+      ~DateTimeKwds.year
+   
+   

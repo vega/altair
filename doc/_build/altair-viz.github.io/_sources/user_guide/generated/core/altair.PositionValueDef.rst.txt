@@ -1,0 +1,30 @@
+﻿altair.PositionValueDef
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: PositionValueDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PositionValueDef.__init__
+      ~PositionValueDef.copy
+      ~PositionValueDef.from_dict
+      ~PositionValueDef.from_json
+      ~PositionValueDef.resolve_references
+      ~PositionValueDef.to_dict
+      ~PositionValueDef.to_json
+      ~PositionValueDef.validate
+      ~PositionValueDef.validate_property
+   
+   
+
+   
+   
+   

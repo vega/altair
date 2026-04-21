@@ -1,0 +1,6 @@
+﻿altair.typing.ChartType
+=======================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChartType

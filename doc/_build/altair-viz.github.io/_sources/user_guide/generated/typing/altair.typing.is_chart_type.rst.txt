@@ -1,0 +1,6 @@
+﻿altair.typing.is\_chart\_type
+=============================
+
+.. currentmodule:: altair.typing
+
+.. autofunction:: is_chart_type

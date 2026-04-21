@@ -1,0 +1,30 @@
+﻿altair.VConcatSpecGenericSpec
+=============================
+
+.. currentmodule:: altair
+
+.. autoclass:: VConcatSpecGenericSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~VConcatSpecGenericSpec.__init__
+      ~VConcatSpecGenericSpec.copy
+      ~VConcatSpecGenericSpec.from_dict
+      ~VConcatSpecGenericSpec.from_json
+      ~VConcatSpecGenericSpec.resolve_references
+      ~VConcatSpecGenericSpec.to_dict
+      ~VConcatSpecGenericSpec.to_json
+      ~VConcatSpecGenericSpec.validate
+      ~VConcatSpecGenericSpec.validate_property
+   
+   
+
+   
+   
+   

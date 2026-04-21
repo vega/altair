@@ -1,0 +1,30 @@
+﻿altair.SelectionParameter
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: SelectionParameter
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SelectionParameter.__init__
+      ~SelectionParameter.copy
+      ~SelectionParameter.from_dict
+      ~SelectionParameter.from_json
+      ~SelectionParameter.resolve_references
+      ~SelectionParameter.to_dict
+      ~SelectionParameter.to_json
+      ~SelectionParameter.validate
+      ~SelectionParameter.validate_property
+   
+   
+
+   
+   
+   

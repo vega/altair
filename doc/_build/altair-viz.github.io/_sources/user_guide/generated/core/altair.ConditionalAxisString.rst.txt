@@ -1,0 +1,30 @@
+﻿altair.ConditionalAxisString
+============================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalAxisString
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalAxisString.__init__
+      ~ConditionalAxisString.copy
+      ~ConditionalAxisString.from_dict
+      ~ConditionalAxisString.from_json
+      ~ConditionalAxisString.resolve_references
+      ~ConditionalAxisString.to_dict
+      ~ConditionalAxisString.to_json
+      ~ConditionalAxisString.validate
+      ~ConditionalAxisString.validate_property
+   
+   
+
+   
+   
+   

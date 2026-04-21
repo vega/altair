@@ -1,0 +1,30 @@
+﻿altair.AllSortString
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: AllSortString
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AllSortString.__init__
+      ~AllSortString.copy
+      ~AllSortString.from_dict
+      ~AllSortString.from_json
+      ~AllSortString.resolve_references
+      ~AllSortString.to_dict
+      ~AllSortString.to_json
+      ~AllSortString.validate
+      ~AllSortString.validate_property
+   
+   
+
+   
+   
+   

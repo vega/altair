@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelFillOpacity
+================================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelFillOpacity

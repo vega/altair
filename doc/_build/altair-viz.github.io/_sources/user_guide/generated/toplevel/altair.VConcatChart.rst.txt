@@ -1,0 +1,127 @@
+﻿altair.VConcatChart
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: VConcatChart
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~VConcatChart.__init__
+      ~VConcatChart.add_params
+      ~VConcatChart.add_selection
+      ~VConcatChart.configure
+      ~VConcatChart.configure_arc
+      ~VConcatChart.configure_area
+      ~VConcatChart.configure_axis
+      ~VConcatChart.configure_axisBand
+      ~VConcatChart.configure_axisBottom
+      ~VConcatChart.configure_axisDiscrete
+      ~VConcatChart.configure_axisLeft
+      ~VConcatChart.configure_axisPoint
+      ~VConcatChart.configure_axisQuantitative
+      ~VConcatChart.configure_axisRight
+      ~VConcatChart.configure_axisTemporal
+      ~VConcatChart.configure_axisTop
+      ~VConcatChart.configure_axisX
+      ~VConcatChart.configure_axisXBand
+      ~VConcatChart.configure_axisXDiscrete
+      ~VConcatChart.configure_axisXPoint
+      ~VConcatChart.configure_axisXQuantitative
+      ~VConcatChart.configure_axisXTemporal
+      ~VConcatChart.configure_axisY
+      ~VConcatChart.configure_axisYBand
+      ~VConcatChart.configure_axisYDiscrete
+      ~VConcatChart.configure_axisYPoint
+      ~VConcatChart.configure_axisYQuantitative
+      ~VConcatChart.configure_axisYTemporal
+      ~VConcatChart.configure_bar
+      ~VConcatChart.configure_boxplot
+      ~VConcatChart.configure_circle
+      ~VConcatChart.configure_concat
+      ~VConcatChart.configure_errorband
+      ~VConcatChart.configure_errorbar
+      ~VConcatChart.configure_facet
+      ~VConcatChart.configure_geoshape
+      ~VConcatChart.configure_header
+      ~VConcatChart.configure_headerColumn
+      ~VConcatChart.configure_headerFacet
+      ~VConcatChart.configure_headerRow
+      ~VConcatChart.configure_image
+      ~VConcatChart.configure_legend
+      ~VConcatChart.configure_line
+      ~VConcatChart.configure_mark
+      ~VConcatChart.configure_point
+      ~VConcatChart.configure_projection
+      ~VConcatChart.configure_range
+      ~VConcatChart.configure_rect
+      ~VConcatChart.configure_rule
+      ~VConcatChart.configure_scale
+      ~VConcatChart.configure_selection
+      ~VConcatChart.configure_square
+      ~VConcatChart.configure_text
+      ~VConcatChart.configure_tick
+      ~VConcatChart.configure_title
+      ~VConcatChart.configure_tooltipFormat
+      ~VConcatChart.configure_trail
+      ~VConcatChart.configure_view
+      ~VConcatChart.copy
+      ~VConcatChart.display
+      ~VConcatChart.from_dict
+      ~VConcatChart.from_json
+      ~VConcatChart.interactive
+      ~VConcatChart.open_editor
+      ~VConcatChart.project
+      ~VConcatChart.properties
+      ~VConcatChart.repeat
+      ~VConcatChart.resolve_axis
+      ~VConcatChart.resolve_legend
+      ~VConcatChart.resolve_references
+      ~VConcatChart.resolve_scale
+      ~VConcatChart.save
+      ~VConcatChart.serve
+      ~VConcatChart.show
+      ~VConcatChart.to_dict
+      ~VConcatChart.to_html
+      ~VConcatChart.to_json
+      ~VConcatChart.to_url
+      ~VConcatChart.transform_aggregate
+      ~VConcatChart.transform_bin
+      ~VConcatChart.transform_calculate
+      ~VConcatChart.transform_density
+      ~VConcatChart.transform_extent
+      ~VConcatChart.transform_filter
+      ~VConcatChart.transform_flatten
+      ~VConcatChart.transform_fold
+      ~VConcatChart.transform_impute
+      ~VConcatChart.transform_joinaggregate
+      ~VConcatChart.transform_loess
+      ~VConcatChart.transform_lookup
+      ~VConcatChart.transform_pivot
+      ~VConcatChart.transform_quantile
+      ~VConcatChart.transform_regression
+      ~VConcatChart.transform_sample
+      ~VConcatChart.transform_stack
+      ~VConcatChart.transform_timeunit
+      ~VConcatChart.transform_window
+      ~VConcatChart.transformed_data
+      ~VConcatChart.validate
+      ~VConcatChart.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~VConcatChart.data
+   
+   

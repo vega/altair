@@ -1,0 +1,6 @@
+﻿altair.datasets.data
+====================
+
+.. currentmodule:: altair.datasets
+
+.. autodata:: data

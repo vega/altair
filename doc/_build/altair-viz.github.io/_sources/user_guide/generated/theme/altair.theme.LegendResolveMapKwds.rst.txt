@@ -1,0 +1,50 @@
+﻿altair.theme.LegendResolveMapKwds
+=================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: LegendResolveMapKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LegendResolveMapKwds.__init__
+      ~LegendResolveMapKwds.clear
+      ~LegendResolveMapKwds.copy
+      ~LegendResolveMapKwds.fromkeys
+      ~LegendResolveMapKwds.get
+      ~LegendResolveMapKwds.items
+      ~LegendResolveMapKwds.keys
+      ~LegendResolveMapKwds.pop
+      ~LegendResolveMapKwds.popitem
+      ~LegendResolveMapKwds.setdefault
+      ~LegendResolveMapKwds.update
+      ~LegendResolveMapKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LegendResolveMapKwds.angle
+      ~LegendResolveMapKwds.color
+      ~LegendResolveMapKwds.fill
+      ~LegendResolveMapKwds.fillOpacity
+      ~LegendResolveMapKwds.opacity
+      ~LegendResolveMapKwds.shape
+      ~LegendResolveMapKwds.size
+      ~LegendResolveMapKwds.stroke
+      ~LegendResolveMapKwds.strokeDash
+      ~LegendResolveMapKwds.strokeOpacity
+      ~LegendResolveMapKwds.strokeWidth
+      ~LegendResolveMapKwds.time
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.Encoding
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: Encoding
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Encoding.__init__
+      ~Encoding.copy
+      ~Encoding.from_dict
+      ~Encoding.from_json
+      ~Encoding.resolve_references
+      ~Encoding.to_dict
+      ~Encoding.to_json
+      ~Encoding.validate
+      ~Encoding.validate_property
+   
+   
+
+   
+   
+   

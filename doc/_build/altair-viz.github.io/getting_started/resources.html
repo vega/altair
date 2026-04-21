@@ -1,0 +1,667 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Resources &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'getting_started/resources';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Project Philosophy" href="project_philosophy.html" />
+    <link rel="prev" title="Getting Help" href="getting_help.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../gallery/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="starting.html">Basic Statistical Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_philosophy.html">Project Philosophy</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="overview.html" class="nav-link">Overview</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Resources</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="resources">
+<span id="id1"></span><h1>Resources<a class="headerlink" href="#resources" title="Link to this heading">#</a></h1>
+<p>We hope to make it easier to find learning resources and projects related to Altair by listing them here. If you know of a project that should be added, please let us know by opening an <a class="reference external" href="https://github.com/vega/altair/issues">Issue on GitHub</a>.</p>
+<section id="learning-material">
+<span id="learning-resources"></span><h2>Learning Material<a class="headerlink" href="#learning-material" title="Link to this heading">#</a></h2>
+<p>This is a list of learning material that complements the official documentation and can help you learn more about how to use Altair.</p>
+<section id="visualization-curriculum">
+<h3><a class="reference external" href="https://uwdata.github.io/visualization-curriculum">Visualization Curriculum</a><a class="headerlink" href="#visualization-curriculum" title="Link to this heading">#</a></h3>
+<p>A data visualization curriculum from the UW data group that developed Vega-Lite.</p>
+</section>
+<section id="jupyter-notebook-tutorials">
+<h3><a class="reference external" href="https://github.com/altair-viz/altair_notebooks">Jupyter Notebook Tutorials</a><a class="headerlink" href="#jupyter-notebook-tutorials" title="Link to this heading">#</a></h3>
+<p>Jupyter Notebook tutorials and examples from the Altair authors.</p>
+</section>
+<section id="pycon-tutorial">
+<h3><a class="reference external" href="https://altair-viz.github.io/altair-tutorial">Pycon Tutorial</a><a class="headerlink" href="#pycon-tutorial" title="Link to this heading">#</a></h3>
+<p>Altair tutorial given at PyCon 2018 by the Altair author Jake VanderPlas.</p>
+</section>
+<section id="data-visualization-course">
+<h3><a class="reference external" href="https://viz-learn.mds.ubc.ca">Data Visualization Course</a><a class="headerlink" href="#data-visualization-course" title="Link to this heading">#</a></h3>
+<p>This course covers how to create common statistical visualizations, tell stories with data, create geographical visualizations, and bring plots to life by adding interactive elements. Created at the University of British Columbia and can either be audited or taken as part of the <a class="reference external" href="https://extendedlearning.ubc.ca/programs/key-capabilities-data-science">Key Capabilities for Data Science</a> certificate program.</p>
+</section>
+<section id="brief-introduction-videos">
+<h3><a class="reference external" href="https://calmcode.io/altair/introduction.html">Brief Introduction Videos</a><a class="headerlink" href="#brief-introduction-videos" title="Link to this heading">#</a></h3>
+<p>Calmcode provides a few videos that give a brief overview of the Altair library.</p>
+</section>
+</section>
+<section id="related-projects">
+<span id="altair-ecosystem"></span><h2>Related Projects<a class="headerlink" href="#related-projects" title="Link to this heading">#</a></h2>
+<p>This is a list of projects which are directly related to Altair. There are many other packages that can be used in tandem with Altair, e.g. <a class="reference external" href="https://stackoverflow.com/questions/49833866/making-dashboards-using-altair">dashboard packages which you can read more about in the answers to this StackOverflow question</a>.</p>
+<section id="vega-lite">
+<h3><a class="reference external" href="https://vega.github.io/vega-lite">Vega-Lite</a><a class="headerlink" href="#vega-lite" title="Link to this heading">#</a></h3>
+<p>The higher-level visualization grammar that Altair implements in Python.</p>
+</section>
+<section id="vl-convert">
+<h3><a class="reference external" href="https://github.com/vega/vl-convert">vl-convert</a><a class="headerlink" href="#vl-convert" title="Link to this heading">#</a></h3>
+<p>Python library for converting Altair/Vega-Lite chart specifications into static images (SVG or PNG) or Vega chart specifications without any external dependencies.</p>
+</section>
+<section id="vegafusion">
+<h3><a class="reference external" href="https://vegafusion.io/">VegaFusion</a><a class="headerlink" href="#vegafusion" title="Link to this heading">#</a></h3>
+<p>VegaFusion provides server-side scaling for Altair charts, which can accelerate interactive charts, extract transformed data, and perform data-intensive aggregations on the server and prune unused columns from the source dataset yielding smaller size visualizations.</p>
+</section>
+<section id="altair-data-server">
+<h3><a class="reference external" href="https://github.com/altair-viz/altair_data_server">altair_data_server</a><a class="headerlink" href="#altair-data-server" title="Link to this heading">#</a></h3>
+<p>Data transformer plugin that transparently serves data for charts.</p>
+</section>
+<section id="altair-pandas">
+<h3><a class="reference external" href="https://github.com/altair-viz/altair_pandas">altair_pandas</a><a class="headerlink" href="#altair-pandas" title="Link to this heading">#</a></h3>
+<p>Altair backend for the pandas plotting API.</p>
+</section>
+<section id="altair-recipes">
+<h3><a class="reference external" href="https://github.com/piccolbo/altair_recipes">altair_recipes</a><a class="headerlink" href="#altair-recipes" title="Link to this heading">#</a></h3>
+<p>altair_recipes provides a collection of ready-made statistical graphics for Altair. See the <a class="reference external" href="https://altair-recipes.readthedocs.io/en/latest/">docs</a>.</p>
+</section>
+<section id="nx-altair">
+<h3><a class="reference external" href="https://github.com/Zsailer/nx_altair">nx_altair</a><a class="headerlink" href="#nx-altair" title="Link to this heading">#</a></h3>
+<p>nx_altair is a library for drawing <a class="reference external" href="https://networkx.github.io/">NetworkX</a> graphs using Altair. It offers a similar draw API as NetworkX but returns Altair Charts instead. This allows users to apply Altair’s rich interactive API to networks graphs. See the <a class="reference external" href="https://github.com/Zsailer/nx_altair/blob/master/examples/nx_altair-tutorial.ipynb">docs</a>.</p>
+</section>
+<section id="altair-ally">
+<h3><a class="reference external" href="https://github.com/vega/altair_ally">Altair Ally</a><a class="headerlink" href="#altair-ally" title="Link to this heading">#</a></h3>
+<p>Altair Ally is a companion package to Altair, which provides a few shortcuts to create common plots for exploratory data analysis, particularly those involving visualization of an entire dataframe.</p>
+</section>
+<section id="gif">
+<h3><a class="reference external" href="https://github.com/maxhumber/gif">gif</a><a class="headerlink" href="#gif" title="Link to this heading">#</a></h3>
+<p>gif is the extension for Altair and matplotlib animations. The library provides a simple, high-level decorator interface to create frames in a regular for-loop that can be stitched together on save. See the <a class="reference external" href="https://github.com/maxhumber/gif">docs</a>.</p>
+</section>
+<section id="altair-in-r">
+<h3><a class="reference external" href="https://github.com/vegawidget/altair">Altair in R</a><a class="headerlink" href="#altair-in-r" title="Link to this heading">#</a></h3>
+<p>Altair in R provides an R interface to the Altair Python package. See the <a class="reference external" href="https://vegawidget.github.io/altair/">docs</a>.</p>
+</section>
+<section id="altair-upset">
+<h3><a class="reference external" href="https://altair-upset.readthedocs.io/en/latest/">Altair-upset</a><a class="headerlink" href="#altair-upset" title="Link to this heading">#</a></h3>
+<p>Create beautiful and interactive UpSet plots using Altair. UpSet plots are a powerful alternative to Venn diagrams for visualizing set intersections, especially when dealing with many sets. The library supports both Pandas and Polars DataFrames, making it flexible for different data processing workflows.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="getting_help.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Getting Help</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="project_philosophy.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Project Philosophy</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-material">Learning Material</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-curriculum">Visualization Curriculum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-notebook-tutorials">Jupyter Notebook Tutorials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycon-tutorial">Pycon Tutorial</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-visualization-course">Data Visualization Course</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#brief-introduction-videos">Brief Introduction Videos</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-projects">Related Projects</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vega-lite">Vega-Lite</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vl-convert">vl-convert</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vegafusion">VegaFusion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#altair-data-server">altair_data_server</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#altair-pandas">altair_pandas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#altair-recipes">altair_recipes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nx-altair">nx_altair</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#altair-ally">Altair Ally</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gif">gif</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#altair-in-r">Altair in R</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#altair-upset">Altair-upset</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

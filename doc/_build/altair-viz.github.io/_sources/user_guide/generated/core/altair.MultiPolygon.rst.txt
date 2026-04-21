@@ -1,0 +1,30 @@
+﻿altair.MultiPolygon
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: MultiPolygon
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MultiPolygon.__init__
+      ~MultiPolygon.copy
+      ~MultiPolygon.from_dict
+      ~MultiPolygon.from_json
+      ~MultiPolygon.resolve_references
+      ~MultiPolygon.to_dict
+      ~MultiPolygon.to_json
+      ~MultiPolygon.validate
+      ~MultiPolygon.validate_property
+   
+   
+
+   
+   
+   

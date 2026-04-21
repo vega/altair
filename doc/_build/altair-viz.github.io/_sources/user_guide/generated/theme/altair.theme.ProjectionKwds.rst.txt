@@ -1,0 +1,62 @@
+﻿altair.theme.ProjectionKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ProjectionKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ProjectionKwds.__init__
+      ~ProjectionKwds.clear
+      ~ProjectionKwds.copy
+      ~ProjectionKwds.fromkeys
+      ~ProjectionKwds.get
+      ~ProjectionKwds.items
+      ~ProjectionKwds.keys
+      ~ProjectionKwds.pop
+      ~ProjectionKwds.popitem
+      ~ProjectionKwds.setdefault
+      ~ProjectionKwds.update
+      ~ProjectionKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ProjectionKwds.center
+      ~ProjectionKwds.clipAngle
+      ~ProjectionKwds.clipExtent
+      ~ProjectionKwds.coefficient
+      ~ProjectionKwds.distance
+      ~ProjectionKwds.extent
+      ~ProjectionKwds.fit
+      ~ProjectionKwds.fraction
+      ~ProjectionKwds.lobes
+      ~ProjectionKwds.parallel
+      ~ProjectionKwds.parallels
+      ~ProjectionKwds.pointRadius
+      ~ProjectionKwds.precision
+      ~ProjectionKwds.radius
+      ~ProjectionKwds.ratio
+      ~ProjectionKwds.reflectX
+      ~ProjectionKwds.reflectY
+      ~ProjectionKwds.rotate
+      ~ProjectionKwds.scale
+      ~ProjectionKwds.size
+      ~ProjectionKwds.spacing
+      ~ProjectionKwds.tilt
+      ~ProjectionKwds.translate
+      ~ProjectionKwds.type
+   
+   

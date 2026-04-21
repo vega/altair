@@ -1,0 +1,30 @@
+﻿altair.StrokeCap
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeCap
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeCap.__init__
+      ~StrokeCap.copy
+      ~StrokeCap.from_dict
+      ~StrokeCap.from_json
+      ~StrokeCap.resolve_references
+      ~StrokeCap.to_dict
+      ~StrokeCap.to_json
+      ~StrokeCap.validate
+      ~StrokeCap.validate_property
+   
+   
+
+   
+   
+   

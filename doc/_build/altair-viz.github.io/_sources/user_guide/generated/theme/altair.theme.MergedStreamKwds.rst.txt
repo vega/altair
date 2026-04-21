@@ -1,0 +1,46 @@
+﻿altair.theme.MergedStreamKwds
+=============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: MergedStreamKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MergedStreamKwds.__init__
+      ~MergedStreamKwds.clear
+      ~MergedStreamKwds.copy
+      ~MergedStreamKwds.fromkeys
+      ~MergedStreamKwds.get
+      ~MergedStreamKwds.items
+      ~MergedStreamKwds.keys
+      ~MergedStreamKwds.pop
+      ~MergedStreamKwds.popitem
+      ~MergedStreamKwds.setdefault
+      ~MergedStreamKwds.update
+      ~MergedStreamKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~MergedStreamKwds.merge
+      ~MergedStreamKwds.between
+      ~MergedStreamKwds.consume
+      ~MergedStreamKwds.debounce
+      ~MergedStreamKwds.filter
+      ~MergedStreamKwds.markname
+      ~MergedStreamKwds.marktype
+      ~MergedStreamKwds.throttle
+   
+   

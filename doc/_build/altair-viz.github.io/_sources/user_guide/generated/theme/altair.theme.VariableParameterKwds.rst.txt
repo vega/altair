@@ -1,0 +1,43 @@
+﻿altair.theme.VariableParameterKwds
+==================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: VariableParameterKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~VariableParameterKwds.__init__
+      ~VariableParameterKwds.clear
+      ~VariableParameterKwds.copy
+      ~VariableParameterKwds.fromkeys
+      ~VariableParameterKwds.get
+      ~VariableParameterKwds.items
+      ~VariableParameterKwds.keys
+      ~VariableParameterKwds.pop
+      ~VariableParameterKwds.popitem
+      ~VariableParameterKwds.setdefault
+      ~VariableParameterKwds.update
+      ~VariableParameterKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~VariableParameterKwds.name
+      ~VariableParameterKwds.bind
+      ~VariableParameterKwds.expr
+      ~VariableParameterKwds.react
+      ~VariableParameterKwds.value
+   
+   

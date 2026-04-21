@@ -1,0 +1,30 @@
+﻿altair.ConditionalPredicateValueDefFontWeightnullExprRef
+========================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalPredicateValueDefFontWeightnullExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalPredicateValueDefFontWeightnullExprRef.__init__
+      ~ConditionalPredicateValueDefFontWeightnullExprRef.copy
+      ~ConditionalPredicateValueDefFontWeightnullExprRef.from_dict
+      ~ConditionalPredicateValueDefFontWeightnullExprRef.from_json
+      ~ConditionalPredicateValueDefFontWeightnullExprRef.resolve_references
+      ~ConditionalPredicateValueDefFontWeightnullExprRef.to_dict
+      ~ConditionalPredicateValueDefFontWeightnullExprRef.to_json
+      ~ConditionalPredicateValueDefFontWeightnullExprRef.validate
+      ~ConditionalPredicateValueDefFontWeightnullExprRef.validate_property
+   
+   
+
+   
+   
+   

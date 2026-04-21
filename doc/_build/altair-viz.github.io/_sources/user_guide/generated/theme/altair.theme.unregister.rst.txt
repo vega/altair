@@ -1,0 +1,6 @@
+﻿altair.theme.unregister
+=======================
+
+.. currentmodule:: altair.theme
+
+.. autofunction:: unregister

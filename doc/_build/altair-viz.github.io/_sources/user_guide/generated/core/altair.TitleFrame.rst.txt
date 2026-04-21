@@ -1,0 +1,30 @@
+﻿altair.TitleFrame
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: TitleFrame
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TitleFrame.__init__
+      ~TitleFrame.copy
+      ~TitleFrame.from_dict
+      ~TitleFrame.from_json
+      ~TitleFrame.resolve_references
+      ~TitleFrame.to_dict
+      ~TitleFrame.to_json
+      ~TitleFrame.validate
+      ~TitleFrame.validate_property
+   
+   
+
+   
+   
+   

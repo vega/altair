@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelLatitude
+=============================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelLatitude

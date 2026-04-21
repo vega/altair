@@ -1,0 +1,40 @@
+﻿altair.theme.RowColKwds
+=======================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: RowColKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RowColKwds.__init__
+      ~RowColKwds.clear
+      ~RowColKwds.copy
+      ~RowColKwds.fromkeys
+      ~RowColKwds.get
+      ~RowColKwds.items
+      ~RowColKwds.keys
+      ~RowColKwds.pop
+      ~RowColKwds.popitem
+      ~RowColKwds.setdefault
+      ~RowColKwds.update
+      ~RowColKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RowColKwds.column
+      ~RowColKwds.row
+   
+   

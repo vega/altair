@@ -1,0 +1,127 @@
+﻿altair.ConcatChart
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConcatChart
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConcatChart.__init__
+      ~ConcatChart.add_params
+      ~ConcatChart.add_selection
+      ~ConcatChart.configure
+      ~ConcatChart.configure_arc
+      ~ConcatChart.configure_area
+      ~ConcatChart.configure_axis
+      ~ConcatChart.configure_axisBand
+      ~ConcatChart.configure_axisBottom
+      ~ConcatChart.configure_axisDiscrete
+      ~ConcatChart.configure_axisLeft
+      ~ConcatChart.configure_axisPoint
+      ~ConcatChart.configure_axisQuantitative
+      ~ConcatChart.configure_axisRight
+      ~ConcatChart.configure_axisTemporal
+      ~ConcatChart.configure_axisTop
+      ~ConcatChart.configure_axisX
+      ~ConcatChart.configure_axisXBand
+      ~ConcatChart.configure_axisXDiscrete
+      ~ConcatChart.configure_axisXPoint
+      ~ConcatChart.configure_axisXQuantitative
+      ~ConcatChart.configure_axisXTemporal
+      ~ConcatChart.configure_axisY
+      ~ConcatChart.configure_axisYBand
+      ~ConcatChart.configure_axisYDiscrete
+      ~ConcatChart.configure_axisYPoint
+      ~ConcatChart.configure_axisYQuantitative
+      ~ConcatChart.configure_axisYTemporal
+      ~ConcatChart.configure_bar
+      ~ConcatChart.configure_boxplot
+      ~ConcatChart.configure_circle
+      ~ConcatChart.configure_concat
+      ~ConcatChart.configure_errorband
+      ~ConcatChart.configure_errorbar
+      ~ConcatChart.configure_facet
+      ~ConcatChart.configure_geoshape
+      ~ConcatChart.configure_header
+      ~ConcatChart.configure_headerColumn
+      ~ConcatChart.configure_headerFacet
+      ~ConcatChart.configure_headerRow
+      ~ConcatChart.configure_image
+      ~ConcatChart.configure_legend
+      ~ConcatChart.configure_line
+      ~ConcatChart.configure_mark
+      ~ConcatChart.configure_point
+      ~ConcatChart.configure_projection
+      ~ConcatChart.configure_range
+      ~ConcatChart.configure_rect
+      ~ConcatChart.configure_rule
+      ~ConcatChart.configure_scale
+      ~ConcatChart.configure_selection
+      ~ConcatChart.configure_square
+      ~ConcatChart.configure_text
+      ~ConcatChart.configure_tick
+      ~ConcatChart.configure_title
+      ~ConcatChart.configure_tooltipFormat
+      ~ConcatChart.configure_trail
+      ~ConcatChart.configure_view
+      ~ConcatChart.copy
+      ~ConcatChart.display
+      ~ConcatChart.from_dict
+      ~ConcatChart.from_json
+      ~ConcatChart.interactive
+      ~ConcatChart.open_editor
+      ~ConcatChart.project
+      ~ConcatChart.properties
+      ~ConcatChart.repeat
+      ~ConcatChart.resolve_axis
+      ~ConcatChart.resolve_legend
+      ~ConcatChart.resolve_references
+      ~ConcatChart.resolve_scale
+      ~ConcatChart.save
+      ~ConcatChart.serve
+      ~ConcatChart.show
+      ~ConcatChart.to_dict
+      ~ConcatChart.to_html
+      ~ConcatChart.to_json
+      ~ConcatChart.to_url
+      ~ConcatChart.transform_aggregate
+      ~ConcatChart.transform_bin
+      ~ConcatChart.transform_calculate
+      ~ConcatChart.transform_density
+      ~ConcatChart.transform_extent
+      ~ConcatChart.transform_filter
+      ~ConcatChart.transform_flatten
+      ~ConcatChart.transform_fold
+      ~ConcatChart.transform_impute
+      ~ConcatChart.transform_joinaggregate
+      ~ConcatChart.transform_loess
+      ~ConcatChart.transform_lookup
+      ~ConcatChart.transform_pivot
+      ~ConcatChart.transform_quantile
+      ~ConcatChart.transform_regression
+      ~ConcatChart.transform_sample
+      ~ConcatChart.transform_stack
+      ~ConcatChart.transform_timeunit
+      ~ConcatChart.transform_window
+      ~ConcatChart.transformed_data
+      ~ConcatChart.validate
+      ~ConcatChart.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ConcatChart.data
+   
+   

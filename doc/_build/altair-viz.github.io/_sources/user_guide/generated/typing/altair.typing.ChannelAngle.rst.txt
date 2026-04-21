@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelAngle
+==========================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelAngle

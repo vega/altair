@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Scatter Plot and Histogram with Interval Selection &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/scatter_with_histogram';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Scatter Plot and Histogram with Interval Selection</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="scatter-plot-and-histogram-with-interval-selection">
+<span id="gallery-scatter-with-histogram"></span><h1>Scatter Plot and Histogram with Interval Selection<a class="headerlink" href="#scatter-plot-and-histogram-with-interval-selection" title="Link to this heading">#</a></h1>
+<p>This example shows how to link a scatter plot and a histogram
+together such that an interval selection in the histogram will
+plot the selected values in the scatter plot.</p>
+<p>Note that both subplots need to know about the <cite>mbin</cite> field created
+by the <cite>transform_bin</cite> method. In order to achieve this, the data is
+not passed to the <cite>Chart()</cite> instances creating the subplots, but
+directly in the <cite>hconcat()</cite> function, which joins the two plots together.</p>
+
+<div id="scatter_with_histogram-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "hconcat": [{"mark": {"type": "point", "color": "black", "filled": true}, "encoding": {"x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}}, "height": 300, "transform": [{"filter": {"param": "param_c97a99acfc68b794"}}], "width": 300}, {"mark": {"type": "bar"}, "encoding": {"color": {"condition": [{"param": "param_c97a99acfc68b794", "value": "black"}], "value": "lightgray"}, "x": {"field": "mbin", "type": "nominal"}, "y": {"aggregate": "count", "type": "quantitative"}}, "height": 300, "name": "view_d4726e54a1fc894c_1", "width": 300}], "data": {"name": "data-198d8cc8390a00fb297ec76e4d400674"}, "params": [{"name": "param_c97a99acfc68b794", "select": {"type": "interval", "encodings": ["x"]}, "views": ["view_d4726e54a1fc894c_1"]}], "transform": [{"bin": {"maxbins": 20}, "field": "m", "as": "mbin"}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-198d8cc8390a00fb297ec76e4d400674": [{"x": -0.8289950109220723, "y": -1.594427658794367, "m": 15.92617754753164}, {"x": -0.5601810401969696, "y": -0.5993750229537729, "m": 16.90941664047013}, {"x": 0.7472936051232618, "y": 0.005243699718183166, "m": 13.601432426180859}, {"x": 0.6103702654334648, "y": 0.046980593764742055, "m": 15.56296923669057}, {"x": -0.020901593964148132, "y": -0.45006547147924364, "m": 14.349357430878174}, {"x": 0.117327383308782, "y": 0.6228499323474987, "m": 14.512874616235305}, {"x": 1.277664895788425, "y": -1.0676204293825944, "m": 14.40760607576113}, {"x": -0.5915713888358299, "y": -0.1423794850212935, "m": 14.136009230320184}, {"x": 0.5470973811700379, "y": 0.12029563171189886, "m": 15.048521627944828}, {"x": -0.20219265243389406, "y": 0.514438834058749, "m": 14.169049883588961}, {"x": -0.2176812032272203, "y": 0.7116148780888898, "m": 15.270456825779839}, {"x": 1.09877685198719, "y": -1.1246420918378692, "m": 14.949761890550864}, {"x": 0.8254163489880298, "y": -1.5341141707356223, "m": 14.76105195313359}, {"x": 0.8135096360006385, "y": 1.277676821898509, "m": 14.092436337958402}, {"x": 1.305478807154329, "y": 0.33231401197959165, "m": 14.423228669431667}, {"x": 0.02100384163275905, "y": -0.7484865365565536, "m": 15.755391225825756}, {"x": 0.6819529712949639, "y": 1.551151975522523, "m": 15.500917187624381}, {"x": -0.31026675659345604, "y": 0.11567463429285867, "m": 14.022444755201448}, {"x": 0.3241663524884421, "y": 1.1792971840638264, "m": 15.099332305429225}, {"x": -0.13014305436768459, "y": 0.06751848141010895, "m": 15.751387123371789}, {"x": 0.09699596499271819, "y": 2.060747924881987, "m": 13.33059471887863}, {"x": 0.5951570254369136, "y": 1.7553408424432044, "m": 15.543360192379936}, {"x": -0.8182206832334725, "y": -0.2489641484790735, "m": 14.337376241054153}, {"x": 2.0923872756854602, "y": 0.9715709509543554, "m": 15.57059866859316}, {"x": -1.006017381499702, "y": 0.6453759495851475, "m": 14.236740843457483}, {"x": -1.2141886127877322, "y": 1.3686315575323487, "m": 13.19511789933548}, {"x": 1.1581108735000678, "y": -0.9649234605801045, "m": 13.372457562116837}, {"x": 0.7916626939629359, "y": 0.6860514599984393, "m": 15.048084946661382}, {"x": 0.6241198170521551, "y": 1.0584244868495878, "m": 15.259722501721482}, {"x": 0.6283455092642799, "y": -1.7587394864231143, "m": 14.095683374895591}, {"x": -0.012246772846914623, "y": -1.183258512665775, "m": 15.638592458777374}, {"x": -0.8972543714858315, "y": -2.0392321777601006, "m": 13.33847993773104}, {"x": 0.07580455819372633, "y": -0.26940683444455776, "m": 14.933920201352683}, {"x": -0.6771617115121117, "y": 0.7175422557959623, "m": 13.788983800237544}, {"x": 0.9751197334177512, "y": 1.502357052096028, "m": 14.34816389219784}, {"x": -0.14705738150213865, "y": 0.07409478041977519, "m": 15.047398671316413}, {"x": -0.8254971967925115, "y": 1.6286155455712918, "m": 14.139586634716048}, {"x": -0.32138584165299344, "y": -1.3801014582148914, "m": 14.615444455770175}, {"x": 0.41293145427562433, "y": -1.7033824393551547, "m": 16.00629280921444}, {"x": -0.5637245528039747, "y": -0.05554769889661878, "m": 14.423108130476852}, {"x": -0.8222203955664315, "y": 0.3840654489393073, "m": 15.835692112065141}, {"x": 0.2436872114919123, "y": -0.03269474809409311, "m": 13.870293145342382}, {"x": 0.24496657110872277, "y": -2.0674421000398766, "m": 15.529804177915283}, {"x": -0.5069431753711298, "y": -0.08912003951278841, "m": 16.4415686206579}, {"x": -0.4710383056183228, "y": -1.3044695005048532, "m": 12.52835549987271}, {"x": 0.2320499373576363, "y": 0.6696725488300385, "m": 14.203104744529524}, {"x": -1.4480843414973241, "y": 0.36659824609684827, "m": 15.57707212718054}, {"x": -1.4074637743765552, "y": -0.9398797863273552, "m": 14.796954613957007}, {"x": -0.718444221252436, "y": -0.5138669173366935, "m": 15.371145873371308}, {"x": -0.21344715171184725, "y": -1.0592135218889516, "m": 14.396014813284179}, {"x": 0.3109075655980046, "y": -0.06267909727317188, "m": 15.0865897874729}, {"x": 1.475356216949552, "y": 0.9551423205012383, "m": 14.84432276460792}, {"x": 0.8576596232020194, "y": -0.9857260463355437, "m": 16.167782061659807}, {"x": -0.1599385299634271, "y": 0.5040465155178444, "m": 15.254420843301213}, {"x": -0.01901620790268883, "y": -0.5302576183724408, "m": 15.337602662075202}, {"x": -1.0025293646378088, "y": -0.7928728322623442, "m": 14.588123033877533}, {"x": -0.01851313599238993, "y": -0.10703035995455783, "m": 14.512393775927507}, {"x": -0.2886586389201383, "y": -1.035242322419374, "m": 14.567441812180379}, {"x": 0.3227185603380895, "y": -0.553649305347182, "m": 15.394452142378297}, {"x": -0.827230943552323, "y": -1.1978778925888485, "m": 14.579015519179737}, {"x": 0.5193465142411723, "y": 1.9647251329163893, "m": 15.289774856896413}, {"x": 1.5327389130025777, "y": 0.03526355197172861, "m": 17.07540079864544}, {"x": -0.1087601484568576, "y": -0.6997255079925856, "m": 15.871124703431692}, {"x": 0.40171172209894146, "y": 0.213979910734222, "m": 14.673976467832158}, {"x": 0.6901439917111125, "y": -0.11232804969082982, "m": 16.201213922163944}, {"x": -0.40122047188583626, "y": -0.22096959953322298, "m": 14.591924626978448}, {"x": 0.22409248181041677, "y": 0.6141667000434252, "m": 12.961875464822146}, {"x": 0.01259240078179486, "y": 0.7575077100473051, "m": 13.991913689082596}, {"x": 0.09767609854883172, "y": -0.5305011476105275, "m": 13.129208078974145}, {"x": -0.7730097838554665, "y": -0.57581824064468, "m": 14.648486515958691}, {"x": 0.024510174258942714, "y": -0.275051697151644, "m": 15.018418379189551}, {"x": 0.49799829124544975, "y": -2.301921164735585, "m": 16.676437312275283}, {"x": 1.4511436077950417, "y": -1.5151910621985523, "m": 15.326927373764162}, {"x": 0.9592708260852069, "y": 1.3668742674445247, "m": 14.780899471191136}, {"x": 2.1531824575115563, "y": 1.6449677135012837, "m": 15.829405581183488}, {"x": -0.7673475628880495, "y": -0.24903603955637832, "m": 12.788864690992115}, {"x": 0.8723206367206782, "y": 0.5765569630557664, "m": 15.235614558108566}, {"x": 0.18334200573835174, "y": 0.3112501545435361, "m": 15.770865193886968}, {"x": 2.1898029332176723, "y": 3.0788808084552377, "m": 13.52141375422016}, {"x": -0.8082982853551515, "y": 1.1195749114345768, "m": 16.14375404320693}, {"x": -0.8397218421807761, "y": -0.12791759148076653, "m": 15.338496407494414}, {"x": -0.5993926454440222, "y": -0.9555404406004258, "m": 14.584712086099199}, {"x": -2.123895724309807, "y": -1.6064463202575725, "m": 15.632781866106285}, {"x": -0.525755021680761, "y": 0.2034636358672231, "m": 17.270692857804395}, {"x": -0.759132661553698, "y": -0.7563507452843033, "m": 15.181866255058495}, {"x": 0.15039378647620763, "y": -1.4222537095976742, "m": 15.248220586300336}, {"x": 0.34175597577715944, "y": -0.6465728842425266, "m": 14.540639100459757}, {"x": 1.8761708392158862, "y": -1.081548003614395, "m": 14.150155630535208}, {"x": 0.9504238381860503, "y": 1.6871416350725648, "m": 15.830335816544245}, {"x": -0.5769036556624031, "y": 0.8816397569494505, "m": 14.143916174091133}, {"x": -0.898414671348358, "y": -0.007972641316617372, "m": 15.071566237219393}, {"x": 0.4919191715065057, "y": 1.4799441388900259, "m": 14.522342553234884}, {"x": -1.3202332070206422, "y": 0.0773683076476183, "m": 15.478979825746391}, {"x": 1.8314587658543537, "y": -0.8612842013282637, "m": 15.333662105286948}, {"x": 1.179440120721287, "y": 1.5231240772696573, "m": 16.0375399442579}, {"x": -0.4691756521047048, "y": 0.5389100436846587, "m": 14.489983601145253}, {"x": -1.7131345290908775, "y": -1.0372461543264564, "m": 14.730125064706629}, {"x": 1.3538723741654128, "y": -0.1903386780836082, "m": 14.021236284217693}, {"x": -0.11453984525261789, "y": -0.8756182533847572, "m": 14.555706739923888}, {"x": 1.2378163119734618, "y": -1.382799730964336, "m": 15.377300493044853}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#scatter_with_histogram-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="method" for="sd-tab-item-0">
+Method syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span><span class="n">m</span><span class="p">})</span>
+
+<span class="c1"># interval selection in the scatter plot</span>
+<span class="n">pts</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_interval</span><span class="p">(</span><span class="n">encodings</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">])</span>
+
+<span class="c1"># left panel: scatter plot</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">()</span><span class="o">.</span><span class="n">mark_point</span><span class="p">(</span><span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">pts</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">300</span>
+<span class="p">)</span>
+
+<span class="c1"># right panel: histogram</span>
+<span class="n">mag</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">()</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;mbin:N&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;count()&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;black&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;lightgray&quot;</span><span class="p">))</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">300</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span>
+
+<span class="c1"># build the chart:</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span>
+    <span class="n">points</span><span class="p">,</span>
+    <span class="n">mag</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">source</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_bin</span><span class="p">(</span>
+    <span class="s2">&quot;mbin&quot;</span><span class="p">,</span>
+    <span class="n">field</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span>
+    <span class="nb">bin</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Bin</span><span class="p">(</span><span class="n">maxbins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="attribute" for="sd-tab-item-1">
+Attribute syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span><span class="n">m</span><span class="p">})</span>
+
+<span class="c1"># interval selection in the scatter plot</span>
+<span class="n">pts</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_interval</span><span class="p">(</span><span class="n">encodings</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">])</span>
+
+<span class="c1"># left panel: scatter plot</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">()</span><span class="o">.</span><span class="n">mark_point</span><span class="p">(</span><span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="n">pts</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">300</span>
+<span class="p">)</span>
+
+<span class="c1"># right panel: histogram</span>
+<span class="n">mag</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">()</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;mbin:N&#39;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;count()&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;black&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;lightgray&quot;</span><span class="p">))</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">300</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span>
+
+<span class="c1"># build the chart:</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span>
+    <span class="n">points</span><span class="p">,</span>
+    <span class="n">mag</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">source</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_bin</span><span class="p">(</span>
+    <span class="s2">&quot;mbin&quot;</span><span class="p">,</span>
+    <span class="n">field</span><span class="o">=</span><span class="s2">&quot;m&quot;</span><span class="p">,</span>
+    <span class="nb">bin</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Bin</span><span class="p">(</span><span class="n">maxbins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="c1"># No channel encoding options are specified in this chart</span>
+<span class="c1"># so the code is the same as for the method-based syntax.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

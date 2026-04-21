@@ -1,0 +1,30 @@
+﻿altair.SingleTimeUnit
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: SingleTimeUnit
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SingleTimeUnit.__init__
+      ~SingleTimeUnit.copy
+      ~SingleTimeUnit.from_dict
+      ~SingleTimeUnit.from_json
+      ~SingleTimeUnit.resolve_references
+      ~SingleTimeUnit.to_dict
+      ~SingleTimeUnit.to_json
+      ~SingleTimeUnit.validate
+      ~SingleTimeUnit.validate_property
+   
+   
+
+   
+   
+   

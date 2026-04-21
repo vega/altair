@@ -1,0 +1,30 @@
+﻿altair.Element
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: Element
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Element.__init__
+      ~Element.copy
+      ~Element.from_dict
+      ~Element.from_json
+      ~Element.resolve_references
+      ~Element.to_dict
+      ~Element.to_json
+      ~Element.validate
+      ~Element.validate_property
+   
+   
+
+   
+   
+   

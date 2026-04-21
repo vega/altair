@@ -1,0 +1,127 @@
+﻿altair.RepeatChart
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: RepeatChart
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RepeatChart.__init__
+      ~RepeatChart.add_params
+      ~RepeatChart.add_selection
+      ~RepeatChart.configure
+      ~RepeatChart.configure_arc
+      ~RepeatChart.configure_area
+      ~RepeatChart.configure_axis
+      ~RepeatChart.configure_axisBand
+      ~RepeatChart.configure_axisBottom
+      ~RepeatChart.configure_axisDiscrete
+      ~RepeatChart.configure_axisLeft
+      ~RepeatChart.configure_axisPoint
+      ~RepeatChart.configure_axisQuantitative
+      ~RepeatChart.configure_axisRight
+      ~RepeatChart.configure_axisTemporal
+      ~RepeatChart.configure_axisTop
+      ~RepeatChart.configure_axisX
+      ~RepeatChart.configure_axisXBand
+      ~RepeatChart.configure_axisXDiscrete
+      ~RepeatChart.configure_axisXPoint
+      ~RepeatChart.configure_axisXQuantitative
+      ~RepeatChart.configure_axisXTemporal
+      ~RepeatChart.configure_axisY
+      ~RepeatChart.configure_axisYBand
+      ~RepeatChart.configure_axisYDiscrete
+      ~RepeatChart.configure_axisYPoint
+      ~RepeatChart.configure_axisYQuantitative
+      ~RepeatChart.configure_axisYTemporal
+      ~RepeatChart.configure_bar
+      ~RepeatChart.configure_boxplot
+      ~RepeatChart.configure_circle
+      ~RepeatChart.configure_concat
+      ~RepeatChart.configure_errorband
+      ~RepeatChart.configure_errorbar
+      ~RepeatChart.configure_facet
+      ~RepeatChart.configure_geoshape
+      ~RepeatChart.configure_header
+      ~RepeatChart.configure_headerColumn
+      ~RepeatChart.configure_headerFacet
+      ~RepeatChart.configure_headerRow
+      ~RepeatChart.configure_image
+      ~RepeatChart.configure_legend
+      ~RepeatChart.configure_line
+      ~RepeatChart.configure_mark
+      ~RepeatChart.configure_point
+      ~RepeatChart.configure_projection
+      ~RepeatChart.configure_range
+      ~RepeatChart.configure_rect
+      ~RepeatChart.configure_rule
+      ~RepeatChart.configure_scale
+      ~RepeatChart.configure_selection
+      ~RepeatChart.configure_square
+      ~RepeatChart.configure_text
+      ~RepeatChart.configure_tick
+      ~RepeatChart.configure_title
+      ~RepeatChart.configure_tooltipFormat
+      ~RepeatChart.configure_trail
+      ~RepeatChart.configure_view
+      ~RepeatChart.copy
+      ~RepeatChart.display
+      ~RepeatChart.from_dict
+      ~RepeatChart.from_json
+      ~RepeatChart.interactive
+      ~RepeatChart.open_editor
+      ~RepeatChart.project
+      ~RepeatChart.properties
+      ~RepeatChart.repeat
+      ~RepeatChart.resolve_axis
+      ~RepeatChart.resolve_legend
+      ~RepeatChart.resolve_references
+      ~RepeatChart.resolve_scale
+      ~RepeatChart.save
+      ~RepeatChart.serve
+      ~RepeatChart.show
+      ~RepeatChart.to_dict
+      ~RepeatChart.to_html
+      ~RepeatChart.to_json
+      ~RepeatChart.to_url
+      ~RepeatChart.transform_aggregate
+      ~RepeatChart.transform_bin
+      ~RepeatChart.transform_calculate
+      ~RepeatChart.transform_density
+      ~RepeatChart.transform_extent
+      ~RepeatChart.transform_filter
+      ~RepeatChart.transform_flatten
+      ~RepeatChart.transform_fold
+      ~RepeatChart.transform_impute
+      ~RepeatChart.transform_joinaggregate
+      ~RepeatChart.transform_loess
+      ~RepeatChart.transform_lookup
+      ~RepeatChart.transform_pivot
+      ~RepeatChart.transform_quantile
+      ~RepeatChart.transform_regression
+      ~RepeatChart.transform_sample
+      ~RepeatChart.transform_stack
+      ~RepeatChart.transform_timeunit
+      ~RepeatChart.transform_window
+      ~RepeatChart.transformed_data
+      ~RepeatChart.validate
+      ~RepeatChart.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RepeatChart.data
+   
+   

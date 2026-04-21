@@ -1,0 +1,30 @@
+﻿altair.NumberLocale
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: NumberLocale
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NumberLocale.__init__
+      ~NumberLocale.copy
+      ~NumberLocale.from_dict
+      ~NumberLocale.from_json
+      ~NumberLocale.resolve_references
+      ~NumberLocale.to_dict
+      ~NumberLocale.to_json
+      ~NumberLocale.validate
+      ~NumberLocale.validate_property
+   
+   
+
+   
+   
+   

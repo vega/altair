@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsValuestrokeOpacity
+===============================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsValuestrokeOpacity
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsValuestrokeOpacity.__init__
+      ~ScaleInvalidDataShowAsValuestrokeOpacity.copy
+      ~ScaleInvalidDataShowAsValuestrokeOpacity.from_dict
+      ~ScaleInvalidDataShowAsValuestrokeOpacity.from_json
+      ~ScaleInvalidDataShowAsValuestrokeOpacity.resolve_references
+      ~ScaleInvalidDataShowAsValuestrokeOpacity.to_dict
+      ~ScaleInvalidDataShowAsValuestrokeOpacity.to_json
+      ~ScaleInvalidDataShowAsValuestrokeOpacity.validate
+      ~ScaleInvalidDataShowAsValuestrokeOpacity.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,45 @@
+﻿altair.theme.BoxPlotConfigKwds
+==============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: BoxPlotConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BoxPlotConfigKwds.__init__
+      ~BoxPlotConfigKwds.clear
+      ~BoxPlotConfigKwds.copy
+      ~BoxPlotConfigKwds.fromkeys
+      ~BoxPlotConfigKwds.get
+      ~BoxPlotConfigKwds.items
+      ~BoxPlotConfigKwds.keys
+      ~BoxPlotConfigKwds.pop
+      ~BoxPlotConfigKwds.popitem
+      ~BoxPlotConfigKwds.setdefault
+      ~BoxPlotConfigKwds.update
+      ~BoxPlotConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BoxPlotConfigKwds.box
+      ~BoxPlotConfigKwds.extent
+      ~BoxPlotConfigKwds.median
+      ~BoxPlotConfigKwds.outliers
+      ~BoxPlotConfigKwds.rule
+      ~BoxPlotConfigKwds.size
+      ~BoxPlotConfigKwds.ticks
+   
+   

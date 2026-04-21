@@ -1,0 +1,41 @@
+﻿altair.theme.PointKwds
+======================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: PointKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PointKwds.__init__
+      ~PointKwds.clear
+      ~PointKwds.copy
+      ~PointKwds.fromkeys
+      ~PointKwds.get
+      ~PointKwds.items
+      ~PointKwds.keys
+      ~PointKwds.pop
+      ~PointKwds.popitem
+      ~PointKwds.setdefault
+      ~PointKwds.update
+      ~PointKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~PointKwds.coordinates
+      ~PointKwds.type
+      ~PointKwds.bbox
+   
+   

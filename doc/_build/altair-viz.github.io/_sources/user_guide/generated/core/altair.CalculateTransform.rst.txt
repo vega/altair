@@ -1,0 +1,30 @@
+﻿altair.CalculateTransform
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: CalculateTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CalculateTransform.__init__
+      ~CalculateTransform.copy
+      ~CalculateTransform.from_dict
+      ~CalculateTransform.from_json
+      ~CalculateTransform.resolve_references
+      ~CalculateTransform.to_dict
+      ~CalculateTransform.to_json
+      ~CalculateTransform.validate
+      ~CalculateTransform.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.ErrorBarExtent
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: ErrorBarExtent
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ErrorBarExtent.__init__
+      ~ErrorBarExtent.copy
+      ~ErrorBarExtent.from_dict
+      ~ErrorBarExtent.from_json
+      ~ErrorBarExtent.resolve_references
+      ~ErrorBarExtent.to_dict
+      ~ErrorBarExtent.to_json
+      ~ErrorBarExtent.validate
+      ~ErrorBarExtent.validate_property
+   
+   
+
+   
+   
+   

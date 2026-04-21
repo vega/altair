@@ -1,0 +1,46 @@
+﻿altair.Stroke
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: Stroke
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Stroke.__init__
+      ~Stroke.copy
+      ~Stroke.from_dict
+      ~Stroke.from_json
+      ~Stroke.resolve_references
+      ~Stroke.to_dict
+      ~Stroke.to_json
+      ~Stroke.validate
+      ~Stroke.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Stroke.aggregate
+      ~Stroke.bandPosition
+      ~Stroke.bin
+      ~Stroke.condition
+      ~Stroke.field
+      ~Stroke.legend
+      ~Stroke.scale
+      ~Stroke.sort
+      ~Stroke.timeUnit
+      ~Stroke.title
+      ~Stroke.type
+   
+   

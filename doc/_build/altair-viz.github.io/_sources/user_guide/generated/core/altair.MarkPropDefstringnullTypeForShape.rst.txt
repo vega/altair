@@ -1,0 +1,30 @@
+﻿altair.MarkPropDefstringnullTypeForShape
+========================================
+
+.. currentmodule:: altair
+
+.. autoclass:: MarkPropDefstringnullTypeForShape
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MarkPropDefstringnullTypeForShape.__init__
+      ~MarkPropDefstringnullTypeForShape.copy
+      ~MarkPropDefstringnullTypeForShape.from_dict
+      ~MarkPropDefstringnullTypeForShape.from_json
+      ~MarkPropDefstringnullTypeForShape.resolve_references
+      ~MarkPropDefstringnullTypeForShape.to_dict
+      ~MarkPropDefstringnullTypeForShape.to_json
+      ~MarkPropDefstringnullTypeForShape.validate
+      ~MarkPropDefstringnullTypeForShape.validate_property
+   
+   
+
+   
+   
+   

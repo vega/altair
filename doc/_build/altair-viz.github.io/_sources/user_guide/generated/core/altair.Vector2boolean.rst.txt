@@ -1,0 +1,30 @@
+﻿altair.Vector2boolean
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: Vector2boolean
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Vector2boolean.__init__
+      ~Vector2boolean.copy
+      ~Vector2boolean.from_dict
+      ~Vector2boolean.from_json
+      ~Vector2boolean.resolve_references
+      ~Vector2boolean.to_dict
+      ~Vector2boolean.to_json
+      ~Vector2boolean.validate
+      ~Vector2boolean.validate_property
+   
+   
+
+   
+   
+   

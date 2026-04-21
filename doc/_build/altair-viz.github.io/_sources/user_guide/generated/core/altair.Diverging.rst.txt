@@ -1,0 +1,30 @@
+﻿altair.Diverging
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: Diverging
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Diverging.__init__
+      ~Diverging.copy
+      ~Diverging.from_dict
+      ~Diverging.from_json
+      ~Diverging.resolve_references
+      ~Diverging.to_dict
+      ~Diverging.to_json
+      ~Diverging.validate
+      ~Diverging.validate_property
+   
+   
+
+   
+   
+   

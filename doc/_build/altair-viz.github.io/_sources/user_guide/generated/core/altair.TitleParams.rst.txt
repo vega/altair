@@ -1,0 +1,30 @@
+﻿altair.TitleParams
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: TitleParams
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TitleParams.__init__
+      ~TitleParams.copy
+      ~TitleParams.from_dict
+      ~TitleParams.from_json
+      ~TitleParams.resolve_references
+      ~TitleParams.to_dict
+      ~TitleParams.to_json
+      ~TitleParams.validate
+      ~TitleParams.validate_property
+   
+   
+
+   
+   
+   

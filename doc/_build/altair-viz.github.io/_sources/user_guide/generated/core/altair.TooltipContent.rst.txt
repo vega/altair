@@ -1,0 +1,30 @@
+﻿altair.TooltipContent
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: TooltipContent
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TooltipContent.__init__
+      ~TooltipContent.copy
+      ~TooltipContent.from_dict
+      ~TooltipContent.from_json
+      ~TooltipContent.resolve_references
+      ~TooltipContent.to_dict
+      ~TooltipContent.to_json
+      ~TooltipContent.validate
+      ~TooltipContent.validate_property
+   
+   
+
+   
+   
+   

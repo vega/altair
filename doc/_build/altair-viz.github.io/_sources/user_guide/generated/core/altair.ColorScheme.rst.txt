@@ -1,0 +1,30 @@
+﻿altair.ColorScheme
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: ColorScheme
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ColorScheme.__init__
+      ~ColorScheme.copy
+      ~ColorScheme.from_dict
+      ~ColorScheme.from_json
+      ~ColorScheme.resolve_references
+      ~ColorScheme.to_dict
+      ~ColorScheme.to_json
+      ~ColorScheme.validate
+      ~ColorScheme.validate_property
+   
+   
+
+   
+   
+   

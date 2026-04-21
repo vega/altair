@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelX2
+=======================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelX2

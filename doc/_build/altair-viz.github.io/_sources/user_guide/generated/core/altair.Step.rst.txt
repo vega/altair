@@ -1,0 +1,30 @@
+﻿altair.Step
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Step
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Step.__init__
+      ~Step.copy
+      ~Step.from_dict
+      ~Step.from_json
+      ~Step.resolve_references
+      ~Step.to_dict
+      ~Step.to_json
+      ~Step.validate
+      ~Step.validate_property
+   
+   
+
+   
+   
+   

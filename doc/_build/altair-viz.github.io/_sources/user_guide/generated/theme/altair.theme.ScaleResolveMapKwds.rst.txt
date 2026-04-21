@@ -1,0 +1,56 @@
+﻿altair.theme.ScaleResolveMapKwds
+================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ScaleResolveMapKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleResolveMapKwds.__init__
+      ~ScaleResolveMapKwds.clear
+      ~ScaleResolveMapKwds.copy
+      ~ScaleResolveMapKwds.fromkeys
+      ~ScaleResolveMapKwds.get
+      ~ScaleResolveMapKwds.items
+      ~ScaleResolveMapKwds.keys
+      ~ScaleResolveMapKwds.pop
+      ~ScaleResolveMapKwds.popitem
+      ~ScaleResolveMapKwds.setdefault
+      ~ScaleResolveMapKwds.update
+      ~ScaleResolveMapKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ScaleResolveMapKwds.angle
+      ~ScaleResolveMapKwds.color
+      ~ScaleResolveMapKwds.fill
+      ~ScaleResolveMapKwds.fillOpacity
+      ~ScaleResolveMapKwds.opacity
+      ~ScaleResolveMapKwds.radius
+      ~ScaleResolveMapKwds.shape
+      ~ScaleResolveMapKwds.size
+      ~ScaleResolveMapKwds.stroke
+      ~ScaleResolveMapKwds.strokeDash
+      ~ScaleResolveMapKwds.strokeOpacity
+      ~ScaleResolveMapKwds.strokeWidth
+      ~ScaleResolveMapKwds.theta
+      ~ScaleResolveMapKwds.time
+      ~ScaleResolveMapKwds.x
+      ~ScaleResolveMapKwds.xOffset
+      ~ScaleResolveMapKwds.y
+      ~ScaleResolveMapKwds.yOffset
+   
+   

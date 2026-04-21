@@ -1,0 +1,735 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Waterfall Chart &#8212; Vega-Altair 6.1.0dev documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-plot.css?v=a673d9d3" />
+    <link rel="stylesheet" type="text/css" href="../_static/altair-gallery.css?v=945786fe" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=9524fec3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=ee81cbed" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=473bec34"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-domain="altair-viz.github.io" defer="defer" src="https://views.scientific-python.org/js/script.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gallery/waterfall_chart';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="6.1.0dev" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.1.0dev documentation - Home"/>
+  
+  
+</a></div>
+    
+      <div class="navbar-item"><a class="navbar-brand" href="../index.html">
+<p class="title">Vega-Altair</p>
+</a>
+</div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/overview.html">
+    Getting Started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/data.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/api.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-external" href="https://github.com/vega/altair/releases">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../about/roadmap.html">
+    About
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/vega/altair" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://stackoverflow.com/tags/altair" title="StackOverflow" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-stack-overflow fa-xl fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">StackOverflow</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Waterfall Chart</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="waterfall-chart">
+<span id="gallery-waterfall-chart"></span><h1>Waterfall Chart<a class="headerlink" href="#waterfall-chart" title="Link to this heading">#</a></h1>
+<p>This example shows how to recreate a Vega-Lite implementation of a waterfall chart.
+Original inspiration is from <a class="reference external" href="https://vega.github.io/vega-lite/examples/waterfall_chart.html">https://vega.github.io/vega-lite/examples/waterfall_chart.html</a></p>
+
+<div id="waterfall_chart-rst-altair-plot-0">
+<script>
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"mark": {"type": "bar", "size": 45}, "encoding": {"color": {"condition": [{"test": "((datum.label === 'Begin') || (datum.label === 'End'))", "value": "#878d96"}, {"test": "(if((datum.label === 'End'),datum.window_sum_amount,datum.amount) < 0)", "value": "#fa4d56"}], "value": "#24a148"}, "x": {"axis": {"labelAngle": 0, "title": "Months"}, "field": "label", "sort": null, "type": "ordinal"}, "y": {"field": "calc_prev_sum", "title": "Amount", "type": "quantitative"}, "y2": {"field": "window_sum_amount"}}, "transform": [{"window": [{"op": "sum", "field": "amount", "as": "window_sum_amount"}, {"op": "lead", "field": "label", "as": "window_lead_label"}]}, {"calculate": "if((datum.window_lead_label === null),datum.label,datum.window_lead_label)", "as": "calc_lead"}, {"calculate": "if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))", "as": "calc_prev_sum"}, {"calculate": "if((datum.label === 'End'),datum.window_sum_amount,datum.amount)", "as": "calc_amount"}, {"calculate": "(if(((((datum.label !== 'Begin') && (datum.label !== 'End')) && if((datum.label === 'End'),datum.window_sum_amount,datum.amount)) > 0),'+','') + if((datum.label === 'End'),datum.window_sum_amount,datum.amount))", "as": "calc_text_amount"}, {"calculate": "((datum.window_sum_amount + if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))) / 2)", "as": "calc_center"}, {"calculate": "if((datum.window_sum_amount < if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))),datum.window_sum_amount,'')", "as": "calc_sum_dec"}, {"calculate": "if((datum.window_sum_amount > if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))),datum.window_sum_amount,'')", "as": "calc_sum_inc"}]}, {"mark": {"type": "rule", "x2Offset": 22.5, "xOffset": -22.5}, "encoding": {"x": {"axis": {"labelAngle": 0, "title": "Months"}, "field": "label", "sort": null, "type": "ordinal"}, "x2": {"field": "calc_lead"}, "y": {"field": "window_sum_amount", "type": "quantitative"}}, "transform": [{"window": [{"op": "sum", "field": "amount", "as": "window_sum_amount"}, {"op": "lead", "field": "label", "as": "window_lead_label"}]}, {"calculate": "if((datum.window_lead_label === null),datum.label,datum.window_lead_label)", "as": "calc_lead"}, {"calculate": "if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))", "as": "calc_prev_sum"}, {"calculate": "if((datum.label === 'End'),datum.window_sum_amount,datum.amount)", "as": "calc_amount"}, {"calculate": "(if(((((datum.label !== 'Begin') && (datum.label !== 'End')) && if((datum.label === 'End'),datum.window_sum_amount,datum.amount)) > 0),'+','') + if((datum.label === 'End'),datum.window_sum_amount,datum.amount))", "as": "calc_text_amount"}, {"calculate": "((datum.window_sum_amount + if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))) / 2)", "as": "calc_center"}, {"calculate": "if((datum.window_sum_amount < if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))),datum.window_sum_amount,'')", "as": "calc_sum_dec"}, {"calculate": "if((datum.window_sum_amount > if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))),datum.window_sum_amount,'')", "as": "calc_sum_inc"}]}, {"mark": {"type": "text", "baseline": "bottom", "dy": -4}, "encoding": {"text": {"field": "calc_sum_inc", "type": "nominal"}, "x": {"axis": {"labelAngle": 0, "title": "Months"}, "field": "label", "sort": null, "type": "ordinal"}, "y": {"field": "calc_sum_inc", "type": "quantitative"}}, "transform": [{"window": [{"op": "sum", "field": "amount", "as": "window_sum_amount"}, {"op": "lead", "field": "label", "as": "window_lead_label"}]}, {"calculate": "if((datum.window_lead_label === null),datum.label,datum.window_lead_label)", "as": "calc_lead"}, {"calculate": "if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))", "as": "calc_prev_sum"}, {"calculate": "if((datum.label === 'End'),datum.window_sum_amount,datum.amount)", "as": "calc_amount"}, {"calculate": "(if(((((datum.label !== 'Begin') && (datum.label !== 'End')) && if((datum.label === 'End'),datum.window_sum_amount,datum.amount)) > 0),'+','') + if((datum.label === 'End'),datum.window_sum_amount,datum.amount))", "as": "calc_text_amount"}, {"calculate": "((datum.window_sum_amount + if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))) / 2)", "as": "calc_center"}, {"calculate": "if((datum.window_sum_amount < if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))),datum.window_sum_amount,'')", "as": "calc_sum_dec"}, {"calculate": "if((datum.window_sum_amount > if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))),datum.window_sum_amount,'')", "as": "calc_sum_inc"}]}, {"mark": {"type": "text", "baseline": "top", "dy": 4}, "encoding": {"text": {"field": "calc_sum_dec", "type": "nominal"}, "x": {"axis": {"labelAngle": 0, "title": "Months"}, "field": "label", "sort": null, "type": "ordinal"}, "y": {"field": "calc_sum_dec", "type": "quantitative"}}, "transform": [{"window": [{"op": "sum", "field": "amount", "as": "window_sum_amount"}, {"op": "lead", "field": "label", "as": "window_lead_label"}]}, {"calculate": "if((datum.window_lead_label === null),datum.label,datum.window_lead_label)", "as": "calc_lead"}, {"calculate": "if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))", "as": "calc_prev_sum"}, {"calculate": "if((datum.label === 'End'),datum.window_sum_amount,datum.amount)", "as": "calc_amount"}, {"calculate": "(if(((((datum.label !== 'Begin') && (datum.label !== 'End')) && if((datum.label === 'End'),datum.window_sum_amount,datum.amount)) > 0),'+','') + if((datum.label === 'End'),datum.window_sum_amount,datum.amount))", "as": "calc_text_amount"}, {"calculate": "((datum.window_sum_amount + if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))) / 2)", "as": "calc_center"}, {"calculate": "if((datum.window_sum_amount < if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))),datum.window_sum_amount,'')", "as": "calc_sum_dec"}, {"calculate": "if((datum.window_sum_amount > if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))),datum.window_sum_amount,'')", "as": "calc_sum_inc"}]}, {"mark": {"type": "text", "baseline": "middle"}, "encoding": {"color": {"value": "white"}, "text": {"field": "calc_text_amount", "type": "nominal"}, "x": {"axis": {"labelAngle": 0, "title": "Months"}, "field": "label", "sort": null, "type": "ordinal"}, "y": {"field": "calc_center", "type": "quantitative"}}, "transform": [{"window": [{"op": "sum", "field": "amount", "as": "window_sum_amount"}, {"op": "lead", "field": "label", "as": "window_lead_label"}]}, {"calculate": "if((datum.window_lead_label === null),datum.label,datum.window_lead_label)", "as": "calc_lead"}, {"calculate": "if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))", "as": "calc_prev_sum"}, {"calculate": "if((datum.label === 'End'),datum.window_sum_amount,datum.amount)", "as": "calc_amount"}, {"calculate": "(if(((((datum.label !== 'Begin') && (datum.label !== 'End')) && if((datum.label === 'End'),datum.window_sum_amount,datum.amount)) > 0),'+','') + if((datum.label === 'End'),datum.window_sum_amount,datum.amount))", "as": "calc_text_amount"}, {"calculate": "((datum.window_sum_amount + if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))) / 2)", "as": "calc_center"}, {"calculate": "if((datum.window_sum_amount < if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))),datum.window_sum_amount,'')", "as": "calc_sum_dec"}, {"calculate": "if((datum.window_sum_amount > if((datum.label === 'End'),0,(datum.window_sum_amount - datum.amount))),datum.window_sum_amount,'')", "as": "calc_sum_inc"}]}], "data": {"name": "data-530a03c720973e6c83c3215e32ccc583"}, "height": 450, "width": 800, "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-530a03c720973e6c83c3215e32ccc583": [{"label": "Begin", "amount": 4000}, {"label": "Jan", "amount": 1707}, {"label": "Feb", "amount": -1425}, {"label": "Mar", "amount": -1030}, {"label": "Apr", "amount": 1812}, {"label": "May", "amount": -1067}, {"label": "Jun", "amount": -1481}, {"label": "Jul", "amount": 1228}, {"label": "Aug", "amount": 1176}, {"label": "Sep", "amount": 1146}, {"label": "Oct", "amount": 1205}, {"label": "Nov", "amount": -1388}, {"label": "Dec", "amount": 1492}, {"label": "End", "amount": 0}]}};
+      var opt = {
+        "mode": "vega-lite",
+        "renderer": "canvas",
+        "actions": {"editor": true, "source": true, "export": true}
+      };
+      vegaEmbed('#waterfall_chart-rst-altair-plot-0', spec, opt).catch(console.err);
+  });
+</script>
+</div><div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="method" for="sd-tab-item-0">
+Method syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">4000</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Jan&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1707</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Feb&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1425</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Mar&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1030</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Apr&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1812</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1067</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Jun&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1481</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Jul&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1228</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Aug&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1176</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Sep&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1146</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Oct&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1205</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Nov&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1388</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Dec&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1492</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;End&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+<span class="p">]</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Define frequently referenced fields</span>
+<span class="n">amount</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">amount</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">label</span>
+<span class="n">window_lead_label</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">window_lead_label</span>
+<span class="n">window_sum_amount</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">window_sum_amount</span>
+
+<span class="c1"># Define frequently referenced/long expressions</span>
+<span class="n">calc_prev_sum</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;End&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">window_sum_amount</span> <span class="o">-</span> <span class="n">amount</span><span class="p">)</span>
+<span class="n">calc_amount</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;End&quot;</span><span class="p">,</span> <span class="n">window_sum_amount</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+<span class="n">calc_text_amount</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">((</span><span class="n">label</span> <span class="o">!=</span> <span class="s2">&quot;Begin&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">label</span> <span class="o">!=</span> <span class="s2">&quot;End&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">calc_amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="o">+</span> <span class="n">calc_amount</span>
+<span class="p">)</span>
+
+<span class="c1"># The &quot;base_chart&quot; defines the transform_window, transform_calculate, and X axis</span>
+<span class="n">base_chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">transform_window</span><span class="p">(</span>
+    <span class="n">window_sum_amount</span><span class="o">=</span><span class="s2">&quot;sum(amount)&quot;</span><span class="p">,</span>
+    <span class="n">window_lead_label</span><span class="o">=</span><span class="s2">&quot;lead(label)&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
+    <span class="n">calc_lead</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">((</span><span class="n">window_lead_label</span> <span class="o">==</span> <span class="kc">None</span><span class="p">),</span> <span class="n">label</span><span class="p">,</span> <span class="n">window_lead_label</span><span class="p">),</span>
+    <span class="n">calc_prev_sum</span><span class="o">=</span><span class="n">calc_prev_sum</span><span class="p">,</span>
+    <span class="n">calc_amount</span><span class="o">=</span><span class="n">calc_amount</span><span class="p">,</span>
+    <span class="n">calc_text_amount</span><span class="o">=</span><span class="n">calc_text_amount</span><span class="p">,</span>
+    <span class="n">calc_center</span><span class="o">=</span><span class="p">(</span><span class="n">window_sum_amount</span> <span class="o">+</span> <span class="n">calc_prev_sum</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">calc_sum_dec</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">(</span><span class="n">window_sum_amount</span> <span class="o">&lt;</span> <span class="n">calc_prev_sum</span><span class="p">,</span> <span class="n">window_sum_amount</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+    <span class="n">calc_sum_inc</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">(</span><span class="n">window_sum_amount</span> <span class="o">&gt;</span> <span class="n">calc_prev_sum</span><span class="p">,</span> <span class="n">window_sum_amount</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">&quot;label:O&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Axis</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Months&quot;</span><span class="p">,</span> <span class="n">labelAngle</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">color_coding</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">((</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;Begin&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;End&quot;</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;#878d96&quot;</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">calc_amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;#fa4d56&quot;</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;#24a148&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="n">bar</span> <span class="o">=</span> <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">&quot;calc_prev_sum:Q&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Amount&quot;</span><span class="p">),</span>
+    <span class="n">y2</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y2</span><span class="p">(</span><span class="s2">&quot;window_sum_amount:Q&quot;</span><span class="p">),</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">color_coding</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># The &quot;rule&quot; chart is for the horizontal lines that connect the bars</span>
+<span class="n">rule</span> <span class="o">=</span> <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_rule</span><span class="p">(</span><span class="n">xOffset</span><span class="o">=-</span><span class="mf">22.5</span><span class="p">,</span> <span class="n">x2Offset</span><span class="o">=</span><span class="mf">22.5</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;window_sum_amount:Q&quot;</span><span class="p">,</span>
+    <span class="n">x2</span><span class="o">=</span><span class="s2">&quot;calc_lead&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Add values as text</span>
+<span class="n">text_pos_values_top_of_bar</span> <span class="o">=</span> <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span><span class="n">baseline</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">dy</span><span class="o">=-</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s2">&quot;calc_sum_inc:N&quot;</span><span class="p">),</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;calc_sum_inc:Q&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">text_neg_values_bot_of_bar</span> <span class="o">=</span> <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span><span class="n">baseline</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">dy</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s2">&quot;calc_sum_dec:N&quot;</span><span class="p">),</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;calc_sum_dec:Q&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">text_bar_values_mid_of_bar</span> <span class="o">=</span> <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span><span class="n">baseline</span><span class="o">=</span><span class="s2">&quot;middle&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s2">&quot;calc_text_amount:N&quot;</span><span class="p">),</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;calc_center:Q&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span>
+    <span class="n">bar</span><span class="p">,</span>
+    <span class="n">rule</span><span class="p">,</span>
+    <span class="n">text_pos_values_top_of_bar</span><span class="p">,</span>
+    <span class="n">text_neg_values_bot_of_bar</span><span class="p">,</span>
+    <span class="n">text_bar_values_mid_of_bar</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">450</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="attribute" for="sd-tab-item-1">
+Attribute syntax</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Begin&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">4000</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Jan&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1707</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Feb&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1425</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Mar&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1030</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Apr&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1812</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1067</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Jun&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1481</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Jul&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1228</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Aug&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1176</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Sep&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1146</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Oct&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1205</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Nov&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1388</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Dec&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">1492</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;End&quot;</span><span class="p">,</span> <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+<span class="p">]</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Define frequently referenced fields</span>
+<span class="n">amount</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">amount</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">label</span>
+<span class="n">window_lead_label</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">window_lead_label</span>
+<span class="n">window_sum_amount</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">window_sum_amount</span>
+
+<span class="c1"># Define frequently referenced/long expressions</span>
+<span class="n">calc_prev_sum</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;End&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">window_sum_amount</span> <span class="o">-</span> <span class="n">amount</span><span class="p">)</span>
+<span class="n">calc_amount</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;End&quot;</span><span class="p">,</span> <span class="n">window_sum_amount</span><span class="p">,</span> <span class="n">amount</span><span class="p">)</span>
+<span class="n">calc_text_amount</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">((</span><span class="n">label</span> <span class="o">!=</span> <span class="s2">&quot;Begin&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">label</span> <span class="o">!=</span> <span class="s2">&quot;End&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">calc_amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="o">+</span> <span class="n">calc_amount</span>
+<span class="p">)</span>
+
+<span class="c1"># The &quot;base_chart&quot; defines the transform_window, transform_calculate, and X axis</span>
+<span class="n">base_chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">transform_window</span><span class="p">(</span>
+    <span class="n">window_sum_amount</span><span class="o">=</span><span class="s2">&quot;sum(amount)&quot;</span><span class="p">,</span>
+    <span class="n">window_lead_label</span><span class="o">=</span><span class="s2">&quot;lead(label)&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
+    <span class="n">calc_lead</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">((</span><span class="n">window_lead_label</span> <span class="o">==</span> <span class="kc">None</span><span class="p">),</span> <span class="n">label</span><span class="p">,</span> <span class="n">window_lead_label</span><span class="p">),</span>
+    <span class="n">calc_prev_sum</span><span class="o">=</span><span class="n">calc_prev_sum</span><span class="p">,</span>
+    <span class="n">calc_amount</span><span class="o">=</span><span class="n">calc_amount</span><span class="p">,</span>
+    <span class="n">calc_text_amount</span><span class="o">=</span><span class="n">calc_text_amount</span><span class="p">,</span>
+    <span class="n">calc_center</span><span class="o">=</span><span class="p">(</span><span class="n">window_sum_amount</span> <span class="o">+</span> <span class="n">calc_prev_sum</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">calc_sum_dec</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">(</span><span class="n">window_sum_amount</span> <span class="o">&lt;</span> <span class="n">calc_prev_sum</span><span class="p">,</span> <span class="n">window_sum_amount</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+    <span class="n">calc_sum_inc</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">if_</span><span class="p">(</span><span class="n">window_sum_amount</span> <span class="o">&gt;</span> <span class="n">calc_prev_sum</span><span class="p">,</span> <span class="n">window_sum_amount</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">&quot;label:O&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Axis</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Months&quot;</span><span class="p">,</span> <span class="n">labelAngle</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">color_coding</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">when</span><span class="p">((</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;Begin&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;End&quot;</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;#878d96&quot;</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">calc_amount</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;#fa4d56&quot;</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;#24a148&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="n">bar</span> <span class="o">=</span> <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">&quot;calc_prev_sum:Q&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Amount&quot;</span><span class="p">),</span>
+    <span class="n">y2</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y2</span><span class="p">(</span><span class="s2">&quot;window_sum_amount:Q&quot;</span><span class="p">),</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">color_coding</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># The &quot;rule&quot; chart is for the horizontal lines that connect the bars</span>
+<span class="n">rule</span> <span class="o">=</span> <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_rule</span><span class="p">(</span><span class="n">xOffset</span><span class="o">=-</span><span class="mf">22.5</span><span class="p">,</span> <span class="n">x2Offset</span><span class="o">=</span><span class="mf">22.5</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;window_sum_amount:Q&quot;</span><span class="p">,</span>
+    <span class="n">x2</span><span class="o">=</span><span class="s2">&quot;calc_lead&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Add values as text</span>
+<span class="n">text_pos_values_top_of_bar</span> <span class="o">=</span> <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span><span class="n">baseline</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">dy</span><span class="o">=-</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s2">&quot;calc_sum_inc:N&quot;</span><span class="p">),</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;calc_sum_inc:Q&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">text_neg_values_bot_of_bar</span> <span class="o">=</span> <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span><span class="n">baseline</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">dy</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s2">&quot;calc_sum_dec:N&quot;</span><span class="p">),</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;calc_sum_dec:Q&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">text_bar_values_mid_of_bar</span> <span class="o">=</span> <span class="n">base_chart</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span><span class="n">baseline</span><span class="o">=</span><span class="s2">&quot;middle&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s2">&quot;calc_text_amount:N&quot;</span><span class="p">),</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;calc_center:Q&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span>
+    <span class="n">bar</span><span class="p">,</span>
+    <span class="n">rule</span><span class="p">,</span>
+    <span class="n">text_pos_values_top_of_bar</span><span class="p">,</span>
+    <span class="n">text_neg_values_bot_of_bar</span><span class="p">,</span>
+    <span class="n">text_bar_values_mid_of_bar</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">450</span>
+<span class="p">)</span><span class="c1"># No channel encoding options are specified in this chart</span>
+<span class="c1"># so the code is the same as for the method-based syntax.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2015-2026, Vega-Altair Developers.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

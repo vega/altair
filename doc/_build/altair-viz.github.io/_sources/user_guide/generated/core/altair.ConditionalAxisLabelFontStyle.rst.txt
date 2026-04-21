@@ -1,0 +1,30 @@
+﻿altair.ConditionalAxisLabelFontStyle
+====================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalAxisLabelFontStyle
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalAxisLabelFontStyle.__init__
+      ~ConditionalAxisLabelFontStyle.copy
+      ~ConditionalAxisLabelFontStyle.from_dict
+      ~ConditionalAxisLabelFontStyle.from_json
+      ~ConditionalAxisLabelFontStyle.resolve_references
+      ~ConditionalAxisLabelFontStyle.to_dict
+      ~ConditionalAxisLabelFontStyle.to_json
+      ~ConditionalAxisLabelFontStyle.validate
+      ~ConditionalAxisLabelFontStyle.validate_property
+   
+   
+
+   
+   
+   

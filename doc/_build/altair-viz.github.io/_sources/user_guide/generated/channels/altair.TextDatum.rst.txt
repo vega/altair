@@ -1,0 +1,42 @@
+﻿altair.TextDatum
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: TextDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TextDatum.__init__
+      ~TextDatum.copy
+      ~TextDatum.from_dict
+      ~TextDatum.from_json
+      ~TextDatum.resolve_references
+      ~TextDatum.to_dict
+      ~TextDatum.to_json
+      ~TextDatum.validate
+      ~TextDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TextDatum.bandPosition
+      ~TextDatum.condition
+      ~TextDatum.datum
+      ~TextDatum.format
+      ~TextDatum.formatType
+      ~TextDatum.title
+      ~TextDatum.type
+   
+   

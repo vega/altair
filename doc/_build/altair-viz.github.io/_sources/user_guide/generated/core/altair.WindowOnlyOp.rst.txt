@@ -1,0 +1,30 @@
+﻿altair.WindowOnlyOp
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: WindowOnlyOp
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~WindowOnlyOp.__init__
+      ~WindowOnlyOp.copy
+      ~WindowOnlyOp.from_dict
+      ~WindowOnlyOp.from_json
+      ~WindowOnlyOp.resolve_references
+      ~WindowOnlyOp.to_dict
+      ~WindowOnlyOp.to_json
+      ~WindowOnlyOp.validate
+      ~WindowOnlyOp.validate_property
+   
+   
+
+   
+   
+   

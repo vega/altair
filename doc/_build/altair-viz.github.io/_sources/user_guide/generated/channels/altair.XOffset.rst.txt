@@ -1,0 +1,44 @@
+﻿altair.XOffset
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: XOffset
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~XOffset.__init__
+      ~XOffset.copy
+      ~XOffset.from_dict
+      ~XOffset.from_json
+      ~XOffset.resolve_references
+      ~XOffset.to_dict
+      ~XOffset.to_json
+      ~XOffset.validate
+      ~XOffset.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~XOffset.aggregate
+      ~XOffset.bandPosition
+      ~XOffset.bin
+      ~XOffset.field
+      ~XOffset.scale
+      ~XOffset.sort
+      ~XOffset.timeUnit
+      ~XOffset.title
+      ~XOffset.type
+   
+   

@@ -1,0 +1,45 @@
+﻿altair.Theta
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Theta
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Theta.__init__
+      ~Theta.copy
+      ~Theta.from_dict
+      ~Theta.from_json
+      ~Theta.resolve_references
+      ~Theta.to_dict
+      ~Theta.to_json
+      ~Theta.validate
+      ~Theta.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Theta.aggregate
+      ~Theta.bandPosition
+      ~Theta.bin
+      ~Theta.field
+      ~Theta.scale
+      ~Theta.sort
+      ~Theta.stack
+      ~Theta.timeUnit
+      ~Theta.title
+      ~Theta.type
+   
+   
