@@ -10,7 +10,7 @@ import numpy as np
 import pytest
 from jsonschema.exceptions import ValidationError
 
-from altair import datum, expr, ExprRef
+from altair import datum, expr, ExprRef, param
 from altair.expr import _ExprMeta
 from altair.expr.core import Expression, GetAttrExpression
 
@@ -160,6 +160,18 @@ def test_datum_getattr():
     magic_attr = "__magic__"
     with pytest.raises(AttributeError):
         getattr(datum, magic_attr)
+
+
+def test_datum_getitem_param():
+    """datum[param] should use the bare signal name, not a quoted string."""
+    p = param(name="xcol", value="Horsepower")
+    assert repr(datum[p]) == "datum[xcol]"
+
+    # String key should still be quoted (field name literal, not a signal)
+    assert repr(datum["Horsepower"]) == "datum['Horsepower']"
+
+    # Works inside a compound expression
+    assert repr(datum[p] > 100) == "(datum[xcol] > 100)"
 
 
 def test_expression_getitem():
