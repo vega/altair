@@ -6,9 +6,9 @@ from altair.vegalite.v6.schema import channels, core
 from altair.vegalite.v6.schema.channels import *
 from altair.vegalite.v6.schema.core import *
 
-SCHEMA_VERSION = "v6.1.0"
+SCHEMA_VERSION = "v6.4.1"
 
-SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v6.1.0.json"
+SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v6.4.1.json"
 
 __all__ = [
     "SCHEMA_URL",
