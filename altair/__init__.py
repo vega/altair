@@ -1,5 +1,5 @@
 # ruff: noqa
-__version__ = "6.1.0"
+__version__ = "6.2.0dev"
 
 # The content of __all__ is automatically written by
 # tools/update_init_file.py. Do not modify directly.
