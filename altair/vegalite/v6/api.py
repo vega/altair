@@ -252,6 +252,7 @@ def _consolidate_data(
             kwds = {"format": data.format}
 
     elif isinstance(data, dict) and ("name" not in data) and ("values" in data):
+        data = t.cast("dict[str, Any]", data)
         values = data["values"]
         kwds = {k: v for k, v in data.items() if k != "values"}
 
@@ -647,7 +648,7 @@ def _predicate_to_condition(
     elif _is_test_predicate(predicate):
         condition = {"test": predicate}
     elif isinstance(predicate, dict):
-        condition = predicate
+        condition = predicate  # ty: ignore
     elif isinstance(predicate, _expr_core.OperatorMixin):
         condition = {"test": predicate._to_expr()}
     else:
@@ -900,7 +901,9 @@ def _parse_literal(val: Any, /) -> dict[str, Any]:
         raise TypeError(msg)
 
 
-def _parse_then(statement: _StatementType, kwds: dict[str, Any], /) -> dict[str, Any]:
+def _parse_then(
+    statement: _StatementType, kwds: dict[str, Any], /
+) -> Mapping[str, Any]:
     if isinstance(statement, SchemaBase):
         statement = statement.to_dict()
     elif not isinstance(statement, dict):
@@ -921,7 +924,7 @@ def _parse_otherwise(
         if not isinstance(statement, Mapping):
             statement = _parse_literal(statement)
         selection = conditions
-        selection.update(**statement, **kwds)  # type: ignore[call-arg]
+        selection.update(**statement, **kwds)  # type: ignore
     return selection
 
 
@@ -1088,7 +1091,7 @@ class Then(ConditionLike, t.Generic[_C]):
             if isinstance(current, list) and len(current) == 1:
                 # This case is guaranteed to have come from `When` and not `ChainedWhen`
                 # The `list` isn't needed if we complete the condition here
-                conditions = _Conditional(condition=current[0])  # pyright: ignore[reportArgumentType]
+                conditions = _Conditional(condition=current[0])
             elif isinstance(current, dict):
                 if not is_extra(statement):
                     conditions = self.to_dict()
@@ -2146,7 +2149,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 )
                 raise ValueError(msg)
             else:
-                return _compile_with_vegafusion(vegalite_spec)
+                return _compile_with_vegafusion(vegalite_spec)  # ty: ignore
         elif format == "vega":
             plugin = vegalite_compilers.get()
             if plugin is None:
@@ -2154,7 +2157,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 raise ValueError(msg)
             return plugin(vegalite_spec)
         else:
-            return vegalite_spec
+            return vegalite_spec  # ty: ignore
 
     def to_json(
         self,
@@ -2498,7 +2501,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         repeat_arg: list[str] | LayerRepeatMapping | RepeatMapping
         if repeat_specified:
             assert isinstance(repeat, list)
-            repeat_arg = repeat
+            repeat_arg = repeat  # ty: ignore
         elif layer_specified:
             repeat_arg = core.LayerRepeatMapping(layer=layer, row=row, column=column)
         else:
@@ -2761,7 +2764,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "op": parsed.get("aggregate", Undefined),
             }
             assert isinstance(aggregate, list)
-            aggregate.append(core.AggregatedFieldDef(**dct))
+            aggregate.append(core.AggregatedFieldDef(**dct))  # ty: ignore
         return self._add_transform(
             core.AggregateTransform(aggregate=aggregate, groupby=groupby)
         )
@@ -3094,7 +3097,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "op": parsed.get("aggregate", Undefined),
             }
             assert isinstance(joinaggregate, list)
-            joinaggregate.append(core.JoinAggregateFieldDef(**dct))
+            joinaggregate.append(core.JoinAggregateFieldDef(**dct))  # ty: ignore
         return self._add_transform(
             core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
         )
@@ -3782,7 +3785,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                         parse_types=False,
                     )
                 )
-                w.append(core.WindowFieldDef(**kwds))
+                w.append(core.WindowFieldDef(**kwds))  # ty: ignore
 
         return self._add_transform(
             core.WindowTransform(
@@ -3995,7 +3998,7 @@ class _EncodingMixin(channels._EncodingMixin):
             r: Any = row
             f = FacetMapping(row=r, column=column)
 
-        return FacetChart(spec=self, facet=f, data=data, columns=columns, **kwargs)  # pyright: ignore[reportArgumentType]
+        return FacetChart(spec=self, facet=f, data=data, columns=columns, **kwargs)
 
 
 class Chart(
@@ -4129,9 +4132,8 @@ class Chart(
         jsonschema.ValidationError :
             If ``validate`` and ``dct`` does not conform to the schema
         """
-        _tp: Any
         for tp in TopLevelMixin.__subclasses__():
-            _tp = super() if tp is Chart else tp
+            _tp: Any = super() if tp is Chart else tp
             try:
                 return _tp.from_dict(dct, validate=validate)
             except jsonschema.ValidationError:
@@ -5339,7 +5341,7 @@ def _combine_subchart_params(  # noqa: C901
 
 def _get_repeat_strings(
     repeat: list[str] | LayerRepeatMapping | RepeatMapping,
-) -> list[str]:
+) -> list[str] | list:
     if isinstance(repeat, list):
         return repeat
 

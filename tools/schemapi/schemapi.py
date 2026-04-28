@@ -990,9 +990,7 @@ The parameters ``short``, ``long`` accept the same range of types::
 
     def func_1(
         short: Optional[str | bool | float | dict[str, Any] | SchemaBase] = Undefined,
-        long: Union[
-            str, bool, float, Dict[str, Any], SchemaBase, UndefinedType
-        ] = Undefined,
+        long: str | bool | float | Dict[str, Any] | SchemaBase | UndefinedType = Undefined,
     ): ...
 
 This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/spec/historical.html#union-and-optional>`__.
@@ -1004,9 +1002,7 @@ This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/
 
     def func_2(
         short: Optional[str | float | dict[str, Any] | None | SchemaBase] = Undefined,
-        long: Union[
-            str, float, Dict[str, Any], None, SchemaBase, UndefinedType
-        ] = Undefined,
+        long: str | float | Dict[str, Any] | None | SchemaBase | UndefinedType = Undefined,
     ): ...
 """
 

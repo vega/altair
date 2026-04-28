@@ -1,0 +1,19 @@
+[src]
+include = ["altair/typing", "altair/expr", "altair/vegalite"]
+exclude = ["altair/vegalite/v6/schema"]
+
+[rules]
+unused-type-ignore-comment = "ignore"  # skip unused type: ignore
+deprecated = "ignore"
+
+# suppress issues in v6/schema (if not excluded above)
+# invalid-overload = "ignore"
+# unresolved-attribute = "ignore"
+
+# suppress these for now so ty check will pass
+no-matching-overload = "ignore"
+invalid-context-manager = "ignore"
+invalid-method-override = "ignore"
+
+[analysis]
+respect-type-ignore-comments = true  # allow existing type: ignore
