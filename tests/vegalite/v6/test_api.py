@@ -1494,6 +1494,24 @@ def test_compound_add_selections(charttype):
     assert chart1.to_dict() == chart2.to_dict()
 
 
+def test_nested_concat_add_params_views():
+    # Regression test for https://github.com/vega/altair/issues/4018
+    base = alt.Chart("data.csv").mark_line()
+    top = alt.hconcat(
+        base.encode(x="x:Q", y="y:Q").properties(name="top_1"),
+        base.encode(x="x:Q", y="y:Q").properties(name="top_2"),
+    )
+    bot = alt.hconcat(
+        base.encode(x="x:Q", y=alt.Y("y:Q", title="B")).properties(name="bot_1"),
+        base.encode(x="x:Q", y=alt.Y("y:Q", title="B")).properties(name="bot_2"),
+    )
+    chart = alt.vconcat(top, bot).add_params(
+        alt.selection_interval(bind="scales", name="zoom")
+    )
+    views = chart.to_dict()["params"][0]["views"]
+    assert views == ["top_1", "top_2", "bot_1", "bot_2"]
+
+
 def test_selection_property():
     sel = alt.selection_interval()
     chart = alt.Chart("data.csv").mark_point().properties(selection=sel)
