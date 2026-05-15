@@ -38,12 +38,6 @@ The contents of the resulting file will look something like this:
 
     {
       "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-      "config": {
-        "view": {
-          "continuousHeight": 300,
-          "continuousWidth": 300
-        }
-      },
       "data": {
         "url": "https://vega.github.io/vega-datasets/data/cars.json"
       },
@@ -98,12 +92,6 @@ javascript-enabled web browser:
       <script type="text/javascript">
         var spec = {
           "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-          "config": {
-            "view": {
-              "continuousHeight": 300,
-              "continuousWidth": 300
-            }
-          },
           "data": {
             "url": "https://vega.github.io/vega-datasets/data/cars.json"
           },

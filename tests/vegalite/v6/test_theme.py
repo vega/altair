@@ -45,9 +45,7 @@ def test_vega_themes(chart) -> None:
         with theme.enable(theme_name):
             dct = chart.to_dict()
         assert dct["usermeta"] == {"embedOptions": {"theme": theme_name}}
-        assert dct["config"] == {
-            "view": {"continuousWidth": 300, "continuousHeight": 300}
-        }
+        assert "config" not in dct
 
 
 @slow
