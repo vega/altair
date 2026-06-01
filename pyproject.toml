@@ -80,7 +80,7 @@ dev = [
     "pytest-xdist[psutil]~=3.5",
     "mistune",
     "mypy",
-    "pandas-stubs<2.3.3",
+    "pandas-stubs>=3.0.3.260530",
     "types-jsonschema",
     "types-setuptools",
     "geopandas>=0.14.3",
