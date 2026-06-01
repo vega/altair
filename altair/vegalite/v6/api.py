@@ -4577,6 +4577,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
             return self
         copy = self.copy()
         copy.concat = [chart.add_params(*params) for chart in copy.concat]
+        copy.params, copy.concat = _combine_subchart_params(copy.params, copy.concat)
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
@@ -4681,6 +4682,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
             return self
         copy = self.copy()
         copy.hconcat = [chart.add_params(*params) for chart in copy.hconcat]
+        copy.params, copy.hconcat = _combine_subchart_params(copy.params, copy.hconcat)
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
@@ -4787,6 +4789,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
             return self
         copy = self.copy()
         copy.vconcat = [chart.add_params(*params) for chart in copy.vconcat]
+        copy.params, copy.vconcat = _combine_subchart_params(copy.params, copy.vconcat)
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
@@ -5301,8 +5304,10 @@ def _combine_subchart_params(  # noqa: C901
             # At this stage in the loop, p must be a TopLevelSelectionParameter.
             # Get this subchart's view name from the subchart only (not p.views: params can share lists).
             view_to_add = _view_name_for_param(subchart, is_concat)
-            # MERGE: start from param's views; APPEND: start from [] so we don't pull in another param's views.
-            views_after = list(p.views or []) if found else []
+            # MERGE (found=True): start from p.views to accumulate all views for this param.
+            # APPEND (found=False, view_to_add set): start from [] to avoid pulling in sibling views.
+            # COMPOUND (found=False, no view_to_add): subchart already aggregated views into p.views; preserve them.
+            views_after = list(p.views or []) if (found or not view_to_add) else []
             if view_to_add and view_to_add not in views_after:
                 views_after.append(view_to_add)
 
