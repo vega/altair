@@ -2110,10 +2110,20 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         # remaining to_dict calls are not at top level
         context["top_level"] = False
+        # pre-initialize so children can write into it by reference,
+        # even when we pass dict(context, pre_transform=False) below
+        auto_calc_transforms: dict[str, dict] = context.setdefault(
+            "auto_calc_transforms", {}
+        )
 
         vegalite_spec: Any = _top_schema_base(super(TopLevelMixin, copy)).to_dict(
             validate=validate, ignore=ignore, context=dict(context, pre_transform=False)
         )
+
+        context.pop("auto_calc_transforms", None)
+        if auto_calc_transforms and is_top_level:
+            vegalite_spec.setdefault("transform", [])
+            vegalite_spec["transform"].extend(auto_calc_transforms.values())
 
         # TODO: following entries are added after validation. Should they be validated?
         if is_top_level:
