@@ -1,0 +1,103 @@
+---
+name: Prepare Release Draft
+
+on:
+  # Enable this after the manual release flow has been tested.
+  # schedule:
+  #   - cron: '0 3 1-7 * 1'  # Every four weeks on the first Monday at 3am UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-draft
+  cancel-in-progress: false
+
+env:
+  UV_SYSTEM_PYTHON: 1
+  CARGO_TERM_COLOR: always
+
+jobs:
+  prepare-release-draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN || github.token }}
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: '3.12'
+      - name: Install uv
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
+        with:
+          enable-cache: false
+      - name: Install dependencies
+        run: uv sync --frozen --all-extras
+      - name: Install Cocogitto
+        run: cargo install cocogitto --version 7.0.0 --locked
+      - name: Configure release git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Check for an existing draft release
+        id: existing-draft
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+        run: |
+          if gh release list --limit 20 --json isDraft,tagName --jq '.[] | select(.isDraft) | .tagName' | grep -q .; then
+            echo "A draft release already exists. Review or delete it before preparing another one."
+            echo "should-release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "should-release=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Determine next release version
+        if: steps.existing-draft.outputs.should-release == 'true'
+        id: next-version
+        run: |
+          set +e
+          DRY_RUN_OUTPUT=$(cog bump --dry-run --auto 2>&1)
+          STATUS=$?
+          set -e
+          printf '%s\n' "$DRY_RUN_OUTPUT"
+          VERSION=$(printf '%s\n' "$DRY_RUN_OUTPUT" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+([+-][0-9A-Za-z.-]+)?' | tail -n 1)
+          if [ -z "$VERSION" ]; then
+            if [ "$STATUS" -eq 0 ]; then
+              echo "No releasable version was detected."
+              echo "should-release=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            exit "$STATUS"
+          fi
+          echo "should-release=true" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Test with pytest
+        if: steps.next-version.outputs.should-release == 'true'
+        run: uv run task test
+      - name: Create release commit and tag
+        if: steps.next-version.outputs.should-release == 'true'
+        id: bump
+        run: |
+          CURRENT_DEV_VERSION=$(uv run python tools/update_release_version.py --get)
+          cog bump --auto
+          uv run task build
+          git push origin HEAD:main --follow-tags
+          NEXT_DEV_VERSION=$(uv run python tools/update_release_version.py --next-dev "${{ steps.next-version.outputs.version }}" "$CURRENT_DEV_VERSION")
+          uv run python tools/update_release_version.py "$NEXT_DEV_VERSION"
+          git add altair/__init__.py doc/conf.py
+          git commit -m "chore: Bump version to ${NEXT_DEV_VERSION}"
+          git push origin HEAD:main
+      - name: Create draft GitHub release
+        if: steps.next-version.outputs.should-release == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+        run: |
+          TAG="${{ steps.next-version.outputs.tag }}"
+          gh release create "$TAG" \
+            --draft \
+            --verify-tag \
+            --title "$TAG" \
+            --generate-notes
