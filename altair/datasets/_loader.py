@@ -7,21 +7,14 @@ from altair.datasets import _reader
 from altair.datasets._reader import IntoDataFrameT, IntoLazyFrameT
 
 if t.TYPE_CHECKING:
-    import sys
-    from typing import Any, Literal
+    from typing import Any, Literal, LiteralString, Self
 
     import pandas as pd
     import polars as pl
     import pyarrow as pa
 
     from altair.datasets._cache import DatasetCache
-    from altair.datasets._reader import Reader
-
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString, Self
-    else:
-        from typing_extensions import LiteralString, Self
-    from altair.datasets._reader import _Backend
+    from altair.datasets._reader import Reader, _Backend
     from altair.datasets._typing import Dataset, Extension
 
 

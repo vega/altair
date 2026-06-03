@@ -10,14 +10,8 @@ from altair.vegalite.v6.schema._config import ThemeConfig
 from altair.vegalite.v6.schema._typing import VegaThemes
 
 if TYPE_CHECKING:
-    import sys
     from functools import partial
-    from typing import TypeAlias
-
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
+    from typing import LiteralString, TypeAlias
 
     from altair.utils.plugin_registry import PluginEnabler
 

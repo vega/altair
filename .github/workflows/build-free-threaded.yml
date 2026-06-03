@@ -31,7 +31,7 @@ jobs:
           # uv pip install 'duckdb>=1.0; python_version<"3.14"'
           # uv pip install ipython
           # uv pip install ipykernel
-          # uv pip install pandas>=1.1.3
+          # uv pip install pandas>=1.5.3
           # uv pip install pyarrow-stubs
           # uv pip install 'pytest-xdist[psutil]~=3.5'
           # uv pip install mistune
@@ -42,8 +42,6 @@ jobs:
           # uv pip install geopandas>=0.14.3
           # uv pip install polars>=0.20.3
           # uv pip install taskipy>=1.14.1
-          # uv pip install tomli>=2.2.1
       - name: Run pytest with pytest-run-parallel
         run: |
           uv run pytest -o addopts= --pyargs --doctest-modules --doctest-ignore-import-errors --iterations=8 --parallel-threads=auto tests
-

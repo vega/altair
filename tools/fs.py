@@ -79,7 +79,7 @@ def dir_exists(file: str | Path, /) -> bool:
 
 def modified_time(file: str | Path, /) -> dt.datetime:
     """UTC datetime when ``file`` was last modified."""
-    return dt.datetime.fromtimestamp(Path(file).stat().st_mtime, dt.timezone.utc)
+    return dt.datetime.fromtimestamp(Path(file).stat().st_mtime, dt.UTC)
 
 
 def path_repr(fp: Path, /) -> str:

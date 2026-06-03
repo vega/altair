@@ -43,10 +43,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeIs
 
-    if sys.version_info >= (3, 11):
-        from typing import Never, Self
-    else:
-        from typing_extensions import Never, Self
+    from typing import Never, Self
 
     _OptionalModule: TypeAlias = "ModuleType | None"
 
@@ -509,7 +506,7 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
                 hours=obj.hour, minutes=obj.minute, seconds=obj.second, milliseconds=ms
             )
         if tzinfo := obj.tzinfo:
-            if tzinfo in [dt.timezone.utc, zoneinfo.ZoneInfo("UTC")]:
+            if tzinfo in [dt.UTC, zoneinfo.ZoneInfo("UTC")]:
                 result["utc"] = True
             else:
                 msg = (
