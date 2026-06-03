@@ -12,6 +12,8 @@ jobs:
     name: py 3.14t free-threaded
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Set up Python 3.14t
         uses: actions/setup-python@v6
         with:
