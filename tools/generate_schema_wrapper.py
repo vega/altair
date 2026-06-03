@@ -878,7 +878,6 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
     it = chain.from_iterable(info.all_names for info in channel_infos.values())
     all_ = sorted(chain(it, COMPAT_EXPORTS))
     imports = [
-        "import sys",
         "from typing import Any, overload, Literal, Union, TypedDict",
         "import narwhals.stable.v1 as nw",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
@@ -909,7 +908,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
             f"from altair.vegalite.v6.schema.core import {', '.join(TYPING_CORE)}",
             f"from altair.vegalite.v6.api import {', '.join(TYPING_API)}",
             "from typing import TypeAlias",
-            textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
+            "from typing import Self",
         ),
         f"\n__all__ = {all_}\n",
         CHANNEL_MIXINS,
@@ -1246,9 +1245,8 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n".join(mixins_imports),
         "\n\n",
         import_type_checking(
-            "import sys",
             "from collections.abc import Sequence",
-            textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
+            "from typing import Self",
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
             "from altair import Parameter",

@@ -12,11 +12,7 @@ else:
     from typing_extensions import TypedDict
 
 if TYPE_CHECKING:
-    if sys.version_info >= (3, 11):
-        from typing import NotRequired, Required
-    else:
-        from typing_extensions import NotRequired, Required
-    from typing import TypeAlias
+    from typing import NotRequired, Required, TypeAlias
 
     from altair.datasets._typing import Dataset, FlFieldStr
 

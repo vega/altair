@@ -22,17 +22,12 @@ Examples
 
 from __future__ import annotations
 
-import sys
+import tomllib
 from collections import deque
 from itertools import chain
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, ClassVar, Literal
 
-if sys.version_info >= (3, 11):
-    import tomllib
-else:
-    # NOTE: See https://github.com/hukkin/tomli?tab=readme-ov-file#building-a-tomlitomllib-compatibility-layer
-    import tomli as tomllib
 from packaging.requirements import Requirement
 from packaging.version import parse as parse_version
 
@@ -48,12 +43,7 @@ if TYPE_CHECKING:
         Mapping,
         Sequence,
     )
-
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
-    from typing import TypeAlias
+    from typing import LiteralString, TypeAlias
 
 __all__ = ["VERSIONS"]
 
