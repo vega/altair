@@ -1,5 +1,7 @@
 # ruff: noqa
-__version__ = "6.2.0dev"
+from importlib.metadata import version
+
+__version__ = version("altair")
 
 # The content of __all__ is automatically written by
 # tools/update_init_file.py. Do not modify directly.
