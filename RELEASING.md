@@ -17,11 +17,8 @@ The workflow:
 2. Uses Cocogitto to inspect conventional commits since the latest `v*` tag.
 3. Skips the release if no SemVer-relevant changes are found.
 4. Runs the test suite.
-5. Bumps `altair/__init__.py` and `doc/conf.py` to the release version.
-6. Builds the package.
-7. Commits the release version and creates a `vX.Y.Z` tag.
-8. Bumps `main` to the next development version.
-9. Creates a draft GitHub release.
+5. Commits the release version and creates a `vX.Y.Z` tag.
+6. Creates a draft GitHub release.
 
 Review the draft GitHub release notes. If everything looks correct, publish the draft release in GitHub.
 
@@ -55,59 +52,29 @@ Use this path for major releases, releases that should not follow the automatic 
 
 5. Create a new release branch:
 
-       git switch -c version_6.0.0
+       git switch -c release_6.0.0
 
-6. Update version to, e.g. 6.0.0:
-
-   - `altair/__init__.py`
-   - `doc/conf.py`
-
-   You can use:
-
-       uv run python tools/update_release_version.py 6.0.0
-
-7. Commit changes and push:
+6. Commit any release-specific changes and push:
 
        git add . -u
-       git commit -m "chore: Bump version to 6.0.0"
+       git commit -m "chore: release 6.0.0"
        git push
 
-8. Merge the release branch into main and make sure that all required checks pass.
+7. Merge the release branch into main and make sure that all required checks pass.
 
-9. Switch to main. If you work on a fork, replace `origin` with `upstream`:
+8. Switch to main. If you work on a fork, replace `origin` with `upstream`:
 
        git switch main
        git pull origin main
 
-10. On main, tag the release. If you work on a fork, replace `origin` with `upstream`:
+9. On main, tag the release. If you work on a fork, replace `origin` with `upstream`:
 
         git tag -a v6.0.0 -m "Version 6.0.0 release"
         git push origin tag v6.0.0
 
-11. Create a draft release at https://github.com/vega/altair/releases/new for the tag. Review the release notes, then publish the release. Publishing the GitHub release triggers PyPI publishing automatically for `vX.Y.Z` tags.
+10. Create a draft release at https://github.com/vega/altair/releases/new for the tag. Review the release notes, then publish the release. Publishing the GitHub release triggers PyPI publishing automatically for `vX.Y.Z` tags.
 
-12. Create a new branch:
-
-        git switch -c maint_6.1.0dev
-
-13. Update version and add `dev` suffix, e.g. 6.1.0dev:
-
-    - `altair/__init__.py`
-    - `doc/conf.py`
-
-    You can use:
-
-        uv run python tools/update_release_version.py 6.1.0dev
-
-14. Commit changes and push:
-
-        git add . -u
-        git commit -m "chore: Bump version to 6.1.0dev"
-        git push
-
-15. Merge the maintenance branch into main.
-
-16. Double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This may take up to several hours:
+11. Double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This may take up to several hours:
 
     https://github.com/conda-forge/altair-feedstock/pulls
 

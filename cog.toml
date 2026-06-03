@@ -4,10 +4,6 @@ ignore_merge_commits = true
 branch_whitelist = ["main"]
 disable_changelog = true
 
-pre_bump_hooks = [
-    "uv run python tools/update_release_version.py {{version}}",
-]
-
 [changelog]
 template = "remote"
 remote = "github.com"

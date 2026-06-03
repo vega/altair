@@ -81,15 +81,8 @@ jobs:
         if: steps.next-version.outputs.should-release == 'true'
         id: bump
         run: |
-          CURRENT_DEV_VERSION=$(uv run python tools/update_release_version.py --get)
           cog bump --auto
-          uv run task build
           git push origin HEAD:main --follow-tags
-          NEXT_DEV_VERSION=$(uv run python tools/update_release_version.py --next-dev "${{ steps.next-version.outputs.version }}" "$CURRENT_DEV_VERSION")
-          uv run python tools/update_release_version.py "$NEXT_DEV_VERSION"
-          git add altair/__init__.py doc/conf.py
-          git commit -m "chore: Bump version to ${NEXT_DEV_VERSION}"
-          git push origin HEAD:main
       - name: Create draft GitHub release
         if: steps.next-version.outputs.should-release == 'true'
         env:
