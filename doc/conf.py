@@ -175,6 +175,13 @@ html_theme_options = {
     },
 }
 
+if preview_tag := os.environ.get("ALTAIR_RELEASE_PREVIEW_TAG"):
+    html_theme_options["announcement"] = (
+        f"This is a preview doc build for draft release {preview_tag}, "
+        'not the <a href="https://altair-viz.github.io/">'
+        "official Altair documentation</a>."
+    )
+
 html_context = {"default_mode": "light"}
 
 # Add any paths that contain custom themes here, relative to this directory.

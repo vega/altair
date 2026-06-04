@@ -95,6 +95,39 @@ jobs:
             --verify-tag \
             --title "$TAG" \
             --generate-notes
+      - name: Build docs preview
+        if: steps.next-version.outputs.should-release == 'true'
+        env:
+          ALTAIR_RELEASE_PREVIEW_TAG: ${{ steps.next-version.outputs.tag }}
+        run: uv run task doc-build -- --clean
+      - name: Publish docs preview
+        if: steps.next-version.outputs.should-release == 'true'
+        id: docs-preview
+        env:
+          TAG: ${{ steps.next-version.outputs.tag }}
+        run: |
+          PREVIEW_PATH="release-preview/latest"
+          PREVIEW_URL="https://vega.github.io/altair/$PREVIEW_PATH/"
+          echo "url=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
+
+          PREVIEW_REPO=/tmp/altair-docs-preview
+          if git ls-remote --exit-code --heads origin gh-pages; then
+            git clone --branch gh-pages --single-branch "$(git remote get-url origin)" "$PREVIEW_REPO"
+          else
+            mkdir -p "$PREVIEW_REPO"
+            git -C "$PREVIEW_REPO" init
+            git -C "$PREVIEW_REPO" remote add origin "$(git remote get-url origin)"
+            git -C "$PREVIEW_REPO" checkout --orphan gh-pages
+          fi
+
+          rm -rf "$PREVIEW_REPO/$PREVIEW_PATH"
+          mkdir -p "$PREVIEW_REPO/$PREVIEW_PATH"
+          cp -a doc/_build/html/. "$PREVIEW_REPO/$PREVIEW_PATH/"
+          touch "$PREVIEW_REPO/.nojekyll"
+
+          git -C "$PREVIEW_REPO" add .
+          git -C "$PREVIEW_REPO" commit -m "docs: preview $TAG" || true
+          git -C "$PREVIEW_REPO" push origin HEAD:gh-pages
       - name: Open release review issue
         if: steps.next-version.outputs.should-release == 'true'
         env:
@@ -102,13 +135,14 @@ jobs:
         run: |
           TAG="${{ steps.next-version.outputs.tag }}"
           cat > release-review-issue.md <<EOF
-          A draft release for $TAG has been created.
+          A draft release for $TAG has been created. Please review the draft release notes and docs preview:
 
-          Please review the draft release notes and publish if everything looks correct:
+          - Draft release notes: https://github.com/vega/altair/releases/tag/$TAG
+          - Docs preview (scan the gallery thumbnails): ${{ steps.docs-preview.outputs.url }}
 
-          https://github.com/vega/altair/releases/tag/$TAG
+          If everything looks correct, go ahead and publish the release on GitHub. This will trigger a PyPI release.
 
-          Release process notes: https://github.com/vega/altair/blob/main/RELEASING.md
+          You can read [the general release notes](https://github.com/vega/altair/blob/main/RELEASING.md) for more details, including what to do after a release.
           EOF
 
           gh issue create \

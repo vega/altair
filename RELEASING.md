@@ -22,7 +22,8 @@ Check all [Vega project](https://github.com/orgs/vega/repositories?type=source) 
         4. Runs the test suite.
         5. Commits the release version and creates a `vX.Y.Z` tag.
         6. Creates a draft GitHub release.
-        7. Opens an issue with the instructions for manual review before releasing.
+        7. Builds and publishes docs preview with a draft-release banner at `release-preview/latest/`.
+        8. Opens an issue with the instructions for manual review before releasing.
 2. Review the issue that was opened by the workflow. This contains instructions on what to review before publishing the draft release, e.g. the release notes and the preview version of the docs.
 3. Publish the release on Github.
     - Publishing a non-prerelease GitHub release whose tag matches `vX.Y.Z` triggers the `Publish Release to PyPI` workflow. That workflow checks out the release tag, builds the package, and publishes to PyPI using trusted publishing.
