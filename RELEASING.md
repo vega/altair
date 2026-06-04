@@ -26,7 +26,7 @@ Check all [Vega project](https://github.com/orgs/vega/repositories?type=source) 
         8. Opens an issue with the instructions for manual review before releasing.
 2. Review the issue that was opened by the workflow. This contains instructions on what to review before publishing the draft release, e.g. the release notes and the preview version of the docs.
 3. Publish the release on Github.
-    - Publishing a non-prerelease GitHub release whose tag matches `vX.Y.Z` triggers the `Publish Release to PyPI` workflow. That workflow checks out the release tag, builds the package, and publishes to PyPI using trusted publishing.
+    - Publishing a non-prerelease GitHub release whose tag matches `vX.Y.Z` triggers the `Publish Release to PyPI` workflow. That workflow checks out the release tag, builds the package, publishes to PyPI using trusted publishing, and publishes the official documentation without the draft-release banner.
 
 ### Manual Release
 
@@ -65,9 +65,4 @@ Use this path for major releases, maintenance-branch releases, releases that sho
 
 ## After Releasing
 
-1. Publish the updated documentation. This is manual since it requires write access to [altair-viz/altair-viz.github.io](https://github.com/altair-viz/altair-viz.github.io):
-
-    uv run task doc-build -- --clean
-    uv run task doc-publish
-
-2. Double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This is usually quick, but may take up to several hours: https://github.com/conda-forge/altair-feedstock/pulls
+Double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This is usually quick, but may take up to several hours: https://github.com/conda-forge/altair-feedstock/pulls

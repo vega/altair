@@ -55,3 +55,16 @@ jobs:
         with:
           verbose: true
           print-hash: true
+      - name: Publish documentation
+        env:
+          DOCS_PUBLISH_TOKEN: ${{ secrets.DOCS_PUBLISH_TOKEN }}
+        run: |
+          if [ -z "$DOCS_PUBLISH_TOKEN" ]; then
+            echo "DOCS_PUBLISH_TOKEN is required to publish documentation."
+            exit 1
+          fi
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global url."https://x-access-token:${DOCS_PUBLISH_TOKEN}@github.com/".insteadOf "https://github.com/"
+          uv run task doc-build -- --clean
+          uv run task doc-publish
