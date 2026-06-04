@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: release-draft
@@ -94,3 +95,25 @@ jobs:
             --verify-tag \
             --title "$TAG" \
             --generate-notes
+      - name: Open release review issue
+        if: steps.next-version.outputs.should-release == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+        run: |
+          TAG="${{ steps.next-version.outputs.tag }}"
+          cat > release-review-issue.md <<EOF
+          A draft release for $TAG has been created.
+
+          Please review the draft release notes and publish if everything looks correct:
+
+          https://github.com/vega/altair/releases/tag/$TAG
+
+          Release process notes: https://github.com/vega/altair/blob/main/RELEASING.md
+          EOF
+
+          gh issue create \
+            --title "Review draft release $TAG" \
+            --body-file release-review-issue.md \
+            --assignee joelostblom \
+            --assignee mattijn \
+            --assignee alec-bike
