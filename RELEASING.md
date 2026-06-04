@@ -2,8 +2,8 @@
 
 Altair has two release paths:
 
-- Automated stable releases for routine `fix` and `feat` changes.
-- Manual releases for major releases or any release that needs extra maintainer judgment.
+- Automated stable releases for routine releases where Cocogitto's SemVer calculation is appropriate.
+- Manual releases when maintainers need to choose the release tag themselves.
 
 ## Automated Stable Release
 
@@ -30,7 +30,7 @@ https://github.com/conda-forge/altair-feedstock/pulls
 
 ## Manual Release
 
-Use this path for major releases, releases that should not follow the automatic SemVer calculation, or if the automated workflow exits and says the release should be manual.
+Use this path for major releases, maintenance-branch releases, releases that should not follow Cocogitto's automatic SemVer calculation, or if the automated workflow fails. Unlike the automated workflow, the maintainer chooses and creates the release tag manually.
 
 1. Check all [Vega project](https://github.com/orgs/vega/repositories?type=source) versions are up-to-date. See [NOTES_FOR_MAINTAINERS.md](NOTES_FOR_MAINTAINERS.md).
 
@@ -50,31 +50,18 @@ Use this path for major releases, releases that should not follow the automatic 
 
    Navigate to http://localhost:8000 and ensure it looks OK, particularly the gallery thumbnails.
 
-5. Create a new release branch:
+5. Run the test suite:
 
-       git switch -c release_6.0.0
+       uv run task test
 
-6. Commit any release-specific changes and push:
-
-       git add . -u
-       git commit -m "chore: release 6.0.0"
-       git push
-
-7. Merge the release branch into main and make sure that all required checks pass.
-
-8. Switch to main. If you work on a fork, replace `origin` with `upstream`:
-
-       git switch main
-       git pull origin main
-
-9. On main, tag the release. If you work on a fork, replace `origin` with `upstream`:
+6. Tag the release. If you work on a fork, replace `origin` with `upstream`:
 
         git tag -a v6.0.0 -m "Version 6.0.0 release"
         git push origin tag v6.0.0
 
-10. Create a draft release at https://github.com/vega/altair/releases/new for the tag. Review the release notes, then publish the release. Publishing the GitHub release triggers PyPI publishing automatically for `vX.Y.Z` tags.
+7. Create a draft release at https://github.com/vega/altair/releases/new for the tag. Review the release notes, then publish the release. Publishing the GitHub release triggers PyPI publishing automatically for `vX.Y.Z` tags.
 
-11. Double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This may take up to several hours:
+8. Double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This may take up to several hours:
 
     https://github.com/conda-forge/altair-feedstock/pulls
 
