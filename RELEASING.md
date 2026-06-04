@@ -5,34 +5,29 @@ Altair has two release paths:
 - Automated stable releases for routine releases where Cocogitto's SemVer calculation is appropriate.
 - Manual releases when maintainers need to choose the release tag themselves.
 
-## Before Any Release
+## Before Releasing
 
 Check all [Vega project](https://github.com/orgs/vega/repositories?type=source) versions are up-to-date. See [NOTES_FOR_MAINTAINERS.md](NOTES_FOR_MAINTAINERS.md).
 
-## Automated Stable Release
+## Releasing
 
-The `Prepare Release Draft` workflow is started manually from GitHub Actions. A commented schedule is included in the workflow file and can be enabled after the manual release flow has been tested.
+### Semi-Automated Release
 
-The workflow uses the default `GITHUB_TOKEN` unless a `RELEASE_TOKEN` secret is configured. If branch protection prevents GitHub Actions from pushing release commits or tags to `main`, configure `RELEASE_TOKEN` with a maintainer or bot token that is allowed to push through the repository's release rules.
+1. Go to GitHub actions and start the `Prepare Release Draft` workflow.
+    - The workflow uses the default `GITHUB_TOKEN` unless a `RELEASE_TOKEN` secret is configured. If branch protection prevents GitHub Actions from pushing release commits or tags to `main`, configure `RELEASE_TOKEN` with a maintainer or bot token that is allowed to push through the repository's release rules.
+    - This workflow automates the following steps:
+        1. Checks for an existing draft release and exits if one already exists.
+        2. Uses Cocogitto to inspect conventional commits since the latest `v*` tag.
+        3. Skips the release if no SemVer-relevant changes are found.
+        4. Runs the test suite.
+        5. Commits the release version and creates a `vX.Y.Z` tag.
+        6. Creates a draft GitHub release.
+        7. Opens an issue with the instructions for manual review before releasing.
+2. Review the issue that was opened by the workflow. This contains instructions on what to review before publishing the draft release, e.g. the release notes and the preview version of the docs.
+3. Publish the release on Github.
+    - Publishing a non-prerelease GitHub release whose tag matches `vX.Y.Z` triggers the `Publish Release to PyPI` workflow. That workflow checks out the release tag, builds the package, and publishes to PyPI using trusted publishing.
 
-The workflow:
-
-1. Checks for an existing draft release and exits if one already exists.
-2. Uses Cocogitto to inspect conventional commits since the latest `v*` tag.
-3. Skips the release if no SemVer-relevant changes are found.
-4. Runs the test suite.
-5. Commits the release version and creates a `vX.Y.Z` tag.
-6. Creates a draft GitHub release.
-
-Review the draft GitHub release notes. If everything looks correct, publish the draft release in GitHub.
-
-Publishing a non-prerelease GitHub release whose tag matches `vX.Y.Z` triggers the `Publish Release to PyPI` workflow. That workflow checks out the release tag, builds the package, and publishes to PyPI using trusted publishing.
-
-After publishing, double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This may take up to several hours:
-
-https://github.com/conda-forge/altair-feedstock/pulls
-
-## Manual Release
+### Manual Release
 
 Use this path for major releases, maintenance-branch releases, releases that should not follow Cocogitto's automatic SemVer calculation, or if the automated workflow fails. Unlike the automated workflow, the maintainer chooses and creates the release tag manually.
 
@@ -67,11 +62,11 @@ Use this path for major releases, maintenance-branch releases, releases that sho
 
     https://github.com/conda-forge/altair-feedstock/pulls
 
-## Documentation Publishing
+## After Releasing
 
-Publishing documentation still requires write access to [altair-viz/altair-viz.github.io](https://github.com/altair-viz/altair-viz.github.io):
+1. Publish the updated documentation. This is manual since it requires write access to [altair-viz/altair-viz.github.io](https://github.com/altair-viz/altair-viz.github.io):
 
     uv run task doc-build -- --clean
     uv run task doc-publish
 
-This is not yet automated by the release workflows because the required credentials and review policy are separate from PyPI trusted publishing.
+2. Double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This is usually quick, but may take up to several hours: https://github.com/conda-forge/altair-feedstock/pulls
