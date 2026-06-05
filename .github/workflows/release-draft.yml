@@ -104,19 +104,22 @@ jobs:
         if: steps.next-version.outputs.should-release == 'true'
         id: docs-preview
         env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
           TAG: ${{ steps.next-version.outputs.tag }}
         run: |
           PREVIEW_PATH="release-preview/latest"
           PREVIEW_URL="https://vega.github.io/altair/$PREVIEW_PATH/"
           echo "url=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
 
+          AUTHENTICATED_REMOTE="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
           PREVIEW_REPO=/tmp/altair-docs-preview
           if git ls-remote --exit-code --heads origin gh-pages; then
-            git clone --branch gh-pages --single-branch "$(git remote get-url origin)" "$PREVIEW_REPO"
+            git clone --branch gh-pages --single-branch "$AUTHENTICATED_REMOTE" "$PREVIEW_REPO"
           else
             mkdir -p "$PREVIEW_REPO"
             git -C "$PREVIEW_REPO" init
-            git -C "$PREVIEW_REPO" remote add origin "$(git remote get-url origin)"
+            git -C "$PREVIEW_REPO" remote add origin "$AUTHENTICATED_REMOTE"
             git -C "$PREVIEW_REPO" checkout --orphan gh-pages
           fi
 
