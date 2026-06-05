@@ -38,7 +38,9 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen --all-extras
       - name: Install Cocogitto
-        run: cargo install cocogitto --version 7.0.0 --locked
+        uses: cocogitto/cocogitto-action@390bda87a19bf627e03ad075c67a11e9ddbb7547 # v4
+        with:
+          install-only: true
       - name: Configure release git identity
         run: |
           git config --global user.name "github-actions[bot]"
