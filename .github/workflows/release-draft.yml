@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen --all-extras
       - name: Install Cocogitto
-        uses: cocogitto/cocogitto-action@390bda87a19bf627e03ad075c67a11e9ddbb7547 # v4
+        uses: cocogitto/cocogitto-action@52d0023b4396897f1815648e553db2ab8d782f3a # v4.2.0
         with:
           install-only: true
       - name: Configure release git identity
