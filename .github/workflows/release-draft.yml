@@ -86,7 +86,7 @@ jobs:
         if: steps.next-version.outputs.should-release == 'true'
         id: bump
         run: |
-          cog bump --auto --disable-bump-commit --annotated "chore(version): {{version}}"
+          cog bump --auto --disable-bump-commit --annotated "Version {{version}} release"
           git push origin "refs/tags/${{ steps.next-version.outputs.tag }}"
       - name: Create draft GitHub release
         if: steps.next-version.outputs.should-release == 'true'
