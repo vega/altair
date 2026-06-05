@@ -111,15 +111,16 @@ jobs:
           PREVIEW_URL="https://vega.github.io/altair/$PREVIEW_PATH/"
           echo "url=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
 
-          AUTHENTICATED_REMOTE="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          CANONICAL_REMOTE="https://github.com/${GITHUB_REPOSITORY}.git"
+          git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
 
           PREVIEW_REPO=/tmp/altair-docs-preview
           if git ls-remote --exit-code --heads origin gh-pages; then
-            git clone --branch gh-pages --single-branch "$AUTHENTICATED_REMOTE" "$PREVIEW_REPO"
+            git clone --branch gh-pages --single-branch "$CANONICAL_REMOTE" "$PREVIEW_REPO"
           else
             mkdir -p "$PREVIEW_REPO"
             git -C "$PREVIEW_REPO" init
-            git -C "$PREVIEW_REPO" remote add origin "$AUTHENTICATED_REMOTE"
+            git -C "$PREVIEW_REPO" remote add origin "$CANONICAL_REMOTE"
             git -C "$PREVIEW_REPO" checkout --orphan gh-pages
           fi
 
