@@ -1,6 +1,0 @@
-﻿altair.selection\_point
-=======================
-
-.. currentmodule:: altair
-
-.. autofunction:: selection_point

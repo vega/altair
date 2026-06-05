@@ -1,6 +1,0 @@
-﻿altair.selection\_multi
-=======================
-
-.. currentmodule:: altair
-
-.. autofunction:: selection_multi

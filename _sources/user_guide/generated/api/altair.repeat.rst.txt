@@ -1,6 +1,0 @@
-﻿altair.repeat
-=============
-
-.. currentmodule:: altair
-
-.. autofunction:: repeat

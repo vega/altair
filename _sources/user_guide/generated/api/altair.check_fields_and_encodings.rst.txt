@@ -1,6 +1,0 @@
-﻿altair.check\_fields\_and\_encodings
-====================================
-
-.. currentmodule:: altair
-
-.. autofunction:: check_fields_and_encodings

@@ -1,6 +1,0 @@
-﻿altair.selection
-================
-
-.. currentmodule:: altair
-
-.. autofunction:: selection

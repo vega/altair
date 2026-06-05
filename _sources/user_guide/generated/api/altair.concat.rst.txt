@@ -1,6 +1,0 @@
-﻿altair.concat
-=============
-
-.. currentmodule:: altair
-
-.. autofunction:: concat

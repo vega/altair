@@ -1,6 +1,0 @@
-﻿altair.binding\_radio
-=====================
-
-.. currentmodule:: altair
-
-.. autofunction:: binding_radio

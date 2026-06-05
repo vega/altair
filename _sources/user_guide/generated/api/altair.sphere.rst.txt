@@ -1,6 +1,0 @@
-﻿altair.sphere
-=============
-
-.. currentmodule:: altair
-
-.. autofunction:: sphere

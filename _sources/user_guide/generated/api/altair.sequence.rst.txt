@@ -1,6 +1,0 @@
-﻿altair.sequence
-===============
-
-.. currentmodule:: altair
-
-.. autofunction:: sequence

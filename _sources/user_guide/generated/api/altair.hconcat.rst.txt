@@ -1,6 +1,0 @@
-﻿altair.hconcat
-==============
-
-.. currentmodule:: altair
-
-.. autofunction:: hconcat

@@ -1,6 +1,0 @@
-﻿altair.topo\_feature
-====================
-
-.. currentmodule:: altair
-
-.. autofunction:: topo_feature
