@@ -60,8 +60,8 @@ plot_data = pd.DataFrame(
 
 alt.Chart(plot_data).mark_line().encode(
     x="t:Q",
-    y=alt.Y("value:Q").title(""),
+    y=alt.Y("value:Q").title(None),
     color=f"{col_class}:N",
     detail="sample:N",
     opacity=alt.value(0.5),
-).properties(width=600, height=400)
+)
