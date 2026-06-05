@@ -33,9 +33,10 @@ jobs:
 
             const mapping = [
               { pattern: /^(feat|feat!)(\(.+\))?!?:/, label: "enhancement" },
-              { pattern: /^(fix|fix!)(\(.+\))?!?:/,  label: "bug" },
+              { pattern: /^perf(\(.+\))?:/,           label: "enhancement" },
+              { pattern: /^(fix|fix!)(\(.+\))?!?:/,   label: "bug" },
               { pattern: /^docs(\(.+\))?:/,           label: "documentation" },
-              { pattern: /^(chore|build|ci|style|test|refactor|perf)(\(.+\))?:/, label: "maintenance" },
+              { pattern: /^(chore|build|ci|style|test|refactor)(\(.+\))?:/, label: "maintenance" },
             ];
 
             // Check for breaking change: trailing ! before colon or BREAKING CHANGE in body
