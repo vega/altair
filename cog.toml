@@ -3,17 +3,3 @@ from_latest_tag = true
 ignore_merge_commits = true
 branch_whitelist = ["main"]
 disable_changelog = true
-
-[changelog]
-template = "remote"
-remote = "github.com"
-owner = "vega"
-repository = "altair"
-
-[commit_types]
-docs = { changelog_title = "Documentation", omit_from_changelog = false }
-build = { changelog_title = "Build", omit_from_changelog = false }
-ci = { changelog_title = "Continuous Integration", omit_from_changelog = true }
-chore = { changelog_title = "Maintenance", omit_from_changelog = true }
-test = { changelog_title = "Tests", omit_from_changelog = true }
-style = { changelog_title = "Style", omit_from_changelog = true }
