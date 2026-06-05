@@ -26,8 +26,13 @@ layers = [
     alt.Chart(source)
     .mark_rect()
     .encode(
-        alt.X("IMDB Rating:Q").bin(maxbins=n),
-        alt.Y("Rotten Tomatoes Rating:Q").bin(maxbins=n),
+        alt.X("IMDB Rating:Q")
+        .bin(maxbins=n)
+        .scale(zero=True)
+        .axis(format="d", title="IMDB Rating"),
+        alt.Y("Rotten Tomatoes Rating:Q")
+        .bin(maxbins=n)
+        .axis(format="d", title="Rotten Tomatoes Rating"),
         alt.Color("count():Q").scale(scheme="greenblue"),
     )
     .transform_filter(f"maxbins === {n}")

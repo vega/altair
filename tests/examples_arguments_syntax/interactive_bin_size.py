@@ -25,8 +25,17 @@ maxbins = alt.param(name="maxbins", value=30, bind=slider)
 
 layers = [
     alt.Chart(source).mark_rect().encode(
-        x=alt.X("IMDB Rating:Q", bin=alt.Bin(maxbins=n)),
-        y=alt.Y("Rotten Tomatoes Rating:Q", bin=alt.Bin(maxbins=n)),
+        x=alt.X(
+            "IMDB Rating:Q",
+            bin=alt.Bin(maxbins=n),
+            scale=alt.Scale(zero=True),
+            axis=alt.Axis(format="d", title="IMDB Rating"),
+        ),
+        y=alt.Y(
+            "Rotten Tomatoes Rating:Q",
+            bin=alt.Bin(maxbins=n),
+            axis=alt.Axis(format="d", title="Rotten Tomatoes Rating"),
+        ),
         color=alt.Color("count():Q", scale=alt.Scale(scheme="greenblue")),
     ).transform_filter(f"maxbins === {n}")
     for n in maxbins_options
