@@ -11,6 +11,7 @@ permissions:
 
 env:
   UV_SYSTEM_PYTHON: 1
+  UV_FROZEN: 1
 
 jobs:
   publish-release:
