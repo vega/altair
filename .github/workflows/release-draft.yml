@@ -17,6 +17,7 @@ concurrency:
 
 env:
   UV_SYSTEM_PYTHON: 1
+  UV_FROZEN: 1
   CARGO_TERM_COLOR: always
 
 jobs:
