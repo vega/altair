@@ -13,8 +13,7 @@ Check all [Vega project](https://github.com/orgs/vega/repositories?type=source) 
 
 ### Semi-Automated Release
 
-1. Go to GitHub actions and start the `Prepare Release Draft` workflow.
-    - The workflow uses the default `GITHUB_TOKEN` unless a `RELEASE_TOKEN` secret is configured. If branch protection prevents GitHub Actions from pushing release commits or tags to `main`, configure `RELEASE_TOKEN` with a maintainer or bot token that is allowed to push through the repository's release rules.
+1. Go to "Actions" tab, click the `Prepare Release Draft` workflow to the left, and then "Run workflow".
     - This workflow automates the following steps:
         1. Checks for an existing draft release and exits if one already exists.
         2. Uses Cocogitto to inspect conventional commits since the latest `v*` tag.
