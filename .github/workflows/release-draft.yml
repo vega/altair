@@ -1,0 +1,156 @@
+---
+name: Prepare Release Draft
+
+on:
+  # Enable this after the manual release flow has been tested.
+  # schedule:
+  #   - cron: '0 3 1-7 * 1'  # Every four weeks on the first Monday at 3am UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: release-draft
+  cancel-in-progress: false
+
+env:
+  UV_SYSTEM_PYTHON: 1
+  UV_FROZEN: 1
+  CARGO_TERM_COLOR: always
+
+jobs:
+  prepare-release-draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+          # Use RELEASE_TOKEN when branch protection blocks github.token pushes.
+          token: ${{ secrets.RELEASE_TOKEN || github.token }}
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: '3.12'
+      - name: Install uv
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
+        with:
+          enable-cache: false
+      - name: Install dependencies
+        run: uv sync --frozen --all-extras
+      - name: Install Cocogitto
+        uses: cocogitto/cocogitto-action@52d0023b4396897f1815648e553db2ab8d782f3a # v4.2.0
+        with:
+          install-only: true
+      - name: Configure release git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Check for an existing draft release
+        id: existing-draft
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+        run: |
+          if gh release list --limit 20 --json isDraft,tagName --jq '.[] | select(.isDraft) | .tagName' | grep -q .; then
+            echo "A draft release already exists. Review or delete it before preparing another one."
+            echo "should-release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "should-release=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Determine next release version
+        if: steps.existing-draft.outputs.should-release == 'true'
+        id: next-version
+        run: |
+          set +e
+          DRY_RUN_OUTPUT=$(cog bump --dry-run --auto 2>&1)
+          STATUS=$?
+          set -e
+          printf '%s\n' "$DRY_RUN_OUTPUT"
+          VERSION=$(printf '%s\n' "$DRY_RUN_OUTPUT" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+([+-][0-9A-Za-z.-]+)?' | tail -n 1)
+          if [ -z "$VERSION" ]; then
+            if [ "$STATUS" -eq 0 ]; then
+              echo "No releasable version was detected."
+              echo "should-release=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            exit "$STATUS"
+          fi
+          echo "should-release=true" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Test with pytest
+        if: steps.next-version.outputs.should-release == 'true'
+        run: uv run task test
+      - name: Create release tag
+        if: steps.next-version.outputs.should-release == 'true'
+        id: bump
+        run: |
+          cog bump --auto --disable-bump-commit --annotated "Version {{version}} release"
+          git push origin "refs/tags/${{ steps.next-version.outputs.tag }}"
+      - name: Create draft GitHub release
+        if: steps.next-version.outputs.should-release == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+        run: |
+          TAG="${{ steps.next-version.outputs.tag }}"
+          gh release create "$TAG" \
+            --draft \
+            --verify-tag \
+            --title "$TAG" \
+            --generate-notes
+      - name: Build docs preview
+        if: steps.next-version.outputs.should-release == 'true'
+        env:
+          ALTAIR_RELEASE_PREVIEW_TAG: ${{ steps.next-version.outputs.tag }}
+        run: uv run task doc-build -- --clean
+      - name: Publish docs preview
+        if: steps.next-version.outputs.should-release == 'true'
+        id: docs-preview
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+          TAG: ${{ steps.next-version.outputs.tag }}
+        run: |
+          PREVIEW_PATH="release-preview/latest"
+          PREVIEW_URL="https://vega.github.io/altair/$PREVIEW_PATH/"
+          echo "url=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
+
+          CANONICAL_REMOTE="https://github.com/${GITHUB_REPOSITORY}.git"
+          git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
+
+          PREVIEW_REPO=/tmp/altair-docs-preview
+          if git ls-remote --exit-code --heads origin gh-pages; then
+            git clone --branch gh-pages --single-branch "$CANONICAL_REMOTE" "$PREVIEW_REPO"
+          else
+            mkdir -p "$PREVIEW_REPO"
+            git -C "$PREVIEW_REPO" init
+            git -C "$PREVIEW_REPO" remote add origin "$CANONICAL_REMOTE"
+            git -C "$PREVIEW_REPO" checkout --orphan gh-pages
+          fi
+
+          rm -rf "$PREVIEW_REPO/$PREVIEW_PATH"
+          mkdir -p "$PREVIEW_REPO/$PREVIEW_PATH"
+          cp -a doc/_build/html/. "$PREVIEW_REPO/$PREVIEW_PATH/"
+          touch "$PREVIEW_REPO/.nojekyll"
+
+          git -C "$PREVIEW_REPO" add .
+          git -C "$PREVIEW_REPO" commit -m "docs: preview $TAG" || true
+          git -C "$PREVIEW_REPO" push origin HEAD:gh-pages
+      - name: Open release review issue
+        if: steps.next-version.outputs.should-release == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+        run: |
+          TAG="${{ steps.next-version.outputs.tag }}"
+          cat > release-review-issue.md <<EOF
+          @joelostblom @mattijn @alec-bike
+          A draft release for $TAG has been created. Please assign yourself to this issue if you have capacity to release this version.
+
+          Next, review [the draft release notes](https://github.com/vega/altair/releases) and [the docs preview](${{ steps.docs-preview.outputs.url }}) (scan the gallery thumbnails for broken examples). If everything looks correct, publish the release on GitHub; this will also trigger a PyPI release.
+
+          You can read [the general release notes](https://github.com/vega/altair/blob/main/RELEASING.md) for more details, including what to do after a release.
+          EOF
+
+          gh issue create \
+            --title "Review draft release $TAG" \
+            --body-file release-review-issue.md

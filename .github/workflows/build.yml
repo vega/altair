@@ -16,6 +16,8 @@ jobs:
     name: py ${{ matrix.python-version }} with ${{ matrix.required-dependencies }} required deps
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:

@@ -10,7 +10,7 @@
 # - ty (experimental)
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "versioningit"]
 build-backend = "hatchling.build"
 
 [project]
@@ -122,7 +122,17 @@ vega-lite     = "v6.4.1" # https://github.com/vega/vega-lite
 [tool.hatch]
 build    = { include = ["/altair"], artifacts = ["altair/jupyter/js/index.js"] }
 metadata = { allow-direct-references = true }
-version  = { path = "altair/__init__.py" }
+
+[tool.hatch.version]
+source = "versioningit"
+
+[tool.hatch.version.vcs]
+# "git-archive" is required (not the default "git") so that version calculation
+# works when installing from a PyPI sdist or GitHub archive, where there is no
+# .git directory. The describe-subst placeholder is expanded by git at archive
+# time via the export-subst attribute in .gitattributes.
+method = "git-archive"
+describe-subst = "$Format:%(describe:tags,match=v[0-9]*)$"
 
 [tool.hatch.envs]
 # https://hatch.pypa.io/latest/how-to/environment/select-installer/#enabling-uv
@@ -296,9 +306,6 @@ doc-publish = "python tools/docs_cli.py publish"
 clean   = "python -c \"import tools;tools.fs.rm('dist')\""
 build   = "task clean && uv build"
 publish = "task build && uv publish"
-
-nightly-build   = "python tools/generate_nightly_version.py --update && task build"
-nightly-release = "task nightly-build && echo 'Package built, ready for GitHub release'"
 
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.
