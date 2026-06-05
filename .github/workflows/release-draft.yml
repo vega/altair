@@ -143,19 +143,14 @@ jobs:
         run: |
           TAG="${{ steps.next-version.outputs.tag }}"
           cat > release-review-issue.md <<EOF
-          A draft release for $TAG has been created. Please review the draft release notes and docs preview:
+          @joelostblom @mattijn @alec-bike
+          A draft release for $TAG has been created. Please assign yourself to this issue if you have capacity to release this version.
 
-          - Draft release notes: https://github.com/vega/altair/releases/tag/$TAG
-          - Docs preview (scan the gallery thumbnails): ${{ steps.docs-preview.outputs.url }}
-
-          If everything looks correct, go ahead and publish the release on GitHub. This will trigger a PyPI release.
+          Next, review [the draft release notes](https://github.com/vega/altair/releases) and [the docs preview](${{ steps.docs-preview.outputs.url }}) (scan the gallery thumbnails for broken examples). If everything looks correct, publish the release on GitHub; this will also trigger a PyPI release.
 
           You can read [the general release notes](https://github.com/vega/altair/blob/main/RELEASING.md) for more details, including what to do after a release.
           EOF
 
           gh issue create \
             --title "Review draft release $TAG" \
-            --body-file release-review-issue.md \
-            --assignee joelostblom \
-            --assignee mattijn \
-            --assignee alec-bike
+            --body-file release-review-issue.md
