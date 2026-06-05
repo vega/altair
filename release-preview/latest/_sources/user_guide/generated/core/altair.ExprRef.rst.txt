@@ -1,0 +1,30 @@
+﻿altair.ExprRef
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: ExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ExprRef.__init__
+      ~ExprRef.copy
+      ~ExprRef.from_dict
+      ~ExprRef.from_json
+      ~ExprRef.resolve_references
+      ~ExprRef.to_dict
+      ~ExprRef.to_json
+      ~ExprRef.validate
+      ~ExprRef.validate_property
+   
+   
+
+   
+   
+   

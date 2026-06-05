@@ -1,0 +1,30 @@
+﻿altair.TextBaseline
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: TextBaseline
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TextBaseline.__init__
+      ~TextBaseline.copy
+      ~TextBaseline.from_dict
+      ~TextBaseline.from_json
+      ~TextBaseline.resolve_references
+      ~TextBaseline.to_dict
+      ~TextBaseline.to_json
+      ~TextBaseline.validate
+      ~TextBaseline.validate_property
+   
+   
+
+   
+   
+   

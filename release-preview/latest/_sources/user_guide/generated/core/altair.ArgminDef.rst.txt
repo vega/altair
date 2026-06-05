@@ -1,0 +1,30 @@
+﻿altair.ArgminDef
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: ArgminDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ArgminDef.__init__
+      ~ArgminDef.copy
+      ~ArgminDef.from_dict
+      ~ArgminDef.from_json
+      ~ArgminDef.resolve_references
+      ~ArgminDef.to_dict
+      ~ArgminDef.to_json
+      ~ArgminDef.validate
+      ~ArgminDef.validate_property
+   
+   
+
+   
+   
+   

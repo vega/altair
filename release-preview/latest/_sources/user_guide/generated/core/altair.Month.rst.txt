@@ -1,0 +1,30 @@
+﻿altair.Month
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Month
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Month.__init__
+      ~Month.copy
+      ~Month.from_dict
+      ~Month.from_json
+      ~Month.resolve_references
+      ~Month.to_dict
+      ~Month.to_json
+      ~Month.validate
+      ~Month.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,41 @@
+﻿altair.theme.GeometryCollectionKwds
+===================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: GeometryCollectionKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GeometryCollectionKwds.__init__
+      ~GeometryCollectionKwds.clear
+      ~GeometryCollectionKwds.copy
+      ~GeometryCollectionKwds.fromkeys
+      ~GeometryCollectionKwds.get
+      ~GeometryCollectionKwds.items
+      ~GeometryCollectionKwds.keys
+      ~GeometryCollectionKwds.pop
+      ~GeometryCollectionKwds.popitem
+      ~GeometryCollectionKwds.setdefault
+      ~GeometryCollectionKwds.update
+      ~GeometryCollectionKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~GeometryCollectionKwds.geometries
+      ~GeometryCollectionKwds.type
+      ~GeometryCollectionKwds.bbox
+   
+   

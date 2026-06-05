@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsValueangle
+=======================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsValueangle
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsValueangle.__init__
+      ~ScaleInvalidDataShowAsValueangle.copy
+      ~ScaleInvalidDataShowAsValueangle.from_dict
+      ~ScaleInvalidDataShowAsValueangle.from_json
+      ~ScaleInvalidDataShowAsValueangle.resolve_references
+      ~ScaleInvalidDataShowAsValueangle.to_dict
+      ~ScaleInvalidDataShowAsValueangle.to_json
+      ~ScaleInvalidDataShowAsValueangle.validate
+      ~ScaleInvalidDataShowAsValueangle.validate_property
+   
+   
+
+   
+   
+   

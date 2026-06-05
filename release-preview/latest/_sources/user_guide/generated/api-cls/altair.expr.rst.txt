@@ -1,0 +1,191 @@
+﻿altair.expr
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: expr
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~expr.__init__
+      ~expr.abs
+      ~expr.acos
+      ~expr.asin
+      ~expr.atan
+      ~expr.atan2
+      ~expr.atob
+      ~expr.bandspace
+      ~expr.bandwidth
+      ~expr.btoa
+      ~expr.ceil
+      ~expr.clamp
+      ~expr.clampRange
+      ~expr.containerSize
+      ~expr.contrast
+      ~expr.copy
+      ~expr.cos
+      ~expr.cumulativeLogNormal
+      ~expr.cumulativeNormal
+      ~expr.cumulativeUniform
+      ~expr.data
+      ~expr.date
+      ~expr.datetime
+      ~expr.day
+      ~expr.dayAbbrevFormat
+      ~expr.dayFormat
+      ~expr.dayofyear
+      ~expr.debug
+      ~expr.densityLogNormal
+      ~expr.densityNormal
+      ~expr.densityUniform
+      ~expr.domain
+      ~expr.exp
+      ~expr.extent
+      ~expr.floor
+      ~expr.format
+      ~expr.from_dict
+      ~expr.from_json
+      ~expr.geoArea
+      ~expr.geoBounds
+      ~expr.geoCentroid
+      ~expr.geoScale
+      ~expr.gradient
+      ~expr.group
+      ~expr.hcl
+      ~expr.hours
+      ~expr.hsl
+      ~expr.hypot
+      ~expr.if_
+      ~expr.inScope
+      ~expr.indata
+      ~expr.indexof
+      ~expr.info
+      ~expr.inrange
+      ~expr.invert
+      ~expr.isArray
+      ~expr.isBoolean
+      ~expr.isDate
+      ~expr.isDefined
+      ~expr.isFinite
+      ~expr.isNaN
+      ~expr.isNumber
+      ~expr.isObject
+      ~expr.isRegExp
+      ~expr.isString
+      ~expr.isValid
+      ~expr.item
+      ~expr.join
+      ~expr.lab
+      ~expr.lastindexof
+      ~expr.length
+      ~expr.lerp
+      ~expr.log
+      ~expr.lower
+      ~expr.luminance
+      ~expr.max
+      ~expr.merge
+      ~expr.milliseconds
+      ~expr.min
+      ~expr.minutes
+      ~expr.month
+      ~expr.monthAbbrevFormat
+      ~expr.monthFormat
+      ~expr.now
+      ~expr.pad
+      ~expr.panLinear
+      ~expr.panLog
+      ~expr.panPow
+      ~expr.panSymlog
+      ~expr.parseFloat
+      ~expr.parseInt
+      ~expr.peek
+      ~expr.pinchAngle
+      ~expr.pinchDistance
+      ~expr.pluck
+      ~expr.pow
+      ~expr.quantileLogNormal
+      ~expr.quantileNormal
+      ~expr.quantileUniform
+      ~expr.quarter
+      ~expr.random
+      ~expr.range
+      ~expr.regexp
+      ~expr.replace
+      ~expr.resolve_references
+      ~expr.reverse
+      ~expr.rgb
+      ~expr.round
+      ~expr.sampleLogNormal
+      ~expr.sampleNormal
+      ~expr.sampleUniform
+      ~expr.scale
+      ~expr.screen
+      ~expr.seconds
+      ~expr.sequence
+      ~expr.sin
+      ~expr.slice
+      ~expr.sort
+      ~expr.span
+      ~expr.sqrt
+      ~expr.substring
+      ~expr.tan
+      ~expr.test
+      ~expr.time
+      ~expr.timeFormat
+      ~expr.timeOffset
+      ~expr.timeParse
+      ~expr.timeSequence
+      ~expr.timeUnitSpecifier
+      ~expr.timezoneoffset
+      ~expr.toBoolean
+      ~expr.toDate
+      ~expr.toNumber
+      ~expr.toString
+      ~expr.to_dict
+      ~expr.to_json
+      ~expr.treeAncestors
+      ~expr.treePath
+      ~expr.trim
+      ~expr.truncate
+      ~expr.upper
+      ~expr.utc
+      ~expr.utcFormat
+      ~expr.utcOffset
+      ~expr.utcParse
+      ~expr.utcSequence
+      ~expr.utcdate
+      ~expr.utcday
+      ~expr.utcdayofyear
+      ~expr.utchours
+      ~expr.utcmilliseconds
+      ~expr.utcminutes
+      ~expr.utcmonth
+      ~expr.utcquarter
+      ~expr.utcseconds
+      ~expr.utcweek
+      ~expr.utcyear
+      ~expr.validate
+      ~expr.validate_property
+      ~expr.warn
+      ~expr.week
+      ~expr.windowSize
+      ~expr.x
+      ~expr.xy
+      ~expr.y
+      ~expr.year
+      ~expr.zoomLinear
+      ~expr.zoomLog
+      ~expr.zoomPow
+      ~expr.zoomSymlog
+   
+   
+
+   
+   
+   

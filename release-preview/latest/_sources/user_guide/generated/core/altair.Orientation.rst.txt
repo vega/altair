@@ -1,0 +1,30 @@
+﻿altair.Orientation
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: Orientation
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Orientation.__init__
+      ~Orientation.copy
+      ~Orientation.from_dict
+      ~Orientation.from_json
+      ~Orientation.resolve_references
+      ~Orientation.to_dict
+      ~Orientation.to_json
+      ~Orientation.validate
+      ~Orientation.validate_property
+   
+   
+
+   
+   
+   

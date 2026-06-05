@@ -1,0 +1,30 @@
+﻿altair.FieldValidPredicate
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldValidPredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldValidPredicate.__init__
+      ~FieldValidPredicate.copy
+      ~FieldValidPredicate.from_dict
+      ~FieldValidPredicate.from_json
+      ~FieldValidPredicate.resolve_references
+      ~FieldValidPredicate.to_dict
+      ~FieldValidPredicate.to_json
+      ~FieldValidPredicate.validate
+      ~FieldValidPredicate.validate_property
+   
+   
+
+   
+   
+   

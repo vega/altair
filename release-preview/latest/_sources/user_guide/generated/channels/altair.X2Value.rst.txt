@@ -1,0 +1,36 @@
+﻿altair.X2Value
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: X2Value
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~X2Value.__init__
+      ~X2Value.copy
+      ~X2Value.from_dict
+      ~X2Value.from_json
+      ~X2Value.resolve_references
+      ~X2Value.to_dict
+      ~X2Value.to_json
+      ~X2Value.validate
+      ~X2Value.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~X2Value.value
+   
+   

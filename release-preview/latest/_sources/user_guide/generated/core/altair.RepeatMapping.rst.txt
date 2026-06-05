@@ -1,0 +1,30 @@
+﻿altair.RepeatMapping
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: RepeatMapping
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RepeatMapping.__init__
+      ~RepeatMapping.copy
+      ~RepeatMapping.from_dict
+      ~RepeatMapping.from_json
+      ~RepeatMapping.resolve_references
+      ~RepeatMapping.to_dict
+      ~RepeatMapping.to_json
+      ~RepeatMapping.validate
+      ~RepeatMapping.validate_property
+   
+   
+
+   
+   
+   

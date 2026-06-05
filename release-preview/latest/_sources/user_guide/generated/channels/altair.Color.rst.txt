@@ -1,0 +1,46 @@
+﻿altair.Color
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Color
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Color.__init__
+      ~Color.copy
+      ~Color.from_dict
+      ~Color.from_json
+      ~Color.resolve_references
+      ~Color.to_dict
+      ~Color.to_json
+      ~Color.validate
+      ~Color.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Color.aggregate
+      ~Color.bandPosition
+      ~Color.bin
+      ~Color.condition
+      ~Color.field
+      ~Color.legend
+      ~Color.scale
+      ~Color.sort
+      ~Color.timeUnit
+      ~Color.title
+      ~Color.type
+   
+   

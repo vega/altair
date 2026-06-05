@@ -1,0 +1,37 @@
+﻿altair.ShapeValue
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: ShapeValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ShapeValue.__init__
+      ~ShapeValue.copy
+      ~ShapeValue.from_dict
+      ~ShapeValue.from_json
+      ~ShapeValue.resolve_references
+      ~ShapeValue.to_dict
+      ~ShapeValue.to_json
+      ~ShapeValue.validate
+      ~ShapeValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ShapeValue.condition
+      ~ShapeValue.value
+   
+   

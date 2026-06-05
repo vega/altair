@@ -1,0 +1,30 @@
+﻿altair.LabelOverlap
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: LabelOverlap
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LabelOverlap.__init__
+      ~LabelOverlap.copy
+      ~LabelOverlap.from_dict
+      ~LabelOverlap.from_json
+      ~LabelOverlap.resolve_references
+      ~LabelOverlap.to_dict
+      ~LabelOverlap.to_json
+      ~LabelOverlap.validate
+      ~LabelOverlap.validate_property
+   
+   
+
+   
+   
+   

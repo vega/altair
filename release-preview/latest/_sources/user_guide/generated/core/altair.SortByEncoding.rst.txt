@@ -1,0 +1,30 @@
+﻿altair.SortByEncoding
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: SortByEncoding
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SortByEncoding.__init__
+      ~SortByEncoding.copy
+      ~SortByEncoding.from_dict
+      ~SortByEncoding.from_json
+      ~SortByEncoding.resolve_references
+      ~SortByEncoding.to_dict
+      ~SortByEncoding.to_json
+      ~SortByEncoding.validate
+      ~SortByEncoding.validate_property
+   
+   
+
+   
+   
+   

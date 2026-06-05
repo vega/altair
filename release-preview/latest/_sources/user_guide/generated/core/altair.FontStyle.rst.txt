@@ -1,0 +1,30 @@
+﻿altair.FontStyle
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: FontStyle
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FontStyle.__init__
+      ~FontStyle.copy
+      ~FontStyle.from_dict
+      ~FontStyle.from_json
+      ~FontStyle.resolve_references
+      ~FontStyle.to_dict
+      ~FontStyle.to_json
+      ~FontStyle.validate
+      ~FontStyle.validate_property
+   
+   
+
+   
+   
+   

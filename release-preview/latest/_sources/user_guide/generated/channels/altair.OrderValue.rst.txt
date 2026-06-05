@@ -1,0 +1,37 @@
+﻿altair.OrderValue
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: OrderValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OrderValue.__init__
+      ~OrderValue.copy
+      ~OrderValue.from_dict
+      ~OrderValue.from_json
+      ~OrderValue.resolve_references
+      ~OrderValue.to_dict
+      ~OrderValue.to_json
+      ~OrderValue.validate
+      ~OrderValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~OrderValue.condition
+      ~OrderValue.value
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.Root
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Root
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Root.__init__
+      ~Root.copy
+      ~Root.from_dict
+      ~Root.from_json
+      ~Root.resolve_references
+      ~Root.to_dict
+      ~Root.to_json
+      ~Root.validate
+      ~Root.validate_property
+   
+   
+
+   
+   
+   

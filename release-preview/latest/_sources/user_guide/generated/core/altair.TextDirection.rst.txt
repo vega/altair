@@ -1,0 +1,30 @@
+﻿altair.TextDirection
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: TextDirection
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TextDirection.__init__
+      ~TextDirection.copy
+      ~TextDirection.from_dict
+      ~TextDirection.from_json
+      ~TextDirection.resolve_references
+      ~TextDirection.to_dict
+      ~TextDirection.to_json
+      ~TextDirection.validate
+      ~TextDirection.validate_property
+   
+   
+
+   
+   
+   

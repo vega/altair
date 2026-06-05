@@ -1,0 +1,30 @@
+﻿altair.PositionFieldDefBase
+===========================
+
+.. currentmodule:: altair
+
+.. autoclass:: PositionFieldDefBase
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PositionFieldDefBase.__init__
+      ~PositionFieldDefBase.copy
+      ~PositionFieldDefBase.from_dict
+      ~PositionFieldDefBase.from_json
+      ~PositionFieldDefBase.resolve_references
+      ~PositionFieldDefBase.to_dict
+      ~PositionFieldDefBase.to_json
+      ~PositionFieldDefBase.validate
+      ~PositionFieldDefBase.validate_property
+   
+   
+
+   
+   
+   

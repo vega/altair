@@ -1,0 +1,40 @@
+﻿altair.ColorDatum
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: ColorDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ColorDatum.__init__
+      ~ColorDatum.copy
+      ~ColorDatum.from_dict
+      ~ColorDatum.from_json
+      ~ColorDatum.resolve_references
+      ~ColorDatum.to_dict
+      ~ColorDatum.to_json
+      ~ColorDatum.validate
+      ~ColorDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ColorDatum.bandPosition
+      ~ColorDatum.condition
+      ~ColorDatum.datum
+      ~ColorDatum.title
+      ~ColorDatum.type
+   
+   

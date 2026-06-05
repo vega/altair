@@ -1,0 +1,30 @@
+﻿altair.ValueDefWithConditionMarkPropFieldOrDatumDefnumber
+=========================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ValueDefWithConditionMarkPropFieldOrDatumDefnumber
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefnumber.__init__
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefnumber.copy
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefnumber.from_dict
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefnumber.from_json
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefnumber.resolve_references
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefnumber.to_dict
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefnumber.to_json
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefnumber.validate
+      ~ValueDefWithConditionMarkPropFieldOrDatumDefnumber.validate_property
+   
+   
+
+   
+   
+   

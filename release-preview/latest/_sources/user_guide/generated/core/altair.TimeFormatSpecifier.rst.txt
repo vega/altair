@@ -1,0 +1,30 @@
+﻿altair.TimeFormatSpecifier
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: TimeFormatSpecifier
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TimeFormatSpecifier.__init__
+      ~TimeFormatSpecifier.copy
+      ~TimeFormatSpecifier.from_dict
+      ~TimeFormatSpecifier.from_json
+      ~TimeFormatSpecifier.resolve_references
+      ~TimeFormatSpecifier.to_dict
+      ~TimeFormatSpecifier.to_json
+      ~TimeFormatSpecifier.validate
+      ~TimeFormatSpecifier.validate_property
+   
+   
+
+   
+   
+   

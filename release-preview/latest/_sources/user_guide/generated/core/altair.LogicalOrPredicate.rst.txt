@@ -1,0 +1,30 @@
+﻿altair.LogicalOrPredicate
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: LogicalOrPredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LogicalOrPredicate.__init__
+      ~LogicalOrPredicate.copy
+      ~LogicalOrPredicate.from_dict
+      ~LogicalOrPredicate.from_json
+      ~LogicalOrPredicate.resolve_references
+      ~LogicalOrPredicate.to_dict
+      ~LogicalOrPredicate.to_json
+      ~LogicalOrPredicate.validate
+      ~LogicalOrPredicate.validate_property
+   
+   
+
+   
+   
+   

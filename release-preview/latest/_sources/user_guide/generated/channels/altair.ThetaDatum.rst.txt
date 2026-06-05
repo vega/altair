@@ -1,0 +1,41 @@
+﻿altair.ThetaDatum
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: ThetaDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ThetaDatum.__init__
+      ~ThetaDatum.copy
+      ~ThetaDatum.from_dict
+      ~ThetaDatum.from_json
+      ~ThetaDatum.resolve_references
+      ~ThetaDatum.to_dict
+      ~ThetaDatum.to_json
+      ~ThetaDatum.validate
+      ~ThetaDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ThetaDatum.bandPosition
+      ~ThetaDatum.datum
+      ~ThetaDatum.scale
+      ~ThetaDatum.stack
+      ~ThetaDatum.title
+      ~ThetaDatum.type
+   
+   

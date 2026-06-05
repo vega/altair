@@ -1,0 +1,36 @@
+﻿altair.ThetaValue
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: ThetaValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ThetaValue.__init__
+      ~ThetaValue.copy
+      ~ThetaValue.from_dict
+      ~ThetaValue.from_json
+      ~ThetaValue.resolve_references
+      ~ThetaValue.to_dict
+      ~ThetaValue.to_json
+      ~ThetaValue.validate
+      ~ThetaValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ThetaValue.value
+   
+   

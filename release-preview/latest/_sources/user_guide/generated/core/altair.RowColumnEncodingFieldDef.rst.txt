@@ -1,0 +1,30 @@
+﻿altair.RowColumnEncodingFieldDef
+================================
+
+.. currentmodule:: altair
+
+.. autoclass:: RowColumnEncodingFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RowColumnEncodingFieldDef.__init__
+      ~RowColumnEncodingFieldDef.copy
+      ~RowColumnEncodingFieldDef.from_dict
+      ~RowColumnEncodingFieldDef.from_json
+      ~RowColumnEncodingFieldDef.resolve_references
+      ~RowColumnEncodingFieldDef.to_dict
+      ~RowColumnEncodingFieldDef.to_json
+      ~RowColumnEncodingFieldDef.validate
+      ~RowColumnEncodingFieldDef.validate_property
+   
+   
+
+   
+   
+   

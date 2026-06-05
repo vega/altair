@@ -1,0 +1,30 @@
+﻿altair.TopLevelLayerSpec
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: TopLevelLayerSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TopLevelLayerSpec.__init__
+      ~TopLevelLayerSpec.copy
+      ~TopLevelLayerSpec.from_dict
+      ~TopLevelLayerSpec.from_json
+      ~TopLevelLayerSpec.resolve_references
+      ~TopLevelLayerSpec.to_dict
+      ~TopLevelLayerSpec.to_json
+      ~TopLevelLayerSpec.validate
+      ~TopLevelLayerSpec.validate_property
+   
+   
+
+   
+   
+   

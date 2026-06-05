@@ -1,0 +1,30 @@
+﻿altair.DerivedStream
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: DerivedStream
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DerivedStream.__init__
+      ~DerivedStream.copy
+      ~DerivedStream.from_dict
+      ~DerivedStream.from_json
+      ~DerivedStream.resolve_references
+      ~DerivedStream.to_dict
+      ~DerivedStream.to_json
+      ~DerivedStream.validate
+      ~DerivedStream.validate_property
+   
+   
+
+   
+   
+   

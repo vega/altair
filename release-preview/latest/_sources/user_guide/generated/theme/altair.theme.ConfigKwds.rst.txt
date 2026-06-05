@@ -1,0 +1,110 @@
+﻿altair.theme.ConfigKwds
+=======================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConfigKwds.__init__
+      ~ConfigKwds.clear
+      ~ConfigKwds.copy
+      ~ConfigKwds.fromkeys
+      ~ConfigKwds.get
+      ~ConfigKwds.items
+      ~ConfigKwds.keys
+      ~ConfigKwds.pop
+      ~ConfigKwds.popitem
+      ~ConfigKwds.setdefault
+      ~ConfigKwds.update
+      ~ConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ConfigKwds.arc
+      ~ConfigKwds.area
+      ~ConfigKwds.aria
+      ~ConfigKwds.autosize
+      ~ConfigKwds.axis
+      ~ConfigKwds.axisBand
+      ~ConfigKwds.axisBottom
+      ~ConfigKwds.axisDiscrete
+      ~ConfigKwds.axisLeft
+      ~ConfigKwds.axisPoint
+      ~ConfigKwds.axisQuantitative
+      ~ConfigKwds.axisRight
+      ~ConfigKwds.axisTemporal
+      ~ConfigKwds.axisTop
+      ~ConfigKwds.axisX
+      ~ConfigKwds.axisXBand
+      ~ConfigKwds.axisXDiscrete
+      ~ConfigKwds.axisXPoint
+      ~ConfigKwds.axisXQuantitative
+      ~ConfigKwds.axisXTemporal
+      ~ConfigKwds.axisY
+      ~ConfigKwds.axisYBand
+      ~ConfigKwds.axisYDiscrete
+      ~ConfigKwds.axisYPoint
+      ~ConfigKwds.axisYQuantitative
+      ~ConfigKwds.axisYTemporal
+      ~ConfigKwds.background
+      ~ConfigKwds.bar
+      ~ConfigKwds.boxplot
+      ~ConfigKwds.circle
+      ~ConfigKwds.concat
+      ~ConfigKwds.countTitle
+      ~ConfigKwds.customFormatTypes
+      ~ConfigKwds.errorband
+      ~ConfigKwds.errorbar
+      ~ConfigKwds.facet
+      ~ConfigKwds.fieldTitle
+      ~ConfigKwds.font
+      ~ConfigKwds.geoshape
+      ~ConfigKwds.header
+      ~ConfigKwds.headerColumn
+      ~ConfigKwds.headerFacet
+      ~ConfigKwds.headerRow
+      ~ConfigKwds.image
+      ~ConfigKwds.legend
+      ~ConfigKwds.line
+      ~ConfigKwds.lineBreak
+      ~ConfigKwds.locale
+      ~ConfigKwds.mark
+      ~ConfigKwds.normalizedNumberFormat
+      ~ConfigKwds.normalizedNumberFormatType
+      ~ConfigKwds.numberFormat
+      ~ConfigKwds.numberFormatType
+      ~ConfigKwds.padding
+      ~ConfigKwds.params
+      ~ConfigKwds.point
+      ~ConfigKwds.projection
+      ~ConfigKwds.range
+      ~ConfigKwds.rect
+      ~ConfigKwds.rule
+      ~ConfigKwds.scale
+      ~ConfigKwds.selection
+      ~ConfigKwds.square
+      ~ConfigKwds.style
+      ~ConfigKwds.text
+      ~ConfigKwds.tick
+      ~ConfigKwds.timeFormat
+      ~ConfigKwds.timeFormatType
+      ~ConfigKwds.title
+      ~ConfigKwds.tooltipFormat
+      ~ConfigKwds.trail
+      ~ConfigKwds.view
+   
+   

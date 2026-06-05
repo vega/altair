@@ -1,0 +1,30 @@
+﻿altair.Padding
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: Padding
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Padding.__init__
+      ~Padding.copy
+      ~Padding.from_dict
+      ~Padding.from_json
+      ~Padding.resolve_references
+      ~Padding.to_dict
+      ~Padding.to_json
+      ~Padding.validate
+      ~Padding.validate_property
+   
+   
+
+   
+   
+   

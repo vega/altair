@@ -1,0 +1,30 @@
+﻿altair.SelectionInitIntervalMapping
+===================================
+
+.. currentmodule:: altair
+
+.. autoclass:: SelectionInitIntervalMapping
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SelectionInitIntervalMapping.__init__
+      ~SelectionInitIntervalMapping.copy
+      ~SelectionInitIntervalMapping.from_dict
+      ~SelectionInitIntervalMapping.from_json
+      ~SelectionInitIntervalMapping.resolve_references
+      ~SelectionInitIntervalMapping.to_dict
+      ~SelectionInitIntervalMapping.to_json
+      ~SelectionInitIntervalMapping.validate
+      ~SelectionInitIntervalMapping.validate_property
+   
+   
+
+   
+   
+   

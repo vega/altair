@@ -1,0 +1,30 @@
+﻿altair.FieldEqualPredicate
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldEqualPredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldEqualPredicate.__init__
+      ~FieldEqualPredicate.copy
+      ~FieldEqualPredicate.from_dict
+      ~FieldEqualPredicate.from_json
+      ~FieldEqualPredicate.resolve_references
+      ~FieldEqualPredicate.to_dict
+      ~FieldEqualPredicate.to_json
+      ~FieldEqualPredicate.validate
+      ~FieldEqualPredicate.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.SchemeParams
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: SchemeParams
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SchemeParams.__init__
+      ~SchemeParams.copy
+      ~SchemeParams.from_dict
+      ~SchemeParams.from_json
+      ~SchemeParams.resolve_references
+      ~SchemeParams.to_dict
+      ~SchemeParams.to_json
+      ~SchemeParams.validate
+      ~SchemeParams.validate_property
+   
+   
+
+   
+   
+   

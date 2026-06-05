@@ -1,0 +1,30 @@
+﻿altair.LegendStreamBinding
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: LegendStreamBinding
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LegendStreamBinding.__init__
+      ~LegendStreamBinding.copy
+      ~LegendStreamBinding.from_dict
+      ~LegendStreamBinding.from_json
+      ~LegendStreamBinding.resolve_references
+      ~LegendStreamBinding.to_dict
+      ~LegendStreamBinding.to_json
+      ~LegendStreamBinding.validate
+      ~LegendStreamBinding.validate_property
+   
+   
+
+   
+   
+   

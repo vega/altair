@@ -1,0 +1,30 @@
+﻿altair.ViewConfig
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: ViewConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ViewConfig.__init__
+      ~ViewConfig.copy
+      ~ViewConfig.from_dict
+      ~ViewConfig.from_json
+      ~ViewConfig.resolve_references
+      ~ViewConfig.to_dict
+      ~ViewConfig.to_json
+      ~ViewConfig.validate
+      ~ViewConfig.validate_property
+   
+   
+
+   
+   
+   

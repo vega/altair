@@ -1,0 +1,30 @@
+﻿altair.ConditionalPredicateValueDefFontStylenullExprRef
+=======================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalPredicateValueDefFontStylenullExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalPredicateValueDefFontStylenullExprRef.__init__
+      ~ConditionalPredicateValueDefFontStylenullExprRef.copy
+      ~ConditionalPredicateValueDefFontStylenullExprRef.from_dict
+      ~ConditionalPredicateValueDefFontStylenullExprRef.from_json
+      ~ConditionalPredicateValueDefFontStylenullExprRef.resolve_references
+      ~ConditionalPredicateValueDefFontStylenullExprRef.to_dict
+      ~ConditionalPredicateValueDefFontStylenullExprRef.to_json
+      ~ConditionalPredicateValueDefFontStylenullExprRef.validate
+      ~ConditionalPredicateValueDefFontStylenullExprRef.validate_property
+   
+   
+
+   
+   
+   

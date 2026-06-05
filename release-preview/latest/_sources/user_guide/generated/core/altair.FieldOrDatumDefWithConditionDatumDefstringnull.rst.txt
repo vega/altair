@@ -1,0 +1,30 @@
+﻿altair.FieldOrDatumDefWithConditionDatumDefstringnull
+=====================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldOrDatumDefWithConditionDatumDefstringnull
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldOrDatumDefWithConditionDatumDefstringnull.__init__
+      ~FieldOrDatumDefWithConditionDatumDefstringnull.copy
+      ~FieldOrDatumDefWithConditionDatumDefstringnull.from_dict
+      ~FieldOrDatumDefWithConditionDatumDefstringnull.from_json
+      ~FieldOrDatumDefWithConditionDatumDefstringnull.resolve_references
+      ~FieldOrDatumDefWithConditionDatumDefstringnull.to_dict
+      ~FieldOrDatumDefWithConditionDatumDefstringnull.to_json
+      ~FieldOrDatumDefWithConditionDatumDefstringnull.validate
+      ~FieldOrDatumDefWithConditionDatumDefstringnull.validate_property
+   
+   
+
+   
+   
+   

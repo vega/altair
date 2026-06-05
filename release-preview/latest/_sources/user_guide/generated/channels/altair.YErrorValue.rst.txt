@@ -1,0 +1,36 @@
+﻿altair.YErrorValue
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: YErrorValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~YErrorValue.__init__
+      ~YErrorValue.copy
+      ~YErrorValue.from_dict
+      ~YErrorValue.from_json
+      ~YErrorValue.resolve_references
+      ~YErrorValue.to_dict
+      ~YErrorValue.to_json
+      ~YErrorValue.validate
+      ~YErrorValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~YErrorValue.value
+   
+   

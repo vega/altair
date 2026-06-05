@@ -1,0 +1,30 @@
+﻿altair.NonLayerRepeatSpec
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: NonLayerRepeatSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NonLayerRepeatSpec.__init__
+      ~NonLayerRepeatSpec.copy
+      ~NonLayerRepeatSpec.from_dict
+      ~NonLayerRepeatSpec.from_json
+      ~NonLayerRepeatSpec.resolve_references
+      ~NonLayerRepeatSpec.to_dict
+      ~NonLayerRepeatSpec.to_json
+      ~NonLayerRepeatSpec.validate
+      ~NonLayerRepeatSpec.validate_property
+   
+   
+
+   
+   
+   

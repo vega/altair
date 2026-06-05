@@ -1,0 +1,30 @@
+﻿altair.Cursor
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: Cursor
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Cursor.__init__
+      ~Cursor.copy
+      ~Cursor.from_dict
+      ~Cursor.from_json
+      ~Cursor.resolve_references
+      ~Cursor.to_dict
+      ~Cursor.to_json
+      ~Cursor.validate
+      ~Cursor.validate_property
+   
+   
+
+   
+   
+   

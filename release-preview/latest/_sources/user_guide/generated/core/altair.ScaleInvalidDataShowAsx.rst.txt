@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsx
+==============================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsx
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsx.__init__
+      ~ScaleInvalidDataShowAsx.copy
+      ~ScaleInvalidDataShowAsx.from_dict
+      ~ScaleInvalidDataShowAsx.from_json
+      ~ScaleInvalidDataShowAsx.resolve_references
+      ~ScaleInvalidDataShowAsx.to_dict
+      ~ScaleInvalidDataShowAsx.to_json
+      ~ScaleInvalidDataShowAsx.validate
+      ~ScaleInvalidDataShowAsx.validate_property
+   
+   
+
+   
+   
+   

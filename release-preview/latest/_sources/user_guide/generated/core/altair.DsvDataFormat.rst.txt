@@ -1,0 +1,30 @@
+﻿altair.DsvDataFormat
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: DsvDataFormat
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DsvDataFormat.__init__
+      ~DsvDataFormat.copy
+      ~DsvDataFormat.from_dict
+      ~DsvDataFormat.from_json
+      ~DsvDataFormat.resolve_references
+      ~DsvDataFormat.to_dict
+      ~DsvDataFormat.to_json
+      ~DsvDataFormat.validate
+      ~DsvDataFormat.validate_property
+   
+   
+
+   
+   
+   

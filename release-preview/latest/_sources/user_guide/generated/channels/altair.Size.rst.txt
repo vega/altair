@@ -1,0 +1,46 @@
+﻿altair.Size
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Size
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Size.__init__
+      ~Size.copy
+      ~Size.from_dict
+      ~Size.from_json
+      ~Size.resolve_references
+      ~Size.to_dict
+      ~Size.to_json
+      ~Size.validate
+      ~Size.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Size.aggregate
+      ~Size.bandPosition
+      ~Size.bin
+      ~Size.condition
+      ~Size.field
+      ~Size.legend
+      ~Size.scale
+      ~Size.sort
+      ~Size.timeUnit
+      ~Size.title
+      ~Size.type
+   
+   

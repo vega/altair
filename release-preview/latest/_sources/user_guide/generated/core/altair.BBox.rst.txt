@@ -1,0 +1,30 @@
+﻿altair.BBox
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: BBox
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BBox.__init__
+      ~BBox.copy
+      ~BBox.from_dict
+      ~BBox.from_json
+      ~BBox.resolve_references
+      ~BBox.to_dict
+      ~BBox.to_json
+      ~BBox.validate
+      ~BBox.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,63 @@
+﻿altair.theme.TitleConfigKwds
+============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: TitleConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TitleConfigKwds.__init__
+      ~TitleConfigKwds.clear
+      ~TitleConfigKwds.copy
+      ~TitleConfigKwds.fromkeys
+      ~TitleConfigKwds.get
+      ~TitleConfigKwds.items
+      ~TitleConfigKwds.keys
+      ~TitleConfigKwds.pop
+      ~TitleConfigKwds.popitem
+      ~TitleConfigKwds.setdefault
+      ~TitleConfigKwds.update
+      ~TitleConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TitleConfigKwds.align
+      ~TitleConfigKwds.anchor
+      ~TitleConfigKwds.angle
+      ~TitleConfigKwds.aria
+      ~TitleConfigKwds.baseline
+      ~TitleConfigKwds.color
+      ~TitleConfigKwds.dx
+      ~TitleConfigKwds.dy
+      ~TitleConfigKwds.font
+      ~TitleConfigKwds.fontSize
+      ~TitleConfigKwds.fontStyle
+      ~TitleConfigKwds.fontWeight
+      ~TitleConfigKwds.frame
+      ~TitleConfigKwds.limit
+      ~TitleConfigKwds.lineHeight
+      ~TitleConfigKwds.offset
+      ~TitleConfigKwds.orient
+      ~TitleConfigKwds.subtitleColor
+      ~TitleConfigKwds.subtitleFont
+      ~TitleConfigKwds.subtitleFontSize
+      ~TitleConfigKwds.subtitleFontStyle
+      ~TitleConfigKwds.subtitleFontWeight
+      ~TitleConfigKwds.subtitleLineHeight
+      ~TitleConfigKwds.subtitlePadding
+      ~TitleConfigKwds.zindex
+   
+   

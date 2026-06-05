@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsstrokeDash
+=======================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsstrokeDash
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsstrokeDash.__init__
+      ~ScaleInvalidDataShowAsstrokeDash.copy
+      ~ScaleInvalidDataShowAsstrokeDash.from_dict
+      ~ScaleInvalidDataShowAsstrokeDash.from_json
+      ~ScaleInvalidDataShowAsstrokeDash.resolve_references
+      ~ScaleInvalidDataShowAsstrokeDash.to_dict
+      ~ScaleInvalidDataShowAsstrokeDash.to_json
+      ~ScaleInvalidDataShowAsstrokeDash.validate
+      ~ScaleInvalidDataShowAsstrokeDash.validate_property
+   
+   
+
+   
+   
+   

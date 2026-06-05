@@ -1,0 +1,30 @@
+﻿altair.UtcMultiTimeUnit
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: UtcMultiTimeUnit
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~UtcMultiTimeUnit.__init__
+      ~UtcMultiTimeUnit.copy
+      ~UtcMultiTimeUnit.from_dict
+      ~UtcMultiTimeUnit.from_json
+      ~UtcMultiTimeUnit.resolve_references
+      ~UtcMultiTimeUnit.to_dict
+      ~UtcMultiTimeUnit.to_json
+      ~UtcMultiTimeUnit.validate
+      ~UtcMultiTimeUnit.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,39 @@
+﻿altair.Longitude2Datum
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: Longitude2Datum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Longitude2Datum.__init__
+      ~Longitude2Datum.copy
+      ~Longitude2Datum.from_dict
+      ~Longitude2Datum.from_json
+      ~Longitude2Datum.resolve_references
+      ~Longitude2Datum.to_dict
+      ~Longitude2Datum.to_json
+      ~Longitude2Datum.validate
+      ~Longitude2Datum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Longitude2Datum.bandPosition
+      ~Longitude2Datum.datum
+      ~Longitude2Datum.title
+      ~Longitude2Datum.type
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.LayoutAlign
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: LayoutAlign
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LayoutAlign.__init__
+      ~LayoutAlign.copy
+      ~LayoutAlign.from_dict
+      ~LayoutAlign.from_json
+      ~LayoutAlign.resolve_references
+      ~LayoutAlign.to_dict
+      ~LayoutAlign.to_json
+      ~LayoutAlign.validate
+      ~LayoutAlign.validate_property
+   
+   
+
+   
+   
+   

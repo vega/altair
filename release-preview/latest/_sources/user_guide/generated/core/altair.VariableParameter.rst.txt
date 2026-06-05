@@ -1,0 +1,30 @@
+﻿altair.VariableParameter
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: VariableParameter
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~VariableParameter.__init__
+      ~VariableParameter.copy
+      ~VariableParameter.from_dict
+      ~VariableParameter.from_json
+      ~VariableParameter.resolve_references
+      ~VariableParameter.to_dict
+      ~VariableParameter.to_json
+      ~VariableParameter.validate
+      ~VariableParameter.validate_property
+   
+   
+
+   
+   
+   

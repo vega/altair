@@ -1,0 +1,37 @@
+﻿altair.SizeValue
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: SizeValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SizeValue.__init__
+      ~SizeValue.copy
+      ~SizeValue.from_dict
+      ~SizeValue.from_json
+      ~SizeValue.resolve_references
+      ~SizeValue.to_dict
+      ~SizeValue.to_json
+      ~SizeValue.validate
+      ~SizeValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~SizeValue.condition
+      ~SizeValue.value
+   
+   

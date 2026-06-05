@@ -1,0 +1,30 @@
+﻿altair.ConditionalParameterStringFieldDef
+=========================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalParameterStringFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalParameterStringFieldDef.__init__
+      ~ConditionalParameterStringFieldDef.copy
+      ~ConditionalParameterStringFieldDef.from_dict
+      ~ConditionalParameterStringFieldDef.from_json
+      ~ConditionalParameterStringFieldDef.resolve_references
+      ~ConditionalParameterStringFieldDef.to_dict
+      ~ConditionalParameterStringFieldDef.to_json
+      ~ConditionalParameterStringFieldDef.validate
+      ~ConditionalParameterStringFieldDef.validate_property
+   
+   
+
+   
+   
+   

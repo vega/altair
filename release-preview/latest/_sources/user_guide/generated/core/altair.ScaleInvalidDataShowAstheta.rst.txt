@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAstheta
+==================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAstheta
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAstheta.__init__
+      ~ScaleInvalidDataShowAstheta.copy
+      ~ScaleInvalidDataShowAstheta.from_dict
+      ~ScaleInvalidDataShowAstheta.from_json
+      ~ScaleInvalidDataShowAstheta.resolve_references
+      ~ScaleInvalidDataShowAstheta.to_dict
+      ~ScaleInvalidDataShowAstheta.to_json
+      ~ScaleInvalidDataShowAstheta.validate
+      ~ScaleInvalidDataShowAstheta.validate_property
+   
+   
+
+   
+   
+   

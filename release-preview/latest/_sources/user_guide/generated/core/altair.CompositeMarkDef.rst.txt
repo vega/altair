@@ -1,0 +1,30 @@
+﻿altair.CompositeMarkDef
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: CompositeMarkDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CompositeMarkDef.__init__
+      ~CompositeMarkDef.copy
+      ~CompositeMarkDef.from_dict
+      ~CompositeMarkDef.from_json
+      ~CompositeMarkDef.resolve_references
+      ~CompositeMarkDef.to_dict
+      ~CompositeMarkDef.to_json
+      ~CompositeMarkDef.validate
+      ~CompositeMarkDef.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.Field
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Field
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Field.__init__
+      ~Field.copy
+      ~Field.from_dict
+      ~Field.from_json
+      ~Field.resolve_references
+      ~Field.to_dict
+      ~Field.to_json
+      ~Field.validate
+      ~Field.validate_property
+   
+   
+
+   
+   
+   

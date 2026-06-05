@@ -1,0 +1,40 @@
+﻿altair.theme.LocaleKwds
+=======================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: LocaleKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LocaleKwds.__init__
+      ~LocaleKwds.clear
+      ~LocaleKwds.copy
+      ~LocaleKwds.fromkeys
+      ~LocaleKwds.get
+      ~LocaleKwds.items
+      ~LocaleKwds.keys
+      ~LocaleKwds.pop
+      ~LocaleKwds.popitem
+      ~LocaleKwds.setdefault
+      ~LocaleKwds.update
+      ~LocaleKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LocaleKwds.number
+      ~LocaleKwds.time
+   
+   

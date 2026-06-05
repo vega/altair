@@ -1,0 +1,6 @@
+﻿altair.typing.Optional
+======================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: Optional

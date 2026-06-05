@@ -1,0 +1,30 @@
+﻿altair.NonArgAggregateOp
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: NonArgAggregateOp
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NonArgAggregateOp.__init__
+      ~NonArgAggregateOp.copy
+      ~NonArgAggregateOp.from_dict
+      ~NonArgAggregateOp.from_json
+      ~NonArgAggregateOp.resolve_references
+      ~NonArgAggregateOp.to_dict
+      ~NonArgAggregateOp.to_json
+      ~NonArgAggregateOp.validate
+      ~NonArgAggregateOp.validate_property
+   
+   
+
+   
+   
+   

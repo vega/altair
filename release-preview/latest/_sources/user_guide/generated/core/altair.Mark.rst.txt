@@ -1,0 +1,30 @@
+﻿altair.Mark
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Mark
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Mark.__init__
+      ~Mark.copy
+      ~Mark.from_dict
+      ~Mark.from_json
+      ~Mark.resolve_references
+      ~Mark.to_dict
+      ~Mark.to_json
+      ~Mark.validate
+      ~Mark.validate_property
+   
+   
+
+   
+   
+   

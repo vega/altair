@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelUrl
+========================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelUrl

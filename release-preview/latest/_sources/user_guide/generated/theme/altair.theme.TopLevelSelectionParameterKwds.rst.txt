@@ -1,0 +1,43 @@
+﻿altair.theme.TopLevelSelectionParameterKwds
+===========================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: TopLevelSelectionParameterKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TopLevelSelectionParameterKwds.__init__
+      ~TopLevelSelectionParameterKwds.clear
+      ~TopLevelSelectionParameterKwds.copy
+      ~TopLevelSelectionParameterKwds.fromkeys
+      ~TopLevelSelectionParameterKwds.get
+      ~TopLevelSelectionParameterKwds.items
+      ~TopLevelSelectionParameterKwds.keys
+      ~TopLevelSelectionParameterKwds.pop
+      ~TopLevelSelectionParameterKwds.popitem
+      ~TopLevelSelectionParameterKwds.setdefault
+      ~TopLevelSelectionParameterKwds.update
+      ~TopLevelSelectionParameterKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TopLevelSelectionParameterKwds.name
+      ~TopLevelSelectionParameterKwds.select
+      ~TopLevelSelectionParameterKwds.bind
+      ~TopLevelSelectionParameterKwds.value
+      ~TopLevelSelectionParameterKwds.views
+   
+   

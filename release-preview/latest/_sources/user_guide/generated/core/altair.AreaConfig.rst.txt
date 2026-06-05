@@ -1,0 +1,30 @@
+﻿altair.AreaConfig
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: AreaConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AreaConfig.__init__
+      ~AreaConfig.copy
+      ~AreaConfig.from_dict
+      ~AreaConfig.from_json
+      ~AreaConfig.resolve_references
+      ~AreaConfig.to_dict
+      ~AreaConfig.to_json
+      ~AreaConfig.validate
+      ~AreaConfig.validate_property
+   
+   
+
+   
+   
+   

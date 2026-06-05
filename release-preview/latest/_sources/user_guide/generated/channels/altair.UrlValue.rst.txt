@@ -1,0 +1,37 @@
+﻿altair.UrlValue
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: UrlValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~UrlValue.__init__
+      ~UrlValue.copy
+      ~UrlValue.from_dict
+      ~UrlValue.from_json
+      ~UrlValue.resolve_references
+      ~UrlValue.to_dict
+      ~UrlValue.to_json
+      ~UrlValue.validate
+      ~UrlValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~UrlValue.condition
+      ~UrlValue.value
+   
+   

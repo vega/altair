@@ -1,0 +1,30 @@
+﻿altair.DateTime
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: DateTime
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DateTime.__init__
+      ~DateTime.copy
+      ~DateTime.from_dict
+      ~DateTime.from_json
+      ~DateTime.resolve_references
+      ~DateTime.to_dict
+      ~DateTime.to_json
+      ~DateTime.validate
+      ~DateTime.validate_property
+   
+   
+
+   
+   
+   

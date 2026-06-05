@@ -1,0 +1,40 @@
+﻿altair.SizeDatum
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: SizeDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SizeDatum.__init__
+      ~SizeDatum.copy
+      ~SizeDatum.from_dict
+      ~SizeDatum.from_json
+      ~SizeDatum.resolve_references
+      ~SizeDatum.to_dict
+      ~SizeDatum.to_json
+      ~SizeDatum.validate
+      ~SizeDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~SizeDatum.bandPosition
+      ~SizeDatum.condition
+      ~SizeDatum.datum
+      ~SizeDatum.title
+      ~SizeDatum.type
+   
+   

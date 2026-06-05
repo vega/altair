@@ -1,0 +1,30 @@
+﻿altair.ErrorBand
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: ErrorBand
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ErrorBand.__init__
+      ~ErrorBand.copy
+      ~ErrorBand.from_dict
+      ~ErrorBand.from_json
+      ~ErrorBand.resolve_references
+      ~ErrorBand.to_dict
+      ~ErrorBand.to_json
+      ~ErrorBand.validate
+      ~ErrorBand.validate_property
+   
+   
+
+   
+   
+   

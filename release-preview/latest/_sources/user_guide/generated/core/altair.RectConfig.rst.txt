@@ -1,0 +1,30 @@
+﻿altair.RectConfig
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: RectConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RectConfig.__init__
+      ~RectConfig.copy
+      ~RectConfig.from_dict
+      ~RectConfig.from_json
+      ~RectConfig.resolve_references
+      ~RectConfig.to_dict
+      ~RectConfig.to_json
+      ~RectConfig.validate
+      ~RectConfig.validate_property
+   
+   
+
+   
+   
+   

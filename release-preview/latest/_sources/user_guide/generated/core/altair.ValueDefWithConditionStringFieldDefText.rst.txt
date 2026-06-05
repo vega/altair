@@ -1,0 +1,30 @@
+﻿altair.ValueDefWithConditionStringFieldDefText
+==============================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ValueDefWithConditionStringFieldDefText
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ValueDefWithConditionStringFieldDefText.__init__
+      ~ValueDefWithConditionStringFieldDefText.copy
+      ~ValueDefWithConditionStringFieldDefText.from_dict
+      ~ValueDefWithConditionStringFieldDefText.from_json
+      ~ValueDefWithConditionStringFieldDefText.resolve_references
+      ~ValueDefWithConditionStringFieldDefText.to_dict
+      ~ValueDefWithConditionStringFieldDefText.to_json
+      ~ValueDefWithConditionStringFieldDefText.validate
+      ~ValueDefWithConditionStringFieldDefText.validate_property
+   
+   
+
+   
+   
+   

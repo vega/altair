@@ -1,0 +1,30 @@
+﻿altair.Header
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: Header
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Header.__init__
+      ~Header.copy
+      ~Header.from_dict
+      ~Header.from_json
+      ~Header.resolve_references
+      ~Header.to_dict
+      ~Header.to_json
+      ~Header.validate
+      ~Header.validate_property
+   
+   
+
+   
+   
+   

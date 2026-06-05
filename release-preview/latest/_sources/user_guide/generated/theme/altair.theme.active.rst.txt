@@ -1,0 +1,6 @@
+﻿altair.theme.active
+===================
+
+.. currentmodule:: altair.theme
+
+.. autodata:: active

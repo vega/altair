@@ -1,0 +1,30 @@
+﻿altair.Spec
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Spec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Spec.__init__
+      ~Spec.copy
+      ~Spec.from_dict
+      ~Spec.from_json
+      ~Spec.resolve_references
+      ~Spec.to_dict
+      ~Spec.to_json
+      ~Spec.validate
+      ~Spec.validate_property
+   
+   
+
+   
+   
+   

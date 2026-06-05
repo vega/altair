@@ -1,0 +1,30 @@
+﻿altair.Position
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: Position
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Position.__init__
+      ~Position.copy
+      ~Position.from_dict
+      ~Position.from_json
+      ~Position.resolve_references
+      ~Position.to_dict
+      ~Position.to_json
+      ~Position.validate
+      ~Position.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.LatLongFieldDef
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: LatLongFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LatLongFieldDef.__init__
+      ~LatLongFieldDef.copy
+      ~LatLongFieldDef.from_dict
+      ~LatLongFieldDef.from_json
+      ~LatLongFieldDef.resolve_references
+      ~LatLongFieldDef.to_dict
+      ~LatLongFieldDef.to_json
+      ~LatLongFieldDef.validate
+      ~LatLongFieldDef.validate_property
+   
+   
+
+   
+   
+   

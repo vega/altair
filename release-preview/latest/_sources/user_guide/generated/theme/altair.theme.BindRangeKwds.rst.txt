@@ -1,0 +1,45 @@
+﻿altair.theme.BindRangeKwds
+==========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: BindRangeKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BindRangeKwds.__init__
+      ~BindRangeKwds.clear
+      ~BindRangeKwds.copy
+      ~BindRangeKwds.fromkeys
+      ~BindRangeKwds.get
+      ~BindRangeKwds.items
+      ~BindRangeKwds.keys
+      ~BindRangeKwds.pop
+      ~BindRangeKwds.popitem
+      ~BindRangeKwds.setdefault
+      ~BindRangeKwds.update
+      ~BindRangeKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BindRangeKwds.input
+      ~BindRangeKwds.debounce
+      ~BindRangeKwds.element
+      ~BindRangeKwds.max
+      ~BindRangeKwds.min
+      ~BindRangeKwds.name
+      ~BindRangeKwds.step
+   
+   

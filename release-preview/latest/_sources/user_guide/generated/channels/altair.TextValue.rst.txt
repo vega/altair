@@ -1,0 +1,37 @@
+﻿altair.TextValue
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: TextValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TextValue.__init__
+      ~TextValue.copy
+      ~TextValue.from_dict
+      ~TextValue.from_json
+      ~TextValue.resolve_references
+      ~TextValue.to_dict
+      ~TextValue.to_json
+      ~TextValue.validate
+      ~TextValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TextValue.condition
+      ~TextValue.value
+   
+   

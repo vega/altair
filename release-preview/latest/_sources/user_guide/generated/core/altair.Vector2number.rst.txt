@@ -1,0 +1,30 @@
+﻿altair.Vector2number
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: Vector2number
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Vector2number.__init__
+      ~Vector2number.copy
+      ~Vector2number.from_dict
+      ~Vector2number.from_json
+      ~Vector2number.resolve_references
+      ~Vector2number.to_dict
+      ~Vector2number.to_json
+      ~Vector2number.validate
+      ~Vector2number.validate_property
+   
+   
+
+   
+   
+   

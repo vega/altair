@@ -1,0 +1,30 @@
+﻿altair.FacetEncodingFieldDef
+============================
+
+.. currentmodule:: altair
+
+.. autoclass:: FacetEncodingFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FacetEncodingFieldDef.__init__
+      ~FacetEncodingFieldDef.copy
+      ~FacetEncodingFieldDef.from_dict
+      ~FacetEncodingFieldDef.from_json
+      ~FacetEncodingFieldDef.resolve_references
+      ~FacetEncodingFieldDef.to_dict
+      ~FacetEncodingFieldDef.to_json
+      ~FacetEncodingFieldDef.validate
+      ~FacetEncodingFieldDef.validate_property
+   
+   
+
+   
+   
+   

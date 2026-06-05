@@ -1,0 +1,30 @@
+﻿altair.TimeUnitParams
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: TimeUnitParams
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TimeUnitParams.__init__
+      ~TimeUnitParams.copy
+      ~TimeUnitParams.from_dict
+      ~TimeUnitParams.from_json
+      ~TimeUnitParams.resolve_references
+      ~TimeUnitParams.to_dict
+      ~TimeUnitParams.to_json
+      ~TimeUnitParams.validate
+      ~TimeUnitParams.validate_property
+   
+   
+
+   
+   
+   

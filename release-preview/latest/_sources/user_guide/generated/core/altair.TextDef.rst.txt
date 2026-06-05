@@ -1,0 +1,30 @@
+﻿altair.TextDef
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: TextDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TextDef.__init__
+      ~TextDef.copy
+      ~TextDef.from_dict
+      ~TextDef.from_json
+      ~TextDef.resolve_references
+      ~TextDef.to_dict
+      ~TextDef.to_json
+      ~TextDef.validate
+      ~TextDef.validate_property
+   
+   
+
+   
+   
+   

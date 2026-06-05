@@ -1,0 +1,30 @@
+﻿altair.TimeDef
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: TimeDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TimeDef.__init__
+      ~TimeDef.copy
+      ~TimeDef.from_dict
+      ~TimeDef.from_json
+      ~TimeDef.resolve_references
+      ~TimeDef.to_dict
+      ~TimeDef.to_json
+      ~TimeDef.validate
+      ~TimeDef.validate_property
+   
+   
+
+   
+   
+   

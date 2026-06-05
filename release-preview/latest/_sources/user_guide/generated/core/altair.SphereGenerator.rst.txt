@@ -1,0 +1,30 @@
+﻿altair.SphereGenerator
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: SphereGenerator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SphereGenerator.__init__
+      ~SphereGenerator.copy
+      ~SphereGenerator.from_dict
+      ~SphereGenerator.from_json
+      ~SphereGenerator.resolve_references
+      ~SphereGenerator.to_dict
+      ~SphereGenerator.to_json
+      ~SphereGenerator.validate
+      ~SphereGenerator.validate_property
+   
+   
+
+   
+   
+   

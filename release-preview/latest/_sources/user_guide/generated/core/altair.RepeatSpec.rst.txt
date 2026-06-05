@@ -1,0 +1,30 @@
+﻿altair.RepeatSpec
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: RepeatSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RepeatSpec.__init__
+      ~RepeatSpec.copy
+      ~RepeatSpec.from_dict
+      ~RepeatSpec.from_json
+      ~RepeatSpec.resolve_references
+      ~RepeatSpec.to_dict
+      ~RepeatSpec.to_json
+      ~RepeatSpec.validate
+      ~RepeatSpec.validate_property
+   
+   
+
+   
+   
+   

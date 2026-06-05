@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelStrokeOpacity
+==================================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelStrokeOpacity

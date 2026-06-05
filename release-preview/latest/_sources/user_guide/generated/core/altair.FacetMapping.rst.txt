@@ -1,0 +1,30 @@
+﻿altair.FacetMapping
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: FacetMapping
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FacetMapping.__init__
+      ~FacetMapping.copy
+      ~FacetMapping.from_dict
+      ~FacetMapping.from_json
+      ~FacetMapping.resolve_references
+      ~FacetMapping.to_dict
+      ~FacetMapping.to_json
+      ~FacetMapping.validate
+      ~FacetMapping.validate_property
+   
+   
+
+   
+   
+   

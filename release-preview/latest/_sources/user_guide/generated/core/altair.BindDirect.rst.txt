@@ -1,0 +1,30 @@
+﻿altair.BindDirect
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: BindDirect
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BindDirect.__init__
+      ~BindDirect.copy
+      ~BindDirect.from_dict
+      ~BindDirect.from_json
+      ~BindDirect.resolve_references
+      ~BindDirect.to_dict
+      ~BindDirect.to_json
+      ~BindDirect.validate
+      ~BindDirect.validate_property
+   
+   
+
+   
+   
+   

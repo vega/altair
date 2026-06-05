@@ -1,0 +1,46 @@
+﻿altair.StrokeWidth
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeWidth
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeWidth.__init__
+      ~StrokeWidth.copy
+      ~StrokeWidth.from_dict
+      ~StrokeWidth.from_json
+      ~StrokeWidth.resolve_references
+      ~StrokeWidth.to_dict
+      ~StrokeWidth.to_json
+      ~StrokeWidth.validate
+      ~StrokeWidth.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StrokeWidth.aggregate
+      ~StrokeWidth.bandPosition
+      ~StrokeWidth.bin
+      ~StrokeWidth.condition
+      ~StrokeWidth.field
+      ~StrokeWidth.legend
+      ~StrokeWidth.scale
+      ~StrokeWidth.sort
+      ~StrokeWidth.timeUnit
+      ~StrokeWidth.title
+      ~StrokeWidth.type
+   
+   

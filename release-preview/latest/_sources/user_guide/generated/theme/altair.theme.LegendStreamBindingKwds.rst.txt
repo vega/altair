@@ -1,0 +1,39 @@
+﻿altair.theme.LegendStreamBindingKwds
+====================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: LegendStreamBindingKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LegendStreamBindingKwds.__init__
+      ~LegendStreamBindingKwds.clear
+      ~LegendStreamBindingKwds.copy
+      ~LegendStreamBindingKwds.fromkeys
+      ~LegendStreamBindingKwds.get
+      ~LegendStreamBindingKwds.items
+      ~LegendStreamBindingKwds.keys
+      ~LegendStreamBindingKwds.pop
+      ~LegendStreamBindingKwds.popitem
+      ~LegendStreamBindingKwds.setdefault
+      ~LegendStreamBindingKwds.update
+      ~LegendStreamBindingKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LegendStreamBindingKwds.legend
+   
+   

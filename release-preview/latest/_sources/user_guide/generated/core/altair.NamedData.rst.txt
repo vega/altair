@@ -1,0 +1,30 @@
+﻿altair.NamedData
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: NamedData
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NamedData.__init__
+      ~NamedData.copy
+      ~NamedData.from_dict
+      ~NamedData.from_json
+      ~NamedData.resolve_references
+      ~NamedData.to_dict
+      ~NamedData.to_json
+      ~NamedData.validate
+      ~NamedData.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,40 @@
+﻿altair.theme.TimeIntervalStepKwds
+=================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: TimeIntervalStepKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TimeIntervalStepKwds.__init__
+      ~TimeIntervalStepKwds.clear
+      ~TimeIntervalStepKwds.copy
+      ~TimeIntervalStepKwds.fromkeys
+      ~TimeIntervalStepKwds.get
+      ~TimeIntervalStepKwds.items
+      ~TimeIntervalStepKwds.keys
+      ~TimeIntervalStepKwds.pop
+      ~TimeIntervalStepKwds.popitem
+      ~TimeIntervalStepKwds.setdefault
+      ~TimeIntervalStepKwds.update
+      ~TimeIntervalStepKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TimeIntervalStepKwds.interval
+      ~TimeIntervalStepKwds.step
+   
+   

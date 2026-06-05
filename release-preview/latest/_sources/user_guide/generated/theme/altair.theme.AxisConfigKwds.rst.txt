@@ -1,0 +1,116 @@
+﻿altair.theme.AxisConfigKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: AxisConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AxisConfigKwds.__init__
+      ~AxisConfigKwds.clear
+      ~AxisConfigKwds.copy
+      ~AxisConfigKwds.fromkeys
+      ~AxisConfigKwds.get
+      ~AxisConfigKwds.items
+      ~AxisConfigKwds.keys
+      ~AxisConfigKwds.pop
+      ~AxisConfigKwds.popitem
+      ~AxisConfigKwds.setdefault
+      ~AxisConfigKwds.update
+      ~AxisConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AxisConfigKwds.aria
+      ~AxisConfigKwds.bandPosition
+      ~AxisConfigKwds.description
+      ~AxisConfigKwds.disable
+      ~AxisConfigKwds.domain
+      ~AxisConfigKwds.domainCap
+      ~AxisConfigKwds.domainColor
+      ~AxisConfigKwds.domainDash
+      ~AxisConfigKwds.domainDashOffset
+      ~AxisConfigKwds.domainOpacity
+      ~AxisConfigKwds.domainWidth
+      ~AxisConfigKwds.format
+      ~AxisConfigKwds.formatType
+      ~AxisConfigKwds.grid
+      ~AxisConfigKwds.gridCap
+      ~AxisConfigKwds.gridColor
+      ~AxisConfigKwds.gridDash
+      ~AxisConfigKwds.gridDashOffset
+      ~AxisConfigKwds.gridOpacity
+      ~AxisConfigKwds.gridWidth
+      ~AxisConfigKwds.labelAlign
+      ~AxisConfigKwds.labelAngle
+      ~AxisConfigKwds.labelBaseline
+      ~AxisConfigKwds.labelBound
+      ~AxisConfigKwds.labelColor
+      ~AxisConfigKwds.labelExpr
+      ~AxisConfigKwds.labelFlush
+      ~AxisConfigKwds.labelFlushOffset
+      ~AxisConfigKwds.labelFont
+      ~AxisConfigKwds.labelFontSize
+      ~AxisConfigKwds.labelFontStyle
+      ~AxisConfigKwds.labelFontWeight
+      ~AxisConfigKwds.labelLimit
+      ~AxisConfigKwds.labelLineHeight
+      ~AxisConfigKwds.labelOffset
+      ~AxisConfigKwds.labelOpacity
+      ~AxisConfigKwds.labelOverlap
+      ~AxisConfigKwds.labelPadding
+      ~AxisConfigKwds.labelSeparation
+      ~AxisConfigKwds.labels
+      ~AxisConfigKwds.maxExtent
+      ~AxisConfigKwds.minExtent
+      ~AxisConfigKwds.offset
+      ~AxisConfigKwds.orient
+      ~AxisConfigKwds.position
+      ~AxisConfigKwds.style
+      ~AxisConfigKwds.tickBand
+      ~AxisConfigKwds.tickCap
+      ~AxisConfigKwds.tickColor
+      ~AxisConfigKwds.tickCount
+      ~AxisConfigKwds.tickDash
+      ~AxisConfigKwds.tickDashOffset
+      ~AxisConfigKwds.tickExtra
+      ~AxisConfigKwds.tickMinStep
+      ~AxisConfigKwds.tickOffset
+      ~AxisConfigKwds.tickOpacity
+      ~AxisConfigKwds.tickRound
+      ~AxisConfigKwds.tickSize
+      ~AxisConfigKwds.tickWidth
+      ~AxisConfigKwds.ticks
+      ~AxisConfigKwds.title
+      ~AxisConfigKwds.titleAlign
+      ~AxisConfigKwds.titleAnchor
+      ~AxisConfigKwds.titleAngle
+      ~AxisConfigKwds.titleBaseline
+      ~AxisConfigKwds.titleColor
+      ~AxisConfigKwds.titleFont
+      ~AxisConfigKwds.titleFontSize
+      ~AxisConfigKwds.titleFontStyle
+      ~AxisConfigKwds.titleFontWeight
+      ~AxisConfigKwds.titleLimit
+      ~AxisConfigKwds.titleLineHeight
+      ~AxisConfigKwds.titleOpacity
+      ~AxisConfigKwds.titlePadding
+      ~AxisConfigKwds.titleX
+      ~AxisConfigKwds.titleY
+      ~AxisConfigKwds.translate
+      ~AxisConfigKwds.zindex
+   
+   

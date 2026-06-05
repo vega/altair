@@ -1,0 +1,30 @@
+﻿altair.Baseline
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: Baseline
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Baseline.__init__
+      ~Baseline.copy
+      ~Baseline.from_dict
+      ~Baseline.from_json
+      ~Baseline.resolve_references
+      ~Baseline.to_dict
+      ~Baseline.to_json
+      ~Baseline.validate
+      ~Baseline.validate_property
+   
+   
+
+   
+   
+   

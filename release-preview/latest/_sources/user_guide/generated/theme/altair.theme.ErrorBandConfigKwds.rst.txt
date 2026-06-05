@@ -1,0 +1,43 @@
+﻿altair.theme.ErrorBandConfigKwds
+================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ErrorBandConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ErrorBandConfigKwds.__init__
+      ~ErrorBandConfigKwds.clear
+      ~ErrorBandConfigKwds.copy
+      ~ErrorBandConfigKwds.fromkeys
+      ~ErrorBandConfigKwds.get
+      ~ErrorBandConfigKwds.items
+      ~ErrorBandConfigKwds.keys
+      ~ErrorBandConfigKwds.pop
+      ~ErrorBandConfigKwds.popitem
+      ~ErrorBandConfigKwds.setdefault
+      ~ErrorBandConfigKwds.update
+      ~ErrorBandConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ErrorBandConfigKwds.band
+      ~ErrorBandConfigKwds.borders
+      ~ErrorBandConfigKwds.extent
+      ~ErrorBandConfigKwds.interpolate
+      ~ErrorBandConfigKwds.tension
+   
+   

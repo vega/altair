@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelColor
+==========================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelColor

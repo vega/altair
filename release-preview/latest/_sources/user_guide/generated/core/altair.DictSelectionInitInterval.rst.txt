@@ -1,0 +1,30 @@
+﻿altair.DictSelectionInitInterval
+================================
+
+.. currentmodule:: altair
+
+.. autoclass:: DictSelectionInitInterval
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DictSelectionInitInterval.__init__
+      ~DictSelectionInitInterval.copy
+      ~DictSelectionInitInterval.from_dict
+      ~DictSelectionInitInterval.from_json
+      ~DictSelectionInitInterval.resolve_references
+      ~DictSelectionInitInterval.to_dict
+      ~DictSelectionInitInterval.to_json
+      ~DictSelectionInitInterval.validate
+      ~DictSelectionInitInterval.validate_property
+   
+   
+
+   
+   
+   

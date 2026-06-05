@@ -1,0 +1,36 @@
+﻿altair.Y2Value
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: Y2Value
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Y2Value.__init__
+      ~Y2Value.copy
+      ~Y2Value.from_dict
+      ~Y2Value.from_json
+      ~Y2Value.resolve_references
+      ~Y2Value.to_dict
+      ~Y2Value.to_json
+      ~Y2Value.validate
+      ~Y2Value.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Y2Value.value
+   
+   

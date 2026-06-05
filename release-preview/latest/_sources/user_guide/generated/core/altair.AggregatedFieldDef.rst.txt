@@ -1,0 +1,30 @@
+﻿altair.AggregatedFieldDef
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: AggregatedFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AggregatedFieldDef.__init__
+      ~AggregatedFieldDef.copy
+      ~AggregatedFieldDef.from_dict
+      ~AggregatedFieldDef.from_json
+      ~AggregatedFieldDef.resolve_references
+      ~AggregatedFieldDef.to_dict
+      ~AggregatedFieldDef.to_json
+      ~AggregatedFieldDef.validate
+      ~AggregatedFieldDef.validate_property
+   
+   
+
+   
+   
+   

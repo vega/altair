@@ -1,0 +1,30 @@
+﻿altair.ErrorBarDef
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: ErrorBarDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ErrorBarDef.__init__
+      ~ErrorBarDef.copy
+      ~ErrorBarDef.from_dict
+      ~ErrorBarDef.from_json
+      ~ErrorBarDef.resolve_references
+      ~ErrorBarDef.to_dict
+      ~ErrorBarDef.to_json
+      ~ErrorBarDef.validate
+      ~ErrorBarDef.validate_property
+   
+   
+
+   
+   
+   

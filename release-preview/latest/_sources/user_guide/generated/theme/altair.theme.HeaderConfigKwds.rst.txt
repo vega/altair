@@ -1,0 +1,70 @@
+﻿altair.theme.HeaderConfigKwds
+=============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: HeaderConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~HeaderConfigKwds.__init__
+      ~HeaderConfigKwds.clear
+      ~HeaderConfigKwds.copy
+      ~HeaderConfigKwds.fromkeys
+      ~HeaderConfigKwds.get
+      ~HeaderConfigKwds.items
+      ~HeaderConfigKwds.keys
+      ~HeaderConfigKwds.pop
+      ~HeaderConfigKwds.popitem
+      ~HeaderConfigKwds.setdefault
+      ~HeaderConfigKwds.update
+      ~HeaderConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~HeaderConfigKwds.format
+      ~HeaderConfigKwds.formatType
+      ~HeaderConfigKwds.labelAlign
+      ~HeaderConfigKwds.labelAnchor
+      ~HeaderConfigKwds.labelAngle
+      ~HeaderConfigKwds.labelBaseline
+      ~HeaderConfigKwds.labelColor
+      ~HeaderConfigKwds.labelExpr
+      ~HeaderConfigKwds.labelFont
+      ~HeaderConfigKwds.labelFontSize
+      ~HeaderConfigKwds.labelFontStyle
+      ~HeaderConfigKwds.labelFontWeight
+      ~HeaderConfigKwds.labelLimit
+      ~HeaderConfigKwds.labelLineHeight
+      ~HeaderConfigKwds.labelOrient
+      ~HeaderConfigKwds.labelPadding
+      ~HeaderConfigKwds.labels
+      ~HeaderConfigKwds.orient
+      ~HeaderConfigKwds.title
+      ~HeaderConfigKwds.titleAlign
+      ~HeaderConfigKwds.titleAnchor
+      ~HeaderConfigKwds.titleAngle
+      ~HeaderConfigKwds.titleBaseline
+      ~HeaderConfigKwds.titleColor
+      ~HeaderConfigKwds.titleFont
+      ~HeaderConfigKwds.titleFontSize
+      ~HeaderConfigKwds.titleFontStyle
+      ~HeaderConfigKwds.titleFontWeight
+      ~HeaderConfigKwds.titleLimit
+      ~HeaderConfigKwds.titleLineHeight
+      ~HeaderConfigKwds.titleOrient
+      ~HeaderConfigKwds.titlePadding
+   
+   

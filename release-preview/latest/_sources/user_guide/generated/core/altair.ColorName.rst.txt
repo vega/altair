@@ -1,0 +1,30 @@
+﻿altair.ColorName
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: ColorName
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ColorName.__init__
+      ~ColorName.copy
+      ~ColorName.from_dict
+      ~ColorName.from_json
+      ~ColorName.resolve_references
+      ~ColorName.to_dict
+      ~ColorName.to_json
+      ~ColorName.validate
+      ~ColorName.validate_property
+   
+   
+
+   
+   
+   

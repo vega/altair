@@ -1,0 +1,41 @@
+﻿altair.theme.ResolveKwds
+========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ResolveKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ResolveKwds.__init__
+      ~ResolveKwds.clear
+      ~ResolveKwds.copy
+      ~ResolveKwds.fromkeys
+      ~ResolveKwds.get
+      ~ResolveKwds.items
+      ~ResolveKwds.keys
+      ~ResolveKwds.pop
+      ~ResolveKwds.popitem
+      ~ResolveKwds.setdefault
+      ~ResolveKwds.update
+      ~ResolveKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ResolveKwds.axis
+      ~ResolveKwds.legend
+      ~ResolveKwds.scale
+   
+   

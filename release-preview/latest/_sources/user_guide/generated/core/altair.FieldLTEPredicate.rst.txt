@@ -1,0 +1,30 @@
+﻿altair.FieldLTEPredicate
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldLTEPredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldLTEPredicate.__init__
+      ~FieldLTEPredicate.copy
+      ~FieldLTEPredicate.from_dict
+      ~FieldLTEPredicate.from_json
+      ~FieldLTEPredicate.resolve_references
+      ~FieldLTEPredicate.to_dict
+      ~FieldLTEPredicate.to_json
+      ~FieldLTEPredicate.validate
+      ~FieldLTEPredicate.validate_property
+   
+   
+
+   
+   
+   

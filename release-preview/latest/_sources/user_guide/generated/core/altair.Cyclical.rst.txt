@@ -1,0 +1,30 @@
+﻿altair.Cyclical
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: Cyclical
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Cyclical.__init__
+      ~Cyclical.copy
+      ~Cyclical.from_dict
+      ~Cyclical.from_json
+      ~Cyclical.resolve_references
+      ~Cyclical.to_dict
+      ~Cyclical.to_json
+      ~Cyclical.validate
+      ~Cyclical.validate_property
+   
+   
+
+   
+   
+   

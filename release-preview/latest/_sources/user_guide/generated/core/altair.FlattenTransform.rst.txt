@@ -1,0 +1,30 @@
+﻿altair.FlattenTransform
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: FlattenTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FlattenTransform.__init__
+      ~FlattenTransform.copy
+      ~FlattenTransform.from_dict
+      ~FlattenTransform.from_json
+      ~FlattenTransform.resolve_references
+      ~FlattenTransform.to_dict
+      ~FlattenTransform.to_json
+      ~FlattenTransform.validate
+      ~FlattenTransform.validate_property
+   
+   
+
+   
+   
+   

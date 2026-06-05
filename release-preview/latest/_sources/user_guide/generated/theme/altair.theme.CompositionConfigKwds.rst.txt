@@ -1,0 +1,40 @@
+﻿altair.theme.CompositionConfigKwds
+==================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: CompositionConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CompositionConfigKwds.__init__
+      ~CompositionConfigKwds.clear
+      ~CompositionConfigKwds.copy
+      ~CompositionConfigKwds.fromkeys
+      ~CompositionConfigKwds.get
+      ~CompositionConfigKwds.items
+      ~CompositionConfigKwds.keys
+      ~CompositionConfigKwds.pop
+      ~CompositionConfigKwds.popitem
+      ~CompositionConfigKwds.setdefault
+      ~CompositionConfigKwds.update
+      ~CompositionConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CompositionConfigKwds.columns
+      ~CompositionConfigKwds.spacing
+   
+   

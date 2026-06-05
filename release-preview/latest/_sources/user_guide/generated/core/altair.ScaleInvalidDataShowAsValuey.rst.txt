@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsValuey
+===================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsValuey
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsValuey.__init__
+      ~ScaleInvalidDataShowAsValuey.copy
+      ~ScaleInvalidDataShowAsValuey.from_dict
+      ~ScaleInvalidDataShowAsValuey.from_json
+      ~ScaleInvalidDataShowAsValuey.resolve_references
+      ~ScaleInvalidDataShowAsValuey.to_dict
+      ~ScaleInvalidDataShowAsValuey.to_json
+      ~ScaleInvalidDataShowAsValuey.validate
+      ~ScaleInvalidDataShowAsValuey.validate_property
+   
+   
+
+   
+   
+   

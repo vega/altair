@@ -1,0 +1,30 @@
+﻿altair.ScaleType
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleType
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleType.__init__
+      ~ScaleType.copy
+      ~ScaleType.from_dict
+      ~ScaleType.from_json
+      ~ScaleType.resolve_references
+      ~ScaleType.to_dict
+      ~ScaleType.to_json
+      ~ScaleType.validate
+      ~ScaleType.validate_property
+   
+   
+
+   
+   
+   

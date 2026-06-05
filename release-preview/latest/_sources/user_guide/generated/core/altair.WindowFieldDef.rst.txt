@@ -1,0 +1,30 @@
+﻿altair.WindowFieldDef
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: WindowFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~WindowFieldDef.__init__
+      ~WindowFieldDef.copy
+      ~WindowFieldDef.from_dict
+      ~WindowFieldDef.from_json
+      ~WindowFieldDef.resolve_references
+      ~WindowFieldDef.to_dict
+      ~WindowFieldDef.to_json
+      ~WindowFieldDef.validate
+      ~WindowFieldDef.validate_property
+   
+   
+
+   
+   
+   

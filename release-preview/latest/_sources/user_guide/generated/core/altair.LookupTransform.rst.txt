@@ -1,0 +1,30 @@
+﻿altair.LookupTransform
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: LookupTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LookupTransform.__init__
+      ~LookupTransform.copy
+      ~LookupTransform.from_dict
+      ~LookupTransform.from_json
+      ~LookupTransform.resolve_references
+      ~LookupTransform.to_dict
+      ~LookupTransform.to_json
+      ~LookupTransform.validate
+      ~LookupTransform.validate_property
+   
+   
+
+   
+   
+   

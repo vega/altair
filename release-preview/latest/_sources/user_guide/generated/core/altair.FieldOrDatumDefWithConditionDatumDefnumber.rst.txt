@@ -1,0 +1,30 @@
+﻿altair.FieldOrDatumDefWithConditionDatumDefnumber
+=================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldOrDatumDefWithConditionDatumDefnumber
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldOrDatumDefWithConditionDatumDefnumber.__init__
+      ~FieldOrDatumDefWithConditionDatumDefnumber.copy
+      ~FieldOrDatumDefWithConditionDatumDefnumber.from_dict
+      ~FieldOrDatumDefWithConditionDatumDefnumber.from_json
+      ~FieldOrDatumDefWithConditionDatumDefnumber.resolve_references
+      ~FieldOrDatumDefWithConditionDatumDefnumber.to_dict
+      ~FieldOrDatumDefWithConditionDatumDefnumber.to_json
+      ~FieldOrDatumDefWithConditionDatumDefnumber.validate
+      ~FieldOrDatumDefWithConditionDatumDefnumber.validate_property
+   
+   
+
+   
+   
+   

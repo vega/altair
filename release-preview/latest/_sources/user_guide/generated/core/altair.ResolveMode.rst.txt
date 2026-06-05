@@ -1,0 +1,30 @@
+﻿altair.ResolveMode
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: ResolveMode
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ResolveMode.__init__
+      ~ResolveMode.copy
+      ~ResolveMode.from_dict
+      ~ResolveMode.from_json
+      ~ResolveMode.resolve_references
+      ~ResolveMode.to_dict
+      ~ResolveMode.to_json
+      ~ResolveMode.validate
+      ~ResolveMode.validate_property
+   
+   
+
+   
+   
+   

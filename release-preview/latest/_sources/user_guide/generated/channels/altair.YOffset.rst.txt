@@ -1,0 +1,44 @@
+﻿altair.YOffset
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: YOffset
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~YOffset.__init__
+      ~YOffset.copy
+      ~YOffset.from_dict
+      ~YOffset.from_json
+      ~YOffset.resolve_references
+      ~YOffset.to_dict
+      ~YOffset.to_json
+      ~YOffset.validate
+      ~YOffset.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~YOffset.aggregate
+      ~YOffset.bandPosition
+      ~YOffset.bin
+      ~YOffset.field
+      ~YOffset.scale
+      ~YOffset.sort
+      ~YOffset.timeUnit
+      ~YOffset.title
+      ~YOffset.type
+   
+   

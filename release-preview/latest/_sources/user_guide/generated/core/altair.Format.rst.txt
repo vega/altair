@@ -1,0 +1,30 @@
+﻿altair.Format
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: Format
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Format.__init__
+      ~Format.copy
+      ~Format.from_dict
+      ~Format.from_json
+      ~Format.resolve_references
+      ~Format.to_dict
+      ~Format.to_json
+      ~Format.validate
+      ~Format.validate_property
+   
+   
+
+   
+   
+   

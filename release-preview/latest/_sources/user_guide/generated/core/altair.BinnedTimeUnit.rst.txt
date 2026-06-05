@@ -1,0 +1,30 @@
+﻿altair.BinnedTimeUnit
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: BinnedTimeUnit
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BinnedTimeUnit.__init__
+      ~BinnedTimeUnit.copy
+      ~BinnedTimeUnit.from_dict
+      ~BinnedTimeUnit.from_json
+      ~BinnedTimeUnit.resolve_references
+      ~BinnedTimeUnit.to_dict
+      ~BinnedTimeUnit.to_json
+      ~BinnedTimeUnit.validate
+      ~BinnedTimeUnit.validate_property
+   
+   
+
+   
+   
+   

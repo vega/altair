@@ -1,0 +1,30 @@
+﻿altair.ScaleDatumDef
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleDatumDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleDatumDef.__init__
+      ~ScaleDatumDef.copy
+      ~ScaleDatumDef.from_dict
+      ~ScaleDatumDef.from_json
+      ~ScaleDatumDef.resolve_references
+      ~ScaleDatumDef.to_dict
+      ~ScaleDatumDef.to_json
+      ~ScaleDatumDef.validate
+      ~ScaleDatumDef.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,36 @@
+﻿altair.Latitude2Value
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: Latitude2Value
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Latitude2Value.__init__
+      ~Latitude2Value.copy
+      ~Latitude2Value.from_dict
+      ~Latitude2Value.from_json
+      ~Latitude2Value.resolve_references
+      ~Latitude2Value.to_dict
+      ~Latitude2Value.to_json
+      ~Latitude2Value.validate
+      ~Latitude2Value.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Latitude2Value.value
+   
+   

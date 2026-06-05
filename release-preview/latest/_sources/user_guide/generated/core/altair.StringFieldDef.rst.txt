@@ -1,0 +1,30 @@
+﻿altair.StringFieldDef
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: StringFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StringFieldDef.__init__
+      ~StringFieldDef.copy
+      ~StringFieldDef.from_dict
+      ~StringFieldDef.from_json
+      ~StringFieldDef.resolve_references
+      ~StringFieldDef.to_dict
+      ~StringFieldDef.to_json
+      ~StringFieldDef.validate
+      ~StringFieldDef.validate_property
+   
+   
+
+   
+   
+   

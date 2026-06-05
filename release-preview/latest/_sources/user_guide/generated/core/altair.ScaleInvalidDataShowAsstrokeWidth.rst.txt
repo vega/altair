@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsstrokeWidth
+========================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsstrokeWidth
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsstrokeWidth.__init__
+      ~ScaleInvalidDataShowAsstrokeWidth.copy
+      ~ScaleInvalidDataShowAsstrokeWidth.from_dict
+      ~ScaleInvalidDataShowAsstrokeWidth.from_json
+      ~ScaleInvalidDataShowAsstrokeWidth.resolve_references
+      ~ScaleInvalidDataShowAsstrokeWidth.to_dict
+      ~ScaleInvalidDataShowAsstrokeWidth.to_json
+      ~ScaleInvalidDataShowAsstrokeWidth.validate
+      ~ScaleInvalidDataShowAsstrokeWidth.validate_property
+   
+   
+
+   
+   
+   

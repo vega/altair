@@ -1,0 +1,30 @@
+﻿altair.ScaleConfig
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleConfig.__init__
+      ~ScaleConfig.copy
+      ~ScaleConfig.from_dict
+      ~ScaleConfig.from_json
+      ~ScaleConfig.resolve_references
+      ~ScaleConfig.to_dict
+      ~ScaleConfig.to_json
+      ~ScaleConfig.validate
+      ~ScaleConfig.validate_property
+   
+   
+
+   
+   
+   

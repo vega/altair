@@ -1,0 +1,6 @@
+﻿altair.theme.enable
+===================
+
+.. currentmodule:: altair.theme
+
+.. autofunction:: enable

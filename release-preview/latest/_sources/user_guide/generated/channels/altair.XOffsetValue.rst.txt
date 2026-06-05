@@ -1,0 +1,36 @@
+﻿altair.XOffsetValue
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: XOffsetValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~XOffsetValue.__init__
+      ~XOffsetValue.copy
+      ~XOffsetValue.from_dict
+      ~XOffsetValue.from_json
+      ~XOffsetValue.resolve_references
+      ~XOffsetValue.to_dict
+      ~XOffsetValue.to_json
+      ~XOffsetValue.validate
+      ~XOffsetValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~XOffsetValue.value
+   
+   

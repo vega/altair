@@ -1,0 +1,30 @@
+﻿altair.ConditionalPredicateValueDefTextBaselinenullExprRef
+==========================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalPredicateValueDefTextBaselinenullExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalPredicateValueDefTextBaselinenullExprRef.__init__
+      ~ConditionalPredicateValueDefTextBaselinenullExprRef.copy
+      ~ConditionalPredicateValueDefTextBaselinenullExprRef.from_dict
+      ~ConditionalPredicateValueDefTextBaselinenullExprRef.from_json
+      ~ConditionalPredicateValueDefTextBaselinenullExprRef.resolve_references
+      ~ConditionalPredicateValueDefTextBaselinenullExprRef.to_dict
+      ~ConditionalPredicateValueDefTextBaselinenullExprRef.to_json
+      ~ConditionalPredicateValueDefTextBaselinenullExprRef.validate
+      ~ConditionalPredicateValueDefTextBaselinenullExprRef.validate_property
+   
+   
+
+   
+   
+   

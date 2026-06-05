@@ -1,0 +1,30 @@
+﻿altair.ErrorBandDef
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: ErrorBandDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ErrorBandDef.__init__
+      ~ErrorBandDef.copy
+      ~ErrorBandDef.from_dict
+      ~ErrorBandDef.from_json
+      ~ErrorBandDef.resolve_references
+      ~ErrorBandDef.to_dict
+      ~ErrorBandDef.to_json
+      ~ErrorBandDef.validate
+      ~ErrorBandDef.validate_property
+   
+   
+
+   
+   
+   

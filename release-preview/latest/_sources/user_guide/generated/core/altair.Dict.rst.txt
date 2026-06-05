@@ -1,0 +1,30 @@
+﻿altair.Dict
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Dict
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Dict.__init__
+      ~Dict.copy
+      ~Dict.from_dict
+      ~Dict.from_json
+      ~Dict.resolve_references
+      ~Dict.to_dict
+      ~Dict.to_json
+      ~Dict.validate
+      ~Dict.validate_property
+   
+   
+
+   
+   
+   

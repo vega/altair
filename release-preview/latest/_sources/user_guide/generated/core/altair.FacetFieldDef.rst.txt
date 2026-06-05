@@ -1,0 +1,30 @@
+﻿altair.FacetFieldDef
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: FacetFieldDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FacetFieldDef.__init__
+      ~FacetFieldDef.copy
+      ~FacetFieldDef.from_dict
+      ~FacetFieldDef.from_json
+      ~FacetFieldDef.resolve_references
+      ~FacetFieldDef.to_dict
+      ~FacetFieldDef.to_json
+      ~FacetFieldDef.validate
+      ~FacetFieldDef.validate_property
+   
+   
+
+   
+   
+   

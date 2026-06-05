@@ -1,0 +1,57 @@
+﻿altair.theme.ViewConfigKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ViewConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ViewConfigKwds.__init__
+      ~ViewConfigKwds.clear
+      ~ViewConfigKwds.copy
+      ~ViewConfigKwds.fromkeys
+      ~ViewConfigKwds.get
+      ~ViewConfigKwds.items
+      ~ViewConfigKwds.keys
+      ~ViewConfigKwds.pop
+      ~ViewConfigKwds.popitem
+      ~ViewConfigKwds.setdefault
+      ~ViewConfigKwds.update
+      ~ViewConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ViewConfigKwds.clip
+      ~ViewConfigKwds.continuousHeight
+      ~ViewConfigKwds.continuousWidth
+      ~ViewConfigKwds.cornerRadius
+      ~ViewConfigKwds.cursor
+      ~ViewConfigKwds.discreteHeight
+      ~ViewConfigKwds.discreteWidth
+      ~ViewConfigKwds.fill
+      ~ViewConfigKwds.fillOpacity
+      ~ViewConfigKwds.opacity
+      ~ViewConfigKwds.step
+      ~ViewConfigKwds.stroke
+      ~ViewConfigKwds.strokeCap
+      ~ViewConfigKwds.strokeDash
+      ~ViewConfigKwds.strokeDashOffset
+      ~ViewConfigKwds.strokeJoin
+      ~ViewConfigKwds.strokeMiterLimit
+      ~ViewConfigKwds.strokeOpacity
+      ~ViewConfigKwds.strokeWidth
+   
+   

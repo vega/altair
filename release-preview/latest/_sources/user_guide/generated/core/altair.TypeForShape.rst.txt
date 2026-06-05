@@ -1,0 +1,30 @@
+﻿altair.TypeForShape
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: TypeForShape
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TypeForShape.__init__
+      ~TypeForShape.copy
+      ~TypeForShape.from_dict
+      ~TypeForShape.from_json
+      ~TypeForShape.resolve_references
+      ~TypeForShape.to_dict
+      ~TypeForShape.to_json
+      ~TypeForShape.validate
+      ~TypeForShape.validate_property
+   
+   
+
+   
+   
+   

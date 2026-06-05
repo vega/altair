@@ -1,0 +1,30 @@
+﻿altair.ConditionalValueDefGradientstringnullExprRef
+===================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalValueDefGradientstringnullExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalValueDefGradientstringnullExprRef.__init__
+      ~ConditionalValueDefGradientstringnullExprRef.copy
+      ~ConditionalValueDefGradientstringnullExprRef.from_dict
+      ~ConditionalValueDefGradientstringnullExprRef.from_json
+      ~ConditionalValueDefGradientstringnullExprRef.resolve_references
+      ~ConditionalValueDefGradientstringnullExprRef.to_dict
+      ~ConditionalValueDefGradientstringnullExprRef.to_json
+      ~ConditionalValueDefGradientstringnullExprRef.validate
+      ~ConditionalValueDefGradientstringnullExprRef.validate_property
+   
+   
+
+   
+   
+   

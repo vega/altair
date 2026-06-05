@@ -1,0 +1,39 @@
+﻿altair.theme.StepKwds
+=====================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: StepKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StepKwds.__init__
+      ~StepKwds.clear
+      ~StepKwds.copy
+      ~StepKwds.fromkeys
+      ~StepKwds.get
+      ~StepKwds.items
+      ~StepKwds.keys
+      ~StepKwds.pop
+      ~StepKwds.popitem
+      ~StepKwds.setdefault
+      ~StepKwds.update
+      ~StepKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StepKwds.step
+   
+   

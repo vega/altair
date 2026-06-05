@@ -1,0 +1,30 @@
+﻿altair.SelectionInitInterval
+============================
+
+.. currentmodule:: altair
+
+.. autoclass:: SelectionInitInterval
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SelectionInitInterval.__init__
+      ~SelectionInitInterval.copy
+      ~SelectionInitInterval.from_dict
+      ~SelectionInitInterval.from_json
+      ~SelectionInitInterval.resolve_references
+      ~SelectionInitInterval.to_dict
+      ~SelectionInitInterval.to_json
+      ~SelectionInitInterval.validate
+      ~SelectionInitInterval.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.RowColnumber
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: RowColnumber
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RowColnumber.__init__
+      ~RowColnumber.copy
+      ~RowColnumber.from_dict
+      ~RowColnumber.from_json
+      ~RowColnumber.resolve_references
+      ~RowColnumber.to_dict
+      ~RowColnumber.to_json
+      ~RowColnumber.validate
+      ~RowColnumber.validate_property
+   
+   
+
+   
+   
+   

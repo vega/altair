@@ -1,0 +1,45 @@
+﻿altair.Radius
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: Radius
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Radius.__init__
+      ~Radius.copy
+      ~Radius.from_dict
+      ~Radius.from_json
+      ~Radius.resolve_references
+      ~Radius.to_dict
+      ~Radius.to_json
+      ~Radius.validate
+      ~Radius.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Radius.aggregate
+      ~Radius.bandPosition
+      ~Radius.bin
+      ~Radius.field
+      ~Radius.scale
+      ~Radius.sort
+      ~Radius.stack
+      ~Radius.timeUnit
+      ~Radius.title
+      ~Radius.type
+   
+   

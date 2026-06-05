@@ -1,0 +1,30 @@
+﻿altair.GenericUnitSpecEncodingAnyMark
+=====================================
+
+.. currentmodule:: altair
+
+.. autoclass:: GenericUnitSpecEncodingAnyMark
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GenericUnitSpecEncodingAnyMark.__init__
+      ~GenericUnitSpecEncodingAnyMark.copy
+      ~GenericUnitSpecEncodingAnyMark.from_dict
+      ~GenericUnitSpecEncodingAnyMark.from_json
+      ~GenericUnitSpecEncodingAnyMark.resolve_references
+      ~GenericUnitSpecEncodingAnyMark.to_dict
+      ~GenericUnitSpecEncodingAnyMark.to_json
+      ~GenericUnitSpecEncodingAnyMark.validate
+      ~GenericUnitSpecEncodingAnyMark.validate_property
+   
+   
+
+   
+   
+   

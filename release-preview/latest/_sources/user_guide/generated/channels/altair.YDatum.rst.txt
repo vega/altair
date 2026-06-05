@@ -1,0 +1,43 @@
+﻿altair.YDatum
+=============
+
+.. currentmodule:: altair
+
+.. autoclass:: YDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~YDatum.__init__
+      ~YDatum.copy
+      ~YDatum.from_dict
+      ~YDatum.from_json
+      ~YDatum.resolve_references
+      ~YDatum.to_dict
+      ~YDatum.to_json
+      ~YDatum.validate
+      ~YDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~YDatum.axis
+      ~YDatum.bandPosition
+      ~YDatum.datum
+      ~YDatum.impute
+      ~YDatum.scale
+      ~YDatum.stack
+      ~YDatum.title
+      ~YDatum.type
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.ConditionalParameterValueDefnumberArrayExprRef
+=====================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalParameterValueDefnumberArrayExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalParameterValueDefnumberArrayExprRef.__init__
+      ~ConditionalParameterValueDefnumberArrayExprRef.copy
+      ~ConditionalParameterValueDefnumberArrayExprRef.from_dict
+      ~ConditionalParameterValueDefnumberArrayExprRef.from_json
+      ~ConditionalParameterValueDefnumberArrayExprRef.resolve_references
+      ~ConditionalParameterValueDefnumberArrayExprRef.to_dict
+      ~ConditionalParameterValueDefnumberArrayExprRef.to_json
+      ~ConditionalParameterValueDefnumberArrayExprRef.validate
+      ~ConditionalParameterValueDefnumberArrayExprRef.validate_property
+   
+   
+
+   
+   
+   

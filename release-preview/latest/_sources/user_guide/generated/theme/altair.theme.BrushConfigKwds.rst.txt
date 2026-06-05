@@ -1,0 +1,46 @@
+﻿altair.theme.BrushConfigKwds
+============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: BrushConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BrushConfigKwds.__init__
+      ~BrushConfigKwds.clear
+      ~BrushConfigKwds.copy
+      ~BrushConfigKwds.fromkeys
+      ~BrushConfigKwds.get
+      ~BrushConfigKwds.items
+      ~BrushConfigKwds.keys
+      ~BrushConfigKwds.pop
+      ~BrushConfigKwds.popitem
+      ~BrushConfigKwds.setdefault
+      ~BrushConfigKwds.update
+      ~BrushConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BrushConfigKwds.cursor
+      ~BrushConfigKwds.fill
+      ~BrushConfigKwds.fillOpacity
+      ~BrushConfigKwds.stroke
+      ~BrushConfigKwds.strokeDash
+      ~BrushConfigKwds.strokeDashOffset
+      ~BrushConfigKwds.strokeOpacity
+      ~BrushConfigKwds.strokeWidth
+   
+   

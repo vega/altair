@@ -1,0 +1,30 @@
+﻿altair.TopLevelParameter
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: TopLevelParameter
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TopLevelParameter.__init__
+      ~TopLevelParameter.copy
+      ~TopLevelParameter.from_dict
+      ~TopLevelParameter.from_json
+      ~TopLevelParameter.resolve_references
+      ~TopLevelParameter.to_dict
+      ~TopLevelParameter.to_json
+      ~TopLevelParameter.validate
+      ~TopLevelParameter.validate_property
+   
+   
+
+   
+   
+   

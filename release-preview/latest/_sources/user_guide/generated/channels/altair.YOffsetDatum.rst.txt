@@ -1,0 +1,40 @@
+﻿altair.YOffsetDatum
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: YOffsetDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~YOffsetDatum.__init__
+      ~YOffsetDatum.copy
+      ~YOffsetDatum.from_dict
+      ~YOffsetDatum.from_json
+      ~YOffsetDatum.resolve_references
+      ~YOffsetDatum.to_dict
+      ~YOffsetDatum.to_json
+      ~YOffsetDatum.validate
+      ~YOffsetDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~YOffsetDatum.bandPosition
+      ~YOffsetDatum.datum
+      ~YOffsetDatum.scale
+      ~YOffsetDatum.title
+      ~YOffsetDatum.type
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.SharedEncoding
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: SharedEncoding
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SharedEncoding.__init__
+      ~SharedEncoding.copy
+      ~SharedEncoding.from_dict
+      ~SharedEncoding.from_json
+      ~SharedEncoding.resolve_references
+      ~SharedEncoding.to_dict
+      ~SharedEncoding.to_json
+      ~SharedEncoding.validate
+      ~SharedEncoding.validate_property
+   
+   
+
+   
+   
+   

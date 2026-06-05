@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelSize
+=========================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelSize

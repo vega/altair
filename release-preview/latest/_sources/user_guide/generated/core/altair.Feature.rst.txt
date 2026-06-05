@@ -1,0 +1,30 @@
+﻿altair.Feature
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: Feature
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Feature.__init__
+      ~Feature.copy
+      ~Feature.from_dict
+      ~Feature.from_json
+      ~Feature.resolve_references
+      ~Feature.to_dict
+      ~Feature.to_json
+      ~Feature.validate
+      ~Feature.validate_property
+   
+   
+
+   
+   
+   

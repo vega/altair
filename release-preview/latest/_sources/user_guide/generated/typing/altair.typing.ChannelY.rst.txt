@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelY
+======================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelY

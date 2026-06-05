@@ -1,0 +1,30 @@
+﻿altair.LatLongDef
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: LatLongDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LatLongDef.__init__
+      ~LatLongDef.copy
+      ~LatLongDef.from_dict
+      ~LatLongDef.from_json
+      ~LatLongDef.resolve_references
+      ~LatLongDef.to_dict
+      ~LatLongDef.to_json
+      ~LatLongDef.validate
+      ~LatLongDef.validate_property
+   
+   
+
+   
+   
+   

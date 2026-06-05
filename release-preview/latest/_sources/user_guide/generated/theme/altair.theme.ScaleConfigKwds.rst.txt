@@ -1,0 +1,69 @@
+﻿altair.theme.ScaleConfigKwds
+============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ScaleConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleConfigKwds.__init__
+      ~ScaleConfigKwds.clear
+      ~ScaleConfigKwds.copy
+      ~ScaleConfigKwds.fromkeys
+      ~ScaleConfigKwds.get
+      ~ScaleConfigKwds.items
+      ~ScaleConfigKwds.keys
+      ~ScaleConfigKwds.pop
+      ~ScaleConfigKwds.popitem
+      ~ScaleConfigKwds.setdefault
+      ~ScaleConfigKwds.update
+      ~ScaleConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ScaleConfigKwds.animationDuration
+      ~ScaleConfigKwds.bandPaddingInner
+      ~ScaleConfigKwds.bandPaddingOuter
+      ~ScaleConfigKwds.bandWithNestedOffsetPaddingInner
+      ~ScaleConfigKwds.bandWithNestedOffsetPaddingOuter
+      ~ScaleConfigKwds.barBandPaddingInner
+      ~ScaleConfigKwds.clamp
+      ~ScaleConfigKwds.continuousPadding
+      ~ScaleConfigKwds.framesPerSecond
+      ~ScaleConfigKwds.invalid
+      ~ScaleConfigKwds.maxBandSize
+      ~ScaleConfigKwds.maxFontSize
+      ~ScaleConfigKwds.maxOpacity
+      ~ScaleConfigKwds.maxSize
+      ~ScaleConfigKwds.maxStrokeWidth
+      ~ScaleConfigKwds.minBandSize
+      ~ScaleConfigKwds.minFontSize
+      ~ScaleConfigKwds.minOpacity
+      ~ScaleConfigKwds.minSize
+      ~ScaleConfigKwds.minStrokeWidth
+      ~ScaleConfigKwds.offsetBandPaddingInner
+      ~ScaleConfigKwds.offsetBandPaddingOuter
+      ~ScaleConfigKwds.pointPadding
+      ~ScaleConfigKwds.quantileCount
+      ~ScaleConfigKwds.quantizeCount
+      ~ScaleConfigKwds.rectBandPaddingInner
+      ~ScaleConfigKwds.round
+      ~ScaleConfigKwds.tickBandPaddingInner
+      ~ScaleConfigKwds.useUnaggregatedDomain
+      ~ScaleConfigKwds.xReverse
+      ~ScaleConfigKwds.zero
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.SortByChannelDesc
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: SortByChannelDesc
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SortByChannelDesc.__init__
+      ~SortByChannelDesc.copy
+      ~SortByChannelDesc.from_dict
+      ~SortByChannelDesc.from_json
+      ~SortByChannelDesc.resolve_references
+      ~SortByChannelDesc.to_dict
+      ~SortByChannelDesc.to_json
+      ~SortByChannelDesc.validate
+      ~SortByChannelDesc.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,46 @@
+﻿altair.Angle
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Angle
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Angle.__init__
+      ~Angle.copy
+      ~Angle.from_dict
+      ~Angle.from_json
+      ~Angle.resolve_references
+      ~Angle.to_dict
+      ~Angle.to_json
+      ~Angle.validate
+      ~Angle.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Angle.aggregate
+      ~Angle.bandPosition
+      ~Angle.bin
+      ~Angle.condition
+      ~Angle.field
+      ~Angle.legend
+      ~Angle.scale
+      ~Angle.sort
+      ~Angle.timeUnit
+      ~Angle.title
+      ~Angle.type
+   
+   

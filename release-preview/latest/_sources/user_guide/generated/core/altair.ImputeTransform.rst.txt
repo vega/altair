@@ -1,0 +1,30 @@
+﻿altair.ImputeTransform
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: ImputeTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ImputeTransform.__init__
+      ~ImputeTransform.copy
+      ~ImputeTransform.from_dict
+      ~ImputeTransform.from_json
+      ~ImputeTransform.resolve_references
+      ~ImputeTransform.to_dict
+      ~ImputeTransform.to_json
+      ~ImputeTransform.validate
+      ~ImputeTransform.validate_property
+   
+   
+
+   
+   
+   

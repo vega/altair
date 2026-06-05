@@ -1,0 +1,30 @@
+﻿altair.HexColor
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: HexColor
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~HexColor.__init__
+      ~HexColor.copy
+      ~HexColor.from_dict
+      ~HexColor.from_json
+      ~HexColor.resolve_references
+      ~HexColor.to_dict
+      ~HexColor.to_json
+      ~HexColor.validate
+      ~HexColor.validate_property
+   
+   
+
+   
+   
+   

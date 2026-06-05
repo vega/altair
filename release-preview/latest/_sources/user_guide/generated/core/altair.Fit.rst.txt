@@ -1,0 +1,30 @@
+﻿altair.Fit
+==========
+
+.. currentmodule:: altair
+
+.. autoclass:: Fit
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Fit.__init__
+      ~Fit.copy
+      ~Fit.from_dict
+      ~Fit.from_json
+      ~Fit.resolve_references
+      ~Fit.to_dict
+      ~Fit.to_json
+      ~Fit.validate
+      ~Fit.validate_property
+   
+   
+
+   
+   
+   

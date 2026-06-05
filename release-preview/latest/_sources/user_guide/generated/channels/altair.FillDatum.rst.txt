@@ -1,0 +1,40 @@
+﻿altair.FillDatum
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: FillDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FillDatum.__init__
+      ~FillDatum.copy
+      ~FillDatum.from_dict
+      ~FillDatum.from_json
+      ~FillDatum.resolve_references
+      ~FillDatum.to_dict
+      ~FillDatum.to_json
+      ~FillDatum.validate
+      ~FillDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~FillDatum.bandPosition
+      ~FillDatum.condition
+      ~FillDatum.datum
+      ~FillDatum.title
+      ~FillDatum.type
+   
+   

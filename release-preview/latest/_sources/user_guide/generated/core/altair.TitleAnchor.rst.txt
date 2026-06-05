@@ -1,0 +1,30 @@
+﻿altair.TitleAnchor
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: TitleAnchor
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TitleAnchor.__init__
+      ~TitleAnchor.copy
+      ~TitleAnchor.from_dict
+      ~TitleAnchor.from_json
+      ~TitleAnchor.resolve_references
+      ~TitleAnchor.to_dict
+      ~TitleAnchor.to_json
+      ~TitleAnchor.validate
+      ~TitleAnchor.validate_property
+   
+   
+
+   
+   
+   

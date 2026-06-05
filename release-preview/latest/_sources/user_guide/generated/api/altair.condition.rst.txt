@@ -1,0 +1,6 @@
+﻿altair.condition
+================
+
+.. currentmodule:: altair
+
+.. autofunction:: condition

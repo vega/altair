@@ -1,0 +1,30 @@
+﻿altair.ConditionalAxisLabelAlign
+================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalAxisLabelAlign
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalAxisLabelAlign.__init__
+      ~ConditionalAxisLabelAlign.copy
+      ~ConditionalAxisLabelAlign.from_dict
+      ~ConditionalAxisLabelAlign.from_json
+      ~ConditionalAxisLabelAlign.resolve_references
+      ~ConditionalAxisLabelAlign.to_dict
+      ~ConditionalAxisLabelAlign.to_json
+      ~ConditionalAxisLabelAlign.validate
+      ~ConditionalAxisLabelAlign.validate_property
+   
+   
+
+   
+   
+   

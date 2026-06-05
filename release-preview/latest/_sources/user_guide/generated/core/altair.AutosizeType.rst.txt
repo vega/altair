@@ -1,0 +1,30 @@
+﻿altair.AutosizeType
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: AutosizeType
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AutosizeType.__init__
+      ~AutosizeType.copy
+      ~AutosizeType.from_dict
+      ~AutosizeType.from_json
+      ~AutosizeType.resolve_references
+      ~AutosizeType.to_dict
+      ~AutosizeType.to_json
+      ~AutosizeType.validate
+      ~AutosizeType.validate_property
+   
+   
+
+   
+   
+   

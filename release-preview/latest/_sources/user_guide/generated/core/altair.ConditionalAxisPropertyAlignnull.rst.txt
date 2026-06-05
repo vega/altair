@@ -1,0 +1,30 @@
+﻿altair.ConditionalAxisPropertyAlignnull
+=======================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalAxisPropertyAlignnull
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalAxisPropertyAlignnull.__init__
+      ~ConditionalAxisPropertyAlignnull.copy
+      ~ConditionalAxisPropertyAlignnull.from_dict
+      ~ConditionalAxisPropertyAlignnull.from_json
+      ~ConditionalAxisPropertyAlignnull.resolve_references
+      ~ConditionalAxisPropertyAlignnull.to_dict
+      ~ConditionalAxisPropertyAlignnull.to_json
+      ~ConditionalAxisPropertyAlignnull.validate
+      ~ConditionalAxisPropertyAlignnull.validate_property
+   
+   
+
+   
+   
+   

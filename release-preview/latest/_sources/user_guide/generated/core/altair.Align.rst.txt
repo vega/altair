@@ -1,0 +1,30 @@
+﻿altair.Align
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Align
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Align.__init__
+      ~Align.copy
+      ~Align.from_dict
+      ~Align.from_json
+      ~Align.resolve_references
+      ~Align.to_dict
+      ~Align.to_json
+      ~Align.validate
+      ~Align.validate_property
+   
+   
+
+   
+   
+   

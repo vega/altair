@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelTheta
+==========================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelTheta

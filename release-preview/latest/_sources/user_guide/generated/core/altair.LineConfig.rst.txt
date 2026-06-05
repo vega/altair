@@ -1,0 +1,30 @@
+﻿altair.LineConfig
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: LineConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LineConfig.__init__
+      ~LineConfig.copy
+      ~LineConfig.from_dict
+      ~LineConfig.from_json
+      ~LineConfig.resolve_references
+      ~LineConfig.to_dict
+      ~LineConfig.to_json
+      ~LineConfig.validate
+      ~LineConfig.validate_property
+   
+   
+
+   
+   
+   

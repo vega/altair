@@ -1,0 +1,44 @@
+﻿altair.theme.BindInputKwds
+==========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: BindInputKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BindInputKwds.__init__
+      ~BindInputKwds.clear
+      ~BindInputKwds.copy
+      ~BindInputKwds.fromkeys
+      ~BindInputKwds.get
+      ~BindInputKwds.items
+      ~BindInputKwds.keys
+      ~BindInputKwds.pop
+      ~BindInputKwds.popitem
+      ~BindInputKwds.setdefault
+      ~BindInputKwds.update
+      ~BindInputKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BindInputKwds.autocomplete
+      ~BindInputKwds.debounce
+      ~BindInputKwds.element
+      ~BindInputKwds.input
+      ~BindInputKwds.name
+      ~BindInputKwds.placeholder
+   
+   

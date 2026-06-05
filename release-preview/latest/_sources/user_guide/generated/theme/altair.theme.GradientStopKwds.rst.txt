@@ -1,0 +1,40 @@
+﻿altair.theme.GradientStopKwds
+=============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: GradientStopKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GradientStopKwds.__init__
+      ~GradientStopKwds.clear
+      ~GradientStopKwds.copy
+      ~GradientStopKwds.fromkeys
+      ~GradientStopKwds.get
+      ~GradientStopKwds.items
+      ~GradientStopKwds.keys
+      ~GradientStopKwds.pop
+      ~GradientStopKwds.popitem
+      ~GradientStopKwds.setdefault
+      ~GradientStopKwds.update
+      ~GradientStopKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~GradientStopKwds.color
+      ~GradientStopKwds.offset
+   
+   

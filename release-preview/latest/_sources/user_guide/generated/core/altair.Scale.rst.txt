@@ -1,0 +1,30 @@
+﻿altair.Scale
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Scale
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Scale.__init__
+      ~Scale.copy
+      ~Scale.from_dict
+      ~Scale.from_json
+      ~Scale.resolve_references
+      ~Scale.to_dict
+      ~Scale.to_json
+      ~Scale.validate
+      ~Scale.validate_property
+   
+   
+
+   
+   
+   

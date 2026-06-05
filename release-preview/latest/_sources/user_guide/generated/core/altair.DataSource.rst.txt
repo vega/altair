@@ -1,0 +1,30 @@
+﻿altair.DataSource
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: DataSource
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DataSource.__init__
+      ~DataSource.copy
+      ~DataSource.from_dict
+      ~DataSource.from_json
+      ~DataSource.resolve_references
+      ~DataSource.to_dict
+      ~DataSource.to_json
+      ~DataSource.validate
+      ~DataSource.validate_property
+   
+   
+
+   
+   
+   

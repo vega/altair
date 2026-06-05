@@ -1,0 +1,30 @@
+﻿altair.RepeatRef
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: RepeatRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RepeatRef.__init__
+      ~RepeatRef.copy
+      ~RepeatRef.from_dict
+      ~RepeatRef.from_json
+      ~RepeatRef.resolve_references
+      ~RepeatRef.to_dict
+      ~RepeatRef.to_json
+      ~RepeatRef.validate
+      ~RepeatRef.validate_property
+   
+   
+
+   
+   
+   

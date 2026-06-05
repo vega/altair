@@ -1,0 +1,30 @@
+﻿altair.UtcSingleTimeUnit
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: UtcSingleTimeUnit
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~UtcSingleTimeUnit.__init__
+      ~UtcSingleTimeUnit.copy
+      ~UtcSingleTimeUnit.from_dict
+      ~UtcSingleTimeUnit.from_json
+      ~UtcSingleTimeUnit.resolve_references
+      ~UtcSingleTimeUnit.to_dict
+      ~UtcSingleTimeUnit.to_json
+      ~UtcSingleTimeUnit.validate
+      ~UtcSingleTimeUnit.validate_property
+   
+   
+
+   
+   
+   

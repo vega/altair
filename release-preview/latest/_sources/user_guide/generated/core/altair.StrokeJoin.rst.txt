@@ -1,0 +1,30 @@
+﻿altair.StrokeJoin
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeJoin
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeJoin.__init__
+      ~StrokeJoin.copy
+      ~StrokeJoin.from_dict
+      ~StrokeJoin.from_json
+      ~StrokeJoin.resolve_references
+      ~StrokeJoin.to_dict
+      ~StrokeJoin.to_json
+      ~StrokeJoin.validate
+      ~StrokeJoin.validate_property
+   
+   
+
+   
+   
+   

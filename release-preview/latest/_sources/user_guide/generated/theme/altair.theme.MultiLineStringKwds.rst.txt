@@ -1,0 +1,41 @@
+﻿altair.theme.MultiLineStringKwds
+================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: MultiLineStringKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MultiLineStringKwds.__init__
+      ~MultiLineStringKwds.clear
+      ~MultiLineStringKwds.copy
+      ~MultiLineStringKwds.fromkeys
+      ~MultiLineStringKwds.get
+      ~MultiLineStringKwds.items
+      ~MultiLineStringKwds.keys
+      ~MultiLineStringKwds.pop
+      ~MultiLineStringKwds.popitem
+      ~MultiLineStringKwds.setdefault
+      ~MultiLineStringKwds.update
+      ~MultiLineStringKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~MultiLineStringKwds.coordinates
+      ~MultiLineStringKwds.type
+      ~MultiLineStringKwds.bbox
+   
+   

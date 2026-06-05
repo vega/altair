@@ -1,0 +1,6 @@
+﻿altair.typing.ChannelXError2
+============================
+
+.. currentmodule:: altair.typing
+
+.. autodata:: ChannelXError2

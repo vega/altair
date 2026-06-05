@@ -1,0 +1,30 @@
+﻿altair.SchemaBase
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: SchemaBase
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SchemaBase.__init__
+      ~SchemaBase.copy
+      ~SchemaBase.from_dict
+      ~SchemaBase.from_json
+      ~SchemaBase.resolve_references
+      ~SchemaBase.to_dict
+      ~SchemaBase.to_json
+      ~SchemaBase.validate
+      ~SchemaBase.validate_property
+   
+   
+
+   
+   
+   

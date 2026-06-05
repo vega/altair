@@ -1,0 +1,30 @@
+﻿altair.PointSelectionConfig
+===========================
+
+.. currentmodule:: altair
+
+.. autoclass:: PointSelectionConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PointSelectionConfig.__init__
+      ~PointSelectionConfig.copy
+      ~PointSelectionConfig.from_dict
+      ~PointSelectionConfig.from_json
+      ~PointSelectionConfig.resolve_references
+      ~PointSelectionConfig.to_dict
+      ~PointSelectionConfig.to_json
+      ~PointSelectionConfig.validate
+      ~PointSelectionConfig.validate_property
+   
+   
+
+   
+   
+   

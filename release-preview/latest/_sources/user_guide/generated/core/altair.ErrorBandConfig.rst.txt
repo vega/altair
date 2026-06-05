@@ -1,0 +1,30 @@
+﻿altair.ErrorBandConfig
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: ErrorBandConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ErrorBandConfig.__init__
+      ~ErrorBandConfig.copy
+      ~ErrorBandConfig.from_dict
+      ~ErrorBandConfig.from_json
+      ~ErrorBandConfig.resolve_references
+      ~ErrorBandConfig.to_dict
+      ~ErrorBandConfig.to_json
+      ~ErrorBandConfig.validate
+      ~ErrorBandConfig.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.TopLevelRepeatSpec
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: TopLevelRepeatSpec
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TopLevelRepeatSpec.__init__
+      ~TopLevelRepeatSpec.copy
+      ~TopLevelRepeatSpec.from_dict
+      ~TopLevelRepeatSpec.from_json
+      ~TopLevelRepeatSpec.resolve_references
+      ~TopLevelRepeatSpec.to_dict
+      ~TopLevelRepeatSpec.to_json
+      ~TopLevelRepeatSpec.validate
+      ~TopLevelRepeatSpec.validate_property
+   
+   
+
+   
+   
+   

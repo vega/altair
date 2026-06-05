@@ -1,0 +1,30 @@
+﻿altair.PointSelectionConfigWithoutType
+======================================
+
+.. currentmodule:: altair
+
+.. autoclass:: PointSelectionConfigWithoutType
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PointSelectionConfigWithoutType.__init__
+      ~PointSelectionConfigWithoutType.copy
+      ~PointSelectionConfigWithoutType.from_dict
+      ~PointSelectionConfigWithoutType.from_json
+      ~PointSelectionConfigWithoutType.resolve_references
+      ~PointSelectionConfigWithoutType.to_dict
+      ~PointSelectionConfigWithoutType.to_json
+      ~PointSelectionConfigWithoutType.validate
+      ~PointSelectionConfigWithoutType.validate_property
+   
+   
+
+   
+   
+   

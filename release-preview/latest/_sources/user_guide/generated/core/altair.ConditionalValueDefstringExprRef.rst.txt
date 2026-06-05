@@ -1,0 +1,30 @@
+﻿altair.ConditionalValueDefstringExprRef
+=======================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalValueDefstringExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalValueDefstringExprRef.__init__
+      ~ConditionalValueDefstringExprRef.copy
+      ~ConditionalValueDefstringExprRef.from_dict
+      ~ConditionalValueDefstringExprRef.from_json
+      ~ConditionalValueDefstringExprRef.resolve_references
+      ~ConditionalValueDefstringExprRef.to_dict
+      ~ConditionalValueDefstringExprRef.to_json
+      ~ConditionalValueDefstringExprRef.validate
+      ~ConditionalValueDefstringExprRef.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.ConditionalParameterValueDefstringnullExprRef
+====================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalParameterValueDefstringnullExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalParameterValueDefstringnullExprRef.__init__
+      ~ConditionalParameterValueDefstringnullExprRef.copy
+      ~ConditionalParameterValueDefstringnullExprRef.from_dict
+      ~ConditionalParameterValueDefstringnullExprRef.from_json
+      ~ConditionalParameterValueDefstringnullExprRef.resolve_references
+      ~ConditionalParameterValueDefstringnullExprRef.to_dict
+      ~ConditionalParameterValueDefstringnullExprRef.to_json
+      ~ConditionalParameterValueDefstringnullExprRef.validate
+      ~ConditionalParameterValueDefstringnullExprRef.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.LegendResolveMap
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: LegendResolveMap
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LegendResolveMap.__init__
+      ~LegendResolveMap.copy
+      ~LegendResolveMap.from_dict
+      ~LegendResolveMap.from_json
+      ~LegendResolveMap.resolve_references
+      ~LegendResolveMap.to_dict
+      ~LegendResolveMap.to_json
+      ~LegendResolveMap.validate
+      ~LegendResolveMap.validate_property
+   
+   
+
+   
+   
+   

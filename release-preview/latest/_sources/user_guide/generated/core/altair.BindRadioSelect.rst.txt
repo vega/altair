@@ -1,0 +1,30 @@
+﻿altair.BindRadioSelect
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: BindRadioSelect
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BindRadioSelect.__init__
+      ~BindRadioSelect.copy
+      ~BindRadioSelect.from_dict
+      ~BindRadioSelect.from_json
+      ~BindRadioSelect.resolve_references
+      ~BindRadioSelect.to_dict
+      ~BindRadioSelect.to_json
+      ~BindRadioSelect.validate
+      ~BindRadioSelect.validate_property
+   
+   
+
+   
+   
+   

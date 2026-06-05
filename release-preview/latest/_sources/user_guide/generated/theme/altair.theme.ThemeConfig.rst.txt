@@ -1,0 +1,56 @@
+﻿altair.theme.ThemeConfig
+========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ThemeConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ThemeConfig.__init__
+      ~ThemeConfig.clear
+      ~ThemeConfig.copy
+      ~ThemeConfig.fromkeys
+      ~ThemeConfig.get
+      ~ThemeConfig.items
+      ~ThemeConfig.keys
+      ~ThemeConfig.pop
+      ~ThemeConfig.popitem
+      ~ThemeConfig.setdefault
+      ~ThemeConfig.update
+      ~ThemeConfig.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ThemeConfig.align
+      ~ThemeConfig.autosize
+      ~ThemeConfig.background
+      ~ThemeConfig.bounds
+      ~ThemeConfig.center
+      ~ThemeConfig.config
+      ~ThemeConfig.description
+      ~ThemeConfig.height
+      ~ThemeConfig.name
+      ~ThemeConfig.padding
+      ~ThemeConfig.params
+      ~ThemeConfig.projection
+      ~ThemeConfig.resolve
+      ~ThemeConfig.spacing
+      ~ThemeConfig.title
+      ~ThemeConfig.usermeta
+      ~ThemeConfig.view
+      ~ThemeConfig.width
+   
+   

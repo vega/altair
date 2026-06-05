@@ -1,0 +1,30 @@
+﻿altair.FontWeight
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: FontWeight
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FontWeight.__init__
+      ~FontWeight.copy
+      ~FontWeight.from_dict
+      ~FontWeight.from_json
+      ~FontWeight.resolve_references
+      ~FontWeight.to_dict
+      ~FontWeight.to_json
+      ~FontWeight.validate
+      ~FontWeight.validate_property
+   
+   
+
+   
+   
+   

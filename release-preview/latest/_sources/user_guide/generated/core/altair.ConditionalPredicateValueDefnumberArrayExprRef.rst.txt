@@ -1,0 +1,30 @@
+﻿altair.ConditionalPredicateValueDefnumberArrayExprRef
+=====================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalPredicateValueDefnumberArrayExprRef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalPredicateValueDefnumberArrayExprRef.__init__
+      ~ConditionalPredicateValueDefnumberArrayExprRef.copy
+      ~ConditionalPredicateValueDefnumberArrayExprRef.from_dict
+      ~ConditionalPredicateValueDefnumberArrayExprRef.from_json
+      ~ConditionalPredicateValueDefnumberArrayExprRef.resolve_references
+      ~ConditionalPredicateValueDefnumberArrayExprRef.to_dict
+      ~ConditionalPredicateValueDefnumberArrayExprRef.to_json
+      ~ConditionalPredicateValueDefnumberArrayExprRef.validate
+      ~ConditionalPredicateValueDefnumberArrayExprRef.validate_property
+   
+   
+
+   
+   
+   

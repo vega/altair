@@ -1,0 +1,30 @@
+﻿altair.GraticuleGenerator
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: GraticuleGenerator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GraticuleGenerator.__init__
+      ~GraticuleGenerator.copy
+      ~GraticuleGenerator.from_dict
+      ~GraticuleGenerator.from_json
+      ~GraticuleGenerator.resolve_references
+      ~GraticuleGenerator.to_dict
+      ~GraticuleGenerator.to_json
+      ~GraticuleGenerator.validate
+      ~GraticuleGenerator.validate_property
+   
+   
+
+   
+   
+   

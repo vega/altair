@@ -1,0 +1,40 @@
+﻿altair.theme.SelectionConfigKwds
+================================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: SelectionConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SelectionConfigKwds.__init__
+      ~SelectionConfigKwds.clear
+      ~SelectionConfigKwds.copy
+      ~SelectionConfigKwds.fromkeys
+      ~SelectionConfigKwds.get
+      ~SelectionConfigKwds.items
+      ~SelectionConfigKwds.keys
+      ~SelectionConfigKwds.pop
+      ~SelectionConfigKwds.popitem
+      ~SelectionConfigKwds.setdefault
+      ~SelectionConfigKwds.update
+      ~SelectionConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~SelectionConfigKwds.interval
+      ~SelectionConfigKwds.point
+   
+   

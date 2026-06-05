@@ -1,0 +1,30 @@
+﻿altair.FieldRangePredicate
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldRangePredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldRangePredicate.__init__
+      ~FieldRangePredicate.copy
+      ~FieldRangePredicate.from_dict
+      ~FieldRangePredicate.from_json
+      ~FieldRangePredicate.resolve_references
+      ~FieldRangePredicate.to_dict
+      ~FieldRangePredicate.to_json
+      ~FieldRangePredicate.validate
+      ~FieldRangePredicate.validate_property
+   
+   
+
+   
+   
+   

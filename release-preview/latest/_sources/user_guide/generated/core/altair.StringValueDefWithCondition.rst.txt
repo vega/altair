@@ -1,0 +1,30 @@
+﻿altair.StringValueDefWithCondition
+==================================
+
+.. currentmodule:: altair
+
+.. autoclass:: StringValueDefWithCondition
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StringValueDefWithCondition.__init__
+      ~StringValueDefWithCondition.copy
+      ~StringValueDefWithCondition.from_dict
+      ~StringValueDefWithCondition.from_json
+      ~StringValueDefWithCondition.resolve_references
+      ~StringValueDefWithCondition.to_dict
+      ~StringValueDefWithCondition.to_json
+      ~StringValueDefWithCondition.validate
+      ~StringValueDefWithCondition.validate_property
+   
+   
+
+   
+   
+   

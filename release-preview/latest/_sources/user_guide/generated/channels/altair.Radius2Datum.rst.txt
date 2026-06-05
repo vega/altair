@@ -1,0 +1,39 @@
+﻿altair.Radius2Datum
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: Radius2Datum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Radius2Datum.__init__
+      ~Radius2Datum.copy
+      ~Radius2Datum.from_dict
+      ~Radius2Datum.from_json
+      ~Radius2Datum.resolve_references
+      ~Radius2Datum.to_dict
+      ~Radius2Datum.to_json
+      ~Radius2Datum.validate
+      ~Radius2Datum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Radius2Datum.bandPosition
+      ~Radius2Datum.datum
+      ~Radius2Datum.title
+      ~Radius2Datum.type
+   
+   

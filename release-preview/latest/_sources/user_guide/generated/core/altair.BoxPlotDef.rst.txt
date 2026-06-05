@@ -1,0 +1,30 @@
+﻿altair.BoxPlotDef
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: BoxPlotDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BoxPlotDef.__init__
+      ~BoxPlotDef.copy
+      ~BoxPlotDef.from_dict
+      ~BoxPlotDef.from_json
+      ~BoxPlotDef.resolve_references
+      ~BoxPlotDef.to_dict
+      ~BoxPlotDef.to_json
+      ~BoxPlotDef.validate
+      ~BoxPlotDef.validate_property
+   
+   
+
+   
+   
+   

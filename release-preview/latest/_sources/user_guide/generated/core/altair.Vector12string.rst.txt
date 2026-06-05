@@ -1,0 +1,30 @@
+﻿altair.Vector12string
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: Vector12string
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Vector12string.__init__
+      ~Vector12string.copy
+      ~Vector12string.from_dict
+      ~Vector12string.from_json
+      ~Vector12string.resolve_references
+      ~Vector12string.to_dict
+      ~Vector12string.to_json
+      ~Vector12string.validate
+      ~Vector12string.validate_property
+   
+   
+
+   
+   
+   

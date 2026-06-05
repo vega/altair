@@ -1,0 +1,30 @@
+﻿altair.RangeScheme
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: RangeScheme
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RangeScheme.__init__
+      ~RangeScheme.copy
+      ~RangeScheme.from_dict
+      ~RangeScheme.from_json
+      ~RangeScheme.resolve_references
+      ~RangeScheme.to_dict
+      ~RangeScheme.to_json
+      ~RangeScheme.validate
+      ~RangeScheme.validate_property
+   
+   
+
+   
+   
+   

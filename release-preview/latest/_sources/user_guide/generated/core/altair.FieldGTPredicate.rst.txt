@@ -1,0 +1,30 @@
+﻿altair.FieldGTPredicate
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldGTPredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldGTPredicate.__init__
+      ~FieldGTPredicate.copy
+      ~FieldGTPredicate.from_dict
+      ~FieldGTPredicate.from_json
+      ~FieldGTPredicate.resolve_references
+      ~FieldGTPredicate.to_dict
+      ~FieldGTPredicate.to_json
+      ~FieldGTPredicate.validate
+      ~FieldGTPredicate.validate_property
+   
+   
+
+   
+   
+   

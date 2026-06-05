@@ -1,0 +1,30 @@
+﻿altair.GradientStop
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: GradientStop
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GradientStop.__init__
+      ~GradientStop.copy
+      ~GradientStop.from_dict
+      ~GradientStop.from_json
+      ~GradientStop.resolve_references
+      ~GradientStop.to_dict
+      ~GradientStop.to_json
+      ~GradientStop.validate
+      ~GradientStop.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,41 @@
+﻿altair.theme.BindDirectKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: BindDirectKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BindDirectKwds.__init__
+      ~BindDirectKwds.clear
+      ~BindDirectKwds.copy
+      ~BindDirectKwds.fromkeys
+      ~BindDirectKwds.get
+      ~BindDirectKwds.items
+      ~BindDirectKwds.keys
+      ~BindDirectKwds.pop
+      ~BindDirectKwds.popitem
+      ~BindDirectKwds.setdefault
+      ~BindDirectKwds.update
+      ~BindDirectKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BindDirectKwds.element
+      ~BindDirectKwds.debounce
+      ~BindDirectKwds.event
+   
+   

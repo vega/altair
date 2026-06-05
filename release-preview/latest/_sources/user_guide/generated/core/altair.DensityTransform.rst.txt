@@ -1,0 +1,30 @@
+﻿altair.DensityTransform
+=======================
+
+.. currentmodule:: altair
+
+.. autoclass:: DensityTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DensityTransform.__init__
+      ~DensityTransform.copy
+      ~DensityTransform.from_dict
+      ~DensityTransform.from_json
+      ~DensityTransform.resolve_references
+      ~DensityTransform.to_dict
+      ~DensityTransform.to_json
+      ~DensityTransform.validate
+      ~DensityTransform.validate_property
+   
+   
+
+   
+   
+   

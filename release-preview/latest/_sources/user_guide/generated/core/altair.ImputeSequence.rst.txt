@@ -1,0 +1,30 @@
+﻿altair.ImputeSequence
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: ImputeSequence
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ImputeSequence.__init__
+      ~ImputeSequence.copy
+      ~ImputeSequence.from_dict
+      ~ImputeSequence.from_json
+      ~ImputeSequence.resolve_references
+      ~ImputeSequence.to_dict
+      ~ImputeSequence.to_json
+      ~ImputeSequence.validate
+      ~ImputeSequence.validate_property
+   
+   
+
+   
+   
+   

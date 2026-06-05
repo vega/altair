@@ -1,0 +1,30 @@
+﻿altair.BindRange
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: BindRange
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BindRange.__init__
+      ~BindRange.copy
+      ~BindRange.from_dict
+      ~BindRange.from_json
+      ~BindRange.resolve_references
+      ~BindRange.to_dict
+      ~BindRange.to_json
+      ~BindRange.validate
+      ~BindRange.validate_property
+   
+   
+
+   
+   
+   

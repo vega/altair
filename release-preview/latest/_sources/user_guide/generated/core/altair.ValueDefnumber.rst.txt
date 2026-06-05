@@ -1,0 +1,30 @@
+﻿altair.ValueDefnumber
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: ValueDefnumber
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ValueDefnumber.__init__
+      ~ValueDefnumber.copy
+      ~ValueDefnumber.from_dict
+      ~ValueDefnumber.from_json
+      ~ValueDefnumber.resolve_references
+      ~ValueDefnumber.to_dict
+      ~ValueDefnumber.to_json
+      ~ValueDefnumber.validate
+      ~ValueDefnumber.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsyOffset
+====================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsyOffset
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsyOffset.__init__
+      ~ScaleInvalidDataShowAsyOffset.copy
+      ~ScaleInvalidDataShowAsyOffset.from_dict
+      ~ScaleInvalidDataShowAsyOffset.from_json
+      ~ScaleInvalidDataShowAsyOffset.resolve_references
+      ~ScaleInvalidDataShowAsyOffset.to_dict
+      ~ScaleInvalidDataShowAsyOffset.to_json
+      ~ScaleInvalidDataShowAsyOffset.validate
+      ~ScaleInvalidDataShowAsyOffset.validate_property
+   
+   
+
+   
+   
+   

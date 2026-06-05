@@ -1,0 +1,30 @@
+﻿altair.WindowEventType
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: WindowEventType
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~WindowEventType.__init__
+      ~WindowEventType.copy
+      ~WindowEventType.from_dict
+      ~WindowEventType.from_json
+      ~WindowEventType.resolve_references
+      ~WindowEventType.to_dict
+      ~WindowEventType.to_json
+      ~WindowEventType.validate
+      ~WindowEventType.validate_property
+   
+   
+
+   
+   
+   

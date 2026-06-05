@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataShowAsValueradius
+========================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataShowAsValueradius
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataShowAsValueradius.__init__
+      ~ScaleInvalidDataShowAsValueradius.copy
+      ~ScaleInvalidDataShowAsValueradius.from_dict
+      ~ScaleInvalidDataShowAsValueradius.from_json
+      ~ScaleInvalidDataShowAsValueradius.resolve_references
+      ~ScaleInvalidDataShowAsValueradius.to_dict
+      ~ScaleInvalidDataShowAsValueradius.to_json
+      ~ScaleInvalidDataShowAsValueradius.validate
+      ~ScaleInvalidDataShowAsValueradius.validate_property
+   
+   
+
+   
+   
+   

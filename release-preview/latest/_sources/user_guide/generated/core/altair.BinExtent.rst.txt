@@ -1,0 +1,30 @@
+﻿altair.BinExtent
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: BinExtent
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BinExtent.__init__
+      ~BinExtent.copy
+      ~BinExtent.from_dict
+      ~BinExtent.from_json
+      ~BinExtent.resolve_references
+      ~BinExtent.to_dict
+      ~BinExtent.to_json
+      ~BinExtent.validate
+      ~BinExtent.validate_property
+   
+   
+
+   
+   
+   

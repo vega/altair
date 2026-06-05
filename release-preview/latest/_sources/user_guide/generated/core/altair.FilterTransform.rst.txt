@@ -1,0 +1,30 @@
+﻿altair.FilterTransform
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: FilterTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FilterTransform.__init__
+      ~FilterTransform.copy
+      ~FilterTransform.from_dict
+      ~FilterTransform.from_json
+      ~FilterTransform.resolve_references
+      ~FilterTransform.to_dict
+      ~FilterTransform.to_json
+      ~FilterTransform.validate
+      ~FilterTransform.validate_property
+   
+   
+
+   
+   
+   

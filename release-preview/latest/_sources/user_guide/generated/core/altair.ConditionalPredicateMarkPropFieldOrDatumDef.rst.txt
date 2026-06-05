@@ -1,0 +1,30 @@
+﻿altair.ConditionalPredicateMarkPropFieldOrDatumDef
+==================================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalPredicateMarkPropFieldOrDatumDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalPredicateMarkPropFieldOrDatumDef.__init__
+      ~ConditionalPredicateMarkPropFieldOrDatumDef.copy
+      ~ConditionalPredicateMarkPropFieldOrDatumDef.from_dict
+      ~ConditionalPredicateMarkPropFieldOrDatumDef.from_json
+      ~ConditionalPredicateMarkPropFieldOrDatumDef.resolve_references
+      ~ConditionalPredicateMarkPropFieldOrDatumDef.to_dict
+      ~ConditionalPredicateMarkPropFieldOrDatumDef.to_json
+      ~ConditionalPredicateMarkPropFieldOrDatumDef.validate
+      ~ConditionalPredicateMarkPropFieldOrDatumDef.validate_property
+   
+   
+
+   
+   
+   

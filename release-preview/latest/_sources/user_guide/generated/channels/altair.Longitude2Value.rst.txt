@@ -1,0 +1,36 @@
+﻿altair.Longitude2Value
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: Longitude2Value
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Longitude2Value.__init__
+      ~Longitude2Value.copy
+      ~Longitude2Value.from_dict
+      ~Longitude2Value.from_json
+      ~Longitude2Value.resolve_references
+      ~Longitude2Value.to_dict
+      ~Longitude2Value.to_json
+      ~Longitude2Value.validate
+      ~Longitude2Value.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Longitude2Value.value
+   
+   

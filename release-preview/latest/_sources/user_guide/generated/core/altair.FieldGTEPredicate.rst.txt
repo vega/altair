@@ -1,0 +1,30 @@
+﻿altair.FieldGTEPredicate
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldGTEPredicate
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldGTEPredicate.__init__
+      ~FieldGTEPredicate.copy
+      ~FieldGTEPredicate.from_dict
+      ~FieldGTEPredicate.from_json
+      ~FieldGTEPredicate.resolve_references
+      ~FieldGTEPredicate.to_dict
+      ~FieldGTEPredicate.to_json
+      ~FieldGTEPredicate.validate
+      ~FieldGTEPredicate.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.SequenceParams
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: SequenceParams
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SequenceParams.__init__
+      ~SequenceParams.copy
+      ~SequenceParams.from_dict
+      ~SequenceParams.from_json
+      ~SequenceParams.resolve_references
+      ~SequenceParams.to_dict
+      ~SequenceParams.to_json
+      ~SequenceParams.validate
+      ~SequenceParams.validate_property
+   
+   
+
+   
+   
+   

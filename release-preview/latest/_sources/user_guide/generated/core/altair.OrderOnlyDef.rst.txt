@@ -1,0 +1,30 @@
+﻿altair.OrderOnlyDef
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: OrderOnlyDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OrderOnlyDef.__init__
+      ~OrderOnlyDef.copy
+      ~OrderOnlyDef.from_dict
+      ~OrderOnlyDef.from_json
+      ~OrderOnlyDef.resolve_references
+      ~OrderOnlyDef.to_dict
+      ~OrderOnlyDef.to_json
+      ~OrderOnlyDef.validate
+      ~OrderOnlyDef.validate_property
+   
+   
+
+   
+   
+   

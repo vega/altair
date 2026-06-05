@@ -1,0 +1,52 @@
+﻿altair.theme.ViewBackgroundKwds
+===============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: ViewBackgroundKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ViewBackgroundKwds.__init__
+      ~ViewBackgroundKwds.clear
+      ~ViewBackgroundKwds.copy
+      ~ViewBackgroundKwds.fromkeys
+      ~ViewBackgroundKwds.get
+      ~ViewBackgroundKwds.items
+      ~ViewBackgroundKwds.keys
+      ~ViewBackgroundKwds.pop
+      ~ViewBackgroundKwds.popitem
+      ~ViewBackgroundKwds.setdefault
+      ~ViewBackgroundKwds.update
+      ~ViewBackgroundKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ViewBackgroundKwds.cornerRadius
+      ~ViewBackgroundKwds.cursor
+      ~ViewBackgroundKwds.fill
+      ~ViewBackgroundKwds.fillOpacity
+      ~ViewBackgroundKwds.opacity
+      ~ViewBackgroundKwds.stroke
+      ~ViewBackgroundKwds.strokeCap
+      ~ViewBackgroundKwds.strokeDash
+      ~ViewBackgroundKwds.strokeDashOffset
+      ~ViewBackgroundKwds.strokeJoin
+      ~ViewBackgroundKwds.strokeMiterLimit
+      ~ViewBackgroundKwds.strokeOpacity
+      ~ViewBackgroundKwds.strokeWidth
+      ~ViewBackgroundKwds.style
+   
+   

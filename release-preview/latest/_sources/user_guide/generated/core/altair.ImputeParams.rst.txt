@@ -1,0 +1,30 @@
+﻿altair.ImputeParams
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: ImputeParams
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ImputeParams.__init__
+      ~ImputeParams.copy
+      ~ImputeParams.from_dict
+      ~ImputeParams.from_json
+      ~ImputeParams.resolve_references
+      ~ImputeParams.to_dict
+      ~ImputeParams.to_json
+      ~ImputeParams.validate
+      ~ImputeParams.validate_property
+   
+   
+
+   
+   
+   

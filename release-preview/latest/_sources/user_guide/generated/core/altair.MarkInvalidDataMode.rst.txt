@@ -1,0 +1,30 @@
+﻿altair.MarkInvalidDataMode
+==========================
+
+.. currentmodule:: altair
+
+.. autoclass:: MarkInvalidDataMode
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MarkInvalidDataMode.__init__
+      ~MarkInvalidDataMode.copy
+      ~MarkInvalidDataMode.from_dict
+      ~MarkInvalidDataMode.from_json
+      ~MarkInvalidDataMode.resolve_references
+      ~MarkInvalidDataMode.to_dict
+      ~MarkInvalidDataMode.to_json
+      ~MarkInvalidDataMode.validate
+      ~MarkInvalidDataMode.validate_property
+   
+   
+
+   
+   
+   

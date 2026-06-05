@@ -1,0 +1,30 @@
+﻿altair.AutoSizeParams
+=====================
+
+.. currentmodule:: altair
+
+.. autoclass:: AutoSizeParams
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AutoSizeParams.__init__
+      ~AutoSizeParams.copy
+      ~AutoSizeParams.from_dict
+      ~AutoSizeParams.from_json
+      ~AutoSizeParams.resolve_references
+      ~AutoSizeParams.to_dict
+      ~AutoSizeParams.to_json
+      ~AutoSizeParams.validate
+      ~AutoSizeParams.validate_property
+   
+   
+
+   
+   
+   

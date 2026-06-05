@@ -1,0 +1,112 @@
+﻿altair.theme.RectConfigKwds
+===========================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: RectConfigKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RectConfigKwds.__init__
+      ~RectConfigKwds.clear
+      ~RectConfigKwds.copy
+      ~RectConfigKwds.fromkeys
+      ~RectConfigKwds.get
+      ~RectConfigKwds.items
+      ~RectConfigKwds.keys
+      ~RectConfigKwds.pop
+      ~RectConfigKwds.popitem
+      ~RectConfigKwds.setdefault
+      ~RectConfigKwds.update
+      ~RectConfigKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RectConfigKwds.align
+      ~RectConfigKwds.angle
+      ~RectConfigKwds.aria
+      ~RectConfigKwds.ariaRole
+      ~RectConfigKwds.ariaRoleDescription
+      ~RectConfigKwds.aspect
+      ~RectConfigKwds.baseline
+      ~RectConfigKwds.binSpacing
+      ~RectConfigKwds.blend
+      ~RectConfigKwds.color
+      ~RectConfigKwds.continuousBandSize
+      ~RectConfigKwds.cornerRadius
+      ~RectConfigKwds.cornerRadiusBottomLeft
+      ~RectConfigKwds.cornerRadiusBottomRight
+      ~RectConfigKwds.cornerRadiusTopLeft
+      ~RectConfigKwds.cornerRadiusTopRight
+      ~RectConfigKwds.cursor
+      ~RectConfigKwds.description
+      ~RectConfigKwds.dir
+      ~RectConfigKwds.discreteBandSize
+      ~RectConfigKwds.dx
+      ~RectConfigKwds.dy
+      ~RectConfigKwds.ellipsis
+      ~RectConfigKwds.endAngle
+      ~RectConfigKwds.fill
+      ~RectConfigKwds.fillOpacity
+      ~RectConfigKwds.filled
+      ~RectConfigKwds.font
+      ~RectConfigKwds.fontSize
+      ~RectConfigKwds.fontStyle
+      ~RectConfigKwds.fontWeight
+      ~RectConfigKwds.height
+      ~RectConfigKwds.href
+      ~RectConfigKwds.innerRadius
+      ~RectConfigKwds.interpolate
+      ~RectConfigKwds.invalid
+      ~RectConfigKwds.limit
+      ~RectConfigKwds.lineBreak
+      ~RectConfigKwds.lineHeight
+      ~RectConfigKwds.minBandSize
+      ~RectConfigKwds.opacity
+      ~RectConfigKwds.order
+      ~RectConfigKwds.orient
+      ~RectConfigKwds.outerRadius
+      ~RectConfigKwds.padAngle
+      ~RectConfigKwds.radius
+      ~RectConfigKwds.radius2
+      ~RectConfigKwds.shape
+      ~RectConfigKwds.size
+      ~RectConfigKwds.smooth
+      ~RectConfigKwds.startAngle
+      ~RectConfigKwds.stroke
+      ~RectConfigKwds.strokeCap
+      ~RectConfigKwds.strokeDash
+      ~RectConfigKwds.strokeDashOffset
+      ~RectConfigKwds.strokeJoin
+      ~RectConfigKwds.strokeMiterLimit
+      ~RectConfigKwds.strokeOffset
+      ~RectConfigKwds.strokeOpacity
+      ~RectConfigKwds.strokeWidth
+      ~RectConfigKwds.tension
+      ~RectConfigKwds.text
+      ~RectConfigKwds.theta
+      ~RectConfigKwds.theta2
+      ~RectConfigKwds.time
+      ~RectConfigKwds.timeUnitBandPosition
+      ~RectConfigKwds.timeUnitBandSize
+      ~RectConfigKwds.tooltip
+      ~RectConfigKwds.url
+      ~RectConfigKwds.width
+      ~RectConfigKwds.x
+      ~RectConfigKwds.x2
+      ~RectConfigKwds.y
+      ~RectConfigKwds.y2
+   
+   

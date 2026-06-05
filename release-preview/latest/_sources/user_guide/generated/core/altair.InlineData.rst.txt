@@ -1,0 +1,30 @@
+﻿altair.InlineData
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: InlineData
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~InlineData.__init__
+      ~InlineData.copy
+      ~InlineData.from_dict
+      ~InlineData.from_json
+      ~InlineData.resolve_references
+      ~InlineData.to_dict
+      ~InlineData.to_json
+      ~InlineData.validate
+      ~InlineData.validate_property
+   
+   
+
+   
+   
+   

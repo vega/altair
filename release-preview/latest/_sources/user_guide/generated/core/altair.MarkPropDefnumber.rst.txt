@@ -1,0 +1,30 @@
+﻿altair.MarkPropDefnumber
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: MarkPropDefnumber
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MarkPropDefnumber.__init__
+      ~MarkPropDefnumber.copy
+      ~MarkPropDefnumber.from_dict
+      ~MarkPropDefnumber.from_json
+      ~MarkPropDefnumber.resolve_references
+      ~MarkPropDefnumber.to_dict
+      ~MarkPropDefnumber.to_json
+      ~MarkPropDefnumber.validate
+      ~MarkPropDefnumber.validate_property
+   
+   
+
+   
+   
+   

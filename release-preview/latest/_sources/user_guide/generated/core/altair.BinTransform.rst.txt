@@ -1,0 +1,30 @@
+﻿altair.BinTransform
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: BinTransform
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BinTransform.__init__
+      ~BinTransform.copy
+      ~BinTransform.from_dict
+      ~BinTransform.from_json
+      ~BinTransform.resolve_references
+      ~BinTransform.to_dict
+      ~BinTransform.to_json
+      ~BinTransform.validate
+      ~BinTransform.validate_property
+   
+   
+
+   
+   
+   

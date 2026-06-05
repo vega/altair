@@ -1,0 +1,30 @@
+﻿altair.SelectionInitMapping
+===========================
+
+.. currentmodule:: altair
+
+.. autoclass:: SelectionInitMapping
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SelectionInitMapping.__init__
+      ~SelectionInitMapping.copy
+      ~SelectionInitMapping.from_dict
+      ~SelectionInitMapping.from_json
+      ~SelectionInitMapping.resolve_references
+      ~SelectionInitMapping.to_dict
+      ~SelectionInitMapping.to_json
+      ~SelectionInitMapping.validate
+      ~SelectionInitMapping.validate_property
+   
+   
+
+   
+   
+   

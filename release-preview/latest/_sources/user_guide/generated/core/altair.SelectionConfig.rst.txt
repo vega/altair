@@ -1,0 +1,30 @@
+﻿altair.SelectionConfig
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: SelectionConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SelectionConfig.__init__
+      ~SelectionConfig.copy
+      ~SelectionConfig.from_dict
+      ~SelectionConfig.from_json
+      ~SelectionConfig.resolve_references
+      ~SelectionConfig.to_dict
+      ~SelectionConfig.to_json
+      ~SelectionConfig.validate
+      ~SelectionConfig.validate_property
+   
+   
+
+   
+   
+   

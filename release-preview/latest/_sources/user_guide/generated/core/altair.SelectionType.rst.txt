@@ -1,0 +1,30 @@
+﻿altair.SelectionType
+====================
+
+.. currentmodule:: altair
+
+.. autoclass:: SelectionType
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SelectionType.__init__
+      ~SelectionType.copy
+      ~SelectionType.from_dict
+      ~SelectionType.from_json
+      ~SelectionType.resolve_references
+      ~SelectionType.to_dict
+      ~SelectionType.to_json
+      ~SelectionType.validate
+      ~SelectionType.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.ScaleInvalidDataConfig
+=============================
+
+.. currentmodule:: altair
+
+.. autoclass:: ScaleInvalidDataConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ScaleInvalidDataConfig.__init__
+      ~ScaleInvalidDataConfig.copy
+      ~ScaleInvalidDataConfig.from_dict
+      ~ScaleInvalidDataConfig.from_json
+      ~ScaleInvalidDataConfig.resolve_references
+      ~ScaleInvalidDataConfig.to_dict
+      ~ScaleInvalidDataConfig.to_json
+      ~ScaleInvalidDataConfig.validate
+      ~ScaleInvalidDataConfig.validate_property
+   
+   
+
+   
+   
+   

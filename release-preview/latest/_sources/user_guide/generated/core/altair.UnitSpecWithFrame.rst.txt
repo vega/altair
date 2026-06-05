@@ -1,0 +1,30 @@
+﻿altair.UnitSpecWithFrame
+========================
+
+.. currentmodule:: altair
+
+.. autoclass:: UnitSpecWithFrame
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~UnitSpecWithFrame.__init__
+      ~UnitSpecWithFrame.copy
+      ~UnitSpecWithFrame.from_dict
+      ~UnitSpecWithFrame.from_json
+      ~UnitSpecWithFrame.resolve_references
+      ~UnitSpecWithFrame.to_dict
+      ~UnitSpecWithFrame.to_json
+      ~UnitSpecWithFrame.validate
+      ~UnitSpecWithFrame.validate_property
+   
+   
+
+   
+   
+   

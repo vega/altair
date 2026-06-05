@@ -1,0 +1,47 @@
+﻿altair.theme.RadialGradientKwds
+===============================
+
+.. currentmodule:: altair.theme
+
+.. autoclass:: RadialGradientKwds
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RadialGradientKwds.__init__
+      ~RadialGradientKwds.clear
+      ~RadialGradientKwds.copy
+      ~RadialGradientKwds.fromkeys
+      ~RadialGradientKwds.get
+      ~RadialGradientKwds.items
+      ~RadialGradientKwds.keys
+      ~RadialGradientKwds.pop
+      ~RadialGradientKwds.popitem
+      ~RadialGradientKwds.setdefault
+      ~RadialGradientKwds.update
+      ~RadialGradientKwds.values
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RadialGradientKwds.gradient
+      ~RadialGradientKwds.stops
+      ~RadialGradientKwds.id
+      ~RadialGradientKwds.r1
+      ~RadialGradientKwds.r2
+      ~RadialGradientKwds.x1
+      ~RadialGradientKwds.x2
+      ~RadialGradientKwds.y1
+      ~RadialGradientKwds.y2
+   
+   

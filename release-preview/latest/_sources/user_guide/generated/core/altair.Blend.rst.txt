@@ -1,0 +1,30 @@
+﻿altair.Blend
+============
+
+.. currentmodule:: altair
+
+.. autoclass:: Blend
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Blend.__init__
+      ~Blend.copy
+      ~Blend.from_dict
+      ~Blend.from_json
+      ~Blend.resolve_references
+      ~Blend.to_dict
+      ~Blend.to_json
+      ~Blend.validate
+      ~Blend.validate_property
+   
+   
+
+   
+   
+   

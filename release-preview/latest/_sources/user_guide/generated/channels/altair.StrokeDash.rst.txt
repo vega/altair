@@ -1,0 +1,46 @@
+﻿altair.StrokeDash
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeDash
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeDash.__init__
+      ~StrokeDash.copy
+      ~StrokeDash.from_dict
+      ~StrokeDash.from_json
+      ~StrokeDash.resolve_references
+      ~StrokeDash.to_dict
+      ~StrokeDash.to_json
+      ~StrokeDash.validate
+      ~StrokeDash.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StrokeDash.aggregate
+      ~StrokeDash.bandPosition
+      ~StrokeDash.bin
+      ~StrokeDash.condition
+      ~StrokeDash.field
+      ~StrokeDash.legend
+      ~StrokeDash.scale
+      ~StrokeDash.sort
+      ~StrokeDash.timeUnit
+      ~StrokeDash.title
+      ~StrokeDash.type
+   
+   

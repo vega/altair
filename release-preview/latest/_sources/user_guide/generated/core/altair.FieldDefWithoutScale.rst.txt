@@ -1,0 +1,30 @@
+﻿altair.FieldDefWithoutScale
+===========================
+
+.. currentmodule:: altair
+
+.. autoclass:: FieldDefWithoutScale
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FieldDefWithoutScale.__init__
+      ~FieldDefWithoutScale.copy
+      ~FieldDefWithoutScale.from_dict
+      ~FieldDefWithoutScale.from_json
+      ~FieldDefWithoutScale.resolve_references
+      ~FieldDefWithoutScale.to_dict
+      ~FieldDefWithoutScale.to_json
+      ~FieldDefWithoutScale.validate
+      ~FieldDefWithoutScale.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,37 @@
+﻿altair.StrokeOpacityValue
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeOpacityValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeOpacityValue.__init__
+      ~StrokeOpacityValue.copy
+      ~StrokeOpacityValue.from_dict
+      ~StrokeOpacityValue.from_json
+      ~StrokeOpacityValue.resolve_references
+      ~StrokeOpacityValue.to_dict
+      ~StrokeOpacityValue.to_json
+      ~StrokeOpacityValue.validate
+      ~StrokeOpacityValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StrokeOpacityValue.condition
+      ~StrokeOpacityValue.value
+   
+   

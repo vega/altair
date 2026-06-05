@@ -1,0 +1,36 @@
+﻿altair.YOffsetValue
+===================
+
+.. currentmodule:: altair
+
+.. autoclass:: YOffsetValue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~YOffsetValue.__init__
+      ~YOffsetValue.copy
+      ~YOffsetValue.from_dict
+      ~YOffsetValue.from_json
+      ~YOffsetValue.resolve_references
+      ~YOffsetValue.to_dict
+      ~YOffsetValue.to_json
+      ~YOffsetValue.validate
+      ~YOffsetValue.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~YOffsetValue.value
+   
+   

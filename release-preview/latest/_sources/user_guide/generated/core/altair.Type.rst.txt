@@ -1,0 +1,30 @@
+﻿altair.Type
+===========
+
+.. currentmodule:: altair
+
+.. autoclass:: Type
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Type.__init__
+      ~Type.copy
+      ~Type.from_dict
+      ~Type.from_json
+      ~Type.resolve_references
+      ~Type.to_dict
+      ~Type.to_json
+      ~Type.validate
+      ~Type.validate_property
+   
+   
+
+   
+   
+   

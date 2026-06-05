@@ -1,0 +1,30 @@
+﻿altair.ConditionalAxisLabelFontWeight
+=====================================
+
+.. currentmodule:: altair
+
+.. autoclass:: ConditionalAxisLabelFontWeight
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConditionalAxisLabelFontWeight.__init__
+      ~ConditionalAxisLabelFontWeight.copy
+      ~ConditionalAxisLabelFontWeight.from_dict
+      ~ConditionalAxisLabelFontWeight.from_json
+      ~ConditionalAxisLabelFontWeight.resolve_references
+      ~ConditionalAxisLabelFontWeight.to_dict
+      ~ConditionalAxisLabelFontWeight.to_json
+      ~ConditionalAxisLabelFontWeight.validate
+      ~ConditionalAxisLabelFontWeight.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.RangeRaw
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: RangeRaw
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RangeRaw.__init__
+      ~RangeRaw.copy
+      ~RangeRaw.from_dict
+      ~RangeRaw.from_json
+      ~RangeRaw.resolve_references
+      ~RangeRaw.to_dict
+      ~RangeRaw.to_json
+      ~RangeRaw.validate
+      ~RangeRaw.validate_property
+   
+   
+
+   
+   
+   

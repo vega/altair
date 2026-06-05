@@ -1,0 +1,30 @@
+﻿altair.MarkConfig
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: MarkConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MarkConfig.__init__
+      ~MarkConfig.copy
+      ~MarkConfig.from_dict
+      ~MarkConfig.from_json
+      ~MarkConfig.resolve_references
+      ~MarkConfig.to_dict
+      ~MarkConfig.to_json
+      ~MarkConfig.validate
+      ~MarkConfig.validate_property
+   
+   
+
+   
+   
+   

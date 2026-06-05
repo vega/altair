@@ -1,0 +1,30 @@
+﻿altair.BrushConfig
+==================
+
+.. currentmodule:: altair
+
+.. autoclass:: BrushConfig
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BrushConfig.__init__
+      ~BrushConfig.copy
+      ~BrushConfig.from_dict
+      ~BrushConfig.from_json
+      ~BrushConfig.resolve_references
+      ~BrushConfig.to_dict
+      ~BrushConfig.to_json
+      ~BrushConfig.validate
+      ~BrushConfig.validate_property
+   
+   
+
+   
+   
+   

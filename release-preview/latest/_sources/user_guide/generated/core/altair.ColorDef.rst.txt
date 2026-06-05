@@ -1,0 +1,30 @@
+﻿altair.ColorDef
+===============
+
+.. currentmodule:: altair
+
+.. autoclass:: ColorDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ColorDef.__init__
+      ~ColorDef.copy
+      ~ColorDef.from_dict
+      ~ColorDef.from_json
+      ~ColorDef.resolve_references
+      ~ColorDef.to_dict
+      ~ColorDef.to_json
+      ~ColorDef.validate
+      ~ColorDef.validate_property
+   
+   
+
+   
+   
+   

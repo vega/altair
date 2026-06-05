@@ -1,0 +1,30 @@
+﻿altair.EventType
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: EventType
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~EventType.__init__
+      ~EventType.copy
+      ~EventType.from_dict
+      ~EventType.from_json
+      ~EventType.resolve_references
+      ~EventType.to_dict
+      ~EventType.to_json
+      ~EventType.validate
+      ~EventType.validate_property
+   
+   
+
+   
+   
+   

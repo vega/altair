@@ -1,0 +1,40 @@
+﻿altair.AngleDatum
+=================
+
+.. currentmodule:: altair
+
+.. autoclass:: AngleDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AngleDatum.__init__
+      ~AngleDatum.copy
+      ~AngleDatum.from_dict
+      ~AngleDatum.from_json
+      ~AngleDatum.resolve_references
+      ~AngleDatum.to_dict
+      ~AngleDatum.to_json
+      ~AngleDatum.validate
+      ~AngleDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~AngleDatum.bandPosition
+      ~AngleDatum.condition
+      ~AngleDatum.datum
+      ~AngleDatum.title
+      ~AngleDatum.type
+   
+   

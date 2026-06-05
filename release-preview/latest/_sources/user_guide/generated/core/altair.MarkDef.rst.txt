@@ -1,0 +1,30 @@
+﻿altair.MarkDef
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: MarkDef
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MarkDef.__init__
+      ~MarkDef.copy
+      ~MarkDef.from_dict
+      ~MarkDef.from_json
+      ~MarkDef.resolve_references
+      ~MarkDef.to_dict
+      ~MarkDef.to_json
+      ~MarkDef.validate
+      ~MarkDef.validate_property
+   
+   
+
+   
+   
+   

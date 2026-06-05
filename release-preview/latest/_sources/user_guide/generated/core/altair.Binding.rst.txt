@@ -1,0 +1,30 @@
+﻿altair.Binding
+==============
+
+.. currentmodule:: altair
+
+.. autoclass:: Binding
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Binding.__init__
+      ~Binding.copy
+      ~Binding.from_dict
+      ~Binding.from_json
+      ~Binding.resolve_references
+      ~Binding.to_dict
+      ~Binding.to_json
+      ~Binding.validate
+      ~Binding.validate_property
+   
+   
+
+   
+   
+   

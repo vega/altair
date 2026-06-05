@@ -1,0 +1,30 @@
+﻿altair.Generator
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: Generator
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Generator.__init__
+      ~Generator.copy
+      ~Generator.from_dict
+      ~Generator.from_json
+      ~Generator.resolve_references
+      ~Generator.to_dict
+      ~Generator.to_json
+      ~Generator.validate
+      ~Generator.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.MultiLineString
+======================
+
+.. currentmodule:: altair
+
+.. autoclass:: MultiLineString
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MultiLineString.__init__
+      ~MultiLineString.copy
+      ~MultiLineString.from_dict
+      ~MultiLineString.from_json
+      ~MultiLineString.resolve_references
+      ~MultiLineString.to_dict
+      ~MultiLineString.to_json
+      ~MultiLineString.validate
+      ~MultiLineString.validate_property
+   
+   
+
+   
+   
+   

@@ -1,0 +1,40 @@
+﻿altair.StrokeOpacityDatum
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: StrokeOpacityDatum
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StrokeOpacityDatum.__init__
+      ~StrokeOpacityDatum.copy
+      ~StrokeOpacityDatum.from_dict
+      ~StrokeOpacityDatum.from_json
+      ~StrokeOpacityDatum.resolve_references
+      ~StrokeOpacityDatum.to_dict
+      ~StrokeOpacityDatum.to_json
+      ~StrokeOpacityDatum.validate
+      ~StrokeOpacityDatum.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~StrokeOpacityDatum.bandPosition
+      ~StrokeOpacityDatum.condition
+      ~StrokeOpacityDatum.datum
+      ~StrokeOpacityDatum.title
+      ~StrokeOpacityDatum.type
+   
+   

@@ -1,0 +1,30 @@
+﻿altair.BinParams
+================
+
+.. currentmodule:: altair
+
+.. autoclass:: BinParams
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BinParams.__init__
+      ~BinParams.copy
+      ~BinParams.from_dict
+      ~BinParams.from_json
+      ~BinParams.resolve_references
+      ~BinParams.to_dict
+      ~BinParams.to_json
+      ~BinParams.validate
+      ~BinParams.validate_property
+   
+   
+
+   
+   
+   

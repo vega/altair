@@ -1,0 +1,47 @@
+﻿altair.Row
+==========
+
+.. currentmodule:: altair
+
+.. autoclass:: Row
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Row.__init__
+      ~Row.copy
+      ~Row.from_dict
+      ~Row.from_json
+      ~Row.resolve_references
+      ~Row.to_dict
+      ~Row.to_json
+      ~Row.validate
+      ~Row.validate_property
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Row.aggregate
+      ~Row.align
+      ~Row.bandPosition
+      ~Row.bin
+      ~Row.center
+      ~Row.field
+      ~Row.header
+      ~Row.sort
+      ~Row.spacing
+      ~Row.timeUnit
+      ~Row.title
+      ~Row.type
+   
+   

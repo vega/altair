@@ -1,0 +1,30 @@
+﻿altair.LayerRepeatMapping
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: LayerRepeatMapping
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LayerRepeatMapping.__init__
+      ~LayerRepeatMapping.copy
+      ~LayerRepeatMapping.from_dict
+      ~LayerRepeatMapping.from_json
+      ~LayerRepeatMapping.resolve_references
+      ~LayerRepeatMapping.to_dict
+      ~LayerRepeatMapping.to_json
+      ~LayerRepeatMapping.validate
+      ~LayerRepeatMapping.validate_property
+   
+   
+
+   
+   
+   

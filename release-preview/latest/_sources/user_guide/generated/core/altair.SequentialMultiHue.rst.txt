@@ -1,0 +1,30 @@
+﻿altair.SequentialMultiHue
+=========================
+
+.. currentmodule:: altair
+
+.. autoclass:: SequentialMultiHue
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SequentialMultiHue.__init__
+      ~SequentialMultiHue.copy
+      ~SequentialMultiHue.from_dict
+      ~SequentialMultiHue.from_json
+      ~SequentialMultiHue.resolve_references
+      ~SequentialMultiHue.to_dict
+      ~SequentialMultiHue.to_json
+      ~SequentialMultiHue.validate
+      ~SequentialMultiHue.validate_property
+   
+   
+
+   
+   
+   
