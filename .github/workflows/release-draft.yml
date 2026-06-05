@@ -82,12 +82,12 @@ jobs:
       - name: Test with pytest
         if: steps.next-version.outputs.should-release == 'true'
         run: uv run task test
-      - name: Create release commit and tag
+      - name: Create release tag
         if: steps.next-version.outputs.should-release == 'true'
         id: bump
         run: |
-          cog bump --auto --annotated "chore(version): {{version}}"
-          git push origin HEAD:main --follow-tags
+          cog bump --auto --disable-bump-commit --annotated "Version {{version}} release"
+          git push origin "refs/tags/${{ steps.next-version.outputs.tag }}"
       - name: Create draft GitHub release
         if: steps.next-version.outputs.should-release == 'true'
         env:
