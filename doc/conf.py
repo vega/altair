@@ -21,6 +21,8 @@ from datetime import datetime
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath(".."))  # noqa: PTH100
 
+import altair
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -82,7 +84,7 @@ author = "Vega-Altair Developers"
 # built documents.
 #
 # The short X.Y version.
-version = "6.2.0dev"
+version = altair.__version__
 # The full version, including alpha/beta/rc tags.
 release = f"{version}"
 
@@ -172,6 +174,13 @@ html_theme_options = {
         "plausible_analytics_url": ("https://views.scientific-python.org/js/script.js"),
     },
 }
+
+if preview_tag := os.environ.get("ALTAIR_RELEASE_PREVIEW_TAG"):
+    html_theme_options["announcement"] = (
+        f"This is a preview doc build for draft release {preview_tag}, "
+        'not the <a href="https://altair-viz.github.io/">'
+        "official Altair documentation</a>."
+    )
 
 html_context = {"default_mode": "light"}
 
