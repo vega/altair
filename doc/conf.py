@@ -177,9 +177,11 @@ html_theme_options = {
 
 if preview_tag := os.environ.get("ALTAIR_RELEASE_PREVIEW_TAG"):
     html_theme_options["announcement"] = (
-        f"This is a preview doc build for draft release {preview_tag}, "
-        'not the <a href="https://altair-viz.github.io/">'
-        "official Altair documentation</a>."
+        "<strong style='font-size:1.2em;'>"
+        f"⚠️ Preview build for draft release {preview_tag} &mdash; "
+        'not the <a href="https://altair-viz.github.io/" style="color:inherit;">'
+        "official Altair documentation</a>. ⚠️"
+        "</strong>"
     )
 
 html_context = {"default_mode": "light"}
