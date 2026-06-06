@@ -2,6 +2,8 @@ name: docbuild
 
 on:
   push:
+    branches:
+      - main
     paths: &docbuild_paths
       - ".github/workflows/docbuild.yml"
       - "doc/**"
