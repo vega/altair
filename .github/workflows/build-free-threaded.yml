@@ -32,10 +32,10 @@ jobs:
           uv pip install pytest
           uv pip install pytest-cov
           uv pip install pytest-run-parallel
-          uv pip install hatch>=1.13.0
+          uv pip install 'hatch>=1.13.0'
           uv pip install ipython
           uv pip install ipykernel
-          uv pip install pandas>=1.1.3
+          uv pip install 'pandas>=1.1.3'
           uv pip install pyarrow-stubs
           uv pip install 'pytest-xdist[psutil]~=3.5'
           uv pip install mistune
@@ -43,9 +43,9 @@ jobs:
           uv pip install pandas-stubs
           uv pip install types-jsonschema
           uv pip install types-setuptools
-          uv pip install geopandas>=0.14.3
-          uv pip install taskipy>=1.14.1
-          uv pip install tomli>=2.2.1
+          uv pip install 'geopandas>=0.14.3'
+          uv pip install 'taskipy>=1.14.1'
+          uv pip install 'tomli>=2.2.1'
 
           # Blockers
           # ruff: no cp314t wheels available yet
