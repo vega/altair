@@ -1,6 +1,18 @@
 name: docbuild
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+    paths: &docbuild_paths
+      - ".github/workflows/docbuild.yml"
+      - "doc/**"
+      - "pyproject.toml"
+      - "tests/examples_*/**"
+      - "tools/**"
+      - "uv.lock"
+  pull_request:
+    paths: *docbuild_paths
 
 jobs:
   build:
