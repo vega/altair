@@ -21,6 +21,7 @@ def latest_docbuild_run_id(*, pr_number: int | None) -> str:
     if pr_number is not None:
         return latest_docbuild_run_id_for_pr(pr_number)
 
+    print("Finding latest docbuild workflow run...")
     command = [
         "gh",
         "run",
@@ -42,8 +43,21 @@ def latest_docbuild_run_id(*, pr_number: int | None) -> str:
 
 
 def latest_docbuild_run_id_for_pr(pr_number: int) -> str:
+    print(f"Finding latest docbuild workflow run for PR #{pr_number}...")
     repo = run_command(
         ["gh", "repo", "view", "--json", "nameWithOwner", "--jq", ".nameWithOwner"]
+    )
+    pr_head_sha = run_command(
+        [
+            "gh",
+            "pr",
+            "view",
+            str(pr_number),
+            "--json",
+            "headRefOid",
+            "--jq",
+            ".headRefOid",
+        ]
     )
     workflow_id = run_command(
         [
@@ -59,7 +73,8 @@ def latest_docbuild_run_id_for_pr(pr_number: int) -> str:
     ).splitlines()[0]
     query = (
         ".workflow_runs[] | "
-        f"select(any(.pull_requests[]?; .number == {pr_number})) | "
+        f"select(any(.pull_requests[]?; .number == {pr_number}) "
+        f'or .head_sha == "{pr_head_sha}") | '
         ".id"
     )
     run_id = run_command(
@@ -84,6 +99,7 @@ def latest_docbuild_run_id_for_pr(pr_number: int) -> str:
 
 
 def download_artifact(*, run_id: str, output_dir: Path) -> None:
+    print(f"Downloading docs artifact from workflow run {run_id} ...")
     shutil.rmtree(output_dir, ignore_errors=True)
     output_dir.mkdir(parents=True, exist_ok=True)
     subprocess.run(
