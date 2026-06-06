@@ -133,6 +133,7 @@ source = "versioningit"
 # time via the export-subst attribute in .gitattributes.
 method = "git-archive"
 describe-subst = "$Format:%(describe:tags,match=v[0-9]*)$"
+default-tag = "v0"
 
 [tool.hatch.envs]
 # https://hatch.pypa.io/latest/how-to/environment/select-installer/#enabling-uv
