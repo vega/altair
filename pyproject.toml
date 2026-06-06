@@ -302,6 +302,7 @@ doc-clean = "python tools/docs_cli.py clean"
 doc-build = "python tools/docs_cli.py build"
 doc-serve = "python tools/docs_cli.py serve"
 doc-publish = "python tools/docs_cli.py publish"
+doc-preview-pr = "python tools/download_docs_artifact.py"
 
 clean   = "python -c \"import tools;tools.fs.rm('dist')\""
 build   = "task clean && uv build"

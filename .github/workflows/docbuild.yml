@@ -1,6 +1,18 @@
 name: docbuild
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+    paths: &docbuild_paths
+      - ".github/workflows/docbuild.yml"
+      - "doc/**"
+      - "pyproject.toml"
+      - "tests/examples_*/**"
+      - "tools/**"
+      - "uv.lock"
+  pull_request:
+    paths: *docbuild_paths
 
 jobs:
   build:
@@ -26,6 +38,12 @@ jobs:
       run: |
         mkdir -p doc/_images
         uv run sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html
+    - name: Upload docs preview artifact
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+      with:
+        name: docs-html
+        path: doc/_build/html
+        retention-days: 7
     - name: Run doctests
       run: |
         uv run sphinx-build -b doctest -d doc/_build/doctrees doc doc/_build/doctest
