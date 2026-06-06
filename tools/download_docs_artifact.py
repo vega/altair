@@ -45,6 +45,9 @@ def latest_docbuild_run_id_for_pr(pr_number: int) -> str:
     repo = run_command(
         ["gh", "repo", "view", "--json", "nameWithOwner", "--jq", ".nameWithOwner"]
     )
+    pr_head_sha = run_command(
+        ["gh", "pr", "view", str(pr_number), "--json", "headRefOid", "--jq", ".headRefOid"]
+    )
     workflow_id = run_command(
         [
             "gh",
@@ -59,7 +62,8 @@ def latest_docbuild_run_id_for_pr(pr_number: int) -> str:
     ).splitlines()[0]
     query = (
         ".workflow_runs[] | "
-        f"select(any(.pull_requests[]?; .number == {pr_number})) | "
+        f"select(any(.pull_requests[]?; .number == {pr_number}) "
+        f'or .head_sha == "{pr_head_sha}") | '
         ".id"
     )
     run_id = run_command(
