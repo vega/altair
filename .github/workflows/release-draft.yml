@@ -2,9 +2,8 @@
 name: Prepare Release Draft
 
 on:
-  # Enable this after the manual release flow has been tested.
-  # schedule:
-  #   - cron: '0 3 1-7 * 1'  # Every four weeks on the first Monday at 3am UTC
+  schedule:
+    - cron: '0 15 1-7,15-21 * 1'  # First and third Monday of each month at 15:00 UTC.
   workflow_dispatch:
 
 permissions:

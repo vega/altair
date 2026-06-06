@@ -24,7 +24,7 @@ DOC_BUILD_INFO: Path = DOC_HTML_DIR / ".buildinfo"
 
 CMD_CLONE = "git", "clone", DOC_REPO_URL
 CMD_PULL = "git", "pull"
-CMD_HEAD_HASH = "git", "rev-parse", "HEAD"
+CMD_SOURCE_HEAD_HASH = "git", "-C", str(fs.REPO_ROOT), "rev-parse", "HEAD"
 CMD_ADD = "git", "add", ".", "--all", "--force"
 CMD_COMMIT = "git", "commit", "-m"
 CMD_PUSH = "git", "push", "origin", "master"
@@ -61,9 +61,8 @@ def sync_from_html_build() -> None:
 
 
 def generate_commit_message() -> str:
-    os.chdir(DOC_REPO_DIR)
     print("Generating commit message ...")
-    return f"{COMMIT_MSG_PREFIX} {fs.run_check(CMD_HEAD_HASH).stdout.strip()}"
+    return f"{COMMIT_MSG_PREFIX} {fs.run_check(CMD_SOURCE_HEAD_HASH).stdout.strip()}"
 
 
 def add_commit_push_github(msg: str, /, *, dry_run: bool) -> None:

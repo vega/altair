@@ -56,3 +56,12 @@ jobs:
         with:
           verbose: true
           print-hash: true
+      - name: Publish official docs
+        env:
+          DOCS_PUBLISH_TOKEN: ${{ secrets.DOCS_PUBLISH_TOKEN }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global url."https://x-access-token:${DOCS_PUBLISH_TOKEN}@github.com/".insteadOf "https://github.com/"
+          uv run task doc-build -- --clean
+          uv run task doc-publish
