@@ -41,7 +41,4 @@ layers = [
     for n in maxbins_options
 ]
 
-alt.layer(*layers).add_params(maxbins).properties(
-    width=400,
-    height=300,
-)
+alt.layer(*layers).add_params(maxbins)
