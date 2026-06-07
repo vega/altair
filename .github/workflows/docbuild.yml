@@ -1,12 +1,27 @@
-name: docbuild
+name: Docs
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+    paths: &docbuild_paths
+      - ".github/workflows/docbuild.yml"
+      - "doc/**"
+      - "pyproject.toml"
+      - "tests/examples_*/**"
+      - "tools/**"
+      - "uv.lock"
+  pull_request:
+    paths: *docbuild_paths
 
 jobs:
-  build:
+  build-docs:
+    name: Build docs
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
     - name: Set up Python 3.12
       uses: actions/setup-python@v6
       with:
@@ -24,6 +39,12 @@ jobs:
       run: |
         mkdir -p doc/_images
         uv run sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html
+    - name: Upload docs preview artifact
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      with:
+        name: docs-html
+        path: doc/_build/html
+        retention-days: 7
     - name: Run doctests
       run: |
         uv run sphinx-build -b doctest -d doc/_build/doctrees doc doc/_build/doctest

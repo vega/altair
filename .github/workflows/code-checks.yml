@@ -1,17 +1,23 @@
-name: lint
+name: Code checks
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  build:
+  checks:
     runs-on: ubuntu-latest
-    name: ruff-mypy
+    name: Check linting, formatting, types, and lockfile
     steps:
     - name: "Set up Python"
       uses: actions/setup-python@v6
       with:
         python-version: "3.12"
     - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
     - name: Install uv
       uses: astral-sh/setup-uv@v7
       with:
@@ -19,6 +25,15 @@ jobs:
         cache-dependency-glob: |
           **/uv.lock
           **/pyproject.toml
+    - name: Check uv lockfile
+      run: |
+        uv lock
+        if ! git diff --quiet -- uv.lock; then
+          git diff -- uv.lock
+          echo
+          echo "uv.lock is out of date. Run 'uv lock' and commit the updated uv.lock."
+          exit 1
+        fi
     # Installing all dependencies and not just the linters as mypy needs them for type checking
     - name: Install dependencies
       run: uv sync --all-extras
