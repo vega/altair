@@ -1,11 +1,15 @@
-name: lint
+name: Code checks
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  build:
+  checks:
     runs-on: ubuntu-latest
-    name: ruff-mypy
+    name: Check linting, formatting, types, and lockfile
     steps:
     - name: "Set up Python"
       uses: actions/setup-python@v6

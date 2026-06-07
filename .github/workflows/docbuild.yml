@@ -1,4 +1,4 @@
-name: docbuild
+name: Docs
 
 on:
   push:
@@ -15,7 +15,8 @@ on:
     paths: *docbuild_paths
 
 jobs:
-  docbuild:
+  build-docs:
+    name: Build docs
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
