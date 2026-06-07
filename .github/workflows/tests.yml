@@ -95,8 +95,8 @@ jobs:
         run: uv pip list
 
   # Branch protection requires one stable check name; this aggregates the test matrix.
-  all-tests:
-    name: All tests
+  check-all-tests:
+    name: Check all tests
     runs-on: ubuntu-latest
     needs: test
     if: ${{ always() }}
