@@ -1,4 +1,4 @@
-name: docbuild
+name: Docs
 
 on:
   push:

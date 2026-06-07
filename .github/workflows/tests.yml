@@ -96,7 +96,7 @@ jobs:
 
   # Branch protection requires one stable check name; this aggregates the test matrix.
   check-all-tests:
-    name: Check all tests
+    name: Check that all tests passed
     runs-on: ubuntu-latest
     needs: test
     if: ${{ always() }}
