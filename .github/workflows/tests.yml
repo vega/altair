@@ -1,12 +1,16 @@
-name: build
+name: Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 env:
   UV_SYSTEM_PYTHON: 1
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -89,3 +93,16 @@ jobs:
           uv run check-jsonschema --check-metaschema altair/vegalite/v6/schema/vega-lite-schema.json --disable-formats uri-reference
       - name: Show installed versions
         run: uv pip list
+
+  # Branch protection requires one stable check name; this aggregates the test matrix.
+  check-all-tests:
+    name: Check that all tests passed
+    runs-on: ubuntu-latest
+    needs: test
+    if: ${{ always() }}
+    steps:
+      - name: Check matrix result
+        run: |
+          if [ "${{ needs.test.result }}" != "success" ]; then
+            exit 1
+          fi

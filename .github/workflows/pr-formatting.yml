@@ -1,5 +1,5 @@
 ---
-name: Lint and label PR
+name: PR formatting
 
 on:
   pull_request_target:
@@ -19,7 +19,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  label:
+  apply-label:
     name: Apply label from PR title
     runs-on: ubuntu-latest
     needs: validate-title
