@@ -1,0 +1,67 @@
+---
+name: Publish Release to PyPI
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: read
+
+env:
+  UV_SYSTEM_PYTHON: 1
+  UV_FROZEN: 1
+
+jobs:
+  publish-release:
+    if: >-
+      ${{
+        !github.event.release.prerelease &&
+        startsWith(github.event.release.tag_name, 'v')
+      }}
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/altair
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: '3.12'
+      - name: Install uv
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
+        with:
+          enable-cache: false
+      - name: Install dependencies
+        run: uv sync --frozen --all-extras
+      - name: Build package
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
+        run: |
+          if ! [[ "$TAG_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Refusing to publish non-stable release tag: $TAG_NAME"
+            exit 1
+          fi
+          uv run task build
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # v1.14.0
+        with:
+          verbose: true
+          print-hash: true
+      - name: Publish official docs
+        env:
+          DOCS_PUBLISH_TOKEN: ${{ secrets.DOCS_PUBLISH_TOKEN }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global url."https://x-access-token:${DOCS_PUBLISH_TOKEN}@github.com/".insteadOf "https://github.com/"
+          uv run task doc-build -- --clean
+          uv run task doc-publish

@@ -175,6 +175,15 @@ html_theme_options = {
     },
 }
 
+if preview_tag := os.environ.get("ALTAIR_RELEASE_PREVIEW_TAG"):
+    html_theme_options["announcement"] = (
+        "<strong style='font-size:1.2em;'>"
+        f"⚠️ Preview build for draft release {preview_tag} &mdash; "
+        'not the <a href="https://altair-viz.github.io/" style="color:inherit;">'
+        "official Altair documentation</a>. ⚠️"
+        "</strong>"
+    )
+
 html_context = {"default_mode": "light"}
 
 # Add any paths that contain custom themes here, relative to this directory.

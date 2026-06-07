@@ -19,7 +19,7 @@ authors = [{ name = "Vega-Altair Contributors" }]
 dependencies = [
     "typing_extensions>=4.12.0; python_version<'3.15'",
     "jinja2",
-    # If you update the minimum required jsonschema version, also update it in build.yml
+    # If you update the minimum required jsonschema version, also update it in tests.yml
     "jsonschema>=3.0",
     "packaging",
     "narwhals>=2.4.0",
@@ -133,6 +133,7 @@ source = "versioningit"
 # time via the export-subst attribute in .gitattributes.
 method = "git-archive"
 describe-subst = "$Format:%(describe:tags,match=v[0-9]*)$"
+default-tag = "v0"
 
 [tool.hatch.envs]
 # https://hatch.pypa.io/latest/how-to/environment/select-installer/#enabling-uv
@@ -302,13 +303,11 @@ doc-clean = "python tools/docs_cli.py clean"
 doc-build = "python tools/docs_cli.py build"
 doc-serve = "python tools/docs_cli.py serve"
 doc-publish = "python tools/docs_cli.py publish"
+doc-preview-pr = "python tools/download_docs_artifact.py"
 
 clean   = "python -c \"import tools;tools.fs.rm('dist')\""
 build   = "task clean && uv build"
 publish = "task build && uv publish"
-
-nightly-build   = "python tools/generate_nightly_version.py --update && task build"
-nightly-release = "task nightly-build && echo 'Package built, ready for GitHub release'"
 
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.

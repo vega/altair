@@ -28,12 +28,26 @@ git clone https://github.com/YOUR-USERNAME/altair.git
 To keep your fork up to date with changes in this repo,
 you can [use the fetch upstream button on GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork).
 
+> [!NOTE]
+> Altair's local version is derived from Git release tags. If your fork
+> is missing the latest upstream tags, the version reported by a local install
+> may be using an older tag as the base (or even fall back to a synthetic
+> `0...` version if no upstream tags are present). This doesn't affect the
+> development experience in any meaningful way and you can still see the latest
+> commit SHA in the reported version, but if you want more accurate version
+> reporting for a locally installed development version, make sure to fetch all
+> upstream tags:
+>
+> ```cmd
+> git fetch --tags https://github.com/vega/altair.git
+> ```
 
 [Install `uv`](https://docs.astral.sh/uv/getting-started/installation/), or update to the latest version:
 
 ```cmd
 uv self update
 ```
+
 Install Python:
 
 ```cmd
