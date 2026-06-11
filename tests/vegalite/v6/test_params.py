@@ -413,3 +413,31 @@ def test_vconcat_different_data_unique_names():
             f"Layers should have unique names when data differs, "
             f"but both got name: {line_names[0]}"
         )
+
+
+def test_vconcat_identical_layered_charts_unique_inner_layer_names():
+    df = pd.DataFrame({"site": [1, 2, 3, 4, 5], "escape": [0.1, 0.9, 0.1, 0.2, 0.1]})
+    selection = alt.selection_point(fields=["site"], on="mouseover", empty=False)
+
+    def make_layered_chart():
+        base = alt.Chart(df).encode(
+            x="site:O",
+            y=alt.Y("escape:Q", scale=alt.Scale(domain=[0, 1])),
+        )
+        lines = base.mark_line(size=1)
+        points = base.encode(
+            size=alt.condition(selection, alt.value(80), alt.value(30)),
+        ).mark_circle(filled=True)
+        return (lines + points).add_params(selection)
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", UserWarning)
+        spec = alt.vconcat(make_layered_chart(), make_layered_chart()).to_dict()
+
+    layers0 = spec["vconcat"][0]["layer"]
+    layers1 = spec["vconcat"][1]["layer"]
+    names0 = [layer["name"] for layer in layers0]
+    names1 = [layer["name"] for layer in layers1]
+
+    assert names0[0] != names1[0]
+    assert names0[1] != names1[1]

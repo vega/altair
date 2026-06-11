@@ -5289,6 +5289,17 @@ def _combine_subchart_params(  # noqa: C901
             elif isinstance(spec, Chart):
                 spec.name = f"{_view_base_for_chart(spec)}_{i}"
 
+        if is_concat and isinstance(subchart, LayerChart) and subchart.layer:
+            subchart.layer = [layer.copy() for layer in subchart.layer]
+            for j, layer in enumerate(subchart.layer):
+                if isinstance(layer, Chart):
+                    base_name = (
+                        layer._get_view_hash_name()
+                        if layer.name is Undefined
+                        else _view_base_for_chart(layer)
+                    )
+                    layer.name = f"{base_name}_{i}_{j}"
+
         for param in subchart.params:
             p = _prepare_to_lift(param)
             pd = _viewless_dict(p)
