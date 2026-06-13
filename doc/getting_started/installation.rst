@@ -51,7 +51,7 @@ To install a specific version of Altair, specify the version explicitly:
 
 .. code-block:: python
 
-    await micropip.install("altair==6.0.0")
+    await micropip.install("altair==6.1.0")
 
 Development Installation
 ========================

@@ -2,6 +2,10 @@ name: build-free-threaded
 
 on:
   workflow_dispatch:  # Manual trigger only; no automatic CI runs
+  # This workflow provides partial free-threaded Python 3.14t coverage.
+  # Some development dependencies are still excluded because upstream packages
+  # do not yet support cp314t/free-threaded builds; blockers are documented
+  # in the dependency installation step below.
 
 env:
   UV_SYSTEM_PYTHON: 1
@@ -12,6 +16,8 @@ jobs:
     name: py 3.14t free-threaded
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Set up Python 3.14t
         uses: actions/setup-python@v6
         with:
@@ -26,24 +32,30 @@ jobs:
           uv pip install pytest
           uv pip install pytest-cov
           uv pip install pytest-run-parallel
-          # uv pip install hatch>=1.13.0
+          uv pip install 'hatch>=1.13.0'
+          uv pip install ipython
+          uv pip install ipykernel
+          uv pip install 'pandas>=1.1.3'
+          uv pip install pyarrow-stubs
+          uv pip install 'pytest-xdist[psutil]~=3.5'
+          uv pip install mistune
+          uv pip install mypy
+          uv pip install pandas-stubs
+          uv pip install types-jsonschema
+          uv pip install types-setuptools
+          uv pip install 'geopandas>=0.14.3'
+          uv pip install 'taskipy>=1.14.1'
+          uv pip install 'tomli>=2.2.1'
+
+          # Blockers
+          # ruff: no cp314t wheels available yet
           # uv pip install ruff>=0.9.5
+          # duckdb: no free-threaded builds
+          # https://github.com/duckdb/duckdb-python/issues/76
           # uv pip install 'duckdb>=1.0; python_version<"3.14"'
-          # uv pip install ipython
-          # uv pip install ipykernel
-          # uv pip install pandas>=1.1.3
-          # uv pip install pyarrow-stubs
-          # uv pip install 'pytest-xdist[psutil]~=3.5'
-          # uv pip install mistune
-          # uv pip install mypy
-          # uv pip install pandas-stubs
-          # uv pip install types-jsonschema
-          # uv pip install types-setuptools
-          # uv pip install geopandas>=0.14.3
+          # polars: pyo3/numpy crate incompatibility
+          # https://github.com/pola-rs/polars/issues/21889
           # uv pip install polars>=0.20.3
-          # uv pip install taskipy>=1.14.1
-          # uv pip install tomli>=2.2.1
       - name: Run pytest with pytest-run-parallel
         run: |
           uv run pytest -o addopts= --pyargs --doctest-modules --doctest-ignore-import-errors --iterations=8 --parallel-threads=auto tests
-

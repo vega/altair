@@ -7,9 +7,10 @@
 # - pytest
 # - mypy
 # - pyright (experimental)
+# - ty (experimental)
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "versioningit"]
 build-backend = "hatchling.build"
 
 [project]
@@ -18,7 +19,7 @@ authors = [{ name = "Vega-Altair Contributors" }]
 dependencies = [
     "typing_extensions>=4.12.0; python_version<'3.15'",
     "jinja2",
-    # If you update the minimum required jsonschema version, also update it in build.yml
+    # If you update the minimum required jsonschema version, also update it in tests.yml
     "jsonschema>=3.0",
     "packaging",
     "narwhals>=2.4.0",
@@ -80,7 +81,9 @@ dev = [
     "pytest-xdist[psutil]~=3.5",
     "mistune",
     "mypy",
-    "pandas-stubs<2.3.3",
+    "pandas-stubs<2.3.3; python_version < '3.11'",
+    "pandas-stubs>=3.0.3.260530; python_version >= '3.11'",
+    "ty",
     "types-jsonschema",
     "types-setuptools",
     "geopandas>=0.14.3",
@@ -119,7 +122,18 @@ vega-lite     = "v6.4.1" # https://github.com/vega/vega-lite
 [tool.hatch]
 build    = { include = ["/altair"], artifacts = ["altair/jupyter/js/index.js"] }
 metadata = { allow-direct-references = true }
-version  = { path = "altair/__init__.py" }
+
+[tool.hatch.version]
+source = "versioningit"
+
+[tool.hatch.version.vcs]
+# "git-archive" is required (not the default "git") so that version calculation
+# works when installing from a PyPI sdist or GitHub archive, where there is no
+# .git directory. The describe-subst placeholder is expanded by git at archive
+# time via the export-subst attribute in .gitattributes.
+method = "git-archive"
+describe-subst = "$Format:%(describe:tags,match=v[0-9]*)$"
+default-tag = "v0"
 
 [tool.hatch.envs]
 # https://hatch.pypa.io/latest/how-to/environment/select-installer/#enabling-uv
@@ -270,7 +284,7 @@ lint       = "ruff check"
 format     = "ruff format --diff --check"
 ruff-check = "task lint && task format"
 ruff-fix   = "task lint && ruff format"
-type-check = "mypy altair tests"
+type-check = "mypy altair tests && ty check"
 
 pytest-serial = "pytest -m \"no_xdist\" --numprocesses=1"
 pytest        = "pytest && task pytest-serial"
@@ -289,13 +303,11 @@ doc-clean = "python tools/docs_cli.py clean"
 doc-build = "python tools/docs_cli.py build"
 doc-serve = "python tools/docs_cli.py serve"
 doc-publish = "python tools/docs_cli.py publish"
+doc-preview-pr = "python tools/download_docs_artifact.py"
 
 clean   = "python -c \"import tools;tools.fs.rm('dist')\""
 build   = "task clean && uv build"
 publish = "task build && uv publish"
-
-nightly-build   = "python tools/generate_nightly_version.py --update && task build"
-nightly-release = "task nightly-build && echo 'Package built, ready for GitHub release'"
 
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.
@@ -364,3 +376,16 @@ ignore = [
     "../../../**/Lib",                          # stdlib
     "../../../**/typeshed*"                     # typeshed-fallback
 ]
+
+[tool.ty]
+src.include = ["altair/typing", "altair/expr", "altair/vegalite"]
+src.exclude = ["altair/vegalite/v6/schema"]
+analysis.respect-type-ignore-comments = true  # allow existing type: ignore
+
+[tool.ty.rules]
+unused-type-ignore-comment = "ignore"  # skip unused type: ignore
+# suppress these for now so ty check will pass
+deprecated = "ignore"
+no-matching-overload = "ignore"
+invalid-context-manager = "ignore"
+invalid-method-override = "ignore"
