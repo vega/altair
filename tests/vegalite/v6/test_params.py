@@ -446,3 +446,33 @@ def test_vconcat_layered_charts_with_parent_transforms_have_unique_names():
     assert line_names[0] != line_names[1]
     assert line_names[0].endswith("_0")
     assert line_names[1].endswith("_1")
+
+
+def test_vconcat_layered_charts_include_all_views_for_selection_params():
+    df = pd.DataFrame(
+        {
+            "x": [1, 2, 3, 1, 2, 3],
+            "category": ["a", "a", "a", "b", "b", "b"],
+            "y": [1, 3, 2, 2, 4, 3],
+        }
+    )
+
+    hover = alt.selection_point(fields=["x"], on="mouseover", empty=False)
+    base = alt.Chart(df).encode(
+        x="x:O",
+        y="y:Q",
+    )
+    lines = base.mark_line(size=1)
+    points = base.encode(
+        size=alt.condition(hover, alt.value(120), alt.value(40))
+    ).mark_circle(filled=True)
+    layered = lines + points
+
+    mean_panel = layered.transform_aggregate(y="mean(y)", groupby=["x"])
+    detail_panel = layered.encode(detail="category:N")
+
+    spec = alt.vconcat(mean_panel, detail_panel).add_params(hover).to_dict()
+    line_names = [panel["layer"][0]["name"] for panel in spec["vconcat"]]
+    param_views = spec["params"][0]["views"]
+
+    assert param_views == line_names
