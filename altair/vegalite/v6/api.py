@@ -5269,6 +5269,15 @@ def _combine_subchart_params(  # noqa: C901
     subcharts = [subchart.copy() for subchart in subcharts]
     is_concat = len(subcharts) > 1
 
+    if is_concat:
+        for i, subchart in enumerate(subcharts):
+            if not (isinstance(subchart, LayerChart) and subchart.layer):
+                continue
+            subchart.layer = [layer.copy() for layer in subchart.layer]
+            for layer in subchart.layer:
+                if isinstance(layer, Chart) and layer.name is not Undefined:
+                    layer.name = f"{_view_base_for_chart(layer)}_{i}"
+
     for i, subchart in enumerate(subcharts):
         if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
             continue
