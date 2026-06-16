@@ -1151,14 +1151,14 @@ def test_property_setter_rejects_multiple_positional_arguments() -> None:
     with pytest.raises(
         TypeError, match=r"scale\(\) accepts at most one positional argument"
     ):
-        alt.Color().scale(["M", "F"], ["#1FC3AA", "#8624F5"])
+        alt.Color().scale(["M", "F"], ["#1FC3AA", "#8624F5"])  # type: ignore[call-overload]
 
 
 def test_property_setter_rejects_positional_and_keyword_arguments() -> None:
     with pytest.raises(
         TypeError, match=r"scale\(\) cannot combine a positional argument"
     ):
-        alt.Color().scale(alt.Scale(), domain=["M", "F"])
+        alt.Color().scale(alt.Scale(), domain=["M", "F"])  # type: ignore[call-overload]
 
 
 def test_to_dict_datetime_typing() -> None:
