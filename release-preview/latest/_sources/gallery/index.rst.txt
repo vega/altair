@@ -34,6 +34,17 @@ Recently Added |gallery-new-pill|
 
    <span class="gallery">
    
+   <a class="imagegroup imagegroup-recent" href="andrews_curves.html">
+   <span
+         class="image" alt="Andrews Curves"
+
+        style="background-image: url(../_static/andrews_curves-thumb.png);"
+
+    ></span>
+
+     <span class="image-title">Andrews Curves</span>
+   </a>
+   
    <a class="imagegroup imagegroup-recent" href="interactive_bar_select_highlight.html">
    <span
          class="image" alt="Bar Chart with Highlighting on Hover and Selection on Click"
@@ -87,6 +98,17 @@ Recently Added |gallery-new-pill|
     ></span>
 
      <span class="image-title">Grouped Bar Chart with xOffset and overlapping bars</span>
+   </a>
+   
+   <a class="imagegroup imagegroup-recent" href="interactive_bin_size.html">
+   <span
+         class="image" alt="Histogram with Adjustable Bin Size"
+
+        style="background-image: url(../_static/interactive_bin_size-thumb.png);"
+
+    ></span>
+
+     <span class="image-title">Histogram with Adjustable Bin Size</span>
    </a>
    
    <a class="imagegroup imagegroup-recent" href="interactive_aggregation.html">
@@ -1433,6 +1455,20 @@ Distributions
      <span class="image-title">Heat Lane Chart</span>
    </a>
    
+   <a class="imagegroup imagegroup-new" href="interactive_bin_size.html">
+   
+   <span class="image-tag">new</span>
+   
+   <span
+         class="image" alt="Histogram with Adjustable Bin Size"
+
+        style="background-image: url(../_static/interactive_bin_size-thumb.png);"
+
+    ></span>
+
+     <span class="image-title">Histogram with Adjustable Bin Size</span>
+   </a>
+   
    <a class="imagegroup" href="histogram_gradient_color.html">
    
    <span
@@ -2122,6 +2158,20 @@ Advanced Calculations
 .. raw:: html
 
    <span class="gallery">
+   
+   <a class="imagegroup imagegroup-new" href="andrews_curves.html">
+   
+   <span class="image-tag">new</span>
+   
+   <span
+         class="image" alt="Andrews Curves"
+
+        style="background-image: url(../_static/andrews_curves-thumb.png);"
+
+    ></span>
+
+     <span class="image-title">Andrews Curves</span>
+   </a>
    
    <a class="imagegroup" href="calculate_residuals.html">
    
