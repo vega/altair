@@ -143,7 +143,7 @@ jobs:
           TAG="${{ steps.next-version.outputs.tag }}"
           cat > release-review-issue.md <<EOF
           @joelostblom @mattijn @alec-bike
-          A draft release for $TAG has been created. Please assign yourself to this issue if you have capacity to release this version.
+          A tag and release note draft for $TAG has been created. Please assign yourself to this issue if you have capacity to release this version.
 
           Next, review [the draft release notes](https://github.com/vega/altair/releases) and [the docs preview](${{ steps.docs-preview.outputs.url }}) (scan the gallery thumbnails for broken examples). If everything looks correct, publish the release on GitHub; this will also trigger a PyPI release.
 
