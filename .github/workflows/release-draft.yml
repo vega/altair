@@ -3,7 +3,7 @@ name: Prepare Release Draft
 
 on:
   schedule:
-    - cron: '0 15 1-7,15-21 * 1'  # First and third Monday of each month at 15:00 UTC.
+    - cron: '30 14 1,15 * *'  # 1st and 15th of each month at 14:30 UTC.
   workflow_dispatch:
 
 permissions:
