@@ -3,7 +3,7 @@ name: Prepare Release Draft
 
 on:
   schedule:
-    - cron: '0 15 1-7,15-21 * 1'  # First and third Monday of each month at 15:00 UTC.
+    - cron: '30 14 1,15 * *'  # 1st and 15th of each month at 14:30 UTC.
   workflow_dispatch:
 
 permissions:
@@ -143,7 +143,7 @@ jobs:
           TAG="${{ steps.next-version.outputs.tag }}"
           cat > release-review-issue.md <<EOF
           @joelostblom @mattijn @alec-bike
-          A draft release for $TAG has been created. Please assign yourself to this issue if you have capacity to release this version.
+          A tag and release note draft for $TAG has been created. Please assign yourself to this issue if you have capacity to release this version.
 
           Next, review [the draft release notes](https://github.com/vega/altair/releases) and [the docs preview](${{ steps.docs-preview.outputs.url }}) (scan the gallery thumbnails for broken examples). If everything looks correct, publish the release on GitHub; this will also trigger a PyPI release.
 
