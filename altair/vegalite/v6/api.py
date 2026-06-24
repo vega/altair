@@ -5232,17 +5232,23 @@ def _view_base_for_chart(obj: Any) -> str:
     return name
 
 
-def _view_name_for_param(subchart: ChartType, is_concat: bool) -> str:
-    """View name for this subchart to add to a param's views."""
+def _view_names_for_param(subchart: ChartType, is_concat: bool) -> list[str]:
+    """View names for this subchart to add to a param's views."""
     if isinstance(subchart, Chart):
-        return subchart.name
+        return [subchart.name]
+    if is_concat and isinstance(subchart, LayerChart):
+        return [
+            layer.name
+            for layer in subchart.layer
+            if isinstance(layer, Chart) and layer.name is not Undefined
+        ]
     if is_concat and isinstance(subchart, FacetChart):
         spec = subchart.spec
         if isinstance(spec, Chart):
-            return spec.name
+            return [spec.name]
         if isinstance(spec, LayerChart) and spec.layer:
-            return spec.layer[0].name
-    return ""
+            return [spec.layer[0].name]
+    return []
 
 
 def _combine_subchart_params(  # noqa: C901
@@ -5268,6 +5274,15 @@ def _combine_subchart_params(  # noqa: C901
 
     subcharts = [subchart.copy() for subchart in subcharts]
     is_concat = len(subcharts) > 1
+
+    if is_concat:
+        for i, subchart in enumerate(subcharts):
+            if not (isinstance(subchart, LayerChart) and subchart.layer):
+                continue
+            subchart.layer = [layer.copy() for layer in subchart.layer]
+            for layer in subchart.layer:
+                if isinstance(layer, Chart) and layer.name is not Undefined:
+                    layer.name = f"{_view_base_for_chart(layer)}_{i}"
 
     for i, subchart in enumerate(subcharts):
         if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
@@ -5304,14 +5319,15 @@ def _combine_subchart_params(  # noqa: C901
                 continue
 
             # At this stage in the loop, p must be a TopLevelSelectionParameter.
-            # Get this subchart's view name from the subchart only (not p.views: params can share lists).
-            view_to_add = _view_name_for_param(subchart, is_concat)
+            # Get this subchart's view names from the subchart only (not p.views: params can share lists).
+            views_to_add = _view_names_for_param(subchart, is_concat)
             # MERGE (found=True): start from p.views to accumulate all views for this param.
-            # APPEND (found=False, view_to_add set): start from [] to avoid pulling in sibling views.
-            # COMPOUND (found=False, no view_to_add): subchart already aggregated views into p.views; preserve them.
-            views_after = list(p.views or []) if (found or not view_to_add) else []
-            if view_to_add and view_to_add not in views_after:
-                views_after.append(view_to_add)
+            # APPEND (found=False, views_to_add set): start from [] to avoid pulling in sibling views.
+            # COMPOUND (found=False, no views_to_add): subchart already aggregated views into p.views; preserve them.
+            views_after = list(p.views or []) if (found or not views_to_add) else []
+            for view_to_add in views_to_add:
+                if view_to_add not in views_after:
+                    views_after.append(view_to_add)
 
             if found:
                 merge_idx = dlist.index(pd)

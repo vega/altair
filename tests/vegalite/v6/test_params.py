@@ -413,3 +413,66 @@ def test_vconcat_different_data_unique_names():
             f"Layers should have unique names when data differs, "
             f"but both got name: {line_names[0]}"
         )
+
+
+def test_vconcat_layered_charts_with_parent_transforms_have_unique_names():
+    # Regression test for issue #4065: layered charts in a concat can have
+    # identical inner layer specs while differing only on the parent layer chart.
+    df = pd.DataFrame(
+        {
+            "site": [1, 2, 3, 4, 5] * 2,
+            "antibody": ["a"] * 5 + ["b"] * 5,
+            "escape": [0.2, 0.8, 0.2, 0.3, 0.2, 0.4, 1.0, 0.4, 0.5, 0.4],
+        }
+    )
+
+    hover = alt.selection_point(fields=["site"], on="mouseover", empty=False)
+    base = alt.Chart(df).encode(
+        x="site:O",
+        y=alt.Y("escape:Q", scale=alt.Scale(domain=[0, 1])),
+    )
+    lines = base.mark_line(size=1)
+    points = base.encode(
+        size=alt.condition(hover, alt.value(120), alt.value(40))
+    ).mark_circle(filled=True)
+    layered = lines + points
+
+    mean_panel = layered.transform_aggregate(escape="mean(escape)", groupby=["site"])
+    indiv_panel = layered.encode(detail="antibody:N")
+
+    spec = alt.vconcat(mean_panel, indiv_panel).add_params(hover).to_dict()
+    line_names = [panel["layer"][0]["name"] for panel in spec["vconcat"]]
+
+    assert line_names[0] != line_names[1]
+    assert line_names[0].endswith("_0")
+    assert line_names[1].endswith("_1")
+
+
+def test_vconcat_layered_charts_include_all_views_for_selection_params():
+    df = pd.DataFrame(
+        {
+            "x": [1, 2, 3, 1, 2, 3],
+            "category": ["a", "a", "a", "b", "b", "b"],
+            "y": [1, 3, 2, 2, 4, 3],
+        }
+    )
+
+    hover = alt.selection_point(fields=["x"], on="mouseover", empty=False)
+    base = alt.Chart(df).encode(
+        x="x:O",
+        y="y:Q",
+    )
+    lines = base.mark_line(size=1)
+    points = base.encode(
+        size=alt.condition(hover, alt.value(120), alt.value(40))
+    ).mark_circle(filled=True)
+    layered = lines + points
+
+    mean_panel = layered.transform_aggregate(y="mean(y)", groupby=["x"])
+    detail_panel = layered.encode(detail="category:N")
+
+    spec = alt.vconcat(mean_panel, detail_panel).add_params(hover).to_dict()
+    line_names = [panel["layer"][0]["name"] for panel in spec["vconcat"]]
+    param_views = spec["params"][0]["views"]
+
+    assert param_views == line_names
