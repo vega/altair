@@ -7,13 +7,14 @@ Altair has two release paths:
 
 ## Before Releasing
 
-Check all [Vega project](https://github.com/orgs/vega/repositories?type=source) versions are up-to-date. See [NOTES_FOR_MAINTAINERS.md](NOTES_FOR_MAINTAINERS.md).
+Check that all [Vega project](https://github.com/orgs/vega/repositories?type=source) versions are up-to-date. See [NOTES_FOR_MAINTAINERS.md](NOTES_FOR_MAINTAINERS.md).
 
 ## Releasing
 
 ### Semi-Automated Release
 
-1. Go to "Actions" tab, click the `Prepare Release Draft` workflow to the left, and then "Run workflow".
+1. A couple of times a month, GitHub actions will check if notable commits has been made to main (e.g. fixes and features) since the last release. If so, a draft release will be prepared and an issue will be opened tagging the maintainers to review it before releasing.
+    - It is also possible to trigger this release workflow manually: go to the "Actions" tab, click the `Prepare Release Draft` workflow to the left, and then "Run workflow".
     - This workflow automates the following steps:
         1. Checks for an existing draft release and exits if one already exists.
         2. Uses Cocogitto to inspect conventional commits since the latest `v*` tag.
@@ -25,7 +26,7 @@ Check all [Vega project](https://github.com/orgs/vega/repositories?type=source) 
         8. Opens an issue with the instructions for manual review before releasing.
 2. Review the issue that was opened by the workflow. This contains instructions on what to review before publishing the draft release, e.g. the release notes and the preview version of the docs.
 3. Publish the release on Github.
-    - Publishing a non-prerelease GitHub release whose tag matches `vX.Y.Z` triggers the `Publish Release to PyPI` workflow. That workflow checks out the release tag, builds the package, and publishes to PyPI using trusted publishing.
+    - Publishing a non-prerelease GitHub release whose tag matches `vX.Y.Z` triggers the `Publish Release to PyPI` workflow. That workflow checks out the release tag, builds the package, publishes to PyPI using trusted publishing, and updates the official documentation.
 
 ### Manual Release
 
@@ -58,15 +59,11 @@ Use this path for major releases, maintenance-branch releases, releases that sho
 
 6. Create a draft release at https://github.com/vega/altair/releases/new for the tag. Review the release notes, then publish the release. Publishing the GitHub release triggers PyPI publishing automatically for `vX.Y.Z` tags.
 
-7. Double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This may take up to several hours:
+7. Publish the updated documentation. To do this manually, write access to [altair-viz/altair-viz.github.io](https://github.com/altair-viz/altair-viz.github.io) is required:
 
-    https://github.com/conda-forge/altair-feedstock/pulls
+        uv run task doc-build -- --clean
+        uv run task doc-publish
 
 ## After Releasing
 
-1. Publish the updated documentation. This is manual since it requires write access to [altair-viz/altair-viz.github.io](https://github.com/altair-viz/altair-viz.github.io):
-
-    uv run task doc-build -- --clean
-    uv run task doc-publish
-
-2. Double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This is usually quick, but may take up to several hours: https://github.com/conda-forge/altair-feedstock/pulls
+Double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This is usually quick, but may take up to several hours: https://github.com/conda-forge/altair-feedstock/pulls
