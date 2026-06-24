@@ -624,6 +624,12 @@ class VegaExprDef:
         if s.isalnum():
             yield s
             return
+        if split := split_first_open_bracket(s):
+            before, after = split
+            yield from before
+            yield OPEN_BRACKET
+            yield from after
+            return
 
         end: list[str] = []
         original = s  # Save original string to detect changes
@@ -871,6 +877,16 @@ def expand_urls(url: str, /) -> str:
     else:
         url = url.replace(r"../", VEGA_DOCS_URL)
     return url
+
+
+def split_first_open_bracket(s: str, /) -> tuple[Iterator[str], Iterator[str]] | None:
+    """Split embedded optional-argument markers from mistune text tokens."""
+    if OPEN_BRACKET not in s:
+        return None
+    before, after = s.split(OPEN_BRACKET, maxsplit=1)
+    before_tokens = VegaExprDef._split_markers(before) if before else iter(())
+    after_tokens = VegaExprDef._split_markers(after) if after else iter(())
+    return before_tokens, after_tokens
 
 
 def format_doc(doc: str, /) -> str:
