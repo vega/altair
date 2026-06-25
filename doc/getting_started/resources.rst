@@ -88,14 +88,6 @@ VegaFusion provides server-side scaling for Altair charts, which can accelerate 
 .. List of links.
 .. _VegaFusion: https://vegafusion.io/
 
-altair_data_server_
-~~~~~~~~~~~~~~~~~~~
-
-Data transformer plugin that transparently serves data for charts.
-
-.. List of links.
-.. _altair_data_server: https://github.com/altair-viz/altair_data_server
-
 altair_pandas_
 ~~~~~~~~~~~~~~
 
