@@ -14,8 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14", "3.15"]
         required-dependencies: ["minimum", "latest"]
+        allow-prereleases: true
 
     name: py ${{ matrix.python-version }} with ${{ matrix.required-dependencies }} required deps
     steps:
