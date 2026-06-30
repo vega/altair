@@ -1161,8 +1161,13 @@ class ConfigMethodMixin:
 
     @use_signature(core.Config)
     def configure(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=False)  # type: ignore[attr-defined]
-        copy.config = core.Config(*args, **kwargs)
+        copy = self.copy(deep=["config"])  # type: ignore[attr-defined]
+        config = core.Config(*args, **kwargs)
+        if copy.config is Undefined:
+            copy.config = config
+        else:
+            for key, value in config.to_dict(validate=False).items():
+                copy.config[key] = value
         return copy
 
     @use_signature(core.RectConfig)
