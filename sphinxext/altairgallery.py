@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import random
+import re
 import shutil
 import warnings
 from operator import itemgetter
@@ -17,6 +18,7 @@ from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
 from docutils.statemachine import StringList
+from sphinx import addnodes
 from sphinx.util.nodes import nested_parse_with_titles
 
 from altair.utils.execeval import eval_block
@@ -32,6 +34,8 @@ from .utils import (
 
 if TYPE_CHECKING:
     from docutils.nodes import Node
+    from sphinx.application import Sphinx
+    from sphinx.environment import BuildEnvironment
 
 
 EXAMPLE_MODULE = "altair.examples"
@@ -300,6 +304,292 @@ def _indices(x: str, /) -> list[int]:
     return [int(idx) for idx in x.split()]
 
 
+def _example_names() -> set[str]:
+    return {example["name"] for example in iter_examples_arguments_syntax()}
+
+
+def _example_code_map() -> dict[str, str]:
+    return {example["name"]: example["code"] for example in populate_examples()}
+
+
+def _doc_ref(
+    app: Sphinx,
+    from_doc: str,
+    to_doc: str,
+    label: str,
+    anchor: str | None = None,
+) -> tuple[str, str] | None:
+    if to_doc not in app.env.found_docs:
+        return None
+    refuri = app.builder.get_relative_uri(from_doc, to_doc)
+    if anchor:
+        refuri = f"{refuri}#{anchor}"
+    return (label, refuri)
+
+
+def _heuristic_links_for_example(  # noqa C901
+    app: Sphinx,
+    docname: str,
+    example_name: str,
+) -> list[tuple[str, str]]:
+    code = _example_code_map().get(example_name, "")
+    if not code:
+        return []
+
+    links: list[tuple[str, str]] = []
+
+    def add(to_doc: str, label: str, anchor: str | None = None) -> None:
+        if (ref := _doc_ref(app, docname, to_doc, label, anchor)) and ref not in links:
+            links.append(ref)
+
+    # Mark pages
+    marks = set(re.findall(r"\.mark_([a-zA-Z0-9_]+)\(", code))
+    for mark in sorted(marks):
+        add(f"user_guide/marks/{mark}", f"Mark: {mark}")
+
+    # Transform pages
+    transforms = set(re.findall(r"\.transform_([a-zA-Z0-9_]+)\(", code))
+    for transform in sorted(transforms):
+        add(f"user_guide/transform/{transform}", f"Transform: {transform}")
+    if transforms:
+        add(
+            "user_guide/transform/index",
+            "Accessing transformed data",
+            "accessing-transformed-data",
+        )
+
+    # Encoding index headings
+    has_aggregation = (
+        "aggregate=" in code
+        or ".aggregate(" in code
+        or bool(re.search(r"\b(count|sum|mean|median|min|max|stdev|variance)\(", code))
+    )
+    has_binning = "bin=" in code or ".bin(" in code
+    has_explicit_type = "type=" in code or bool(re.search(r":[QONGT]\b", code))
+    has_special_char = bool(re.search(r"\\[:.\[\]]", code))
+    has_sort = "sort=" in code or ".sort(" in code
+    has_datum_value = "alt.datum" in code or "alt.value" in code
+
+    if has_aggregation or has_binning:
+        add(
+            "user_guide/encodings/index",
+            "Encodings: Binning and Aggregation",
+            "encoding-aggregates",
+        )
+    if has_explicit_type:
+        add(
+            "user_guide/encodings/index",
+            "Encodings: Data types",
+            "encoding-data-types",
+        )
+    if has_special_char:
+        add(
+            "user_guide/encodings/index",
+            "Encodings: Special characters in column names",
+            "escaping-special-characters-in-column-names",
+        )
+    if has_sort:
+        add("user_guide/encodings/index", "Encodings: Sort option", "sort-option")
+    if has_datum_value:
+        add(
+            "user_guide/encodings/index",
+            "Encodings: Datum and Value",
+            "datum-and-value",
+        )
+
+    # Interactivity index
+    has_interactivity = any(
+        token in code
+        for token in (
+            ".add_params(",
+            "alt.param(",
+            "selection_",
+            ".interactive(",
+            "alt.when(",
+            "condition(",
+        )
+    )
+    if has_interactivity:
+        add("user_guide/interactions/index", "Interactive charts")
+    if "alt.when(" in code:
+        add(
+            "user_guide/interactions/parameters",
+            "Parameters: Understanding when",
+            "understanding-when",
+        )
+
+    # Compound charts page
+    has_compound = any(
+        token in code
+        for token in (
+            ".facet(",
+            ".repeat(",
+            "alt.concat(",
+            "alt.hconcat(",
+            "alt.vconcat(",
+            ".hconcat(",
+            ".vconcat(",
+        )
+    )
+    if has_compound:
+        add("user_guide/compound_charts", "Layered & Multi-View Charts")
+
+    # Temporal axis links
+    has_temporal = (
+        bool(re.search(r"[xy]\s*=\s*['\"][^'\"]*:[Tt]\b", code))
+        or bool(re.search(r"[xy]\s*=.*type\s*=\s*['\"]temporal['\"]", code))
+        or bool(re.search(r"alt\.(X|Y)\([^\)]*:[Tt]", code))
+    )
+    if has_temporal:
+        add("user_guide/times_and_dates", "Times & Dates")
+        add("user_guide/transform/timeunit", "Transform: timeunit")
+
+    return links
+
+
+def _section_context(
+    node: nodes.Node,
+    env: BuildEnvironment,
+    docname: str,
+) -> tuple[str | None, str]:
+    current: nodes.Node | None = node
+    while current is not None and not isinstance(current, nodes.section):
+        current = current.parent
+
+    doc_title_node = env.titles.get(docname)
+    doc_title = doc_title_node.astext() if doc_title_node is not None else docname
+
+    if not isinstance(current, nodes.section):
+        return None, doc_title
+
+    section_ids = current.get("ids", [])
+    section_anchor = section_ids[0] if section_ids else None
+    title_node = current.next_node(nodes.title)
+    section_title = title_node.astext() if title_node is not None else doc_title
+    return section_anchor, section_title
+
+
+def _parse_example_from_target(target: str, /) -> str | None:
+    prefix = "gallery_"
+    if target.startswith(prefix):
+        return target.removeprefix(prefix)
+    return None
+
+
+def _collect_gallery_backrefs(app: Sphinx, doctree: nodes.document) -> None:
+    env = app.env
+    docname = env.docname
+
+    refs: dict[tuple[str, str | None], str] = {}
+    valid_examples = _example_names()
+
+    for node in doctree.findall(addnodes.pending_xref):
+        target = node.get("reftarget")
+        if not isinstance(target, str):
+            continue
+        if example_name := _parse_example_from_target(target):
+            if example_name not in valid_examples:
+                continue
+            anchor, section_title = _section_context(node, env, docname)
+            refs[(example_name, anchor)] = section_title
+
+    for node in doctree.findall(nodes.Element):
+        if node.tagname != "altair_plot":
+            continue
+        source_file = node.get("code_source_file")
+        if not isinstance(source_file, str):
+            continue
+        example_name = Path(source_file).stem
+        if example_name not in valid_examples:
+            continue
+        anchor, section_title = _section_context(node, env, docname)
+        refs[(example_name, anchor)] = section_title
+
+    if not hasattr(env, "_altair_gallery_doc_backrefs"):
+        env._altair_gallery_doc_backrefs = {}
+
+    env._altair_gallery_doc_backrefs[docname] = [
+        (example_name, anchor, section_title)
+        for (example_name, anchor), section_title in refs.items()
+    ]
+
+
+def _purge_gallery_backrefs(app: Sphinx, env: BuildEnvironment, docname: str) -> None:
+    if hasattr(env, "_altair_gallery_doc_backrefs"):
+        env._altair_gallery_doc_backrefs.pop(docname, None)
+
+
+def _add_gallery_backrefs_section(  # noqa C901
+    app: Sphinx, doctree: nodes.document, docname: str
+) -> None:
+    gallery_dir = app.config.altair_gallery_dir
+    if not docname.startswith(f"{gallery_dir}/") or docname == f"{gallery_dir}/index":
+        return
+
+    example_name = docname.rsplit("/", 1)[-1]
+    env = app.env
+    all_refs = getattr(env, "_altair_gallery_doc_backrefs", {})
+
+    matched: list[tuple[str, str | None, str]] = []
+    for source_doc, refs in all_refs.items():
+        if source_doc.startswith(f"{gallery_dir}/"):
+            continue
+        for ref_example, anchor, section_title in refs:
+            if ref_example == example_name:
+                matched.append((source_doc, anchor, section_title))
+
+    matched = sorted(set(matched), key=lambda x: (x[0], x[1] or "", x[2]))
+
+    def _build_explicit_links() -> list[tuple[str, str]]:
+        links: list[tuple[str, str]] = []
+        for source_doc, anchor, section_title in matched:
+            refuri = app.builder.get_relative_uri(docname, source_doc)
+            if anchor:
+                refuri = f"{refuri}#{anchor}"
+
+            doc_title_node = env.titles.get(source_doc)
+            doc_title = (
+                doc_title_node.astext() if doc_title_node is not None else source_doc
+            )
+            if section_title == doc_title:
+                label = doc_title
+            else:
+                label = f"{doc_title} - {section_title}"
+
+            links.append((label, refuri))
+        return links
+
+    def _build_backlink_list(links: list[tuple[str, str]]) -> nodes.bullet_list:
+        bullet = nodes.bullet_list()
+        for label, refuri in links:
+            item = nodes.list_item()
+            paragraph = nodes.paragraph()
+            paragraph += nodes.reference(text=label, refuri=refuri)
+            item += paragraph
+            bullet += item
+        return bullet
+
+    container = nodes.container(classes=["gallery-backlinks"])
+    container += nodes.raw("", "<p></p>", format="html")
+    container += nodes.raw("", "<p></p>", format="html")
+    container += nodes.paragraph(text="Learn more in these related doc sections:")
+    heuristic_links = _heuristic_links_for_example(app, docname, example_name)
+    explicit_links = _build_explicit_links()
+    explicit_uris = {uri for _label, uri in explicit_links}
+    extra_links = [
+        (label, uri) for label, uri in heuristic_links if uri not in explicit_uris
+    ]
+
+    if not matched and not extra_links:
+        return
+
+    merged_links = [*explicit_links, *extra_links]
+    if merged_links:
+        container += _build_backlink_list(merged_links)
+
+    doctree += container
+
+
 class AltairMiniGalleryDirective(Directive):
     has_content = False
 
@@ -442,6 +732,9 @@ def main(app) -> None:
 
 def setup(app) -> None:
     app.connect("builder-inited", main)
+    app.connect("doctree-read", _collect_gallery_backrefs)
+    app.connect("doctree-resolved", _add_gallery_backrefs_section)
+    app.connect("env-purge-doc", _purge_gallery_backrefs)
     app.add_css_file("altair-gallery.css")
     app.add_config_value("altair_gallery_dir", "gallery", "env")
     app.add_config_value("altair_gallery_ref", "example-gallery", "env")

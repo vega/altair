@@ -207,3 +207,7 @@ div.bottomnav {
   display: block;
   line-height: 22px;
 }
+
+.gallery-backlinks {
+  margin-top: 2.5rem;
+}
