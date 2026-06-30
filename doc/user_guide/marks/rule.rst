@@ -189,10 +189,10 @@ When comparing two related variables (e.g. predicted vs actual values), drawing 
     )
 
     identity_line = alt.Chart().mark_rule(strokeDash=[4, 4]).encode(
-        x=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
-        y=alt.datum(alt.expr("domain('x')[0]"), type="quantitative"),
-        x2=alt.datum(alt.expr("domain('x')[1]")),  # inherits "quantitative" from x
-        y2=alt.datum(alt.expr("domain('x')[1]")),  # inherits "quantitative" from y
+        x=alt.datum(alt.expr.domain('x')[0], type="quantitative"),
+        y=alt.datum(alt.expr.domain('x')[0], type="quantitative"),
+        x2=alt.datum(alt.expr.domain('x')[1]),  # inherits "quantitative" from x
+        y2=alt.datum(alt.expr.domain('x')[1]),  # inherits "quantitative" from y
     )  # either the x or y domain could be used to compute the line coordinates
 
     (points + identity_line).interactive()
