@@ -5232,6 +5232,19 @@ def _view_base_for_chart(obj: Any) -> str:
     return name
 
 
+def _has_user_set_name(obj: Any) -> bool:
+    """
+    Whether ``obj.name`` was set by the user rather than auto-generated.
+
+    Auto-generated view names come from the content hash (``_get_view_hash_name``),
+    which deliberately excludes the name, so a name that does not match that hash
+    was supplied by the user and must not be overwritten by position-based renaming.
+    """
+    if obj.name is Undefined:
+        return False
+    return _view_base_for_chart(obj) != obj._get_view_hash_name()
+
+
 def _view_names_for_param(subchart: ChartType, is_concat: bool) -> list[str]:
     """View names for this subchart to add to a param's views."""
     if isinstance(subchart, Chart):
@@ -5281,7 +5294,11 @@ def _combine_subchart_params(  # noqa: C901
                 continue
             subchart.layer = [layer.copy() for layer in subchart.layer]
             for layer in subchart.layer:
-                if isinstance(layer, Chart) and layer.name is not Undefined:
+                if (
+                    isinstance(layer, Chart)
+                    and layer.name is not Undefined
+                    and not _has_user_set_name(layer)
+                ):
                     layer.name = f"{_view_base_for_chart(layer)}_{i}"
 
     for i, subchart in enumerate(subcharts):
@@ -5300,9 +5317,12 @@ def _combine_subchart_params(  # noqa: C901
             subchart.spec = spec.copy(deep=True)
             spec = subchart.spec
             if isinstance(spec, LayerChart) and spec.layer:
-                spec.layer[0].name = f"{_view_base_for_chart(spec.layer[0])}_{i}"
+                target = spec.layer[0]
+                if not _has_user_set_name(target):
+                    target.name = f"{_view_base_for_chart(target)}_{i}"
             elif isinstance(spec, Chart):
-                spec.name = f"{_view_base_for_chart(spec)}_{i}"
+                if not _has_user_set_name(spec):
+                    spec.name = f"{_view_base_for_chart(spec)}_{i}"
 
         for param in subchart.params:
             p = _prepare_to_lift(param)

@@ -448,6 +448,37 @@ def test_vconcat_layered_charts_with_parent_transforms_have_unique_names():
     assert line_names[1].endswith("_1")
 
 
+def test_facet_chart_preserves_user_set_name_in_concat():
+    # Regression test for issue #4070: a user-set name on a FacetChart's inner
+    # spec must survive concatenation, instead of being renamed my_panel_0 / _1.
+    df = pd.DataFrame({"x": [1, 2, 3], "y": [1, 4, 9], "category": ["a", "b", "c"]})
+    hover = alt.selection_point(fields=["x"], on="mouseover", empty=False)
+    chart = alt.Chart(df, name="my_panel").encode(x="x:Q", y="y:Q").mark_line()
+    faceted = chart.add_params(hover).facet("category:N")
+
+    spec = alt.vconcat(faceted, faceted).to_dict()
+    names = [panel["spec"]["name"] for panel in spec["vconcat"]]
+    assert names == ["my_panel", "my_panel"], names
+
+
+def test_layer_chart_preserves_user_set_name_in_concat():
+    # Regression test for issue #4070: a user-set name on a layer inside a
+    # concatenated LayerChart must be preserved, not renamed my_panel_0 / _1.
+    df = pd.DataFrame({"x": [1, 2, 3], "y": [1, 4, 9]})
+    hover = alt.selection_point(fields=["x"], on="mouseover", empty=False)
+    base = alt.Chart(df, name="my_panel").encode(x="x:Q", y="y:Q")
+    points = base.encode(
+        size=alt.condition(hover, alt.value(120), alt.value(40))
+    ).mark_circle()
+    layered = base.mark_line() + points
+    p1 = layered.transform_filter("datum.x > 1")
+    p2 = layered.transform_filter("datum.x < 3")
+
+    spec = alt.vconcat(p1, p2).add_params(hover).to_dict()
+    names = [panel["layer"][0]["name"] for panel in spec["vconcat"]]
+    assert names == ["my_panel", "my_panel"], names
+
+
 def test_vconcat_layered_charts_include_all_views_for_selection_params():
     df = pd.DataFrame(
         {
