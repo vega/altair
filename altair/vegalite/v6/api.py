@@ -697,7 +697,7 @@ def _condition_to_selection(
     return selection
 
 
-class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore
+class _ConditionExtra(TypedDict, closed=True, total=False):
     # https://peps.python.org/pep-0728/
     # Likely a Field predicate
     empty: Optional[bool]
@@ -723,7 +723,7 @@ but not a `Conditional Value`_.
 """
 
 
-class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore
+class _ConditionClosed(TypedDict, closed=True, total=False):
     # https://peps.python.org/pep-0728/
     # Parameter {"param", "value", "empty"}
     # Predicate {"test", "value"}
@@ -772,7 +772,7 @@ Represents all outputs from `when-then-otherwise` conditions, which are not ``Sc
 """
 
 
-class _Value(TypedDict, closed=True, total=False):  # type: ignore
+class _Value(TypedDict, closed=True, total=False):
     # https://peps.python.org/pep-0728/
     value: Required[Any]
     __extra_items__: Any
