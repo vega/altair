@@ -239,7 +239,7 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
 
     def by_dtype(self, name: _Dataset, *dtypes: type[DType]) -> list[str]:
         """
-        Return column names specfied in ``name``'s schema.
+        Return column names specified in ``name``'s schema.
 
         Parameters
         ----------
