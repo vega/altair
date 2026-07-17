@@ -1397,6 +1397,8 @@ def when(
 
 def value(value: Any, **kwargs: Any) -> _Value:
     """Specify a value for use in an encoding."""
+    if isinstance(value, _expr_core.Expression):
+        value = core.ExprRef(expr=repr(value))
     return _Value(value=value, **kwargs)  # type: ignore
 
 
