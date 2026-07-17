@@ -556,6 +556,43 @@ def schema_url(version: str = SCHEMA_VERSION) -> str:
     return SCHEMA_URL_TEMPLATE.format(library="vega-lite", version=version)
 
 
+def _patch_schema_file(fp: Path) -> None:
+    """
+    Apply local patches to the downloaded Vega-Lite schema.
+
+    The upstream schema restricts ``SelectionInitInterval`` to ``Vector2``
+    (exactly 2 items), but Vega-Lite actually supports arbitrary-length arrays
+    for categorical interval selections. This patch extends the definition to
+    also accept arrays of any length (``minItems: 1``).
+
+    See https://github.com/vega/altair/issues/3896
+    """
+    with fp.open(encoding="utf8") as f:
+        schema = json.load(f)
+
+    defn = schema["definitions"]["SelectionInitInterval"]
+    # Only patch if not already patched
+    if not any(
+        isinstance(v, dict) and v.get("minItems") == 1 for v in defn.get("anyOf", [])
+    ):
+        defn["anyOf"].extend(
+            [
+                {"type": "array", "items": {"type": "boolean"}, "minItems": 1},
+                {"type": "array", "items": {"type": "number"}, "minItems": 1},
+                {"type": "array", "items": {"type": "string"}, "minItems": 1},
+                {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/DateTime"},
+                    "minItems": 1,
+                },
+            ]
+        )
+
+    with fp.open("w", encoding="utf8") as f:
+        json.dump(schema, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+
+
 def download_schemafile(
     version: str, schemapath: Path, skip_download: bool = False
 ) -> Path:
@@ -568,6 +605,7 @@ def download_schemafile(
     elif not fp.exists():
         msg = f"Cannot skip download: {fp!s} does not exist"
         raise ValueError(msg)
+    _patch_schema_file(fp)
     return fp
 
 

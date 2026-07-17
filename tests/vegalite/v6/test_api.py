@@ -1053,6 +1053,42 @@ def test_selection():
     assert sel1.name != sel3.name  # Different specifications get different names
 
 
+def test_selection_interval_categorical_value():
+    """
+    Test that selection_interval accepts categorical values with >2 items.
+
+    Regression test for https://github.com/vega/altair/issues/3896
+    """
+    # String categories (the original failing case)
+    brush = alt.selection_interval(
+        encodings=["y"],
+        value={"y": ["A", "B", "C"]},
+    )
+    d = brush.param.to_dict()
+    assert d["value"] == {"y": ["A", "B", "C"]}
+
+    # Numeric categories
+    brush = alt.selection_interval(
+        encodings=["x"],
+        value={"x": [4, 6, 8]},
+    )
+    d = brush.param.to_dict()
+    assert d["value"] == {"x": [4, 6, 8]}
+
+    # Mixed channels: range + categorical
+    brush = alt.selection_interval(
+        encodings=["x", "y"],
+        value={"x": [1, 10], "y": ["A", "B", "C"]},
+    )
+    d = brush.param.to_dict()
+    assert d["value"] == {"x": [1, 10], "y": ["A", "B", "C"]}
+
+    # Existing 2-item (range) case still works
+    brush = alt.selection_interval(value={"x": (55, 160), "y": (13, 37)})
+    d = brush.param.to_dict()
+    assert d["value"] == {"x": [55, 160], "y": [13, 37]}
+
+
 def test_selection_empty_property_preservation():
     """Test that the empty property is preserved in logical operations on selections."""
     # Test basic selection with empty=False
