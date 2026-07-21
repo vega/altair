@@ -300,11 +300,13 @@ def __getattr__(name: str) -> Any:
 def _register(
     name: LiteralString, fn: Plugin[ThemeConfig] | None, /
 ) -> Plugin[ThemeConfig] | None:
-    if fn is None:
-        return _themes._plugins.pop(name, None)
-    elif _themes.plugin_type(fn):
-        _themes._plugins[name] = fn
-        return fn
-    else:
-        msg = f"{type(fn).__name__!r} is not a callable theme\n\n{fn!r}"
-        raise TypeError(msg)
+    # Route through PluginRegistry.register so unregister clears active state
+    # when the removed theme was enabled (#3619).
+    try:
+        return _themes.register(name, fn)
+    except TypeError as err:
+        # Preserve theme-specific error text for non-callable values.
+        if fn is not None and not _themes.plugin_type(fn):
+            msg = f"{type(fn).__name__!r} is not a callable theme\n\n{fn!r}"
+            raise TypeError(msg) from err
+        raise
