@@ -250,7 +250,7 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
     return copy
 """
 UNIVERSAL_TYPED_DICT = '''
-class {name}(TypedDict{metaclass_kwds}):{comment}
+class {name}(TypedDict{metaclass_kwds}):
     """
     {summary}
 
@@ -991,7 +991,6 @@ def generate_typed_dict(
     TARGET: Literal["annotation"] = "annotation"
     arg_info = codegen.get_args(info)
     metaclass_kwds = ", total=False"
-    comment = ""
     args_it: Iterable[str] = (
         (
             f"{p}: {p_info.to_type_repr(target=TARGET, use_concrete=True)}"
@@ -1014,7 +1013,6 @@ def generate_typed_dict(
         arg_info.iter_args(kwds, exclude=exclude)
     ):
         metaclass_kwds = f", closed=True{metaclass_kwds}"
-        comment = "  # type: ignore[call-arg]"
         kwds_all_tps = chain.from_iterable(
             info.to_type_repr(as_str=False, target=TARGET, use_concrete=True)
             for _, info in arg_info.iter_args(kwds, exclude=exclude)
@@ -1028,7 +1026,6 @@ def generate_typed_dict(
     return UNIVERSAL_TYPED_DICT.format(
         name=name,
         metaclass_kwds=metaclass_kwds,
-        comment=comment,
         summary=(summary or f":class:`altair.{info.title}` ``TypedDict`` wrapper."),
         doc=doc,
         td_args=args,
