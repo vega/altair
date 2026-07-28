@@ -1660,6 +1660,19 @@ class _PropertySetter:
         return self
 
     def __call__(self, *args: Any, **kwargs: Any):
+        name = f"{type(self.obj).__name__}.{self.prop}"
+        if len(args) > 1:
+            msg = (
+                f"{name}() accepts at most one positional argument, "
+                f"but {len(args)} were given"
+            )
+            raise TypeError(msg)
+        if args and kwargs:
+            msg = (
+                f"{name}() cannot combine a positional argument with keyword arguments"
+            )
+            raise TypeError(msg)
+
         obj = self.obj.copy()
         # TODO: use schema to validate
         obj[self.prop] = args[0] if args else kwargs
