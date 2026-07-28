@@ -1147,18 +1147,22 @@ def test_to_dict_datetime_unsupported_timezone(tzinfo: dt.timezone) -> None:
         alt.FieldEqualPredicate(datetime.replace(tzinfo=tzinfo), "column 1")
 
 
-def test_property_setter_rejects_multiple_positional_arguments() -> None:
+@pytest.mark.parametrize("setter", ["scale", "axis", "sort"])
+def test_property_setter_rejects_multiple_positional_arguments(setter: str) -> None:
+    method = getattr(alt.X("field:Q"), setter)
     with pytest.raises(
-        TypeError, match=r"scale\(\) accepts at most one positional argument"
+        TypeError, match=rf"X\.{setter}\(\) accepts at most one positional argument"
     ):
-        alt.Color().scale(["M", "F"], ["#1FC3AA", "#8624F5"])  # type: ignore[call-overload]
+        method(["M", "F"], ["#1FC3AA", "#8624F5"])
 
 
-def test_property_setter_rejects_positional_and_keyword_arguments() -> None:
+@pytest.mark.parametrize("setter", ["scale", "axis", "sort"])
+def test_property_setter_rejects_positional_and_keyword_arguments(setter: str) -> None:
+    method = getattr(alt.X("field:Q"), setter)
     with pytest.raises(
-        TypeError, match=r"scale\(\) cannot combine a positional argument"
+        TypeError, match=rf"X\.{setter}\(\) cannot combine a positional argument"
     ):
-        alt.Color().scale(alt.Scale(), domain=["M", "F"])  # type: ignore[call-overload]
+        method(["M", "F"], domain=["M", "F"])
 
 
 def test_to_dict_datetime_typing() -> None:

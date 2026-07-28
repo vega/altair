@@ -1662,16 +1662,16 @@ class _PropertySetter:
         return self
 
     def __call__(self, *args: Any, **kwargs: Any):
+        name = f"{type(self.obj).__name__}.{self.prop}"
         if len(args) > 1:
             msg = (
-                f"{self.prop}() accepts at most one positional argument, "
+                f"{name}() accepts at most one positional argument, "
                 f"but {len(args)} were given"
             )
             raise TypeError(msg)
         if args and kwargs:
             msg = (
-                f"{self.prop}() cannot combine a positional argument "
-                "with keyword arguments"
+                f"{name}() cannot combine a positional argument with keyword arguments"
             )
             raise TypeError(msg)
 
