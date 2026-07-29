@@ -31,6 +31,9 @@ from altair.utils.schemapi import (
     Undefined,
     UndefinedType,
     _FromDict,
+    _get_relevant_errors,
+    _group_errors_by_json_path,
+    _subset_to_most_specific_json_paths,
 )
 from altair.vegalite.v6.schema.channels import X
 from altair.vegalite.v6.schema.core import FieldOneOfPredicate, Legend
@@ -887,6 +890,148 @@ def test_chart_validation_errors(chart_func, expected_error_message):
     expected_error_message = inspect.cleandoc(expected_error_message)
     with pytest.raises(SchemaValidationError, match=expected_error_message):
         chart.to_dict()
+
+
+@pytest.mark.parametrize(
+    ("channel", "invalid_parameters"),
+    [
+        (alt.value(1, bin=True, aggregate="sum"), "'aggregate', 'bin'"),
+        (
+            alt.value(1, bin=True, axis=1, aggregate="sum"),
+            "'aggregate', 'axis', 'bin'",
+        ),
+    ],
+)
+def test_validation_error_prefers_schema_matching_required_property(
+    channel: Any, invalid_parameters: str
+) -> None:
+    chart = alt.Chart().mark_point().encode(y=channel)
+
+    with pytest.raises(SchemaValidationError) as err:
+        chart.to_dict()
+
+    assert str(err.value).splitlines()[0] == (
+        f"`YValue` has no parameters named {invalid_parameters}"
+    )
+
+
+def test_validation_error_prefers_array_size_over_item_type() -> None:
+    with pytest.raises(SchemaValidationError) as err:
+        alt.selection_interval(resolve="global", value={"x": ["Europe"], "y": [10, 20]})
+
+    assert str(err.value) == (
+        "'['Europe']' is an invalid value for `x`. "
+        "Valid values are of type `Sequence` with at least 2 items."
+    )
+
+
+def test_sequence_length_errors_do_not_hide_prefixed_sibling_paths() -> None:
+    value: Any = {"x": ["a"], "x2": [{"bad": 1}]}
+    with pytest.raises(SchemaValidationError) as err:
+        alt.selection_interval(value=value)
+
+    message = str(err.value)
+    assert "for `x`" in message
+    assert "for `x2`" in message
+
+
+def test_specific_json_paths_compare_segments_not_string_prefixes() -> None:
+    schema = {
+        "type": "object",
+        "properties": {
+            "x": {"type": "integer"},
+            "x2": {"type": "array", "items": {"type": "integer"}},
+        },
+    }
+    errors = list(
+        jsonschema.Draft7Validator(schema).iter_errors({"x": "bad", "x2": ["bad"]})
+    )
+    grouped = _group_errors_by_json_path(errors)
+
+    specific = _subset_to_most_specific_json_paths(grouped)
+
+    assert set(specific) == {"$.x", "$.x2[0]"}
+
+
+@pytest.mark.parametrize("union_keyword", ["anyOf", "oneOf"])
+def test_nested_required_is_not_a_union_branch_discriminator(
+    union_keyword: str,
+) -> None:
+    schema = {
+        union_keyword: [
+            {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {"payload": {"type": "string"}},
+            },
+            {
+                "type": "object",
+                "properties": {
+                    "payload": {
+                        "type": "object",
+                        "required": ["kind"],
+                    }
+                },
+            },
+        ]
+    }
+    error = next(
+        jsonschema.Draft7Validator(schema).iter_errors({"kind": "first", "payload": {}})
+    )
+
+    relevant = _get_relevant_errors(error)
+
+    assert {child.schema_path[0] for child in relevant} == {0, 1}
+
+
+@pytest.mark.parametrize("union_keyword", ["anyOf", "oneOf"])
+def test_root_required_property_selects_union_branch(union_keyword: str) -> None:
+    schema = {
+        union_keyword: [
+            {
+                "type": "object",
+                "properties": {"field": {"type": "string"}},
+                "additionalProperties": False,
+            },
+            {
+                "type": "object",
+                "required": ["value"],
+                "properties": {"value": {"type": "integer"}},
+                "additionalProperties": False,
+            },
+        ]
+    }
+    error = next(jsonschema.Draft7Validator(schema).iter_errors({"value": 1, "bad": 2}))
+
+    relevant = _get_relevant_errors(error)
+
+    assert {child.schema_path[0] for child in relevant} == {1}
+
+
+def test_additional_properties_message_respects_pattern_properties() -> None:
+    class PatternSchema(_TestSchema):
+        _schema = {
+            "type": "object",
+            "patternProperties": {"^x-": {"type": "integer"}},
+            "additionalProperties": False,
+        }
+
+    with pytest.raises(SchemaValidationError) as err:
+        PatternSchema(**{"x-valid": 1, "invalid": 2})
+
+    assert str(err.value).splitlines()[0] == (
+        "`PatternSchema` has no parameter named 'invalid'"
+    )
+
+
+def test_validation_error_reports_max_items() -> None:
+    with pytest.raises(SchemaValidationError) as err:
+        alt.BinParams(divide=[1, 2, 3])
+
+    assert str(err.value) == (
+        "'[1, 2, 3]' is an invalid value for `divide`. "
+        "Valid values are of type `Sequence` with at most 2 items."
+    )
 
 
 def test_multiple_field_strings_in_condition():

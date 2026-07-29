@@ -6,6 +6,7 @@ import datetime as dt
 import inspect
 import json
 import operator
+import re
 import sys
 import textwrap
 import zoneinfo
@@ -322,10 +323,41 @@ def _get_leaves_of_error_tree(
             # This means that the error `err` was caused by errors in subschemas.
             # The list of errors from the subschemas are available in the property
             # `context`.
-            leaves.extend(_get_leaves_of_error_tree(err.context))
+            leaves.extend(_get_leaves_of_error_tree(_get_relevant_errors(err)))
         else:
             leaves.append(err)
     return leaves
+
+
+def _get_relevant_errors(
+    error: jsonschema.exceptions.ValidationError,
+) -> ValidationErrorList:
+    """Prefer union branches whose required properties identify the instance."""
+    if error.validator not in {"anyOf", "oneOf"} or not isinstance(
+        error.instance, dict
+    ):
+        return error.context
+
+    matching_schema_indexes: set[int] = set()
+    for child in error.context:
+        schema_path = list(child.schema_path)
+        if len(schema_path) != 2 or not isinstance(schema_path[0], int):
+            continue
+        if not isinstance(child.schema, dict):
+            continue
+        required = child.schema.get("required", [])
+        if required and all(
+            property_name in error.instance for property_name in required
+        ):
+            matching_schema_indexes.add(schema_path[0])
+
+    if not matching_schema_indexes:
+        return error.context
+    return [
+        child
+        for child in error.context
+        if child.schema_path and child.schema_path[0] in matching_schema_indexes
+    ]
 
 
 def _subset_to_most_specific_json_paths(
@@ -339,10 +371,28 @@ def _subset_to_most_specific_json_paths(
 
     This is done under the assumption that more specific json paths give more helpful error messages to the user.
     """
+    sequence_length_error_paths = {
+        tuple(errors[0].absolute_path)
+        for errors in errors_by_json_path.values()
+        if any(error.validator in {"minItems", "maxItems"} for error in errors)
+    }
+    absolute_paths = [
+        tuple(errors[0].absolute_path) for errors in errors_by_json_path.values()
+    ]
+
     errors_by_json_path_specific: GroupedValidationErrors = {}
     for json_path, errors in errors_by_json_path.items():
-        if not _contained_at_start_of_one_of_other_values(
-            json_path, list(errors_by_json_path.keys())
+        absolute_path = tuple(errors[0].absolute_path)
+        if any(
+            len(absolute_path) > len(length_error_path)
+            and absolute_path[: len(length_error_path)] == length_error_path
+            for length_error_path in sequence_length_error_paths
+        ):
+            continue
+        if absolute_path in sequence_length_error_paths or not any(
+            len(other_path) > len(absolute_path)
+            and other_path[: len(absolute_path)] == absolute_path
+            for other_path in absolute_paths
         ):
             errors_by_json_path_specific[json_path] = errors
     return errors_by_json_path_specific
@@ -713,12 +763,25 @@ class SchemaValidationError(jsonschema.ValidationError):
         param_dict_keys = inspect.signature(altair_cls).parameters.keys()
         param_names_table = self._format_params_as_table(param_dict_keys)
 
-        # Error messages for these errors look like this:
-        # "Additional properties are not allowed ('unknown' was unexpected)"
-        # Line below extracts "unknown" from this string
-        parameter_name = error.message.split("('")[-1].split("'")[0]
+        schema = error.schema if isinstance(error.schema, dict) else {}
+        instance = error.instance if isinstance(error.instance, dict) else {}
+        properties = schema.get("properties", {})
+        patterns = schema.get("patternProperties", {})
+        parameter_names = sorted(
+            property_name
+            for property_name in instance
+            if property_name not in properties
+            and not any(re.search(pattern, property_name) for pattern in patterns)
+        )
+        if not parameter_names:
+            # Error messages for these errors look like this:
+            # "Additional properties are not allowed ('unknown' was unexpected)"
+            parameter_names = [error.message.split("('")[-1].split("'")[0]]
+
+        formatted_parameter_names = ", ".join(map(repr, parameter_names))
+        parameter_text = "parameter" if len(parameter_names) == 1 else "parameters"
         message = f"""\
-`{altair_cls.__name__}` has no parameter named '{parameter_name}'
+`{altair_cls.__name__}` has no {parameter_text} named {formatted_parameter_names}
 
 Existing parameter names are:
 {param_names_table}
@@ -837,6 +900,16 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
             )
         if errs_type := errors_by_validator.get("type", None):
             bullet_points.append(self._format_type_reprs(errs_type))
+        if errs_min_items := errors_by_validator.get("minItems", None):
+            min_items = max(
+                cast("int", error.validator_value) for error in errs_min_items
+            )
+            bullet_points.append(f"of type `Sequence` with at least {min_items} items")
+        if errs_max_items := errors_by_validator.get("maxItems", None):
+            max_items = min(
+                cast("int", error.validator_value) for error in errs_max_items
+            )
+            bullet_points.append(f"of type `Sequence` with at most {max_items} items")
 
         # It should not matter which error is specifically used as they are all
         # about the same offending instance (i.e. invalid value), so we can just
@@ -867,7 +940,7 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         it = (
             "\n".join(e.message for e in errors)
             for validator, errors in errors_by_validator.items()
-            if validator not in {"enum", "type"}
+            if validator not in {"enum", "maxItems", "minItems", "type"}
         )
         message += "".join(it)
         return message
