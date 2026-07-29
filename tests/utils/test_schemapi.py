@@ -1008,6 +1008,45 @@ def test_root_required_property_selects_union_branch(union_keyword: str) -> None
     assert {child.schema_path[0] for child in relevant} == {1}
 
 
+@pytest.mark.parametrize("union_keyword", ["anyOf", "oneOf"])
+@pytest.mark.parametrize(
+    "input_schema", [{"const": "checkbox"}, {"enum": ["radio", "select"]}]
+)
+def test_required_property_value_must_match_union_branch(
+    union_keyword: str, input_schema: dict[str, Any]
+) -> None:
+    schema = {
+        union_keyword: [
+            {
+                "type": "object",
+                "required": ["input"],
+                "properties": {"input": input_schema},
+                "additionalProperties": False,
+            },
+            {
+                "type": "object",
+                "properties": {
+                    "input": {"type": "string"},
+                    "placeholder": {"type": "string"},
+                },
+                "additionalProperties": False,
+            },
+        ]
+    }
+    error = next(
+        jsonschema.Draft7Validator(schema).iter_errors(
+            {"input": "text", "placeholder": 123}
+        )
+    )
+
+    relevant = _get_relevant_errors(error)
+
+    assert any(
+        child.validator == "type" and list(child.path) == ["placeholder"]
+        for child in relevant
+    )
+
+
 def test_additional_properties_message_respects_pattern_properties() -> None:
     class PatternSchema(_TestSchema):
         _schema = {

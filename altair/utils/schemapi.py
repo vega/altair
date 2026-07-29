@@ -348,9 +348,24 @@ def _get_relevant_errors(
         if not isinstance(child.schema, dict):
             continue
         required = child.schema.get("required", [])
+        properties = child.schema.get("properties", {})
+        required_values_match = True
+        for property_name in required:
+            property_schema = properties.get(property_name, {})
+            if not isinstance(property_schema, dict):
+                continue
+            value = error.instance.get(property_name)
+            if (
+                "const" in property_schema
+                and value != property_schema["const"]
+            ) or (
+                "enum" in property_schema and value not in property_schema["enum"]
+            ):
+                required_values_match = False
+                break
         if required and all(
             property_name in error.instance for property_name in required
-        ):
+        ) and required_values_match:
             matching_schema_indexes.add(schema_path[0])
 
     if not matching_schema_indexes:
