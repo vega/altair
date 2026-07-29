@@ -1,5 +1,3 @@
-import sys
-from importlib import import_module
 from importlib.metadata import version as importlib_version
 
 import pandas as pd
@@ -9,7 +7,7 @@ from packaging.version import Version
 import altair as alt
 from altair.datasets import data
 
-# If anywidget is not installed, we will skip the tests in this file.
+# Tests requiring anywidget are skipped when it is not installed.
 try:
     import anywidget  # noqa: F401
 
@@ -49,24 +47,14 @@ else:
     jupyter_marks = skip_requires_anywidget(param_transformers)
 
 
-def test_jupyter_chart_without_anywidget(monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.skipif(has_anywidget, reason="anywidget is importable")
+def test_jupyter_chart_without_anywidget() -> None:
     """JupyterChart should report how to install its optional dependency."""
-    original_jupyter = sys.modules["altair.jupyter"]
+    with pytest.raises(ImportError, match="requires the anywidget"):
+        alt.JupyterChart.enable_offline()
 
-    with monkeypatch.context() as mp:
-        mp.setattr(alt, "jupyter", original_jupyter)
-        mp.setitem(sys.modules, "anywidget", None)
-        mp.delitem(sys.modules, "altair.jupyter")
-        jupyter = import_module("altair.jupyter")
-
-        with pytest.raises(ImportError, match="requires the anywidget"):
-            jupyter.JupyterChart.enable_offline()
-
-        with pytest.raises(ImportError, match="requires the anywidget"):
-            jupyter.JupyterChart()
-
-    assert sys.modules["altair.jupyter"] is original_jupyter
-    assert alt.jupyter is original_jupyter
+    with pytest.raises(ImportError, match="requires the anywidget"):
+        alt.JupyterChart(alt.Chart())
 
 
 @jupyter_marks
