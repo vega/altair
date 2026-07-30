@@ -42,8 +42,8 @@ chart = (
     alt.Chart(source)
     .mark_line(point=True)
     .encode(
-        x=alt.X("date:T", title="Date"),
-        y=alt.Y("visitors:Q", title="Visitors"),
+        x=alt.X("date:T"),
+        y=alt.Y("visitors:Q"),
         tooltip=[
             alt.Tooltip("date:T", title="Date"),
             alt.Tooltip("visitors:Q", title="Visitors"),
@@ -51,7 +51,6 @@ chart = (
     )
     .transform_filter(alt.datum.date >= alt.expr.timeParse(start_date, "%Y-%m-%d"))
     .add_params(start_date)
-    .properties(width=600)
 )
 
 chart
