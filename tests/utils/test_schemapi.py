@@ -26,14 +26,12 @@ from altair import load_schema
 from altair.datasets import data
 from altair.utils.schemapi import (
     _DEFAULT_JSON_SCHEMA_DRAFT_URL,
-    _VEGA_LITE_ROOT_URI,
     SchemaBase,
     SchemaValidationError,
     Undefined,
     UndefinedType,
     _FromDict,
     _group_errors_by_json_path,
-    _resolve_local_schema_reference,
     _subset_to_most_specific_json_paths,
     validate_jsonschema,
 )
@@ -1067,63 +1065,6 @@ def test_union_root_reference_uses_validation_root_schema() -> None:
     assert error is not None
     assert set(cast("Any", error)._all_errors) == {"$.payload"}
     assert error.validator == "type"
-
-
-@pytest.mark.parametrize("reference", ["#", f"{_VEGA_LITE_ROOT_URI}#"])
-def test_local_schema_root_reference_resolves_document(reference: str) -> None:
-    root_schema = {"type": "object"}
-
-    resolved = _resolve_local_schema_reference({"$ref": reference}, root_schema)
-
-    assert resolved is root_schema
-
-
-@pytest.mark.parametrize(
-    "reference",
-    [
-        "#/definitions/value~2",
-        "#/items/00",
-        "#/items/²",
-        "#/items/%C2%B2",
-        "#/definitions/%",
-        "#/definitions/%FF",
-    ],
-)
-def test_invalid_local_schema_reference_is_unknown(reference: str) -> None:
-    root_schema = {
-        "definitions": {"value~2": {"type": "string"}},
-        "items": [{"type": "string"}],
-    }
-
-    assert _resolve_local_schema_reference({"$ref": reference}, root_schema) is None
-
-
-def test_local_schema_reference_decodes_uri_fragment_tokens() -> None:
-    target = {"type": "string"}
-    root_schema = {"definitions": {"a b/c~d": target}}
-
-    resolved = _resolve_local_schema_reference(
-        {"$ref": "#/definitions/a%20b~1c~0d"}, root_schema
-    )
-
-    assert resolved is target
-
-
-def test_local_schema_reference_decodes_fragment_before_splitting() -> None:
-    nested_target = {"type": "integer"}
-    slash_key_target = {"type": "string"}
-    root_schema = {
-        "definitions": {
-            "a": {"b": nested_target},
-            "a/b": slash_key_target,
-        }
-    }
-
-    resolved = _resolve_local_schema_reference(
-        {"$ref": "#/definitions/a%2Fb"}, root_schema
-    )
-
-    assert resolved is nested_target
 
 
 def test_additional_properties_message_respects_pattern_properties() -> None:
