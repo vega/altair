@@ -12,7 +12,7 @@ import types
 import warnings
 from collections import deque
 from functools import partial
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 import jsonschema
 import jsonschema.exceptions
@@ -26,14 +26,16 @@ from altair import load_schema
 from altair.datasets import data
 from altair.utils.schemapi import (
     _DEFAULT_JSON_SCHEMA_DRAFT_URL,
+    _VEGA_LITE_ROOT_URI,
     SchemaBase,
     SchemaValidationError,
     Undefined,
     UndefinedType,
     _FromDict,
-    _get_relevant_errors,
     _group_errors_by_json_path,
+    _resolve_local_schema_reference,
     _subset_to_most_specific_json_paths,
+    validate_jsonschema,
 )
 from altair.vegalite.v6.schema.channels import X
 from altair.vegalite.v6.schema.core import FieldOneOfPredicate, Legend
@@ -953,98 +955,175 @@ def test_specific_json_paths_compare_segments_not_string_prefixes() -> None:
     assert set(specific) == {"$.x", "$.x2[0]"}
 
 
-@pytest.mark.parametrize("union_keyword", ["anyOf", "oneOf"])
-def test_nested_required_is_not_a_union_branch_discriminator(
-    union_keyword: str,
+@pytest.mark.parametrize(
+    ("bind", "expected_message"),
+    [
+        pytest.param(
+            {"input": "range", "min": "bad"},
+            "'bad' is an invalid value for `min`. Valid values are of type `float`.",
+            id="const-range",
+        ),
+        pytest.param(
+            {"input": "radio", "options": "bad"},
+            "'bad' is an invalid value for `options`. "
+            "Valid values are of type `Sequence`.",
+            id="enum-radio",
+        ),
+        pytest.param(
+            {"input": "text", "placeholder": 123},
+            "'123' is an invalid value for `placeholder`. "
+            "Valid values are of type `str`.",
+            id="generic-input",
+        ),
+        pytest.param(
+            {"input": "checkbox", "name": 123},
+            "'123' is an invalid value for `name`. Valid values are of type `str`.",
+            id="const-checkbox",
+        ),
+    ],
+)
+def test_binding_error_uses_matching_vegalite_branch(
+    bind: dict[str, Any], expected_message: str
 ) -> None:
-    schema = {
-        union_keyword: [
+    # The Vega-Lite Binding union uses referenced branches with const/enum
+    # discriminators plus a general string-input fallback. Explicitly contradicted
+    # branches should not leak their discriminator errors into the final message.
+    with pytest.raises(SchemaValidationError) as err:
+        alt.param(value=1, bind=bind).to_dict()  # type: ignore[arg-type]
+
+    assert str(err.value) == expected_message
+
+
+def test_union_reference_resolution_uses_validation_root_schema() -> None:
+    root_schema = {
+        "$schema": _JSON_SCHEMA_DRAFT_URL,
+        "definitions": {
+            "first": {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {
+                    "kind": {"const": "first"},
+                    "payload": {"type": "integer"},
+                },
+                "additionalProperties": False,
+            },
+            "second": {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {"kind": {"const": "second"}},
+                "additionalProperties": False,
+            },
+        },
+    }
+    union_schema = {
+        "anyOf": [
+            {"$ref": "#/definitions/first"},
+            {"$ref": "#/definitions/second"},
+        ]
+    }
+
+    error = validate_jsonschema(
+        {"kind": "first", "payload": "bad"},
+        union_schema,
+        rootschema=root_schema,
+        raise_error=False,
+    )
+
+    assert error is not None
+    assert set(cast("Any", error)._all_errors) == {"$.payload"}
+    assert error.validator == "type"
+
+
+def test_union_root_reference_uses_validation_root_schema() -> None:
+    root_schema = {
+        "$schema": _JSON_SCHEMA_DRAFT_URL,
+        "type": "object",
+        "required": ["kind"],
+        "properties": {
+            "kind": {"const": "first"},
+            "payload": {"type": "integer"},
+        },
+        "additionalProperties": False,
+    }
+    union_schema = {
+        "anyOf": [
+            {"$ref": "#"},
             {
                 "type": "object",
                 "required": ["kind"],
-                "properties": {"payload": {"type": "string"}},
-            },
-            {
-                "type": "object",
-                "properties": {
-                    "payload": {
-                        "type": "object",
-                        "required": ["kind"],
-                    }
-                },
+                "properties": {"kind": {"const": "second"}},
+                "additionalProperties": False,
             },
         ]
     }
-    error = next(
-        jsonschema.Draft7Validator(schema).iter_errors({"kind": "first", "payload": {}})
+
+    error = validate_jsonschema(
+        {"kind": "first", "payload": "bad"},
+        union_schema,
+        rootschema=root_schema,
+        raise_error=False,
     )
 
-    relevant = _get_relevant_errors(error)
-
-    assert {child.schema_path[0] for child in relevant} == {0, 1}
-
-
-@pytest.mark.parametrize("union_keyword", ["anyOf", "oneOf"])
-def test_root_required_property_selects_union_branch(union_keyword: str) -> None:
-    schema = {
-        union_keyword: [
-            {
-                "type": "object",
-                "properties": {"field": {"type": "string"}},
-                "additionalProperties": False,
-            },
-            {
-                "type": "object",
-                "required": ["value"],
-                "properties": {"value": {"type": "integer"}},
-                "additionalProperties": False,
-            },
-        ]
-    }
-    error = next(jsonschema.Draft7Validator(schema).iter_errors({"value": 1, "bad": 2}))
-
-    relevant = _get_relevant_errors(error)
-
-    assert {child.schema_path[0] for child in relevant} == {1}
+    assert error is not None
+    assert set(cast("Any", error)._all_errors) == {"$.payload"}
+    assert error.validator == "type"
 
 
-@pytest.mark.parametrize("union_keyword", ["anyOf", "oneOf"])
+@pytest.mark.parametrize("reference", ["#", f"{_VEGA_LITE_ROOT_URI}#"])
+def test_local_schema_root_reference_resolves_document(reference: str) -> None:
+    root_schema = {"type": "object"}
+
+    resolved = _resolve_local_schema_reference({"$ref": reference}, root_schema)
+
+    assert resolved is root_schema
+
+
 @pytest.mark.parametrize(
-    "input_schema", [{"const": "checkbox"}, {"enum": ["radio", "select"]}]
+    "reference",
+    [
+        "#/definitions/value~2",
+        "#/items/00",
+        "#/items/²",
+        "#/items/%C2%B2",
+        "#/definitions/%",
+        "#/definitions/%FF",
+    ],
 )
-def test_required_property_value_must_match_union_branch(
-    union_keyword: str, input_schema: dict[str, Any]
-) -> None:
-    schema = {
-        union_keyword: [
-            {
-                "type": "object",
-                "required": ["input"],
-                "properties": {"input": input_schema},
-                "additionalProperties": False,
-            },
-            {
-                "type": "object",
-                "properties": {
-                    "input": {"type": "string"},
-                    "placeholder": {"type": "string"},
-                },
-                "additionalProperties": False,
-            },
-        ]
+def test_invalid_local_schema_reference_is_unknown(reference: str) -> None:
+    root_schema = {
+        "definitions": {"value~2": {"type": "string"}},
+        "items": [{"type": "string"}],
     }
-    error = next(
-        jsonschema.Draft7Validator(schema).iter_errors(
-            {"input": "text", "placeholder": 123}
-        )
+
+    assert _resolve_local_schema_reference({"$ref": reference}, root_schema) is None
+
+
+def test_local_schema_reference_decodes_uri_fragment_tokens() -> None:
+    target = {"type": "string"}
+    root_schema = {"definitions": {"a b/c~d": target}}
+
+    resolved = _resolve_local_schema_reference(
+        {"$ref": "#/definitions/a%20b~1c~0d"}, root_schema
     )
 
-    relevant = _get_relevant_errors(error)
+    assert resolved is target
 
-    assert any(
-        child.validator == "type" and list(child.path) == ["placeholder"]
-        for child in relevant
+
+def test_local_schema_reference_decodes_fragment_before_splitting() -> None:
+    nested_target = {"type": "integer"}
+    slash_key_target = {"type": "string"}
+    root_schema = {
+        "definitions": {
+            "a": {"b": nested_target},
+            "a/b": slash_key_target,
+        }
+    }
+
+    resolved = _resolve_local_schema_reference(
+        {"$ref": "#/definitions/a%2Fb"}, root_schema
     )
+
+    assert resolved is nested_target
 
 
 def test_additional_properties_message_respects_pattern_properties() -> None:
