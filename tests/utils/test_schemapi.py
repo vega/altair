@@ -12,7 +12,7 @@ import types
 import warnings
 from collections import deque
 from functools import partial
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 import jsonschema
 import jsonschema.exceptions
@@ -31,6 +31,9 @@ from altair.utils.schemapi import (
     Undefined,
     UndefinedType,
     _FromDict,
+    _group_errors_by_json_path,
+    _subset_to_most_specific_json_paths,
+    validate_jsonschema,
 )
 from altair.vegalite.v6.schema.channels import X
 from altair.vegalite.v6.schema.core import FieldOneOfPredicate, Legend
@@ -887,6 +890,207 @@ def test_chart_validation_errors(chart_func, expected_error_message):
     expected_error_message = inspect.cleandoc(expected_error_message)
     with pytest.raises(SchemaValidationError, match=expected_error_message):
         chart.to_dict()
+
+
+@pytest.mark.parametrize(
+    ("channel", "invalid_parameters"),
+    [
+        (alt.value(1, bin=True, aggregate="sum"), "'aggregate', 'bin'"),
+        (
+            alt.value(1, bin=True, axis=1, aggregate="sum"),
+            "'aggregate', 'axis', 'bin'",
+        ),
+    ],
+)
+def test_validation_error_prefers_schema_matching_required_property(
+    channel: Any, invalid_parameters: str
+) -> None:
+    chart = alt.Chart().mark_point().encode(y=channel)
+
+    with pytest.raises(SchemaValidationError) as err:
+        chart.to_dict()
+
+    assert str(err.value).splitlines()[0] == (
+        f"`YValue` has no parameters named {invalid_parameters}"
+    )
+
+
+def test_validation_error_prefers_array_size_over_item_type() -> None:
+    with pytest.raises(SchemaValidationError) as err:
+        alt.selection_interval(resolve="global", value={"x": ["Europe"], "y": [10, 20]})
+
+    assert str(err.value) == (
+        "'['Europe']' is an invalid value for `x`. "
+        "Valid values are of type `Sequence` with at least 2 items."
+    )
+
+
+def test_sequence_length_errors_do_not_hide_prefixed_sibling_paths() -> None:
+    value: Any = {"x": ["a"], "x2": [{"bad": 1}]}
+    with pytest.raises(SchemaValidationError) as err:
+        alt.selection_interval(value=value)
+
+    message = str(err.value)
+    assert "for `x`" in message
+    assert "for `x2`" in message
+
+
+def test_specific_json_paths_compare_segments_not_string_prefixes() -> None:
+    schema = {
+        "type": "object",
+        "properties": {
+            "x": {"type": "integer"},
+            "x2": {"type": "array", "items": {"type": "integer"}},
+        },
+    }
+    errors = list(
+        jsonschema.Draft7Validator(schema).iter_errors({"x": "bad", "x2": ["bad"]})
+    )
+    grouped = _group_errors_by_json_path(errors)
+
+    specific = _subset_to_most_specific_json_paths(grouped)
+
+    assert set(specific) == {"$.x", "$.x2[0]"}
+
+
+@pytest.mark.parametrize(
+    ("bind", "expected_message"),
+    [
+        pytest.param(
+            {"input": "range", "min": "bad"},
+            "'bad' is an invalid value for `min`. Valid values are of type `float`.",
+            id="const-range",
+        ),
+        pytest.param(
+            {"input": "radio", "options": "bad"},
+            "'bad' is an invalid value for `options`. "
+            "Valid values are of type `Sequence`.",
+            id="enum-radio",
+        ),
+        pytest.param(
+            {"input": "text", "placeholder": 123},
+            "'123' is an invalid value for `placeholder`. "
+            "Valid values are of type `str`.",
+            id="generic-input",
+        ),
+        pytest.param(
+            {"input": "checkbox", "name": 123},
+            "'123' is an invalid value for `name`. Valid values are of type `str`.",
+            id="const-checkbox",
+        ),
+    ],
+)
+def test_binding_error_uses_matching_vegalite_branch(
+    bind: dict[str, Any], expected_message: str
+) -> None:
+    # The Vega-Lite Binding union uses referenced branches with const/enum
+    # discriminators plus a general string-input fallback. Explicitly contradicted
+    # branches should not leak their discriminator errors into the final message.
+    with pytest.raises(SchemaValidationError) as err:
+        alt.param(value=1, bind=bind).to_dict()  # type: ignore[arg-type]
+
+    assert str(err.value) == expected_message
+
+
+def test_union_reference_resolution_uses_validation_root_schema() -> None:
+    root_schema = {
+        "$schema": _JSON_SCHEMA_DRAFT_URL,
+        "definitions": {
+            "first": {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {
+                    "kind": {"const": "first"},
+                    "payload": {"type": "integer"},
+                },
+                "additionalProperties": False,
+            },
+            "second": {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {"kind": {"const": "second"}},
+                "additionalProperties": False,
+            },
+        },
+    }
+    union_schema = {
+        "anyOf": [
+            {"$ref": "#/definitions/first"},
+            {"$ref": "#/definitions/second"},
+        ]
+    }
+
+    error = validate_jsonschema(
+        {"kind": "first", "payload": "bad"},
+        union_schema,
+        rootschema=root_schema,
+        raise_error=False,
+    )
+
+    assert error is not None
+    assert set(cast("Any", error)._all_errors) == {"$.payload"}
+    assert error.validator == "type"
+
+
+def test_union_root_reference_uses_validation_root_schema() -> None:
+    root_schema = {
+        "$schema": _JSON_SCHEMA_DRAFT_URL,
+        "type": "object",
+        "required": ["kind"],
+        "properties": {
+            "kind": {"const": "first"},
+            "payload": {"type": "integer"},
+        },
+        "additionalProperties": False,
+    }
+    union_schema = {
+        "anyOf": [
+            {"$ref": "#"},
+            {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {"kind": {"const": "second"}},
+                "additionalProperties": False,
+            },
+        ]
+    }
+
+    error = validate_jsonschema(
+        {"kind": "first", "payload": "bad"},
+        union_schema,
+        rootschema=root_schema,
+        raise_error=False,
+    )
+
+    assert error is not None
+    assert set(cast("Any", error)._all_errors) == {"$.payload"}
+    assert error.validator == "type"
+
+
+def test_additional_properties_message_respects_pattern_properties() -> None:
+    class PatternSchema(_TestSchema):
+        _schema = {
+            "type": "object",
+            "patternProperties": {"^x-": {"type": "integer"}},
+            "additionalProperties": False,
+        }
+
+    with pytest.raises(SchemaValidationError) as err:
+        PatternSchema(**{"x-valid": 1, "invalid": 2})
+
+    assert str(err.value).splitlines()[0] == (
+        "`PatternSchema` has no parameter named 'invalid'"
+    )
+
+
+def test_validation_error_reports_max_items() -> None:
+    with pytest.raises(SchemaValidationError) as err:
+        alt.BinParams(divide=[1, 2, 3])
+
+    assert str(err.value) == (
+        "'[1, 2, 3]' is an invalid value for `divide`. "
+        "Valid values are of type `Sequence` with at most 2 items."
+    )
 
 
 def test_multiple_field_strings_in_condition():
