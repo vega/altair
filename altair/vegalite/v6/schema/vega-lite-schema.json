@@ -23135,6 +23135,34 @@
         },
         {
           "$ref": "#/definitions/Vector2<DateTime>"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          },
+          "minItems": 1
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DateTime"
+          },
+          "minItems": 1
         }
       ]
     },
@@ -32457,4 +32485,3 @@
     }
   }
 }
-
