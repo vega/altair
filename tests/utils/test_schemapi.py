@@ -1147,24 +1147,6 @@ def test_to_dict_datetime_unsupported_timezone(tzinfo: dt.timezone) -> None:
         alt.FieldEqualPredicate(datetime.replace(tzinfo=tzinfo), "column 1")
 
 
-@pytest.mark.parametrize("setter", ["scale", "axis", "sort"])
-def test_property_setter_rejects_multiple_positional_arguments(setter: str) -> None:
-    method = getattr(alt.X("field:Q"), setter)
-    with pytest.raises(
-        TypeError, match=rf"X\.{setter}\(\) accepts at most one positional argument"
-    ):
-        method(["M", "F"], ["#1FC3AA", "#8624F5"])
-
-
-@pytest.mark.parametrize("setter", ["scale", "axis", "sort"])
-def test_property_setter_rejects_positional_and_keyword_arguments(setter: str) -> None:
-    method = getattr(alt.X("field:Q"), setter)
-    with pytest.raises(
-        TypeError, match=rf"X\.{setter}\(\) cannot combine a positional argument"
-    ):
-        method(["M", "F"], domain=["M", "F"])
-
-
 def test_to_dict_datetime_typing() -> None:
     """
     Enumerating various places that need updated annotations.

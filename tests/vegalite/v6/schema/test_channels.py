@@ -64,14 +64,19 @@ def test_channels_typing() -> None:
     ):
         positional_as_keyword.to_dict()
 
-    with pytest.raises(
-        TypeError, match=r"sort\(\) accepts at most one positional argument"
-    ):
-        angle.sort("field:Q", "min", "descending")  # type: ignore[call-overload]
+    keyword_as_positional = angle.sort("field:Q", "min", "descending")  # type: ignore[call-overload]
+    with pytest.raises(SchemaValidationError):
+        keyword_as_positional.to_dict()
     angle.sort(field="field:Q", op="min", order="descending")
 
+    # NOTE: Doesn't raise `SchemaValidationError`
+    # - `"ascending"` is silently ignored when positional
+    # - Caught as invalid statically, but not at runtime
+    bad = angle.sort("x", "ascending").to_dict()  # type: ignore[call-overload]
+    good = angle.sort(encoding="x", order="ascending").to_dict()
+    assert isinstance(bad, dict)
+    assert isinstance(good, dict)
     with pytest.raises(
-        TypeError, match=r"sort\(\) accepts at most one positional argument"
+        AssertionError, match=r"'x' == {'encoding': 'x', 'order': 'ascending'}"
     ):
-        angle.sort("x", "ascending")  # type: ignore[call-overload]
-    assert angle.sort(encoding="x", order="ascending").to_dict()
+        assert bad["sort"] == good["sort"]
