@@ -1,8 +1,8 @@
 """
-Filter a Time Series with a Date Input
-======================================
-This example shows how to bind an HTML date input to a parameter and use the
-selected date to filter a time-series chart.
+Filter a Time Series with Date and Number Inputs
+================================================
+This example shows how to bind HTML date and number inputs to parameters and
+use the selected values to filter a time-series chart.
 """
 
 # category: interactive charts
@@ -37,6 +37,12 @@ start_date = alt.param(
     bind=alt.binding(input="date", name="Start date: "),
 )
 
+minimum_visitors = alt.param(
+    name="minimum_visitors",
+    value=180,
+    bind=alt.binding(input="number", name="Minimum visitors: "),
+)
+
 chart = (
     alt.Chart(source)
     .mark_line(point=True)
@@ -49,7 +55,8 @@ chart = (
         ],
     )
     .transform_filter(alt.datum.date >= alt.expr.timeParse(start_date, "%Y-%m-%d"))
-    .add_params(start_date)
+    .transform_filter(alt.datum.visitors >= minimum_visitors)
+    .add_params(start_date, minimum_visitors)
 )
 
 chart
