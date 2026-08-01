@@ -89,6 +89,17 @@ Recently Added |gallery-new-pill|
      <span class="image-title">Faceted County-Level Choropleth Maps</span>
    </a>
    
+   <a class="imagegroup imagegroup-recent" href="interactive_date_input.html">
+   <span
+         class="image" alt="Filter a Time Series with a Date Input"
+
+        style="background-image: url(../_static/interactive_date_input-thumb.png);"
+
+    ></span>
+
+     <span class="image-title">Filter a Time Series with a Date Input</span>
+   </a>
+   
    <a class="imagegroup imagegroup-recent" href="grouped_bar_chart_overlapping_bars.html">
    <span
          class="image" alt="Grouped Bar Chart with xOffset and overlapping bars"
@@ -1842,6 +1853,20 @@ Interactive Charts
     ></span>
 
      <span class="image-title">Bar Chart with Highlighting on Hover and Selection on Click</span>
+   </a>
+   
+   <a class="imagegroup imagegroup-new" href="interactive_date_input.html">
+   
+   <span class="image-tag">new</span>
+   
+   <span
+         class="image" alt="Filter a Time Series with a Date Input"
+
+        style="background-image: url(../_static/interactive_date_input-thumb.png);"
+
+    ></span>
+
+     <span class="image-title">Filter a Time Series with a Date Input</span>
    </a>
    
    <a class="imagegroup" href="selection_layer_bar_month.html">

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Large Datasets &#8212; Vega-Altair 6.2.1.post20+ga9765713 documentation</title>
+    <title>Large Datasets &#8212; Vega-Altair 6.2.2.post11+gc217ba4b documentation</title>
   
   
   
@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=f2dd5bfb"></script>
+    <script src="../_static/documentation_options.js?v=a3ab8c07"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
@@ -63,7 +63,7 @@
     <link rel="prev" title="Data Transformers" href="data_transformers.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="6.2.1.post20+ga9765713" />
+  <meta name="docsearch:version" content="6.2.2.post11+gc217ba4b" />
   </head>
   
   
@@ -102,7 +102,7 @@
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 <aside class="bd-header-announcement" aria-label="Announcement">
-  <div class="bd-header-announcement__content"><strong style='font-size:1.2em;'>⚠️ Preview build for draft release v6.2.2 &mdash; not the <a href="https://altair-viz.github.io/" style="color:inherit;">official Altair documentation</a>. ⚠️</strong></div>
+  <div class="bd-header-announcement__content"><strong style='font-size:1.2em;'>⚠️ Preview build for draft release v7.0.0 &mdash; not the <a href="https://altair-viz.github.io/" style="color:inherit;">official Altair documentation</a>. ⚠️</strong></div>
 </aside>
 
   
@@ -130,8 +130,8 @@
     
     
     
-    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.2.1.post20+ga9765713 documentation - Home"/>
-    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.2.1.post20+ga9765713 documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.2.2.post11+gc217ba4b documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.2.2.post11+gc217ba4b documentation - Home"/>
   
   
 </a></div>
@@ -719,22 +719,6 @@ as well as remotely in Colab and Binder.</p>
 but rather store it separately and pass it to the chart by URL.
 This not only addresses the issue of large notebooks, but also leads to better
 interactivity performance with large datasets.</p>
-<section id="local-data-server">
-<h3>Local Data Server<a class="headerlink" href="#local-data-server" title="Link to this heading">#</a></h3>
-<p>A convenient way to do this is by using the <a class="reference external" href="https://github.com/altair-viz/altair_data_server">altair_data_server</a>
-package. It serves your data from a local threaded server. First install the package:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install altair_data_server
-</pre></div>
-</div>
-<p>And then enable the data transformer:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
-<span class="n">alt</span><span class="o">.</span><span class="n">data_transformers</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="s1">&#39;data_server&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Note that this approach may not work on some cloud-based Jupyter notebook services.
-A disadvantage of this method is that if you reopen the notebook, the plot may no longer display
-as the data server is no longer running.</p>
-</section>
 <section id="local-filesystem">
 <h3>Local Filesystem<a class="headerlink" href="#local-filesystem" title="Link to this heading">#</a></h3>
 <p>You can also persist the data to disk and then pass the path to Altair:</p>
@@ -1068,7 +1052,6 @@ summary statistics to Altair instead of the full dataset.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#passing-data-by-url">Passing Data by URL</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-data-server">Local Data Server</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-filesystem">Local Filesystem</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vega-datasets">Vega Datasets</a></li>
 </ul>
