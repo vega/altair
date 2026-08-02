@@ -5234,6 +5234,83 @@ def _view_base_for_chart(obj: Any) -> str:
     return name
 
 
+def _has_user_set_name(obj: Any) -> bool:
+    """
+    Whether ``obj.name`` was set by the user rather than auto-generated.
+
+    Auto-generated view names come from the content hash (``_get_view_hash_name``),
+    which deliberately excludes the name, so a name that does not match that hash
+    was supplied by the user and must not be overwritten by position-based renaming.
+    """
+    if obj.name is Undefined:
+        return False
+    return _view_base_for_chart(obj) != obj._get_view_hash_name()
+
+
+def _concat_name_targets(subchart: Any) -> list[Any]:
+    """The charts whose ``name`` position-based renaming would rewrite in a concat."""
+    if isinstance(subchart, LayerChart) and subchart.layer:
+        return [
+            layer
+            for layer in subchart.layer
+            if isinstance(layer, Chart) and layer.name is not Undefined
+        ]
+    if isinstance(subchart, FacetChart):
+        spec = subchart.spec
+        if isinstance(spec, LayerChart) and spec.layer:
+            return [spec.layer[0]]
+        if isinstance(spec, Chart):
+            return [spec]
+    return []
+
+
+def _colliding_user_names(subcharts: Sequence[Any]) -> set[str]:
+    """
+    User-set view names that more than one concatenated subchart carries.
+
+    Vega-Lite requires unique view names within a group, so a name reused across
+    panels has to be disambiguated even though the user set it deliberately.
+    Leaving it in place makes the panels share one data pipeline and renders the
+    wrong data (#4065).
+    """
+    counts: dict[str, int] = {}
+    for subchart in subcharts:
+        # Count a name once per subchart: the layers of one LayerChart share the
+        # name of the base chart they were built from, and that is not a clash
+        # between panels.
+        for name in {
+            target.name
+            for target in _concat_name_targets(subchart)
+            if _has_user_set_name(target)
+        }:
+            counts[name] = counts.get(name, 0) + 1
+    return {name for name, count in counts.items() if count > 1}
+
+
+def _keep_user_set_name(obj: Any, collisions: set[str], warned: set[str]) -> bool:
+    """
+    Whether ``obj.name`` is user-set and unique, so renaming must leave it alone.
+
+    A user-set name that collides with another subchart's is not kept: it falls
+    through to position-based renaming, and a warning is emitted once per name.
+    """
+    if not _has_user_set_name(obj):
+        return False
+    if obj.name not in collisions:
+        return True
+    if obj.name not in warned:
+        warned.add(obj.name)
+        warnings.warn(
+            f"Multiple subcharts in this concatenation are named {obj.name!r}. "
+            "Vega-Lite requires unique view names, so a positional suffix was "
+            "appended to each of them. Give the subcharts distinct name= values "
+            "to control their names.",
+            category=UserWarning,
+            stacklevel=6,
+        )
+    return False
+
+
 def _view_names_for_param(subchart: ChartType, is_concat: bool) -> list[str]:
     """View names for this subchart to add to a param's views."""
     if isinstance(subchart, Chart):
@@ -5277,13 +5354,22 @@ def _combine_subchart_params(  # noqa: C901
     subcharts = [subchart.copy() for subchart in subcharts]
     is_concat = len(subcharts) > 1
 
+    # A user-set name is preserved only while it stays unique across the
+    # subcharts; duplicates still get the positional suffix, with a warning.
+    collisions = _colliding_user_names(subcharts) if is_concat else set()
+    warned: set[str] = set()
+
     if is_concat:
         for i, subchart in enumerate(subcharts):
             if not (isinstance(subchart, LayerChart) and subchart.layer):
                 continue
             subchart.layer = [layer.copy() for layer in subchart.layer]
             for layer in subchart.layer:
-                if isinstance(layer, Chart) and layer.name is not Undefined:
+                if (
+                    isinstance(layer, Chart)
+                    and layer.name is not Undefined
+                    and not _keep_user_set_name(layer, collisions, warned)
+                ):
                     layer.name = f"{_view_base_for_chart(layer)}_{i}"
 
     for i, subchart in enumerate(subcharts):
@@ -5302,9 +5388,12 @@ def _combine_subchart_params(  # noqa: C901
             subchart.spec = spec.copy(deep=True)
             spec = subchart.spec
             if isinstance(spec, LayerChart) and spec.layer:
-                spec.layer[0].name = f"{_view_base_for_chart(spec.layer[0])}_{i}"
+                target = spec.layer[0]
+                if not _keep_user_set_name(target, collisions, warned):
+                    target.name = f"{_view_base_for_chart(target)}_{i}"
             elif isinstance(spec, Chart):
-                spec.name = f"{_view_base_for_chart(spec)}_{i}"
+                if not _keep_user_set_name(spec, collisions, warned):
+                    spec.name = f"{_view_base_for_chart(spec)}_{i}"
 
         for param in subchart.params:
             p = _prepare_to_lift(param)
