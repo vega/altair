@@ -164,7 +164,14 @@ class PluginRegistry(Generic[PluginT, R]):
             The plugin that was registered or unregistered.
         """
         if value is None:
-            return self._plugins.pop(name, None)
+            # Unregister. If this was the active plugin, clear active state so
+            # `active` does not keep returning a removed name (#3619).
+            plugin = self._plugins.pop(name, None)
+            if name == self._active_name:
+                self._active = None
+                self._active_name = ""
+                self._options = {}
+            return plugin
         elif self.plugin_type(value):
             self._plugins[name] = value
             return value

@@ -107,10 +107,12 @@ def test_theme_unregister() -> None:
 
     assert theme.active == "big square"
     fn = theme.unregister("big square")
+    assert fn is not None
     assert fn() == custom_theme()
     assert theme.active == theme._themes.active
-    # BUG: https://github.com/vega/altair/issues/3619
-    # assert theme.active != "big square"
+    # Unregistering the active theme must clear active state (#3619).
+    assert theme.active != "big square"
+    assert theme.active == ""
 
     with pytest.raises(
         TypeError, match=r"Found no theme named 'big square' in registry."

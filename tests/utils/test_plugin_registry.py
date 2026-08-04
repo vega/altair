@@ -130,3 +130,17 @@ def test_plugin_registry_context():
 
     assert plugins.active == "default"
     assert plugins.options == {"p": 2}
+
+
+def test_plugin_registry_unregister_clears_active():
+    """Unregistering the active plugin must clear active name/state (#3619)."""
+    plugins = TypedCallableRegistry()
+    plugins.register("temp", lambda x: x + 1)
+    plugins.enable("temp")
+    assert plugins.active == "temp"
+    removed = plugins.register("temp", None)
+    assert removed is not None
+    assert removed(1) == 2
+    assert plugins.active == ""
+    assert plugins.get() is None
+    assert "temp" not in plugins.names()
