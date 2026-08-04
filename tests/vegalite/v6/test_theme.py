@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Callable, Mapping, Set
+from contextlib import suppress
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal, TypeVar, cast, get_args
 
@@ -68,54 +69,79 @@ def test_theme_remote_lambda() -> None:
     with urlopen(URL) as response:
         custom_theme = json.load(response)
 
-    alt.theme.register("remote_binste", enable=True)(lambda: custom_theme)
-    assert alt.theme.active == "remote_binste"
+    try:
+        alt.theme.register("remote_binste", enable=True)(lambda: custom_theme)
+        assert alt.theme.active == "remote_binste"
 
-    # NOTE: A decorator-compatible way to define an "anonymous" function
-    @alt.theme.register("remote_binste_2", enable=True)
-    def _():
-        return custom_theme
+        # NOTE: A decorator-compatible way to define an "anonymous" function
+        @alt.theme.register("remote_binste_2", enable=True)
+        def _():
+            return custom_theme
 
-    assert alt.theme.active == "remote_binste_2"
+        assert alt.theme.active == "remote_binste_2"
+        decorated_theme = alt.theme.get()
 
-    decorated_theme = alt.theme.get()
-    alt.theme.enable("remote_binste")
-    assert alt.theme.active == "remote_binste"
-    lambda_theme = alt.theme.get()
+        alt.theme.enable("remote_binste")
+        assert alt.theme.active == "remote_binste"
+        lambda_theme = alt.theme.get()
 
-    assert decorated_theme
-    assert lambda_theme
-    assert decorated_theme() == lambda_theme()
+        assert decorated_theme
+        assert lambda_theme
+        assert decorated_theme() == lambda_theme()
+    finally:
+        alt.theme.enable("default")
+        # Cleanup runs even if the test fails before registration completes, or
+        # after a test intentionally unregisters a theme. Ignore missing themes.
+        with suppress(TypeError):
+            alt.theme.unregister("remote_binste")
+        with suppress(TypeError):
+            alt.theme.unregister("remote_binste_2")
 
 
 def test_theme_register_decorator() -> None:
-    @theme.register("unique name", enable=True)
-    def custom_theme() -> ThemeConfig:
-        return {"height": 400, "width": 700}
+    try:
 
-    assert theme._themes.active == "unique name" == theme.active
-    registered = theme._themes.get()
-    assert registered is not None
-    assert registered == theme.get()
-    assert registered() == {"height": 400, "width": 700} == custom_theme()
+        @theme.register("unique name", enable=True)
+        def custom_theme() -> ThemeConfig:
+            return {"height": 400, "width": 700}
+
+        assert theme._themes.active == "unique name" == theme.active
+        registered = theme._themes.get()
+        assert registered is not None
+        assert registered == theme.get()
+        assert registered() == {"height": 400, "width": 700} == custom_theme()
+    finally:
+        theme.enable("default")
+        # Cleanup runs even if the test fails before registration completes.
+        # Ignore missing themes.
+        with suppress(TypeError):
+            theme.unregister("unique name")
 
 
 def test_theme_unregister() -> None:
-    @theme.register("big square", enable=True)
-    def custom_theme() -> ThemeConfig:
-        return {"height": 1000, "width": 1000}
+    try:
 
-    assert theme.active == "big square"
-    fn = theme.unregister("big square")
-    assert fn() == custom_theme()
-    assert theme.active == theme._themes.active
-    # BUG: https://github.com/vega/altair/issues/3619
-    # assert theme.active != "big square"
+        @theme.register("big square", enable=True)
+        def custom_theme() -> ThemeConfig:
+            return {"height": 1000, "width": 1000}
 
-    with pytest.raises(
-        TypeError, match=r"Found no theme named 'big square' in registry."
-    ):
-        theme.unregister("big square")
+        assert theme.active == "big square"
+        fn = theme.unregister("big square")
+        assert fn() == custom_theme()
+        assert theme.active == theme._themes.active
+        # BUG: https://github.com/vega/altair/issues/3619
+        # assert theme.active != "big square"
+
+        with pytest.raises(
+            TypeError, match=r"Found no theme named 'big square' in registry."
+        ):
+            theme.unregister("big square")
+    finally:
+        theme.enable("default")
+        # This test intentionally unregisters the theme. Ignore it if cleanup
+        # sees that it is already missing.
+        with suppress(TypeError):
+            theme.unregister("big square")
 
 
 @pytest.mark.parametrize(
@@ -1055,9 +1081,16 @@ def test_theme_config(theme_func: Callable[[], ThemeConfig], chart) -> None:
     See ``(test_vega_themes|test_register_theme_decorator)`` for comprehensive suite.
     """
     name = cast("LiteralString", theme_func.__qualname__)
-    theme.register(name, enable=True)(theme_func)
-    assert chart.to_dict(validate=True)
-    assert theme.get() == theme_func
+    try:
+        theme.register(name, enable=True)(theme_func)
+        assert chart.to_dict(validate=True)
+        assert theme.get() == theme_func
+    finally:
+        theme.enable("default")
+        # Cleanup runs even if the test fails before registration completes.
+        # Ignore missing themes.
+        with suppress(TypeError):
+            theme.unregister(name)
 
 
 # NOTE: There are roughly 70 keys
