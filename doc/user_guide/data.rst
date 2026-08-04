@@ -254,8 +254,8 @@ can be made much smaller for generated data than for embedded data.
 
 Sequence Generator
 ^^^^^^^^^^^^^^^^^^
-Here is an example of using the :func:`sequence` function to generate a sequence of  *x*
-data, along with a :ref:`user-guide-calculate-transform` to compute *y* data.
+Here is an example of using the :func:`sequence` function to generate a sequence of *x*
+data. The *y* values are computed using an :ref:`encoding-inline-expressions`.
 
 .. altair-plot::
 
@@ -265,11 +265,9 @@ data, along with a :ref:`user-guide-calculate-transform` to compute *y* data.
    # data = pd.DataFrame({'x': np.arange(0, 10, 0.1)})
    data = alt.sequence(0, 10, 0.1, as_='x')
 
-   alt.Chart(data).transform_calculate(
-       y='sin(datum.x)'
-   ).mark_line().encode(
+   alt.Chart(data).mark_line().encode(
        x='x:Q',
-       y='y:Q',
+       y=alt.Y(alt.expr.sin(alt.datum.x)).title('sin(x)'),
    )
 
 Graticule Generator
