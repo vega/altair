@@ -97,6 +97,14 @@ and the ``from_`` argument specifies a :class:`~LookupData` structure where
 we supply the second dataset, the lookup key, and the fields we would like to
 extract.
 
+.. note::
+
+   Make sure the lookup fields use compatible values and data types. For
+   example, a zero-padded FIPS code such as ``"06001"`` will not match the
+   numeric county ID ``6001``. If a pandas column contains zero-padded FIPS
+   strings while the geographic data uses numeric IDs, convert it before
+   creating the chart, for example with ``df["id"] = df["fips"].astype(int)``.
+
 Example: Lookup Transforms for Geographical Visualization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Lookup transforms are often particularly important for geographic visualization,
