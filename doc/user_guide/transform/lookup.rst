@@ -100,10 +100,11 @@ extract.
 .. note::
 
    Make sure the lookup fields use compatible values and data types. For
-   example, a zero-padded FIPS code such as ``"06001"`` will not match the
-   numeric county ID ``6001``. If a pandas column contains zero-padded FIPS
-   strings while the geographic data uses numeric IDs, convert it before
-   creating the chart, for example with ``df["id"] = df["fips"].astype(int)``.
+   example, a zero-padded spatial ID such as ``"06001"`` will not match the
+   numeric spatial ID ``6001``. If your dataframe contains zero-padded spatial 
+   IDs as strings while the geographic data uses numeric IDs, convert the column
+   to a compatible type before creating the chart. For example, in pandas use
+   ``df["id"] = df["spatial_id"].astype(int)``.
 
 Example: Lookup Transforms for Geographical Visualization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
