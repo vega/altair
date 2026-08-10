@@ -1552,6 +1552,51 @@ def test_themes():
         assert "config" not in chart.to_dict()
 
 
+def test_configure_preserves_existing_config():
+    # https://github.com/vega/altair/issues/3841
+    # `configure()` used to replace the whole config object, silently dropping
+    # anything an earlier `configure_*()` call had set.
+    base = alt.Chart("data.txt").mark_point().encode(x="x:Q", y="y:Q")
+
+    axis_first = base.configure_axisBottom(orient="top").configure(
+        tooltipFormat={"numberFormat": ".2f"}
+    )
+    axis_last = base.configure(
+        tooltipFormat={"numberFormat": ".2f"}
+    ).configure_axisBottom(orient="top")
+
+    config = axis_first.to_dict()["config"]
+    assert config["axisBottom"] == {"orient": "top"}
+    assert config["tooltipFormat"] == {"numberFormat": ".2f"}
+    assert config == axis_last.to_dict()["config"]
+
+
+def test_configure_merges_repeated_calls():
+    base = alt.Chart("data.txt").mark_point().encode(x="x:Q", y="y:Q")
+
+    # Properties from separate `configure()` calls accumulate ...
+    config = base.configure(background="red").configure(padding=5).to_dict()["config"]
+    assert config["background"] == "red"
+    assert config["padding"] == 5
+
+    # ... but a repeated property is overridden by the later call.
+    config = (
+        base.configure(background="red")
+        .configure(background="blue")
+        .to_dict()["config"]
+    )
+    assert config["background"] == "blue"
+
+
+def test_configure_does_not_mutate_source_chart():
+    base = alt.Chart("data.txt").mark_point().encode(x="x:Q", y="y:Q")
+    configured = base.configure_axisBottom(orient="top")
+
+    _ = configured.configure(background="red").to_dict()
+
+    assert "background" not in configured.to_dict()["config"]
+
+
 def test_chart_from_dict():
     base = alt.Chart("data.csv").mark_point().encode(x="x:Q", y="y:Q")
 
