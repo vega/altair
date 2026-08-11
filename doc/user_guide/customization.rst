@@ -708,26 +708,37 @@ Chart Themes
    This material was changed considerably with the release of Altair ``5.5.0``.
 
 Altair makes available a theme registry that lets users apply chart configurations
-globally within any Python session. 
+globally within any Python session.
 The :mod:`altair.theme` module provides :ref:`helper functions <api-theme>` to interact with the registry.
 
-Each theme in the registry is a function which define a specification dictionary
-that will be added to every created chart.
-For example, the default theme configures the default size of a single chart:
+Each theme in the registry is a function which defines a specification dictionary
+that will be merged into every created chart.
+Altair's built-in ``"default"`` theme return an empty
+configuration, since it is the same as Vega-Lite's own default theme:
 
     >>> import altair as alt
-    >>> default = alt.theme.get()
-    >>> default()
-    {'config': {'view': {'continuousWidth': 300, 'continuousHeight': 300}}}
+    >>> alt.theme.get()()
+    {}
 
-You can see that any chart you create will have this theme applied, and these configurations
-added to its specification:
+Changing the Theme
+~~~~~~~~~~~~~~~~~~
+If you would like to enable any other theme for the length of your Python session,
+you can call :func:`altair.theme.enable`:
+
+    >>> alt.theme.enable("dark")  # doctest: +ELLIPSIS
+    ThemeRegistry.enable(...)
+    >>> alt.theme.get()()
+    {'usermeta': {'embedOptions': {'theme': 'dark'}}}
+
+You can see that any chart you create will have the active theme applied:
 
 .. altair-plot::
     :output: repr
 
     import altair as alt
     from altair.datasets import data
+
+    alt.theme.enable("dark")
 
     chart = alt.Chart(data.cars.url).mark_point().encode(
         x='Horsepower:Q',
@@ -736,45 +747,11 @@ added to its specification:
 
     chart.to_dict()
 
-The rendered chart will then reflect these configurations:
+The rendered chart will reflect the theme:
 
 .. altair-plot::
 
     chart
-
-Changing the Theme
-~~~~~~~~~~~~~~~~~~
-If you would like to enable any other theme for the length of your Python session,
-you can call :func:`altair.theme.enable`.
-For example, Altair includes a theme in which the chart background is opaque
-rather than transparent:
-
-.. altair-plot::
-    :output: repr
-
-    alt.theme.enable('opaque')
-    chart.to_dict()
-
-.. altair-plot::
-
-    chart
-
-Notice that the background color of the chart is now set to white.
-If you would like no theme applied to your chart, you can use the
-theme named ``'none'``:
-
-.. altair-plot::
-    :output: repr
-
-    alt.theme.enable('none')
-    chart.to_dict()
-
-.. altair-plot::
-
-    chart
-
-Because the view configuration is not set, the chart is smaller
-than the default rendering.
 
 If you would like to use any theme just for a single chart, you can use the
 ``with`` statement to enable a temporary theme:
@@ -782,7 +759,7 @@ If you would like to use any theme just for a single chart, you can use the
 .. altair-plot::
    :output: none
 
-   with alt.theme.enable('default'):
+   with alt.theme.enable('quartz'):
        spec = chart.to_json()
 
 .. note::
@@ -792,10 +769,8 @@ If you would like to use any theme just for a single chart, you can use the
 
 Built-in Themes
 ~~~~~~~~~~~~~~~
-Currently Altair does not offer many built-in themes, but we plan to add
-more options in the future.
-
-You can get a feel for the themes inherited from `Vega Themes`_ via *Vega-Altair Theme Test* below:
+Currently most of the built-in Altair themes are inherited from `Vega Themes`_.
+You can get a feel for what these look like via the *Vega-Altair Theme Test* below:
 
 .. altair-theme:: tests.altair_theme_test.alt_theme_test
     :fold:
@@ -823,7 +798,6 @@ fill unless otherwise specified:
     def black_marks() -> alt.theme.ThemeConfig:
         return {
             "config": {
-                "view": {"continuousWidth": 300, "continuousHeight": 300},
                 "mark": {"color": "black", "fill": "black"},
             }
         }
