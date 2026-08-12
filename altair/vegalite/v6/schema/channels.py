@@ -10,13 +10,15 @@ from __future__ import annotations
 #   sense if there are multiple ones
 # However, we need these overloads due to how the propertysetter works
 # mypy: disable-error-code="no-overload-impl, empty-body, misc"
+import hashlib
 from typing import TYPE_CHECKING, Any, Literal, TypedDict, Union, overload
 
 import narwhals.stable.v1 as nw
 
+from altair.expr.core import Expression as _Expression
 from altair.utils import infer_encoding_types as _infer_encoding_types
 from altair.utils import parse_shorthand
-from altair.utils.schemapi import Undefined, with_property_setters
+from altair.utils.schemapi import Undefined, _infer_expr_type, with_property_setters
 
 from . import core
 from ._typing import *  # noqa: F403
@@ -158,7 +160,7 @@ __all__ = [
 class FieldChannelMixin:
     _encoding_name: str
 
-    def to_dict(
+    def to_dict(  # noqa: C901
         self,
         validate: bool = True,
         ignore: list[str] | None = None,
@@ -183,6 +185,43 @@ class FieldChannelMixin:
                 )
                 for sh in shorthand
             ]
+
+        shorthand_or_kwds = shorthand
+
+        if isinstance(shorthand_or_kwds, (_Expression, core.ExprRef)):
+            vega_expr = (
+                repr(shorthand_or_kwds)
+                if isinstance(shorthand_or_kwds, _Expression)
+                else shorthand_or_kwds.expr
+            )
+            field_hash = hashlib.md5(vega_expr.encode()).hexdigest()[:8]
+            calc_field_name = f"_calc_{field_hash}"
+            transforms: dict[str, dict] = context.setdefault("auto_calc_transforms", {})
+            transforms.setdefault(
+                calc_field_name, {"calculate": vega_expr, "as": calc_field_name}
+            )
+
+            result: dict[str, Any] = {"field": calc_field_name}
+            explicit_type = self._get("type")  # type: ignore[attr-defined]
+            if explicit_type is not Undefined:
+                if hasattr(explicit_type, "to_dict"):
+                    result["type"] = explicit_type.to_dict()
+                else:
+                    result["type"] = explicit_type
+            elif inferred := _infer_expr_type(shorthand_or_kwds):
+                result["type"] = inferred
+
+            explicit_title = self._get("title")  # type: ignore[attr-defined]
+            if explicit_title is not Undefined:
+                if hasattr(explicit_title, "to_dict"):
+                    result["title"] = explicit_title.to_dict()
+                else:
+                    result["title"] = explicit_title
+            else:
+                # Hide hash-based auto-calc field names by default.
+                result["title"] = None
+
+            return result
 
         if shorthand is Undefined:
             parsed = {}
@@ -259,6 +298,7 @@ class DatumChannelMixin:
         ignore = ignore or []
         datum = self._get("datum", Undefined)  # type: ignore[attr-defined] # noqa
         copy = self  # don't copy unless we need to
+
         return super(DatumChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )

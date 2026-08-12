@@ -143,6 +143,7 @@ Fields can also be encoded in the scatter plot using the ``color`` or ``shape`` 
 Dot Plot with Jittering
 ^^^^^^^^^^^^^^^^^^^^^^^
 To jitter points on a discrete scale, you can add a random offset:
+see :ref:`encoding-inline-expressions` for more context on this inline-expression syntax.
 
 .. altair-plot::
     import altair as alt
@@ -153,9 +154,7 @@ To jitter points on a discrete scale, you can add a random offset:
     alt.Chart(source).mark_point().encode(
         x="Horsepower:Q",
         y="Cylinders:O",
-        yOffset="random:Q",
-    ).transform_calculate(
-        random="random()"
+        yOffset=alt.expr.random(),
     ).properties(
         height=alt.Step(50)
     )
@@ -210,4 +209,3 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
     )
 
     background + points
-
