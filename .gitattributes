@@ -1,1 +1,5 @@
 * text=auto eol=lf
+# Expand $Format:...$ placeholders in pyproject.toml when running git archive
+# (including GitHub source ZIPs), so versioningit can derive the version when
+# installing from a sdist or archive where no .git directory is present.
+pyproject.toml export-subst

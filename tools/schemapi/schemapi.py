@@ -990,9 +990,7 @@ The parameters ``short``, ``long`` accept the same range of types::
 
     def func_1(
         short: Optional[str | bool | float | dict[str, Any] | SchemaBase] = Undefined,
-        long: Union[
-            str, bool, float, Dict[str, Any], SchemaBase, UndefinedType
-        ] = Undefined,
+        long: str | bool | float | Dict[str, Any] | SchemaBase | UndefinedType = Undefined,
     ): ...
 
 This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/spec/historical.html#union-and-optional>`__.
@@ -1004,9 +1002,7 @@ This is distinct from `typing.Optional <https://typing.readthedocs.io/en/latest/
 
     def func_2(
         short: Optional[str | float | dict[str, Any] | None | SchemaBase] = Undefined,
-        long: Union[
-            str, float, Dict[str, Any], None, SchemaBase, UndefinedType
-        ] = Undefined,
+        long: str | float | Dict[str, Any] | None | SchemaBase | UndefinedType = Undefined,
     ): ...
 """
 
@@ -1206,7 +1202,7 @@ class SchemaBase:
             kwds = self._args[0]
         elif not self._args:
             kwds = self._kwds.copy()
-            exclude = {*ignore, "shorthand"}
+            exclude = {*ignore, "shorthand", "_cached_hash"}
             if parsed := context.pop("parsed_shorthand", None):
                 kwds = _replace_parsed_shorthand(parsed, kwds)
             kwds = {k: v for k, v in kwds.items() if k not in exclude}
@@ -1664,6 +1660,19 @@ class _PropertySetter:
         return self
 
     def __call__(self, *args: Any, **kwargs: Any):
+        name = f"{type(self.obj).__name__}.{self.prop}"
+        if len(args) > 1:
+            msg = (
+                f"{name}() accepts at most one positional argument, "
+                f"but {len(args)} were given"
+            )
+            raise TypeError(msg)
+        if args and kwargs:
+            msg = (
+                f"{name}() cannot combine a positional argument with keyword arguments"
+            )
+            raise TypeError(msg)
+
         obj = self.obj.copy()
         # TODO: use schema to validate
         obj[self.prop] = args[0] if args else kwargs

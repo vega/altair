@@ -252,6 +252,7 @@ def _consolidate_data(
             kwds = {"format": data.format}
 
     elif isinstance(data, dict) and ("name" not in data) and ("values" in data):
+        data = t.cast("dict[str, Any]", data)
         values = data["values"]
         kwds = {k: v for k, v in data.items() if k != "values"}
 
@@ -647,7 +648,7 @@ def _predicate_to_condition(
     elif _is_test_predicate(predicate):
         condition = {"test": predicate}
     elif isinstance(predicate, dict):
-        condition = predicate
+        condition = predicate  # ty: ignore
     elif isinstance(predicate, _expr_core.OperatorMixin):
         condition = {"test": predicate._to_expr()}
     else:
@@ -696,7 +697,7 @@ def _condition_to_selection(
     return selection
 
 
-class _ConditionExtra(TypedDict, closed=True, total=False):  # type: ignore
+class _ConditionExtra(TypedDict, closed=True, total=False):
     # https://peps.python.org/pep-0728/
     # Likely a Field predicate
     empty: Optional[bool]
@@ -722,7 +723,7 @@ but not a `Conditional Value`_.
 """
 
 
-class _ConditionClosed(TypedDict, closed=True, total=False):  # type: ignore
+class _ConditionClosed(TypedDict, closed=True, total=False):
     # https://peps.python.org/pep-0728/
     # Parameter {"param", "value", "empty"}
     # Predicate {"test", "value"}
@@ -771,7 +772,7 @@ Represents all outputs from `when-then-otherwise` conditions, which are not ``Sc
 """
 
 
-class _Value(TypedDict, closed=True, total=False):  # type: ignore
+class _Value(TypedDict, closed=True, total=False):
     # https://peps.python.org/pep-0728/
     value: Required[Any]
     __extra_items__: Any
@@ -900,7 +901,9 @@ def _parse_literal(val: Any, /) -> dict[str, Any]:
         raise TypeError(msg)
 
 
-def _parse_then(statement: _StatementType, kwds: dict[str, Any], /) -> dict[str, Any]:
+def _parse_then(
+    statement: _StatementType, kwds: dict[str, Any], /
+) -> Mapping[str, Any]:
     if isinstance(statement, SchemaBase):
         statement = statement.to_dict()
     elif not isinstance(statement, dict):
@@ -921,7 +924,7 @@ def _parse_otherwise(
         if not isinstance(statement, Mapping):
             statement = _parse_literal(statement)
         selection = conditions
-        selection.update(**statement, **kwds)  # type: ignore[call-arg]
+        selection.update(**statement, **kwds)  # type: ignore
     return selection
 
 
@@ -1088,7 +1091,7 @@ class Then(ConditionLike, t.Generic[_C]):
             if isinstance(current, list) and len(current) == 1:
                 # This case is guaranteed to have come from `When` and not `ChainedWhen`
                 # The `list` isn't needed if we complete the condition here
-                conditions = _Conditional(condition=current[0])  # pyright: ignore[reportArgumentType]
+                conditions = _Conditional(condition=current[0])
             elif isinstance(current, dict):
                 if not is_extra(statement):
                     conditions = self.to_dict()
@@ -1394,6 +1397,8 @@ def when(
 
 def value(value: Any, **kwargs: Any) -> _Value:
     """Specify a value for use in an encoding."""
+    if isinstance(value, _expr_core.Expression):
+        value = core.ExprRef(expr=repr(value))
     return _Value(value=value, **kwargs)  # type: ignore
 
 
@@ -2146,7 +2151,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 )
                 raise ValueError(msg)
             else:
-                return _compile_with_vegafusion(vegalite_spec)
+                return _compile_with_vegafusion(vegalite_spec)  # ty: ignore
         elif format == "vega":
             plugin = vegalite_compilers.get()
             if plugin is None:
@@ -2154,7 +2159,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 raise ValueError(msg)
             return plugin(vegalite_spec)
         else:
-            return vegalite_spec
+            return vegalite_spec  # ty: ignore
 
     def to_json(
         self,
@@ -2498,7 +2503,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         repeat_arg: list[str] | LayerRepeatMapping | RepeatMapping
         if repeat_specified:
             assert isinstance(repeat, list)
-            repeat_arg = repeat
+            repeat_arg = repeat  # ty: ignore
         elif layer_specified:
             repeat_arg = core.LayerRepeatMapping(layer=layer, row=row, column=column)
         else:
@@ -2761,7 +2766,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "op": parsed.get("aggregate", Undefined),
             }
             assert isinstance(aggregate, list)
-            aggregate.append(core.AggregatedFieldDef(**dct))
+            aggregate.append(core.AggregatedFieldDef(**dct))  # ty: ignore
         return self._add_transform(
             core.AggregateTransform(aggregate=aggregate, groupby=groupby)
         )
@@ -3094,7 +3099,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "op": parsed.get("aggregate", Undefined),
             }
             assert isinstance(joinaggregate, list)
-            joinaggregate.append(core.JoinAggregateFieldDef(**dct))
+            joinaggregate.append(core.JoinAggregateFieldDef(**dct))  # ty: ignore
         return self._add_transform(
             core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
         )
@@ -3782,7 +3787,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                         parse_types=False,
                     )
                 )
-                w.append(core.WindowFieldDef(**kwds))
+                w.append(core.WindowFieldDef(**kwds))  # ty: ignore
 
         return self._add_transform(
             core.WindowTransform(
@@ -3995,7 +4000,7 @@ class _EncodingMixin(channels._EncodingMixin):
             r: Any = row
             f = FacetMapping(row=r, column=column)
 
-        return FacetChart(spec=self, facet=f, data=data, columns=columns, **kwargs)  # pyright: ignore[reportArgumentType]
+        return FacetChart(spec=self, facet=f, data=data, columns=columns, **kwargs)
 
 
 class Chart(
@@ -4082,6 +4087,11 @@ class Chart(
 
     def _compute_hash(self) -> str:
         """Compute a deterministic hash of the chart specification."""
+        # Check if we have a cached hash from before data was hoisted
+        cached_hash = self._kwds.get("_cached_hash", None)
+        if cached_hash is not None:
+            return cached_hash
+
         # Get data name if available, otherwise use data object
         data = getattr(self, "data", None)
         if data is not None and hasattr(data, "name") and data.name is not None:
@@ -4124,9 +4134,8 @@ class Chart(
         jsonschema.ValidationError :
             If ``validate`` and ``dct`` does not conform to the schema
         """
-        _tp: Any
         for tp in TopLevelMixin.__subclasses__():
-            _tp = super() if tp is Chart else tp
+            _tp: Any = super() if tp is Chart else tp
             try:
                 return _tp.from_dict(dct, validate=validate)
             except jsonschema.ValidationError:
@@ -4572,6 +4581,7 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
             return self
         copy = self.copy()
         copy.concat = [chart.add_params(*params) for chart in copy.concat]
+        copy.params, copy.concat = _combine_subchart_params(copy.params, copy.concat)
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
@@ -4676,6 +4686,7 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
             return self
         copy = self.copy()
         copy.hconcat = [chart.add_params(*params) for chart in copy.hconcat]
+        copy.params, copy.hconcat = _combine_subchart_params(copy.params, copy.hconcat)
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
@@ -4782,6 +4793,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
             return self
         copy = self.copy()
         copy.vconcat = [chart.add_params(*params) for chart in copy.vconcat]
+        copy.params, copy.vconcat = _combine_subchart_params(copy.params, copy.vconcat)
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
@@ -5107,8 +5119,25 @@ def _combine_subchart_data(
 ) -> tuple[Optional[ChartDataType], list[ChartType]]:
     def remove_data(subchart: _TSchemaBase) -> _TSchemaBase:
         if subchart.data is not Undefined:
+            # Before removing data, compute and cache a hash
+            # if this subchart will need a name.
+            # This ensures that otherwise identical charts
+            # which use different data get unique hashes.
+            # The cached hash is stored in _kwds
+            # so it survives the copy() operation
+            # and can easily be removed before serialization validation.
+            cached_hash = None
+            if (
+                isinstance(subchart, Chart)
+                and getattr(subchart, "name", None) in (None, Undefined)
+                and hasattr(subchart, "_compute_hash")
+            ):
+                cached_hash = subchart._compute_hash()
+                subchart["_cached_hash"] = cached_hash
+
             subchart = subchart.copy()
             subchart.data = Undefined
+
         return subchart
 
     if not subcharts:
@@ -5205,17 +5234,23 @@ def _view_base_for_chart(obj: Any) -> str:
     return name
 
 
-def _view_name_for_param(subchart: ChartType, is_concat: bool) -> str:
-    """View name for this subchart to add to a param's views."""
+def _view_names_for_param(subchart: ChartType, is_concat: bool) -> list[str]:
+    """View names for this subchart to add to a param's views."""
     if isinstance(subchart, Chart):
-        return subchart.name
+        return [subchart.name]
+    if is_concat and isinstance(subchart, LayerChart):
+        return [
+            layer.name
+            for layer in subchart.layer
+            if isinstance(layer, Chart) and layer.name is not Undefined
+        ]
     if is_concat and isinstance(subchart, FacetChart):
         spec = subchart.spec
         if isinstance(spec, Chart):
-            return spec.name
+            return [spec.name]
         if isinstance(spec, LayerChart) and spec.layer:
-            return spec.layer[0].name
-    return ""
+            return [spec.layer[0].name]
+    return []
 
 
 def _combine_subchart_params(  # noqa: C901
@@ -5241,6 +5276,15 @@ def _combine_subchart_params(  # noqa: C901
 
     subcharts = [subchart.copy() for subchart in subcharts]
     is_concat = len(subcharts) > 1
+
+    if is_concat:
+        for i, subchart in enumerate(subcharts):
+            if not (isinstance(subchart, LayerChart) and subchart.layer):
+                continue
+            subchart.layer = [layer.copy() for layer in subchart.layer]
+            for layer in subchart.layer:
+                if isinstance(layer, Chart) and layer.name is not Undefined:
+                    layer.name = f"{_view_base_for_chart(layer)}_{i}"
 
     for i, subchart in enumerate(subcharts):
         if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
@@ -5277,12 +5321,15 @@ def _combine_subchart_params(  # noqa: C901
                 continue
 
             # At this stage in the loop, p must be a TopLevelSelectionParameter.
-            # Get this subchart's view name from the subchart only (not p.views: params can share lists).
-            view_to_add = _view_name_for_param(subchart, is_concat)
-            # MERGE: start from param's views; APPEND: start from [] so we don't pull in another param's views.
-            views_after = list(p.views or []) if found else []
-            if view_to_add and view_to_add not in views_after:
-                views_after.append(view_to_add)
+            # Get this subchart's view names from the subchart only (not p.views: params can share lists).
+            views_to_add = _view_names_for_param(subchart, is_concat)
+            # MERGE (found=True): start from p.views to accumulate all views for this param.
+            # APPEND (found=False, views_to_add set): start from [] to avoid pulling in sibling views.
+            # COMPOUND (found=False, no views_to_add): subchart already aggregated views into p.views; preserve them.
+            views_after = list(p.views or []) if (found or not views_to_add) else []
+            for view_to_add in views_to_add:
+                if view_to_add not in views_after:
+                    views_after.append(view_to_add)
 
             if found:
                 merge_idx = dlist.index(pd)
@@ -5317,7 +5364,7 @@ def _combine_subchart_params(  # noqa: C901
 
 def _get_repeat_strings(
     repeat: list[str] | LayerRepeatMapping | RepeatMapping,
-) -> list[str]:
+) -> list[str] | list:
     if isinstance(repeat, list):
         return repeat
 

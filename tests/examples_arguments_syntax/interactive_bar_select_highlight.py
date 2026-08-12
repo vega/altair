@@ -5,7 +5,7 @@ This example shows a bar chart with highlighting on hover and selecting on click
 
 Based on https://vega.github.io/vega-lite/examples/interactive_bar_select_highlight.html
 """
-
+# :new:
 # category: interactive charts
 import altair as alt
 

@@ -714,4 +714,4 @@ see :ref:`display-general`.
 .. _Spyder: https://www.spyder-ide.org/
 .. _IPython QtConsole: https://qtconsole.readthedocs.io/en/stable/
 .. _webbrowser module: https://docs.python.org/3/library/webbrowser.html#webbrowser.register
-.. _Olli: https://mitvis.github.io/olli/
+.. _Olli: https://umwelt-data.github.io/olli/

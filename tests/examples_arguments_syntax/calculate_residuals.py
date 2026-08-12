@@ -4,7 +4,6 @@ Calculate Residuals
 A dot plot showing each movie in the database, and the difference from the average movie rating.
 The display is sorted by year to visualize everything in sequential order. 
 The graph is for all Movies before 2019.
-
 Adapted from `Calculate Residuals <https://vega.github.io/vega-lite/examples/joinaggregate_residual_graph.html>`_.
 """
 # category: advanced calculations

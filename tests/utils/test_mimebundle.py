@@ -118,7 +118,7 @@ def vega_spec():
                     "update": {
                         "ariaRoleDescription": {"value": "bar"},
                         "description": {
-                            "signal": '"a: " + (isValid(datum["a"]) ? datum["a"] : ""+datum["a"]) + "; b: " + (format(datum["b"], ""))'
+                            "signal": '"a: " + (isValid(datum["a"]) ? isArray(datum["a"]) ? join(datum["a"], \' \') : datum["a"] : ""+datum["a"]) + "; b: " + (format(datum["b"], ""))'
                         },
                         "fill": {"value": "#4c78a8"},
                         "width": {"signal": "max(0.25, bandwidth('x'))"},

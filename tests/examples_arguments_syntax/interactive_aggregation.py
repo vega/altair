@@ -7,6 +7,7 @@ right-side are drawn as is.
 The ability to slide back and fourth may help you understand how the visualization
 represents the aggregation. Adapted from an example by @dwootton.
 """
+# :new:
 # category: interactive charts
 import altair as alt
 from altair.datasets import data

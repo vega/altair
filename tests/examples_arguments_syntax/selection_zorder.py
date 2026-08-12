@@ -7,6 +7,7 @@ as it is hovered over with the pointer.
 This prevents that the selected points are obscured
 by those that are not selected.
 """
+# :new:
 # category: interactive charts
 
 import altair as alt

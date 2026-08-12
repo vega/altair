@@ -554,8 +554,8 @@ def _into_suffix(obj: Path | str, /) -> Any:
 def _steal_eager_parquet(
     read_fns: Sequence[Read[IntoDataFrameT]], /
 ) -> Sequence[Scan[Any]] | None:
-    if convertable := next((rd for rd in read_fns if rd.include <= is_parquet), None):
-        return (_readimpl.into_scan(convertable),)
+    if convertible := next((rd for rd in read_fns if rd.include <= is_parquet), None):
+        return (_readimpl.into_scan(convertible),)
     return None
 
 

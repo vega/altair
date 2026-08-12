@@ -12,12 +12,12 @@ changelog:
     - title: Bug Fixes
       labels:
         - bug
-    - title: Maintainance
-      labels:
-        - maintainance
     - title: Documentation
       labels:
         - documentation
+    - title: Maintenance
+      labels:
+        - maintenance
     - title: Other Changes
       labels:
         - "*"

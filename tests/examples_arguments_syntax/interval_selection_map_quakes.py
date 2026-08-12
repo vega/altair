@@ -5,6 +5,7 @@ Interval Selection on a Map
 This is an example of a binned bar chart on the right where the filtered overlay
 is adjusted by interacting with the map on the left.
 """
+# :new:
 # category: interactive charts
 import altair as alt
 from altair.datasets import data

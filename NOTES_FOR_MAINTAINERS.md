@@ -101,6 +101,19 @@ rewrites, because the internal structure of the schema changed appreciably.
 To cut a new release of Altair, follow the steps outlined in
 [RELEASING.md](RELEASING.md).
 
+## Previewing PR documentation
+
+The `docbuild` workflow uploads the built HTML documentation as a `docs-html`
+artifact. To download and serve the latest docs artifact for a pull request,
+run:
+
+```bash
+uv run task doc-preview-pr -- 1234
+```
+
+Replace `1234` with the pull request number. The command downloads the artifact
+to `./pr-preview-docs` and serves it at <http://localhost:8000>.
+
 ## Web analytics
 
 We use the privacy-friendly [plausible.io](https://plausible.io/) for tracking usage statistics of our documentation.
