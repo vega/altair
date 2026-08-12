@@ -32,12 +32,13 @@ import altair as alt
 
 # load a simple dataset as a pandas DataFrame
 from altair.datasets import data
+
 cars = data.cars()
 
 alt.Chart(cars).mark_point().encode(
-    x='Horsepower',
-    y='Miles_per_Gallon',
-    color='Origin',
+    x="Horsepower",
+    y="Miles_per_Gallon",
+    color="Origin",
 )
 ```
 
@@ -54,20 +55,22 @@ source = data.cars()
 
 brush = alt.selection_interval()
 
-points = alt.Chart(source).mark_point().encode(
-    x='Horsepower',
-    y='Miles_per_Gallon',
-    color=alt.when(brush).then("Origin").otherwise(alt.value("lightgray"))
-).add_params(
-    brush
+points = (
+    alt.Chart(source)
+    .mark_point()
+    .encode(
+        x="Horsepower",
+        y="Miles_per_Gallon",
+        color=alt.when(brush).then("Origin").otherwise(alt.value("lightgray")),
+    )
+    .add_params(brush)
 )
 
-bars = alt.Chart(source).mark_bar().encode(
-    y='Origin',
-    color='Origin',
-    x='count(Origin)'
-).transform_filter(
-    brush
+bars = (
+    alt.Chart(source)
+    .mark_bar()
+    .encode(y="Origin", color="Origin", x="count(Origin)")
+    .transform_filter(brush)
 )
 
 points & bars

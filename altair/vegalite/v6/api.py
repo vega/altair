@@ -2503,7 +2503,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         repeat_arg: list[str] | LayerRepeatMapping | RepeatMapping
         if repeat_specified:
             assert isinstance(repeat, list)
-            repeat_arg = repeat  # ty: ignore
+            repeat_arg = repeat
         elif layer_specified:
             repeat_arg = core.LayerRepeatMapping(layer=layer, row=row, column=column)
         else:
@@ -2766,7 +2766,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "op": parsed.get("aggregate", Undefined),
             }
             assert isinstance(aggregate, list)
-            aggregate.append(core.AggregatedFieldDef(**dct))  # ty: ignore
+            aggregate.append(core.AggregatedFieldDef(**dct))
         return self._add_transform(
             core.AggregateTransform(aggregate=aggregate, groupby=groupby)
         )
@@ -3099,7 +3099,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "op": parsed.get("aggregate", Undefined),
             }
             assert isinstance(joinaggregate, list)
-            joinaggregate.append(core.JoinAggregateFieldDef(**dct))  # ty: ignore
+            joinaggregate.append(core.JoinAggregateFieldDef(**dct))
         return self._add_transform(
             core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
         )
@@ -3787,7 +3787,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                         parse_types=False,
                     )
                 )
-                w.append(core.WindowFieldDef(**kwds))  # ty: ignore
+                w.append(core.WindowFieldDef(**kwds))
 
         return self._add_transform(
             core.WindowTransform(
