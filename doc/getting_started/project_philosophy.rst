@@ -6,7 +6,7 @@ Many excellent plotting libraries exist in Python, including:
 * `Matplotlib <https://matplotlib.org/>`_
 * `Bokeh <https://bokeh.pydata.org/en/latest/>`_
 * `Seaborn <https://seaborn.pydata.org/>`_
-* `Lightning <http://lightning-viz.org>`_
+* `Lightning <https://github.com/lightning-viz>`_
 * `Plotly <https://plot.ly/>`_
 * `pandas built-in plotting <https://pandas.pydata.org/pandas-docs/stable/visualization.html>`_
 * `HoloViews <https://holoviews.org>`_

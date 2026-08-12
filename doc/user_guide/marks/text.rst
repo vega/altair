@@ -40,7 +40,7 @@ Text Mark Properties
     align_var = alt.param(bind=align_select, value="left", name="align")
 
     baseline_select = alt.binding_select(options=["alphabetic", "top", "middle", "bottom"])
-    baseline_var = alt.param(bind=baseline_select, value="midle", name="baseline")
+    baseline_var = alt.param(bind=baseline_select, value="middle", name="baseline")
 
     font_select = alt.binding_select(options=["sans-serif", "serif", "monospace"])
     font_var = alt.param(bind=font_select, value="sans-serif", name="font")
@@ -109,7 +109,7 @@ Text Table Heatmap
 ^^^^^^^^^^^^^^^^^^
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -196,7 +196,7 @@ Mapping a field to ``text`` channel of text mark sets the mark's text value. For
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     from altair import datum
 
     source = data.cars()
@@ -214,7 +214,7 @@ By mapping geographic coordinate data to ``longitude`` and ``latitude`` channels
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     states = alt.topo_feature(data.us_10m.url, feature="states")
 

@@ -7,7 +7,7 @@ faceted over income brackets
 # category: maps
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 states = alt.topo_feature(data.us_10m.url, 'states')
 source = data.income.url

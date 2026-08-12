@@ -1,7 +1,7 @@
 """
 Ridgeline plot
 --------------
-A `Ridgeline plot <https://serialmentor.com/blog/2017/9/15/goodbye-joyplots>`_
+A `Ridgeline plot <https://clauswilke.com/blog/2017/09/15/goodbye-joyplots/>`_
 lets you visualize distribution of a numeric value for different
 subsets of data (what we call "facets" in Altair).
 
@@ -10,7 +10,7 @@ suitable representation.
 """
 # category: distributions
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.seattle_weather.url
 

@@ -7,7 +7,7 @@ For more information about gradient options see the Vega-Lite `Gradient document
 # category: area charts
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.stocks()
 

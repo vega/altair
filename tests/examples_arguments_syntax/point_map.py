@@ -5,7 +5,7 @@ This is a layered map that shows the positions of airports on a background of U.
 """
 # category: maps
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 # Read in points
 airports = data.airports()

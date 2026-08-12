@@ -6,7 +6,7 @@ Use the dropdown menu to compare projections. For more details on the `project` 
 """
 # category: maps
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = alt.topo_feature(data.world_110m.url, 'countries')
 

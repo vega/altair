@@ -7,7 +7,7 @@ The confidence intervals are computed internally in vega by a non-parametric
 """
 # category: uncertainties and trends
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.barley()
 

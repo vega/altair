@@ -5,9 +5,9 @@ import pytest
 from packaging.version import Version
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
-# If anywidget is not installed, we will skip the tests in this file.
+# Tests requiring anywidget are skipped when it is not installed.
 try:
     import anywidget  # noqa: F401
 
@@ -45,6 +45,16 @@ if Version(importlib_version("ipywidgets")) < Version("8.1.4"):
     )
 else:
     jupyter_marks = skip_requires_anywidget(param_transformers)
+
+
+@pytest.mark.skipif(has_anywidget, reason="anywidget is importable")
+def test_jupyter_chart_without_anywidget() -> None:
+    """JupyterChart should report how to install its optional dependency."""
+    with pytest.raises(ImportError, match="requires the anywidget"):
+        alt.JupyterChart.enable_offline()
+
+    with pytest.raises(ImportError, match="requires the anywidget"):
+        alt.JupyterChart(alt.Chart())
 
 
 @jupyter_marks

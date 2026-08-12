@@ -3,7 +3,7 @@ Top K Letters
 -------------
 This example shows how to use a window transform in order to display only the
 top K categories by number of entries. In this case, we rank the characters in
-the first paragraph of Dickens' *A Tale of Two Cities* by number of occurances.
+the first paragraph of Dickens' *A Tale of Two Cities* by number of occurrences.
 """
 # category: advanced calculations
 import altair as alt

@@ -14,7 +14,7 @@ from copy import deepcopy
 from itertools import chain
 from keyword import iskeyword
 from operator import itemgetter
-from typing import TYPE_CHECKING, Generic, Literal, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Generic, Literal, TypeVar, overload
 
 from tools.codemod import ruff
 from tools.markup import RSTParseVegaLite, rst_syntax_for_class
@@ -37,14 +37,11 @@ if sys.version_info >= (3, 11):
     from typing import LiteralString, Never
 else:
     from typing_extensions import LiteralString, Never
-if sys.version_info >= (3, 10):
-    from typing import TypeAlias
-else:
-    from typing_extensions import TypeAlias
+from typing import TypeAlias
 
 T = TypeVar("T")
 
-OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
+OneOrSeq = TypeAliasType("OneOrSeq", T | Sequence[T], type_params=(T,))
 TargetType: TypeAlias = Literal["annotation", "doc"]
 
 EXCLUDE_KEYS: frozenset[
@@ -125,15 +122,14 @@ class _TypeAliasTracer:
             "import sys",
             "from datetime import date, datetime",
             "from collections.abc import Sequence, Mapping",
-            "from typing import Annotated, Any, Generic, Literal, TypeVar, Union, get_args",
+            "from typing import Annotated, Any, Generic, Literal, TypeAlias, TypeVar, Union, get_args",
             "import re",
             import_typing_extensions(
-                (3, 14), "TypedDict", reason="https://peps.python.org/pep-0728/"
+                (3, 15), "TypedDict", reason="https://peps.python.org/pep-0728/"
             ),
             import_typing_extensions((3, 13), "TypeIs"),
             import_typing_extensions((3, 12), "TypeAliasType"),
             import_typing_extensions((3, 11), "LiteralString"),
-            import_typing_extensions((3, 10), "TypeAlias"),
         )
 
     def _update_literals(self, name: str, tp: str, /) -> None:
@@ -163,7 +159,7 @@ class _TypeAliasTracer:
             # Handles one very specific edge case `WindowFieldDef`
             # - Has an anonymous enum union
             # - One of the members is declared afterwards
-            # - SchemaBase needs to be first, as the union wont be internally sorted
+            # - SchemaBase needs to be first, as the union won't be internally sorted
             it = (
                 self.add_literal(el, spell_literal(el.literal), replace=True)
                 for el in info.anyOf
@@ -245,7 +241,7 @@ class _TypeAliasTracer:
 
     @property
     def n_entries(self) -> int:
-        """Number of unique `TypeAlias` defintions collected."""
+        """Number of unique `TypeAlias` definitions collected."""
         return len(self._literals)
 
 
@@ -1227,6 +1223,26 @@ def spell_literal(it: Iterable[str], /, *, quote: bool = True) -> str:
     return f"Literal[{', '.join(it_el)}]"
 
 
+def spell_literal_alias(
+    alias_name: str, members: Iterable[str], /, *, quote: bool = True
+) -> str:
+    """
+    Wraps ``utils.spell_literal`` as a ``TypeAlias``.
+
+    Examples
+    --------
+    >>> spell_literal_alias("Animals", ("Dog", "Cat", "Fish"))
+    "Animals: TypeAlias = Literal['Dog', 'Cat', 'Fish']"
+
+    >>> spell_literal_alias("Digits", "0123456789")
+    "Digits: TypeAlias = Literal['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']"
+
+    >>> spell_literal_alias("LessThanFive", (repr(i) for i in range(5)))
+    "LessThanFive: TypeAlias = Literal['0', '1', '2', '3', '4']"
+    """
+    return f"{alias_name}: TypeAlias = {spell_literal(members, quote=quote)}"
+
+
 def maybe_rewrap_literal(it: Iterable[str], /) -> Iterator[str]:
     """
     Where `it` may contain one or more `"enum"`, `"const"`, flatten to a single `Literal[...]`.
@@ -1251,7 +1267,12 @@ def unwrap_literal(tp: str, /) -> str:
 def import_type_checking(*imports: str) -> str:
     """Write an `if TYPE_CHECKING` block."""
     imps = "\n".join(f"    {s}" for s in imports)
-    return f"\nif TYPE_CHECKING:\n    # ruff: noqa: F405\n{imps}\n"
+    return (
+        f"from typing import TYPE_CHECKING\n\n"
+        f"if TYPE_CHECKING:\n"
+        f"    # ruff: noqa: F405\n"
+        f"{imps}\n"
+    )
 
 
 def import_typing_extensions(

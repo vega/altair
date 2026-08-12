@@ -88,14 +88,6 @@ VegaFusion provides server-side scaling for Altair charts, which can accelerate 
 .. List of links.
 .. _VegaFusion: https://vegafusion.io/
 
-altair_data_server_
-~~~~~~~~~~~~~~~~~~~
-
-Data transformer plugin that transparently serves data for charts.
-
-.. List of links.
-.. _altair_data_server: https://github.com/altair-viz/altair_data_server
-
 altair_pandas_
 ~~~~~~~~~~~~~~
 
@@ -103,14 +95,6 @@ Altair backend for the pandas plotting API.
 
 .. List of links.
 .. _altair_pandas: https://github.com/altair-viz/altair_pandas
-
-vega_datasets_
-~~~~~~~~~~~~~~
-
-Offline access to the Vega datasets used in the Altair documentation.
-
-.. List of links.
-.. _vega_datasets: https://github.com/altair-viz/vega_datasets
 
 altair_recipes_
 ~~~~~~~~~~~~~~~
@@ -152,3 +136,12 @@ Altair in R provides an R interface to the Altair Python package. See the `docs 
 
 .. List of links.
 .. _`Altair in R`: https://github.com/vegawidget/altair
+
+Altair-upset_
+~~~~~~~~~~~~~
+
+Create beautiful and interactive UpSet plots using Altair. UpSet plots are a powerful alternative to Venn diagrams for visualizing set intersections, especially when dealing with many sets. The library supports both Pandas and Polars DataFrames, making it flexible for different data processing workflows.
+
+.. List of links.
+.. _altair-upset: https://altair-upset.readthedocs.io/en/latest/
+.. _UpSet Plots: https://upset.app

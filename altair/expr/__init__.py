@@ -9,7 +9,7 @@ import sys
 from typing import TYPE_CHECKING, Any
 
 from altair.expr.core import ConstExpression, FunctionExpression
-from altair.vegalite.v5.schema.core import ExprRef as _ExprRef
+from altair.vegalite.v6.schema.core import ExprRef as _ExprRef
 
 if sys.version_info >= (3, 12):
     from typing import override
@@ -91,9 +91,9 @@ class expr(_ExprRef, metaclass=_ExprMeta):
     ``ExprRef``
 
     .. _Expressions:
-        https://altair-viz.github.io/user_guide/interactions.html#expressions
+        https://altair-viz.github.io/user_guide/interactions/expressions.html
     .. _inline expression:
-       https://altair-viz.github.io/user_guide/interactions.html#inline-expressions
+       https://altair-viz.github.io/user_guide/interactions/expressions.html#inline-expressions
     .. _vega expression:
        https://vega.github.io/vega/docs/expressions/
 
@@ -172,8 +172,18 @@ class expr(_ExprRef, metaclass=_ExprMeta):
        https://en.wikipedia.org/wiki/Continuous_uniform_distribution
     .. _*unit*:
        https://vega.github.io/vega/docs/api/time/#time-units
+    .. _ascending from Vega Utils:
+       https://vega.github.io/vega/docs/api/util/#ascending
     .. _JavaScript's String.replace:
        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace
+    .. _Base64:
+       https://developer.mozilla.org/en-US/docs/Glossary/Base64
+    .. _ASCII:
+       https://developer.mozilla.org/en-US/docs/Glossary/ASCII
+    .. _Window.btoa():
+       https://developer.mozilla.org/en-US/docs/Web/API/Window/btoa
+    .. _Window.atob():
+       https://developer.mozilla.org/en-US/docs/Web/API/Window/atob
     .. _d3-format specifier:
        https://github.com/d3/d3-format/
     .. _*units*:
@@ -1176,6 +1186,16 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         return FunctionExpression("slice", (array, start, end))
 
     @classmethod
+    def sort(cls, array: IntoExpression, /) -> Expression:
+        """
+        Sorts the array in natural order using `ascending from Vega Utils`_.
+
+        .. _ascending from Vega Utils:
+            https://vega.github.io/vega/docs/api/util/#ascending
+        """
+        return FunctionExpression("sort", (array,))
+
+    @classmethod
     def span(cls, array: IntoExpression, /) -> Expression:
         """Returns the span of ``array``: the difference between the last and first elements, or *array[array.length-1] - array[0]*."""
         return FunctionExpression("span", (array,))
@@ -1280,6 +1300,38 @@ class expr(_ExprRef, metaclass=_ExprMeta):
     def upper(cls, string: IntoExpression, /) -> Expression:
         """Transforms ``string`` to upper-case letters."""
         return FunctionExpression("upper", (string,))
+
+    @classmethod
+    def btoa(cls, string: IntoExpression, /) -> Expression:
+        """
+        Creates a `Base64`_-encoded `ASCII`_ string.
+
+        Same as JavaScript's `Window.alt.expr.btoa()`_.
+
+        .. _Base64:
+            https://developer.mozilla.org/en-US/docs/Glossary/Base64
+        .. _ASCII:
+            https://developer.mozilla.org/en-US/docs/Glossary/ASCII
+        .. _Window.alt.expr.btoa():
+            https://developer.mozilla.org/en-US/docs/Web/API/Window/btoa
+        """
+        return FunctionExpression("btoa", (string,))
+
+    @classmethod
+    def atob(cls, string: IntoExpression, /) -> Expression:
+        """
+        Decodes an `ASCII`_ string that was encoded with `Base64`_.
+
+        Same as JavaScript's `Window.alt.expr.atob()`_.
+
+        .. _ASCII:
+            https://developer.mozilla.org/en-US/docs/Glossary/ASCII
+        .. _Base64:
+            https://developer.mozilla.org/en-US/docs/Glossary/Base64
+        .. _Window.alt.expr.atob():
+            https://developer.mozilla.org/en-US/docs/Web/API/Window/atob
+        """
+        return FunctionExpression("atob", (string,))
 
     @classmethod
     def merge(

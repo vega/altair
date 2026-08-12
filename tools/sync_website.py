@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import subprocess as sp
 from typing import TYPE_CHECKING
 
 from tools import fs
@@ -14,6 +15,7 @@ DOC_REPO_ORG: Literal["altair-viz"] = "altair-viz"
 GITHUB: Literal["github"] = "github"
 WEBSITE: str = f"{DOC_REPO_ORG}.{GITHUB}.io"
 DOC_REPO_URL: str = f"https://{GITHUB}.com/{DOC_REPO_ORG}/{WEBSITE}.git"
+DOC_REPO_SSH_URL: str = f"git@{GITHUB}.com:{DOC_REPO_ORG}/{WEBSITE}.git"
 
 
 DOC_DIR: Path = fs.REPO_ROOT / "doc"
@@ -24,8 +26,10 @@ DOC_BUILD_INFO: Path = DOC_HTML_DIR / ".buildinfo"
 
 CMD_CLONE = "git", "clone", DOC_REPO_URL
 CMD_PULL = "git", "pull"
-CMD_HEAD_HASH = "git", "rev-parse", "HEAD"
+CMD_REMOTE_URL = "git", "remote", "get-url", "origin"
+CMD_SOURCE_HEAD_HASH = "git", "-C", str(fs.REPO_ROOT), "rev-parse", "HEAD"
 CMD_ADD = "git", "add", ".", "--all", "--force"
+CMD_STAGED_CHANGES = "git", "diff", "--cached", "--quiet"
 CMD_COMMIT = "git", "commit", "-m"
 CMD_PUSH = "git", "push", "origin", "master"
 
@@ -39,8 +43,21 @@ def clone_or_sync_repo() -> None:
         print(f"Cloning repo {WEBSITE!r}\n  -> {fs.path_repr(DOC_REPO_DIR)}")
         fs.run_stream_stdout(CMD_CLONE)
     else:
-        print(f"Using existing cloned altair directory {fs.path_repr(DOC_REPO_DIR)}")
         os.chdir(DOC_REPO_DIR)
+        expected_urls = {
+            DOC_REPO_URL,
+            DOC_REPO_URL.removesuffix(".git"),
+            DOC_REPO_SSH_URL,
+            DOC_REPO_SSH_URL.removesuffix(".git"),
+        }
+        actual_url = fs.run_check((*CMD_REMOTE_URL,)).stdout.strip()
+        if actual_url not in expected_urls:
+            msg = (
+                f"Existing docs publish clone has unexpected origin {actual_url!r}. "
+                f"Remove {fs.path_repr(DOC_REPO_DIR)} and rerun the publish task."
+            )
+            raise RuntimeError(msg)
+        print(f"Using existing cloned altair directory {fs.path_repr(DOC_REPO_DIR)}")
         print(f"Syncing {WEBSITE!r}\n  -> {fs.path_repr(DOC_REPO_DIR)} ...")
         fs.run_stream_stdout(CMD_PULL)
 
@@ -61,9 +78,8 @@ def sync_from_html_build() -> None:
 
 
 def generate_commit_message() -> str:
-    os.chdir(DOC_REPO_DIR)
     print("Generating commit message ...")
-    return f"{COMMIT_MSG_PREFIX} {fs.run_check(CMD_HEAD_HASH).stdout.strip()}"
+    return f"{COMMIT_MSG_PREFIX} {fs.run_check(CMD_SOURCE_HEAD_HASH).stdout.strip()}"
 
 
 def add_commit_push_github(msg: str, /, *, dry_run: bool) -> None:
@@ -71,9 +87,12 @@ def add_commit_push_github(msg: str, /, *, dry_run: bool) -> None:
     print("Pushing ...")
     cmd_commit = *CMD_COMMIT, msg
     cmd_push = (*CMD_PUSH, "--dry-run") if dry_run else CMD_PUSH
-    commands = (CMD_ADD, cmd_commit, cmd_push)
-    for command in commands:
-        fs.run_stream_stdout(command)
+    fs.run_stream_stdout(CMD_ADD)
+    if sp.run(CMD_STAGED_CHANGES, check=False).returncode == 0:
+        print("No docs changes to commit.")
+    else:
+        fs.run_stream_stdout(cmd_commit)
+    fs.run_stream_stdout(cmd_push)
 
 
 def ensure_build_html() -> None:
@@ -81,7 +100,6 @@ def ensure_build_html() -> None:
         raise FileNotFoundError(DOC_HTML_DIR)
     if not DOC_BUILD_INFO.exists():
         raise FileNotFoundError(DOC_BUILD_INFO)
-    fs.mkdir(DOC_REPO_DIR)
     time = fs.modified_time(DOC_BUILD_INFO).isoformat(" ", "seconds")
     print(f"Docs last build time: {time!r}")
 

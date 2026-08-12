@@ -7,7 +7,16 @@ import sys
 from collections.abc import Callable, MutableMapping, Sequence
 from functools import partial
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Literal, TypedDict, TypeVar, Union, overload
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Concatenate,
+    Literal,
+    ParamSpec,
+    TypedDict,
+    TypeVar,
+    overload,
+)
 
 import narwhals.stable.v1 as nw
 from narwhals.stable.v1.dependencies import is_pandas_dataframe
@@ -27,10 +36,6 @@ if sys.version_info >= (3, 13):
     from typing import Protocol, runtime_checkable
 else:
     from typing_extensions import Protocol, runtime_checkable
-if sys.version_info >= (3, 10):
-    from typing import Concatenate, ParamSpec
-else:
-    from typing_extensions import Concatenate, ParamSpec
 
 if TYPE_CHECKING:
     if sys.version_info >= (3, 13):
@@ -38,10 +43,8 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeIs
 
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
+    from typing import TypeAlias
+
     import pandas as pd
     import pyarrow as pa
 
@@ -51,18 +54,16 @@ class SupportsGeoInterface(Protocol):
     __geo_interface__: MutableMapping
 
 
-DataType: TypeAlias = Union[
-    dict[Any, Any], IntoDataFrame, SupportsGeoInterface, DataFrameLike
-]
+DataType: TypeAlias = (
+    dict[Any, Any] | IntoDataFrame | SupportsGeoInterface | DataFrameLike
+)
 
 TDataType = TypeVar("TDataType", bound=DataType)
 TIntoDataFrame = TypeVar("TIntoDataFrame", bound=IntoDataFrame)
 
-VegaLiteDataDict: TypeAlias = dict[
-    str, Union[str, dict[Any, Any], list[dict[Any, Any]]]
-]
-ToValuesReturnType: TypeAlias = dict[str, Union[dict[Any, Any], list[dict[Any, Any]]]]
-SampleReturnType = Union[IntoDataFrame, dict[str, Sequence], None]
+VegaLiteDataDict: TypeAlias = dict[str, str | dict[Any, Any] | list[dict[Any, Any]]]
+ToValuesReturnType: TypeAlias = dict[str, dict[Any, Any] | list[dict[Any, Any]]]
+SampleReturnType = IntoDataFrame | dict[str, Sequence] | None
 
 
 def is_data_type(obj: Any) -> TypeIs[DataType]:
@@ -85,7 +86,7 @@ def is_data_type(obj: Any) -> TypeIs[DataType]:
 # ==============================================================================
 
 P = ParamSpec("P")
-# NOTE: `Any` required due to the complexity of existing signatures imported in `altair.vegalite.v5.data.py`
+# NOTE: `Any` required due to the complexity of existing signatures imported in `altair.vegalite.v6.data.py`
 R = TypeVar("R", VegaLiteDataDict, Any)
 DataTransformerType = Callable[Concatenate[DataType, P], R]
 
@@ -350,20 +351,16 @@ def _compute_data_hash(data_str: str) -> str:
     return hashlib.sha256(data_str.encode()).hexdigest()[:32]
 
 
-def _from_geo_interface(data: SupportsGeoInterface | Any) -> dict[str, Any]:
+def _from_geo_interface(data: SupportsGeoInterface) -> dict[str, Any]:
     """
-    Santize a ``__geo_interface__`` w/ pre-santize step for ``pandas`` if needed.
+    Sanitize a ``__geo_interface__`` w/ pre-sanitize step for ``pandas`` if needed.
 
-    Notes
-    -----
-    Split out to resolve typing issues related to:
-    - Intersection types
-    - ``typing.TypeGuard``
-    - ``pd.DataFrame.__getattr__``
+    Introduces an intersection type::
+
+        geo: <subclass of SupportsGeoInterface and DataFrame> | SupportsGeoInterface
     """
-    if is_pandas_dataframe(data):
-        data = sanitize_pandas_dataframe(data)
-    return sanitize_geo_interface(data.__geo_interface__)
+    geo = sanitize_pandas_dataframe(data) if is_pandas_dataframe(data) else data
+    return sanitize_geo_interface(geo.__geo_interface__)
 
 
 def _data_to_json_string(data: DataType) -> str:

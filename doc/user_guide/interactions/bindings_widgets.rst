@@ -45,7 +45,7 @@ where a drop-down is used to highlight cars of a specific ``Origin``:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     cars = data.cars.url
 

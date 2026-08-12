@@ -8,7 +8,7 @@ to the furthest points within 1.5 * IQR from the first and third quartile.
 """
 # category: distributions
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.population.url
 

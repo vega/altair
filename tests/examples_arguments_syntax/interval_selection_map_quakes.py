@@ -5,16 +5,16 @@ Interval Selection on a Map
 This is an example of a binned bar chart on the right where the filtered overlay
 is adjusted by interacting with the map on the left.
 """
+# :new:
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
-import geopandas as gpd
+from altair.datasets import data
 
 # load data
-gdf_quakies = gpd.read_file(data.earthquakes.url, driver="GeoJSON")
-gdf_world = gpd.read_file(data.world_110m.url, driver="TopoJSON")
+gdf_quakies = data.earthquakes()
+gdf_world = data.world_110m(layer="countries")
 
-# defintion for interactive brush
+# definition for interactive brush
 brush = alt.selection_interval(
     encodings=["longitude"], 
     empty=False, 

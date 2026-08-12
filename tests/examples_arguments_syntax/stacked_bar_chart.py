@@ -6,7 +6,7 @@ This is an example of a stacked bar chart using data which contains crop yields 
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.barley()
 

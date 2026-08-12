@@ -139,7 +139,7 @@ Displaying in nteract
 ---------------------
 nteract_ cannot display HTML outputs natively, and so Altair's default ``html`` renderer
 will not work. However, nteract natively includes vega and vega-lite mimetype-based rendering.
-To use Altair in nteract, ensure you are using a version that supports the Vega-Lite v5
+To use Altair in nteract, ensure you are using a version that supports the Vega-Lite v6
 mimetype, and use::
 
     alt.renderers.enable('mimetype')
@@ -321,7 +321,7 @@ output displayed. This turns out to be true of Altair charts as well:
     :output: none
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     cars = data.cars.url
 
     chart = alt.Chart(cars).mark_point().encode(
@@ -714,4 +714,4 @@ see :ref:`display-general`.
 .. _Spyder: https://www.spyder-ide.org/
 .. _IPython QtConsole: https://qtconsole.readthedocs.io/en/stable/
 .. _webbrowser module: https://docs.python.org/3/library/webbrowser.html#webbrowser.register
-.. _Olli: https://mitvis.github.io/olli/
+.. _Olli: https://umwelt-data.github.io/olli/

@@ -5,12 +5,12 @@ This example shows how to make a 2d histogram scatter plot.
 """
 # category: distributions
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.movies.url
 
 alt.Chart(source).mark_circle().encode(
-    alt.X('IMDB_Rating:Q').bin(),
-    alt.Y('Rotten_Tomatoes_Rating:Q').bin(),
+    alt.X('IMDB Rating:Q').bin(),
+    alt.Y('Rotten Tomatoes Rating:Q').bin(),
     size='count()'
 )

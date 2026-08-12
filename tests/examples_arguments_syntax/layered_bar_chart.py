@@ -5,7 +5,7 @@ This example shows a segmented bar chart that is layered rather than stacked.
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.iowa_electricity()
 

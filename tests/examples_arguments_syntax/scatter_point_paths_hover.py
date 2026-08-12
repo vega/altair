@@ -1,6 +1,6 @@
 """
-Scatter plot with point paths on hover with search box
-======================================================
+Scatter plot with point paths on hover and search box
+=====================================================
 This example combines cross-sectional analysis (comparing countries at a single point in time) 
 with longitudinal analysis (tracking changes in individual countries over time), using
 an interactive visualization technique inspired by [this Vega example](https://vega.github.io/vega/examples/global-development/).
@@ -11,9 +11,10 @@ thickens from past to present, clearly indicating the direction of time.
 2. Search Box. Implements a case-insensitive regex filter for country names,
 enabling dynamic, flexible data point selection to enhance exploratory analysis.
 """
+# :new:
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 # Data source
 source = data.gapminder.url

@@ -5,7 +5,7 @@ A series of scatter plots, one for each country/area of origin.
 """
 # category: scatter plots
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.cars()
 

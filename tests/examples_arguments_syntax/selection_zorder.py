@@ -7,10 +7,11 @@ as it is hovered over with the pointer.
 This prevents that the selected points are obscured
 by those that are not selected.
 """
+# :new:
 # category: interactive charts
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 
 cars = data.cars.url

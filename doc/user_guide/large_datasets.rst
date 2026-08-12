@@ -102,13 +102,13 @@ The VegaFusion dependencies can be installed using pip
 
 .. code-block:: none
 
-   pip install "vegafusion[embed]"
+   pip install vegafusion
 
 or conda
 
 .. code-block:: none
 
-   conda install -c conda-forge vegafusion vegafusion-python-embed vl-convert-python
+   conda install -c conda-forge vegafusion vl-convert-python
 
 Enabling the VegaFusion Data Transformer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -214,24 +214,6 @@ This not only addresses the issue of large notebooks, but also leads to better
 interactivity performance with large datasets.
 
 
-Local Data Server
-^^^^^^^^^^^^^^^^^
-A convenient way to do this is by using the `altair_data_server <https://github.com/altair-viz/altair_data_server>`_
-package. It serves your data from a local threaded server. First install the package:
-
-.. code-block:: none
-
-   pip install altair_data_server
-
-And then enable the data transformer::
-
-    import altair as alt
-    alt.data_transformers.enable('data_server')
-
-Note that this approach may not work on some cloud-based Jupyter notebook services.
-A disadvantage of this method is that if you reopen the notebook, the plot may no longer display
-as the data server is no longer running.
-
 Local Filesystem
 ^^^^^^^^^^^^^^^^
 You can also persist the data to disk and then pass the path to Altair:
@@ -278,7 +260,7 @@ using the ``url`` attribute:
 
 .. code-block:: python
 
-   from vega_datasets import data
+   from altair.datasets import data
    source = data.cars.url
 
    alt.Chart(source).mark_point() # etc.
@@ -310,7 +292,7 @@ it is convenient to pass the unaggregated data to Altair:
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
 
@@ -337,7 +319,7 @@ You could also precalculate the sum in pandas which would reduce the size of the
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.barley()
     source_aggregated = (
@@ -357,7 +339,7 @@ in Altair.
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     df = data.cars()
 
@@ -378,7 +360,7 @@ to calculate the boundaries of the whiskers.
     
     import altair as alt
     import pandas as pd
-    from vega_datasets import data
+    from altair.datasets import data
 
     k = 1.5
     group_by_column = "Origin"

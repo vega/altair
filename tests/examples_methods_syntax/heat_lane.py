@@ -5,7 +5,7 @@ This example shows how to make an alternative form of a histogram `designed at G
 """
 # category: distributions
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.cars.url
 

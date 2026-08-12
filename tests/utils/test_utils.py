@@ -11,7 +11,7 @@ from altair.utils import (
     sanitize_narwhals_dataframe,
     sanitize_pandas_dataframe,
 )
-from tests import skip_requires_pyarrow
+from tests import skip_requires_polars, skip_requires_pyarrow
 
 
 def test_infer_vegalite_type():
@@ -70,6 +70,10 @@ def test_sanitize_dataframe():
     # Re-order the columns to match df
     df2 = df2[df.columns]
 
+    # pandas doesn't properly recognize np.array(np.nan); use float64 so df matches read_json
+    df.iloc[0, df.columns.get_loc("o")] = np.nan
+    df["o"] = df["o"].astype(np.float64)
+
     # Re-apply original types
     for col in df:
         if str(df[col].dtype).startswith("datetime"):
@@ -80,8 +84,6 @@ def test_sanitize_dataframe():
         else:
             df2[col] = df2[col].astype(df[col].dtype)
 
-    # pandas doesn't properly recognize np.array(np.nan), so change it here
-    df.iloc[0, df.columns.get_loc("o")] = np.nan
     assert df.equals(df2)
 
 
@@ -168,6 +170,30 @@ def test_sanitize_pyarrow_table_columns() -> None:
     json.dumps(values)
 
 
+@skip_requires_polars
+def test_sanitize_polars_datetime_timezone_preserved() -> None:
+    import polars as pl
+
+    start = pl.datetime(2023, 11, 5, time_zone="US/Mountain")
+    df = pl.DataFrame(
+        {
+            "datetime": pl.datetime_range(
+                start, start.dt.offset_by("3h"), "1h", closed="both", eager=True
+            ),
+            "value": [10, 20, 30, 40],
+        }
+    )
+
+    sanitized = sanitize_narwhals_dataframe(nw.from_native(df, eager_only=True))
+
+    assert sanitized.rows(named=True) == [
+        {"datetime": "2023-11-05T00:00:00-0600", "value": 10},
+        {"datetime": "2023-11-05T01:00:00-0600", "value": 20},
+        {"datetime": "2023-11-05T01:00:00-0700", "value": 30},
+        {"datetime": "2023-11-05T02:00:00-0700", "value": 40},
+    ]
+
+
 def test_sanitize_dataframe_colnames():
     df = pd.DataFrame(np.arange(12).reshape(4, 3))
 
@@ -239,7 +265,8 @@ def test_sanitize_string_dtype():
     )
 
     df_clean = sanitize_pandas_dataframe(df)
-    assert {col.dtype.name for _, col in df_clean.items()} == {"object"}
+    # pandas 3+ with pyarrow may leave .dtype.name as "str" in some cases
+    assert {col.dtype.name for _, col in df_clean.items()} <= {"object", "str"}
 
     result_python = {col_name: list(col) for col_name, col in df_clean.items()}
     assert result_python == {

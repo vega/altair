@@ -2,20 +2,20 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Literal, get_args
+from typing import TYPE_CHECKING, Literal, cast, get_args
 
 from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx.util.docutils import SphinxDirective
 from sphinx.util.parsing import nested_parse_to_nodes
 
-from altair.vegalite.v5.schema._typing import VegaThemes
+from altair.vegalite.v6.schema._typing import VegaThemes
 from tools.codemod import extract_func_def, extract_func_def_embed
 
 if TYPE_CHECKING:
     import sys
     from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
-    from typing import Any, ClassVar, TypeVar, Union
+    from typing import Any, ClassVar, TypeAlias, TypeVar
 
     from docutils.parsers.rst.states import RSTState, RSTStateMachine
     from docutils.statemachine import StringList
@@ -25,13 +25,9 @@ if TYPE_CHECKING:
         from typing import TypeAliasType
     else:
         from typing_extensions import TypeAliasType
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
 
     T = TypeVar("T")
-    OneOrIter = TypeAliasType("OneOrIter", Union[T, Iterable[T]], type_params=(T,))
+    OneOrIter = TypeAliasType("OneOrIter", T | Iterable[T], type_params=(T,))
 
 _OutputShort: TypeAlias = Literal["code", "plot"]
 _OutputLong: TypeAlias = Literal["code-block", "altair-plot"]
@@ -42,7 +38,7 @@ _OUTPUT_REMAP: Mapping[_OutputShort, _OutputLong] = {
 _Option: TypeAlias = Literal["output", "fold", "summary"]
 
 _PYSCRIPT_URL_FMT = "https://pyscript.net/releases/{0}/core.js"
-_PYSCRIPT_VERSION = "2024.10.1"
+_PYSCRIPT_VERSION = "2025.2.2"
 _PYSCRIPT_URL = _PYSCRIPT_URL_FMT.format(_PYSCRIPT_VERSION)
 
 
@@ -52,13 +48,13 @@ def validate_output(output: Any) -> _OutputLong:
         msg = f":output: option must be one of {get_args(_OutputShort)!r}"
         raise TypeError(msg)
     else:
-        short: _OutputShort = output
+        short = cast("_OutputShort", output)
         return _OUTPUT_REMAP[short]
 
 
 def validate_packages(packages: Any) -> str:
     if packages is None:
-        return '["altair"]'
+        return '["altair", "vega-datasets"]'
     else:
         split = [pkg.strip() for pkg in packages.split(",")]
         if len(split) == 1:
@@ -221,6 +217,38 @@ class ThemeDirective(SphinxDirective):
             assign_to="chart",
             indent=4,
         )
+        # For PyScript/Pyodide compatibility, use vega_datasets until new Altair is published
+        py_code = py_code.replace(
+            "from altair.datasets import data", "from vega_datasets import data"
+        )
+        # vega_datasets uses underscores in column names, not spaces
+        # Order matters: do aggregation functions first (they contain field names)
+        py_code = py_code.replace("mean(IMDB Rating)", "mean(IMDB_Rating)")
+        py_code = py_code.replace(
+            "mean(Rotten Tomatoes Rating)", "mean(Rotten_Tomatoes_Rating)"
+        )
+        py_code = py_code.replace('datum["IMDB Rating"]', "datum.IMDB_Rating")
+        py_code = py_code.replace(
+            'datum["Rotten Tomatoes Rating"]', "datum.Rotten_Tomatoes_Rating"
+        )
+        py_code = py_code.replace('datum["IMDB Votes"]', "datum.IMDB_Votes")
+        # Field references in encodings (remaining ones)
+        py_code = py_code.replace('"IMDB Rating"', '"IMDB_Rating"')
+        py_code = py_code.replace(
+            '"Rotten Tomatoes Rating"', '"Rotten_Tomatoes_Rating"'
+        )
+        py_code = py_code.replace('"IMDB Votes"', '"IMDB_Votes"')
+        py_code = py_code.replace('"Release Date:T"', '"Release_Date:T"')
+        py_code = py_code.replace('"Release Date"', '"Release_Date"')
+        # Restore display titles that were caught by the broad field replacement above
+        py_code = py_code.replace('.title("Release_Date")', '.title("Release Date")')
+        py_code = py_code.replace("'IMDB Rating'", "'IMDB_Rating'")
+        py_code = py_code.replace(
+            "'Rotten Tomatoes Rating'", "'Rotten_Tomatoes_Rating'"
+        )
+        py_code = py_code.replace("'IMDB Votes'", "'IMDB_Votes'")
+        py_code = py_code.replace("'Release Date'", "'Release_Date'")
+
         results.extend(
             pyscript(packages, TARGET_DIV_ID, loading_label, py_code=py_code)
         )

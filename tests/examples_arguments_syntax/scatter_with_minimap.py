@@ -8,7 +8,7 @@ adjusts the axis limits in another, more detailed view.
 # category: scatter plots
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.seattle_weather()
 

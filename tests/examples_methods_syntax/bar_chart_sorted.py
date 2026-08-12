@@ -5,7 +5,7 @@ This example shows a bar chart sorted by a calculated value.
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.barley()
 

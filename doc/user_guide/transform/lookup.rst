@@ -11,12 +11,12 @@ at the top level of a chart using the :meth:`Chart.transform_lookup` method.
 By way of example, imagine you have two sources of data that you would like
 to combine and plot: one is a list of names of people along with their height
 and weight, and the other is some information about which groups they belong
-to. This example data is available in ``vega_datasets``:
+to. This example data is available in the `altair.datasets` package:
 
 .. altair-plot::
    :output: none
 
-   from vega_datasets import data
+   from altair.datasets import data
    people = data.lookup_people()
    groups = data.lookup_groups()
 
@@ -97,6 +97,15 @@ and the ``from_`` argument specifies a :class:`~LookupData` structure where
 we supply the second dataset, the lookup key, and the fields we would like to
 extract.
 
+.. note::
+
+   Make sure the lookup fields use compatible values and data types. For
+   example, a zero-padded spatial ID such as ``"06001"`` will not match the
+   numeric spatial ID ``6001``. If your dataframe contains zero-padded spatial 
+   IDs as strings while the geographic data uses numeric IDs, convert the column
+   to a compatible type before creating the chart. For example, in pandas use
+   ``df["id"] = df["spatial_id"].astype(int)``.
+
 Example: Lookup Transforms for Geographical Visualization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Lookup transforms are often particularly important for geographic visualization,
@@ -107,7 +116,7 @@ of unemployment rates per county in the US:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     counties = alt.topo_feature(data.us_10m.url, 'counties')
     unemp_data = data.unemployment.url

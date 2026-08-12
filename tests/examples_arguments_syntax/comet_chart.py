@@ -9,10 +9,10 @@ is shown in `this blogpost <https://medium.com/de-dataverbinders/comet-charts-in
 # category: advanced calculations
 
 import altair as alt
-import vega_datasets
+from altair.datasets import data
 
 (
-    alt.Chart(vega_datasets.data.barley.url)
+    alt.Chart(data.barley.url)
     .transform_pivot("year", value="yield", groupby=["variety", "site"])
     .transform_fold(["1931", "1932"], as_=["year", "yield"])
     .transform_calculate(calculate="datum['1932'] - datum['1931']", as_="delta")

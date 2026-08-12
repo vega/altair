@@ -19,7 +19,7 @@ def chart():
 
 
 def assert_is_vega_spec(vega_spec):
-    assert vega_spec["$schema"] == "https://vega.github.io/schema/vega/v5.json"
+    assert vega_spec["$schema"] == "https://vega.github.io/schema/vega/v6.json"
     assert "data" in vega_spec
     assert "marks" in vega_spec
     assert "scales" in vega_spec

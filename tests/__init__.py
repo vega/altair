@@ -14,13 +14,12 @@ from tests import examples_arguments_syntax, examples_methods_syntax
 if TYPE_CHECKING:
     from collections.abc import Collection, Iterator, Mapping
     from re import Pattern
+    from typing import TypeAlias
 
-    if sys.version_info >= (3, 11):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
-    from _pytest.mark import ParameterSet
-    from _pytest.mark.structures import Markable
+    from _pytest.mark import ParameterSet  # pyright: ignore[reportPrivateImportUsage]
+    from _pytest.mark.structures import (
+        Markable,  # pyright: ignore[reportPrivateImportUsage]
+    )
 
     MarksType: TypeAlias = (
         "pytest.MarkDecorator | Collection[pytest.MarkDecorator | pytest.Mark]"
@@ -58,6 +57,16 @@ To run **only** slow tests use::
 Either script can accept ``pytest`` args::
 
     >>> hatch run test-slow --durations=25  # doctest: +SKIP
+"""
+
+no_xdist: pytest.MarkDecorator = pytest.mark.no_xdist()
+"""
+Custom ``pytest.mark`` decorator.
+
+Each marked test will run **serially**, after all other selected tests.
+
+.. tip::
+   Use as a last resort when a test depends on manipulating global state.
 """
 
 skip_requires_ipython: pytest.MarkDecorator = pytest.mark.skipif(
@@ -99,6 +108,42 @@ Applies when `vegafusion`_ import would fail.
 skip_requires_scipy: pytest.MarkDecorator = pytest.mark.skipif(
     find_spec("scipy") is None, reason="`scipy` not installed."
 )
+
+skip_requires_geopandas: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("geopandas") is None, reason="`geopandas` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `geopandas`_ import would fail.
+
+.. _geopandas:
+    https://geopandas.org/
+"""
+
+skip_requires_duckdb: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("duckdb") is None, reason="`duckdb` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `duckdb`_ import would fail.
+
+.. _duckdb:
+    https://duckdb.org/
+"""
+
+skip_requires_polars: pytest.MarkDecorator = pytest.mark.skipif(
+    find_spec("polars") is None, reason="`polars` not installed."
+)
+"""
+``pytest.mark.skipif`` decorator.
+
+Applies when `polars`_ import would fail.
+
+.. _polars:
+    https://pola.rs/
+"""
 
 
 @overload

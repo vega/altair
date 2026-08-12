@@ -9,7 +9,7 @@ with an added base map.
 """
 # category: maps
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 df_wind = data.windvectors()
 data_world = alt.topo_feature(data.world_110m.url, "countries")

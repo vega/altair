@@ -23,6 +23,7 @@ import pytest
 
 import altair as alt
 from altair import load_schema
+from altair.datasets import data
 from altair.utils.schemapi import (
     _DEFAULT_JSON_SCHEMA_DRAFT_URL,
     SchemaBase,
@@ -31,9 +32,8 @@ from altair.utils.schemapi import (
     UndefinedType,
     _FromDict,
 )
-from altair.vegalite.v5.schema.channels import X
-from altair.vegalite.v5.schema.core import FieldOneOfPredicate, Legend
-from vega_datasets import data
+from altair.vegalite.v6.schema.channels import X
+from altair.vegalite.v6.schema.core import FieldOneOfPredicate, Legend
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable, Sequence
@@ -1040,7 +1040,7 @@ def test_to_dict_range(tp) -> None:
 
 @pytest.fixture
 def stocks() -> alt.Chart:
-    source = "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/sp500.csv"
+    source = "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/sp500.csv"
     return alt.Chart(source).mark_area().encode(x="date:T", y="price:Q")
 
 
@@ -1145,6 +1145,24 @@ def test_to_dict_datetime_unsupported_timezone(tzinfo: dt.timezone) -> None:
 
     with pytest.raises(TypeError, match=r"Unsupported timezone.+\n.+UTC.+local"):
         alt.FieldEqualPredicate(datetime.replace(tzinfo=tzinfo), "column 1")
+
+
+@pytest.mark.parametrize("setter", ["scale", "axis", "sort"])
+def test_property_setter_rejects_multiple_positional_arguments(setter: str) -> None:
+    method = getattr(alt.X("field:Q"), setter)
+    with pytest.raises(
+        TypeError, match=rf"X\.{setter}\(\) accepts at most one positional argument"
+    ):
+        method(["M", "F"], ["#1FC3AA", "#8624F5"])
+
+
+@pytest.mark.parametrize("setter", ["scale", "axis", "sort"])
+def test_property_setter_rejects_positional_and_keyword_arguments(setter: str) -> None:
+    method = getattr(alt.X("field:Q"), setter)
+    with pytest.raises(
+        TypeError, match=rf"X\.{setter}\(\) cannot combine a positional argument"
+    ):
+        method(["M", "F"], domain=["M", "F"])
 
 
 def test_to_dict_datetime_typing() -> None:

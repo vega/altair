@@ -1,5 +1,5 @@
 """
-Versioning utils, specfic to `vega projects`_.
+Versioning utils, specific to `vega projects`_.
 
 Includes non-`python` projects.
 
@@ -10,14 +10,14 @@ Examples
 --------
 >>> from tools.versioning import VERSIONS  # doctest: +SKIP
 >>> VERSIONS["vega-lite"]  # doctest: +SKIP
-'v5.20.1'
+'v6.1.0'
 
 >>> VERSIONS  # doctest: +SKIP
-{'vega-datasets': 'v2.11.0',
- 'vega-embed': '6',
- 'vega-lite': 'v5.20.1',
+{'vega-datasets': 'v3',
+ 'vega-embed': '7',
+ 'vega-lite': 'v6.1.0',
  'vegafusion': '1.5.0',
- 'vl-convert-python': '1.7.0'}
+ 'vl-convert-python': '1.8.0'}
 """
 
 from __future__ import annotations
@@ -32,7 +32,7 @@ if sys.version_info >= (3, 11):
     import tomllib
 else:
     # NOTE: See https://github.com/hukkin/tomli?tab=readme-ov-file#building-a-tomlitomllib-compatibility-layer
-    import tomli as tomllib  # type: ignore
+    import tomli as tomllib
 from packaging.requirements import Requirement
 from packaging.version import parse as parse_version
 
@@ -53,10 +53,7 @@ if TYPE_CHECKING:
         from typing import LiteralString
     else:
         from typing_extensions import LiteralString
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
+    from typing import TypeAlias
 
 __all__ = ["VERSIONS"]
 
@@ -255,7 +252,7 @@ class _Versions:
                         if sp.operator in _LOWER_BOUNDS
                     )
                     version = str(min(it))
-                    yield req.name, version  # type: ignore[misc]
+                    yield req.name, version
 
 
 def __getattr__(name: str) -> _Versions:

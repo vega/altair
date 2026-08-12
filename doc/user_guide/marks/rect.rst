@@ -53,7 +53,7 @@ Using the ``rect`` marks with discrete fields on ``x`` and ``y`` channels create
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.seattle_weather()
 
@@ -72,7 +72,7 @@ For example, we can use ``rect`` to create an annotation ``layer`` that provides
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 

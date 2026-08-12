@@ -7,7 +7,7 @@ It was inspired by `Gregor Aisch's work at datawrapper
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.co2_concentration.url
 

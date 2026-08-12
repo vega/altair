@@ -34,7 +34,7 @@ same data; for example:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     stocks = data.stocks.url
 
@@ -60,8 +60,11 @@ number of charts:
       base.mark_rule()
     ).interactive()
 
-The output of both of these patterns is a :class:`LayerChart` object, which
-has properties and methods similar to the :class:`Chart` object.
+Normally, the output of both of these patterns is a :class:`LayerChart` object,
+which has properties and methods similar to the :class:`Chart` object. If all
+charts share identical ``row``, ``column``, or ``facet`` encoding channels, those
+encodings are hoisted automatically and a :class:`FacetChart` is returned instead
+(see :ref:`layer-shared-facet`).
 
 Order of Layers
 ^^^^^^^^^^^^^^^
@@ -76,13 +79,13 @@ heat-map:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.movies.url
 
     heatmap = alt.Chart(source).mark_rect().encode(
-        alt.X('IMDB_Rating:Q').bin(),
-        alt.Y('Rotten_Tomatoes_Rating:Q').bin(),
+        alt.X('IMDB Rating:Q').bin(),
+        alt.Y('Rotten Tomatoes Rating:Q').bin(),
         alt.Color('count()').scale(scheme='greenblue')
     )
 
@@ -90,8 +93,8 @@ heat-map:
         color='black',
         size=5,
     ).encode(
-        x='IMDB_Rating:Q',
-        y='Rotten_Tomatoes_Rating:Q',
+        x='IMDB Rating:Q',
+        y='Rotten Tomatoes Rating:Q',
     )
 
     heatmap + points
@@ -121,23 +124,23 @@ distribution of its points:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
-    iris = data.iris.url
+    penguins = data.penguins.url
 
-    chart1 = alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N'
+    chart1 = alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q', scale=alt.Scale(zero=False)),
+        y=alt.Y('Body Mass (g):Q', scale=alt.Scale(zero=False)),
+        color='Species:N'
     ).properties(
         height=300,
         width=300
     )
 
-    chart2 = alt.Chart(iris).mark_bar().encode(
+    chart2 = alt.Chart(penguins).mark_bar().encode(
         x='count()',
-        y=alt.Y('petalWidth:Q').bin(maxbins=30),
-        color='species:N'
+        y=alt.Y('Body Mass (g):Q', bin=alt.Bin(maxbins=30)),
+        color='Species:N'
     ).properties(
         height=300,
         width=100
@@ -174,7 +177,7 @@ with a ``brush`` selection to add interaction:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.sp500.url
 
@@ -219,22 +222,25 @@ showing how ``repeat`` can be used to build the chart more efficiently:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
-    iris = data.iris.url
+    penguins = data.penguins.url
 
     base = alt.Chart().mark_point().encode(
-        color='species:N'
+        color='Species:N'
     ).properties(
         width=200,
         height=200
     ).interactive()
 
-    chart = alt.vconcat(data=iris)
-    for y_encoding in ['petalLength:Q', 'petalWidth:Q']:
+    chart = alt.vconcat(data=penguins)
+    for y_encoding in ['Flipper Length (mm):Q', 'Body Mass (g):Q']:
         row = alt.hconcat()
-        for x_encoding in ['sepalLength:Q', 'sepalWidth:Q']:
-            row |= base.encode(x=x_encoding, y=y_encoding)
+        for x_encoding in ['Beak Length (mm):Q', 'Beak Depth (mm):Q']:
+            row |= base.encode(
+                       x=alt.X(x_encoding, scale=alt.Scale(zero=False)),
+                       y=alt.Y(y_encoding, scale=alt.Scale(zero=False)),
+                   )
         chart &= row
     chart
 
@@ -248,19 +254,19 @@ method, makes this type of chart a bit easier to produce:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    iris = data.iris.url
+    from altair.datasets import data
+    penguins = data.penguins.url
 
-    alt.Chart(iris).mark_point().encode(
-        alt.X(alt.repeat("column"), type='quantitative'),
-        alt.Y(alt.repeat("row"), type='quantitative'),
-        color='species:N'
+    alt.Chart(penguins).mark_point().encode(
+        alt.X(alt.repeat("column"), type='quantitative', scale=alt.Scale(zero=False)),
+        alt.Y(alt.repeat("row"), type='quantitative', scale=alt.Scale(zero=False)),
+        color='Species:N'
     ).properties(
         width=200,
         height=200
     ).repeat(
-        row=['petalLength', 'petalWidth'],
-        column=['sepalLength', 'sepalWidth']
+        row=['Flipper Length (mm)', 'Body Mass (g)'],
+        column=['Beak Length (mm)', 'Beak Depth (mm)']
     ).interactive()
 
 The :meth:`Chart.repeat` method is the key here: it lets you specify a set of
@@ -268,21 +274,21 @@ encodings for the row and/or column which can be referred to in the chart's
 encoding specification using ``alt.repeat('row')`` or ``alt.repeat('column')``.
 
 Another option to use the ``repeat`` method is for layering. Here below the
-columns ``US_Gross`` and ``Worldwide_Gross`` are layered on the ``y``-axis
+columns ``US Gross`` and ``Worldwide Gross`` are layered on the ``y``-axis
 using ``alt.repeat('layer')``:
 
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.movies()
 
     alt.Chart(source).mark_line().encode(
-        x=alt.X("IMDB_Rating").bin(),
+        x=alt.X("IMDB Rating").bin(),
         y=alt.Y(alt.repeat('layer')).aggregate('mean').title("Mean of US and Worldwide Gross"),
         color=alt.ColorDatum(alt.repeat('layer'))
-    ).repeat(layer=["US_Gross", "Worldwide_Gross"])
+    ).repeat(layer=["US Gross", "Worldwide Gross"])
 
 Currently ``repeat`` can only be encodings (not, e.g., data transforms)
 but there is discussion within the Vega-Lite community about making this pattern
@@ -295,7 +301,7 @@ Faceted Charts
 Like repeated charts, Faceted charts provide multiple views of a dataset.
 But instead of having different panels for different encodings,
 we have different panels for different subsets of data. For example,
-one panel for each of the three species of flower in the iris dataset.
+one panel for each of the three species of penguin in the penguins dataset.
 
 This is also called a `small multiple <https://en.wikipedia.org/wiki/Small_multiple>`_
 chart, trellis chart, lattice chart, grid chart, or panel chart.
@@ -306,22 +312,21 @@ concatenation:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
+    penguins = data.penguins.url
 
-    iris = data.iris.url
-
-    base = alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N'
+    base = alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
+        color='Species:N'
     ).properties(
         width=160,
         height=160
     )
 
     chart = alt.hconcat()
-    for species in ['setosa', 'versicolor', 'virginica']:
-        chart |= base.transform_filter(alt.datum.species == species)
+    for species in ['Adelie', 'Chinstrap', 'Gentoo']:
+        chart |= base.transform_filter(alt.datum.Species == species)
     chart
 
 As with the manual approach to :ref:`repeat-chart`, this is straightforward,
@@ -331,15 +336,15 @@ Using ``.facet`` it becomes a bit cleaner:
 
 .. altair-plot::
 
-    alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N'
+    alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
+        color='Species:N'
     ).properties(
         width=180,
         height=180
     ).facet(
-        column='species:N'
+        column='Species:N'
     )
 
 For simple charts like this, there is also a ``column`` encoding channel that
@@ -347,11 +352,11 @@ can give the same results:
 
 .. altair-plot::
 
-    alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N',
-        column='species:N'
+    alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
+        color='Species:N',
+        column='Species:N'
     ).properties(
         width=180,
         height=180
@@ -366,10 +371,10 @@ layered chart with a hover selection:
     hover = alt.selection_point(on='pointerover', nearest=True, empty=False)
     when_hover = alt.when(hover)
 
-    base = alt.Chart(iris).encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color=when_hover.then("species:N").otherwise(alt.value("lightgray"))
+    base = alt.Chart(penguins).encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
+        color=alt.condition(hover, 'Species:N', alt.value('lightgray'))
     ).properties(
         width=180,
         height=180,
@@ -378,12 +383,59 @@ layered chart with a hover selection:
     points = base.mark_point().add_params(hover)
 
     text = base.mark_text(dy=-5).encode(
-        text="species:N", 
-        opacity=when_hover.then(alt.value(1)).otherwise(alt.value(0)),
+        text = 'Species:N',
+        opacity = alt.condition(hover, alt.value(1), alt.value(0))
     )
 
-    (points + text).facet("species:N")
+    alt.layer(points, text).facet(
+        'Species:N',
+    )
 
 Though each of the above examples have faceted the data across columns,
 faceting across rows (or across rows *and* columns) is supported as
 well.
+
+.. _layer-shared-facet:
+
+Layering charts that share a facet encoding
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When every chart passed to :func:`layer` (or combined with ``+``) carries
+identical ``row``, ``column``, or ``facet`` encoding channels, those encodings
+are hoisted automatically and a :class:`FacetChart` is returned. The two forms
+below produce the same Vega-Lite specification:
+
+.. altair-plot::
+
+    import altair as alt
+    from altair.datasets import data
+    penguins = data.penguins.url
+
+    base = alt.Chart(penguins).encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
+        row='Species:N',
+    )
+
+    # facet encoding shared on each layer — hoisted automatically
+    alt.layer(
+        base.mark_point(),
+        base.mark_line(),
+    )
+
+The equivalent explicit form is:
+
+.. code-block:: python
+
+    base = alt.Chart(penguins).encode(
+        x=alt.X('Flipper Length (mm):Q').scale(zero=False),
+        y=alt.Y('Body Mass (g):Q').scale(zero=False),
+    )
+
+    alt.layer(
+        base.mark_point(),
+        base.mark_line(),
+    ).facet(row='Species:N')
+
+If the facet encodings differ across layers, or only some layers carry them,
+a ``TypeError`` is raised as before.

@@ -6,6 +6,7 @@ import sys
 from inspect import classify_class_attrs, getmembers, signature
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
+import numpy as np
 import pytest
 from jsonschema.exceptions import ValidationError
 
@@ -127,10 +128,8 @@ def test_expr_consts_immutable(constname: str):
     """Ensure e.g `alt.expr.PI = 2` is prevented."""
     if sys.version_info >= (3, 11):
         pattern = f"property {constname!r}.+has no setter"
-    elif sys.version_info >= (3, 10):
-        pattern = f"can't set attribute {constname!r}"
     else:
-        pattern = "can't set attribute"
+        pattern = f"can't set attribute {constname!r}"
     with pytest.raises(AttributeError, match=pattern):
         setattr(expr, constname, 2)
 
@@ -140,6 +139,7 @@ def test_json_reprs():
     assert repr(datum.xxx == None) == "(datum.xxx === null)"  # noqa: E711
     assert repr(datum.xxx == False) == "(datum.xxx === false)"  # noqa: E712
     assert repr(datum.xxx == True) == "(datum.xxx === true)"  # noqa: E712
+    assert repr(datum.xxx == np.int64(0)) == "(datum.xxx === 0)"
 
 
 def test_to_dict():
@@ -168,7 +168,7 @@ def test_expression_getitem():
 
 
 def test_expression_function_expr():
-    # test including a expr.<CONSTANT> should return an ExprRef
+    # test including an expr.<CONSTANT> should return an ExprRef
     er = expr(expr.PI * 2)
     assert isinstance(er, ExprRef)
     assert repr(er) == "ExprRef({\n  expr: (PI * 2)\n})"

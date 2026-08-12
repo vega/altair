@@ -5,7 +5,7 @@ Three choropleths representing disjoint data from the same table.
 """
 # category: maps
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 states = alt.topo_feature(data.us_10m.url, 'states')
 source = data.population_engineers_hurricanes.url

@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypeVar
 from urllib import request
 
-if sys.version_info >= (3, 14):
+if sys.version_info >= (3, 15):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
@@ -189,7 +189,7 @@ class ValueChannelMixin:
             elif "field" in condition and "type" not in condition:
                 kwds = parse_shorthand(condition["field"], context.get("data", None))
                 copy = self.copy(deep=["condition"])  # type: ignore[attr-defined]
-                copy["condition"].update(kwds)  # type: ignore[index]
+                copy["condition"].update(kwds)
         return super(ValueChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )
@@ -250,7 +250,7 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
     return copy
 """
 UNIVERSAL_TYPED_DICT = '''
-class {name}(TypedDict{metaclass_kwds}):{comment}
+class {name}(TypedDict{metaclass_kwds}):
     """
     {summary}
 
@@ -343,7 +343,7 @@ DUNDER_PREDICATE_COMPOSITION = """
 # Revisit if this starts to become more common
 TYPING_EXTRA: Final = '''
 T = TypeVar("T")
-OneOrSeq = TypeAliasType("OneOrSeq", Union[T, Sequence[T]], type_params=(T,))
+OneOrSeq = TypeAliasType("OneOrSeq", T | Sequence[T], type_params=(T,))
 """
 One of ``T`` specified type(s), or a `Sequence` of such.
 
@@ -355,7 +355,7 @@ The parameters ``short``, ``long`` accept the same range of types::
 
     def func(
         short: OneOrSeq[str | bool | float],
-        long: Union[str, bool, float, Sequence[Union[str, bool, float]],
+        long: str | bool | float | Sequence[str | bool | float],
     ): ...
 """
 
@@ -367,6 +367,10 @@ class Value(TypedDict, Generic[T]):
     ----------
     value: T
         Wrapped value.
+
+    Returns
+    -------
+    dict
 
     .. _Generic:
         https://typing.readthedocs.io/en/latest/spec/generics.html#generics
@@ -420,6 +424,10 @@ class RowColKwds(TypedDict, Generic[T], total=False):
     column: T
     row: T
 
+    Returns
+    -------
+    dict
+
     .. _Generic:
         https://typing.readthedocs.io/en/latest/spec/generics.html#generics
     """
@@ -434,7 +442,7 @@ class PaddingKwds(TypedDict, total=False):
     right: float
     top: float
 
-Temporal: TypeAlias = Union[date, datetime]
+Temporal: TypeAlias = date | datetime
 '''
 
 _ChannelType = Literal["field", "datum", "value"]
@@ -753,17 +761,16 @@ def generate_vegalite_schema_wrapper(fp: Path, /) -> ModuleDef[str]:
     all_ = [*sorted(it), "Root", "VegaLiteSchema", "SchemaBase", "load_schema"]
     contents = [
         HEADER,
-        "from collections.abc import Iterator, Sequence",
-        "from typing import Any, Literal, Union, Protocol, TYPE_CHECKING",
+        "from typing import Any, Literal, Union",
         "import pkgutil",
         "import json\n",
-        "import narwhals.stable.v1 as nw\n",
         "from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses # noqa: F401\n",
         import_type_checking(
+            "from collections.abc import Iterator, Sequence",
             "from datetime import date, datetime",
             "from altair import Parameter",
             "from altair.typing import Optional",
-            f"from altair.vegalite.v5.api import {CHART_DATA_TYPE}",
+            f"from altair.vegalite.v6.api import {CHART_DATA_TYPE}",
             "from ._typing import * # noqa: F403",
         ),
         f"\n__all__ = {all_}\n",
@@ -872,13 +879,11 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
     all_ = sorted(chain(it, COMPAT_EXPORTS))
     imports = [
         "import sys",
-        "from collections.abc import Sequence",
-        "from typing import Any, overload, Literal, Union, TYPE_CHECKING, TypedDict",
-        import_typing_extensions((3, 10), "TypeAlias"),
+        "from typing import Any, overload, Literal, Union, TypedDict",
         "import narwhals.stable.v1 as nw",
-        "from altair.utils.schemapi import Undefined, with_property_setters",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
         "from altair.utils import parse_shorthand",
+        "from altair.utils.schemapi import Undefined, with_property_setters",
         "from . import core",
         "from ._typing import * # noqa: F403",
     ]
@@ -898,11 +903,12 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
         CHANNEL_MYPY_IGNORE_STATEMENTS,
         *imports,
         import_type_checking(
-            "from datetime import date, datetime",
+            "from collections.abc import Sequence",
             "from altair import Parameter, SchemaBase",
             "from altair.typing import Optional",
-            f"from altair.vegalite.v5.schema.core import {', '.join(TYPING_CORE)}",
-            f"from altair.vegalite.v5.api import {', '.join(TYPING_API)}",
+            f"from altair.vegalite.v6.schema.core import {', '.join(TYPING_CORE)}",
+            f"from altair.vegalite.v6.api import {', '.join(TYPING_API)}",
+            "from typing import TypeAlias",
             textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
         ),
         f"\n__all__ = {all_}\n",
@@ -927,6 +933,7 @@ def generate_vegalite_mark_mixin(fp: Path, /, markdefs: dict[str, str]) -> str:
             schemarepr={"$ref": "#/definitions/" + mark_def},
             exclude_properties={"type"},
             summary=f"{mark_def} schema wrapper.",
+            annotate_kwds_flag=True,  # add Any type annotation to **kwds
         ).schema_class()
         for mark_def in markdefs.values()
     )
@@ -984,7 +991,6 @@ def generate_typed_dict(
     TARGET: Literal["annotation"] = "annotation"
     arg_info = codegen.get_args(info)
     metaclass_kwds = ", total=False"
-    comment = ""
     args_it: Iterable[str] = (
         (
             f"{p}: {p_info.to_type_repr(target=TARGET, use_concrete=True)}"
@@ -1007,7 +1013,6 @@ def generate_typed_dict(
         arg_info.iter_args(kwds, exclude=exclude)
     ):
         metaclass_kwds = f", closed=True{metaclass_kwds}"
-        comment = "  # type: ignore[call-arg]"
         kwds_all_tps = chain.from_iterable(
             info.to_type_repr(as_str=False, target=TARGET, use_concrete=True)
             for _, info in arg_info.iter_args(kwds, exclude=exclude)
@@ -1021,7 +1026,6 @@ def generate_typed_dict(
     return UNIVERSAL_TYPED_DICT.format(
         name=name,
         metaclass_kwds=metaclass_kwds,
-        comment=comment,
         summary=(summary or f":class:`altair.{info.title}` ``TypedDict`` wrapper."),
         doc=doc,
         td_args=args,
@@ -1130,7 +1134,7 @@ def generate_schema__init__(
     package
         Absolute, dotted path for `schema`, e.g::
 
-            "altair.vegalite.v5.schema"
+            "altair.vegalite.v6.schema"
     expand
         Required for 2nd-pass, which explicitly defines the new ``__all__``, using newly generated names.
 
@@ -1165,7 +1169,7 @@ def path_to_module_str(
     root: Literal["altair", "doc", "sphinxext", "tests", "tools"] = "altair",
 ) -> str:
     # NOTE: GH runner has 3x altair, local is 2x
-    # - Needs to be the last occurence
+    # - Needs to be the last occurrence
     idx = fp.parts.index(root)
     start = idx + fp.parts.count(root) - 1 if root == "altair" else idx
     parents = fp.parts[start:-1]
@@ -1226,7 +1230,6 @@ def vegalite_main(skip_download: bool = False) -> None:
     fp_mixins = schemapath / "mixins.py"
     print(f"Generating\n {schemafile!s}\n  ->{fp_mixins!s}")
     mixins_imports = (
-        "from collections.abc import Sequence",
         "from typing import Any, Literal, Union",
         "from altair.utils import use_signature, Undefined, SchemaBase",
         "from . import core",
@@ -1241,6 +1244,7 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n\n",
         import_type_checking(
             "import sys",
+            "from collections.abc import Sequence",
             textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
@@ -1257,12 +1261,14 @@ def vegalite_main(skip_download: bool = False) -> None:
     fp_theme_config: Path = schemapath / "_config.py"
     content_theme_config = [
         HEADER,
-        "from collections.abc import Sequence",
-        "from typing import Any, TYPE_CHECKING, Literal, TypedDict, Union",
-        import_typing_extensions((3, 14), "TypedDict", include_sys=True),
+        "from typing import Any, Literal, TypedDict, Union",
+        "import sys",
         f"from ._typing import {ROW_COL_KWDS}, {PADDING_KWDS}",
-        "\n\n",
-        import_type_checking("from ._typing import * # noqa: F403"),
+        import_type_checking(
+            "from collections.abc import Sequence",
+            "from ._typing import * # noqa: F403",
+        ),
+        import_typing_extensions((3, 15), "TypedDict"),
         "\n\n",
         *generate_config_typed_dicts(schemafile),
     ]
@@ -1381,6 +1387,8 @@ def generate_encoding_artifacts(
 
 
 def main() -> None:
+    from tools import datasets
+
     parser = argparse.ArgumentParser(
         prog="generate_schema_wrapper.py", description="Generate the Altair package."
     )
@@ -1392,6 +1400,7 @@ def main() -> None:
     copy_schemapi_util()
     vegalite_main(args.skip_download)
     write_expr_module(VERSIONS.vlc_vega, output=EXPR_FILE, header=HEADER_COMMENT)
+    datasets.app.refresh(VERSIONS["vega-datasets"], include_typing=True)
 
     # The modules below are imported after the generation of the new schema files
     # as these modules import Altair. This allows them to use the new changes

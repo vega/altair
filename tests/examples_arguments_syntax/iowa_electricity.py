@@ -5,7 +5,7 @@ This example is a fully developed stacked chart using the sample dataset of Iowa
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.iowa_electricity()
 

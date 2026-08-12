@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import collections
+import filecmp
 import hashlib
 import json
+import os
 import random
 import shutil
 import warnings
@@ -46,13 +48,50 @@ GALLERY_TEMPLATE = jinja2.Template(
 
 This gallery contains a selection of examples of the plots Altair can create. Some may seem fairly complicated at first glance, but they are built by combining a simple set of declarative building blocks.
 
-Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/vega/>`_ project. To access them yourself, install `vega_datasets <https://github.com/altair-viz/vega_datasets>`_.
-
-.. code-block:: none
-
-   python -m pip install vega_datasets
+Many draw upon sample datasets compiled by the `Vega <https://vega.github.io/vega/>`_ project.
 
 If you can't find the plots you are looking for here, make sure to check out the :ref:`altair-ecosystem` section, which has links to packages for making e.g. network diagrams and animations.
+
+.. note::
+
+    With the release of Altair 6, the documentation was updated to use
+    ``from altair.datasets import data`` instead of ``from vega_datasets import data``.
+    This change also introduced updated column names in some datasets (e.g., spaces
+    instead of underscores).
+
+{% if recent_examples %}
+
+.. _gallery-category-recently-added:
+
+.. |gallery-new-pill| raw:: html
+
+   <span class="gallery-inline-tag">new</span>
+
+Recently Added |gallery-new-pill|
+~~~~~~~~~~~~~~
+
+.. raw:: html
+
+   <span class="gallery">
+   {% for example in recent_examples %}
+   <a class="imagegroup{% if example['is_new'] %} imagegroup-recent{% endif %}" href="{{ example.name }}.html">
+   <span
+         class="image" alt="{{ example.title }}"
+{% if example['use_svg'] %}
+        style="background-image: url(..{{ image_dir }}/{{ example.name }}-thumb.svg);"
+{% else %}
+        style="background-image: url(..{{ image_dir }}/{{ example.name }}-thumb.png);"
+{% endif %}
+    ></span>
+
+     <span class="image-title">{{ example.title }}</span>
+   </a>
+   {% endfor %}
+   </span>
+
+   <div style='clear:both;'></div>
+
+{% endif %}
 
 {% for grouper, group in examples %}
 
@@ -65,9 +104,12 @@ If you can't find the plots you are looking for here, make sure to check out the
 
    <span class="gallery">
    {% for example in group %}
-   <a class="imagegroup" href="{{ example.name }}.html">
+   <a class="imagegroup{% if example['is_new'] %} imagegroup-new{% endif %}" href="{{ example.name }}.html">
+   {% if example['is_new'] %}
+   <span class="image-tag">new</span>
+   {% endif %}
    <span
-        class="image" alt="{{ example.title }}"
+         class="image" alt="{{ example.title }}"
 {% if example['use_svg'] %}
         style="background-image: url(..{{ image_dir }}/{{ example.name }}-thumb.svg);"
 {% else %}
@@ -199,9 +241,17 @@ def save_example_pngs(
             params = example.get("galleryParameters", {})
             if use_svg:
                 # Thumbnail for SVG is identical to original image
-                shutil.copyfile(image_file, image_dir / f"{name}-thumb.svg")
+                thumb_file = image_dir / f"{name}-thumb.svg"
+                if (
+                    not hashes_match
+                    or not thumb_file.exists()
+                    or not filecmp.cmp(image_file, thumb_file, shallow=False)
+                ):
+                    shutil.copyfile(image_file, thumb_file)
             else:
-                create_thumbnail(image_file, image_dir / f"{name}-thumb.png", **params)
+                thumb_file = image_dir / f"{name}-thumb.png"
+                if not hashes_match or not thumb_file.exists():
+                    create_thumbnail(image_file, thumb_file, **params)
 
     # Save hashes so we know whether we need to re-generate plots
     with hash_file.open("w", encoding=encoding) as f:
@@ -214,9 +264,11 @@ def populate_examples(**kwds: Any) -> list[dict[str, Any]]:
     method_examples = {x["name"]: x for x in iter_examples_methods_syntax()}
 
     for example in examples:
-        docstring, category, code, lineno = get_docstring_and_rest(example["filename"])
+        docstring, category, code, lineno, is_new = get_docstring_and_rest(
+            example["filename"]
+        )
         if example["name"] in method_examples:
-            _, _, method_code, _ = get_docstring_and_rest(
+            _, _, method_code, _, _ = get_docstring_and_rest(
                 method_examples[example["name"]]["filename"]
             )
         else:
@@ -237,6 +289,7 @@ def populate_examples(**kwds: Any) -> list[dict[str, Any]]:
                 "method_code": method_code,
                 "category": category.title(),
                 "lineno": lineno,
+                "is_new": is_new,
             }
         )
 
@@ -314,6 +367,16 @@ class AltairMiniGalleryDirective(Directive):
 
 
 def main(app) -> None:
+    env_flag = os.environ.get("ALTAIR_GALLERY_GENERATE")
+    if env_flag is not None:
+        should_generate = env_flag != "0"
+    else:
+        should_generate = getattr(app.builder.config, "altair_gallery_generate", True)
+
+    if not should_generate:
+        print("-> skipping Altair gallery generation")
+        return
+
     src_dir = Path(app.builder.srcdir)
     target_dir: Path = src_dir / Path(app.builder.config.altair_gallery_dir)
     image_dir: Path = src_dir / "_images"
@@ -346,19 +409,21 @@ def main(app) -> None:
     for d in examples:
         examples_toc[d["category"]].append(d)
 
+    recent_examples = [example for example in examples if example["is_new"]]
+
     encoding = "utf-8"
 
     # Write the gallery index file
     fp = target_dir / "index.rst"
-    fp.write_text(
-        GALLERY_TEMPLATE.render(
-            title=gallery_title,
-            examples=examples_toc.items(),
-            image_dir="/_static",
-            gallery_ref=gallery_ref,
-        ),
-        encoding=encoding,
+    index_text = GALLERY_TEMPLATE.render(
+        title=gallery_title,
+        examples=examples_toc.items(),
+        recent_examples=recent_examples,
+        image_dir="/_static",
+        gallery_ref=gallery_ref,
     )
+    if not fp.exists() or fp.read_text(encoding=encoding) != index_text:
+        fp.write_text(index_text, encoding=encoding)
 
     # save the images to file
     save_example_pngs(examples, image_dir)
@@ -370,7 +435,9 @@ def main(app) -> None:
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
         fp = target_dir / "".join((example["name"], ".rst"))
-        fp.write_text(EXAMPLE_TEMPLATE.render(example), encoding=encoding)
+        page_text = EXAMPLE_TEMPLATE.render(example)
+        if not fp.exists() or fp.read_text(encoding=encoding) != page_text:
+            fp.write_text(page_text, encoding=encoding)
 
 
 def setup(app) -> None:

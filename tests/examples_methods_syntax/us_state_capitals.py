@@ -1,12 +1,12 @@
 """
-U.S. State Capitals Overlayed on a Map of the U.S
+U.S. State Capitals Overlaid on a Map of the U.S
 -------------------------------------------------
 This is a layered geographic visualization that shows US capitals
-overlayed on a map.
+overlaid on a map.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 states = alt.topo_feature(data.us_10m.url, 'states')
 capitals = data.us_state_capitals.url

@@ -78,3 +78,6 @@ data.json
 
 # type stubs
 typings/
+
+# Zed editor
+.zed

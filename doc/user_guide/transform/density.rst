@@ -14,13 +14,13 @@ dataset:
 .. altair-plot::
 
    import altair as alt
-   from vega_datasets import data
+   from altair.datasets import data
 
    alt.Chart(data.movies.url).transform_density(
-       'IMDB_Rating',
-       as_=['IMDB_Rating', 'density'],
+       'IMDB Rating',
+       as_=['IMDB Rating', 'density'],
    ).mark_area().encode(
-       x="IMDB_Rating:Q",
+       x="IMDB Rating:Q",
        y='density:Q',
    )
 
@@ -30,24 +30,23 @@ argument. Here we split the above density computation across movie genres:
 .. altair-plot::
 
    import altair as alt
-   from vega_datasets import data
+   from altair.datasets import data
 
    alt.Chart(
        data.movies.url,
        width=120,
        height=80
    ).transform_filter(
-       'isValid(datum.Major_Genre)'
+       'isValid(datum["Major Genre"])'
    ).transform_density(
-       'IMDB_Rating',
-       groupby=['Major_Genre'],
-       as_=['IMDB_Rating', 'density'],
-       extent=[1, 10],
+       'IMDB Rating',
+       groupby=['Major Genre'],
+       as_=['IMDB Rating', 'density'],
    ).mark_area().encode(
-       x="IMDB_Rating:Q",
+       x="IMDB Rating:Q",
        y='density:Q',
    ).facet(
-       'Major_Genre:N',
+       'Major Genre:N',
        columns=4
    )
 

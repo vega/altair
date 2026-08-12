@@ -88,7 +88,9 @@ def _parse_source_file(filename: str | Path) -> tuple[ast.Module | None, str]:
     return node, content
 
 
-def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, int]:
+def get_docstring_and_rest(  # noqa: C901
+    filename: str | Path,
+) -> tuple[str, str | None, str, int, bool]:
     """
     Separate ``filename`` content between docstring and the rest.
 
@@ -109,6 +111,8 @@ def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, 
         ``filename`` content without the docstring
     lineno: int
          the line number on which the code starts
+    is_new: bool
+        whether the file includes a ``# :new:`` marker before ``# category:``
 
     Notes
     -----
@@ -120,6 +124,15 @@ def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, 
     # Find the category comment
     find_category = re.compile(r"^#\s*category:\s*(.*)$", re.MULTILINE)
     match = find_category.search(content)
+    find_new = re.compile(r"^#\s*:new:\s*$", re.MULTILINE)
+    match_new = find_new.search(content)
+
+    is_new = bool(
+        match is not None
+        and match_new is not None
+        and match_new.start() < match.start()
+    )
+
     if match is not None:
         category = match.groups()[0]
         # remove this comment from the content
@@ -127,10 +140,13 @@ def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, 
     else:
         category = None
 
+    if is_new and match_new is not None:
+        content = content[: match_new.start()] + content[match_new.end() :]
+
     lineno = 1
 
     if node is None:
-        return SYNTAX_ERROR_DOCSTRING, category, content, lineno
+        return SYNTAX_ERROR_DOCSTRING, category, content, lineno, is_new
 
     if not isinstance(node, ast.Module):
         msg = f"This function only supports modules. You provided {node.__class__.__name__}"
@@ -186,7 +202,7 @@ def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, 
             "A docstring is required for the example gallery."
         )
         raise ValueError(msg)
-    return docstring, category, rest, lineno
+    return docstring, category, rest, lineno, is_new
 
 
 def prev_this_next(
@@ -195,7 +211,12 @@ def prev_this_next(
     """Utility to return (prev, this, next) tuples from an iterator."""
     i1, i2, i3 = itertools.tee(it, 3)
     next(i3, None)
-    return zip(itertools.chain([sentinel], i1), i2, itertools.chain(i3, [sentinel]))
+    return zip(
+        itertools.chain([sentinel], i1),
+        i2,
+        itertools.chain(i3, [sentinel]),
+        strict=False,
+    )
 
 
 def dict_hash(dct: dict[Any, Any]) -> Any:

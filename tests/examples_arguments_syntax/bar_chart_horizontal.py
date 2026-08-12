@@ -5,7 +5,7 @@ This example is a bar chart drawn horizontally by putting the quantitative value
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.wheat()
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import uuid
 from importlib.metadata import version as importlib_version
-from typing import TYPE_CHECKING, Any, Final, TypedDict, Union, overload
+from typing import TYPE_CHECKING, Any, Final, TypedDict, overload
 from weakref import WeakValueDictionary
 
 from narwhals.stable.v1.dependencies import is_into_dataframe
@@ -66,7 +66,7 @@ class _ToVegaFusionReturnUrlDict(TypedDict):
     url: str
 
 
-_VegaFusionReturnType = Union[_ToVegaFusionReturnUrlDict, ToValuesReturnType]
+_VegaFusionReturnType = _ToVegaFusionReturnUrlDict | ToValuesReturnType
 
 
 @overload
@@ -283,7 +283,7 @@ def compile_with_vegafusion(vegalite_spec: dict[str, Any]) -> dict[str, Any]:
     return transformed_vega_spec
 
 
-def handle_row_limit_exceeded(row_limit: int, warnings: list):
+def handle_row_limit_exceeded(row_limit: int | None, warnings: list):
     for warning in warnings:
         if warning.get("type") == "RowLimitExceeded":
             msg = (

@@ -23,7 +23,7 @@ dataframes, and contains a loader for this and other built-in datasets:
 .. altair-plot::
     :output: repr
 
-    from vega_datasets import data
+    from altair.datasets import data
 
     df = data.seattle_weather()
     df.head()

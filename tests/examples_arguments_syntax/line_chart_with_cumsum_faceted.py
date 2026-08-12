@@ -6,7 +6,7 @@ Note the use of different predicates to filter based on both a list and a range.
 """
 # category: advanced calculations
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.disasters()
 columns_sorted = ['Drought', 'Epidemic', 'Earthquake', 'Flood']

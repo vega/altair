@@ -7,11 +7,11 @@ where each row is a different site (i.e. the chart is faceted by site),
 they identified an anomaly in a widely used agriculatural dataset,
 where the "Morris" site accidentally had the years 1931 and 1932 swapped.
 They named this
-`"The Morris Mistake." <http://ml.stat.purdue.edu/stat695t/writings/Trellis.User.pdf>`_.
+`"The Morris Mistake." <https://www.stat.auckland.ac.nz/~ihaka/courses/120/trellis.user.pdf>`_.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.barley.url
 

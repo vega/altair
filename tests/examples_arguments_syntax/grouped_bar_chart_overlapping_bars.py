@@ -3,6 +3,7 @@ Grouped Bar Chart with xOffset and overlapping bars
 ---------------------------------------------------
 Like :ref:`gallery_grouped_bar_chart2`, this example shows a grouped bar chart using the ``xOffset`` encoding channel, but in this example the bars are partly overlapping within each group.
 """
+# :new:
 # category: bar charts
 import altair as alt
 import pandas as pd

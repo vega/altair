@@ -1,4 +1,4 @@
-import vegaEmbed from "https://esm.sh/vega-embed@6?deps=vega@5&deps=vega-lite@5.21.0";
+import vegaEmbed from "https://esm.sh/vega-embed@v7.0.2?deps=vega@6&deps=vega-lite@6.4.1";
 import lodashDebounce from "https://esm.sh/lodash-es@4.17.21/debounce";
 
 // Note: For offline support, the import lines above are removed and the remaining script
@@ -91,7 +91,7 @@ async function render({ model, el }) {
 
         // Param change callback
         model.on('change:_params', async (new_params) => {
-            for (const [param, value] of Object.entries(new_params.changed._params)) {
+            for (const [param, value] of Object.entries(new_params.changed ? new_params.changed._params : new_params)) {
                 api.view.signal(param, value);
             }
             await api.view.runAsync();
@@ -128,7 +128,8 @@ async function render({ model, el }) {
 
         // Add signal/data updaters
         model.on('change:_py_to_js_updates', async (updates) => {
-            for (const update of updates.changed._py_to_js_updates ?? []) {
+            const py_to_js_updates = updates.changed ? updates.changed._py_to_js_updates : updates;
+            for (const update of py_to_js_updates ?? []) {
                 if (update.namespace === "signal") {
                     setSignalValue(api.view, update.name, update.scope, update.value);
                 } else if (update.namespace === "data") {

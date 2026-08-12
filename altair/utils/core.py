@@ -12,7 +12,16 @@ from collections.abc import Callable, Iterator, Mapping, MutableMapping
 from copy import deepcopy
 from itertools import groupby
 from operator import itemgetter
-from typing import TYPE_CHECKING, Any, Literal, TypeVar, cast, overload
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Concatenate,
+    Literal,
+    ParamSpec,
+    TypeVar,
+    cast,
+    overload,
+)
 
 import jsonschema
 import narwhals.stable.v1 as nw
@@ -25,18 +34,15 @@ if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
 else:
     from typing_extensions import Protocol, TypeAliasType, runtime_checkable
-if sys.version_info >= (3, 10):
-    from typing import Concatenate, ParamSpec
-else:
-    from typing_extensions import Concatenate, ParamSpec
-
 
 if TYPE_CHECKING:
     import pandas as pd
     from narwhals.stable.v1.typing import IntoExpr
 
     from altair.utils._dfi_types import DataFrame as DfiDataFrame
-    from altair.vegalite.v5.schema._typing import StandardType_T as InferredVegaLiteType
+    from altair.vegalite.v6.schema._typing import StandardType_T as InferredVegaLiteType
+
+    _PandasDataFrameT = TypeVar("_PandasDataFrameT", bound="pd.DataFrame")
 
 TIntoDataFrame = TypeVar("TIntoDataFrame", bound=IntoDataFrame)
 T = TypeVar("T")
@@ -287,7 +293,7 @@ def merge_props_geom(feat: dict[str, Any]) -> dict[str, Any]:
 
 def sanitize_geo_interface(geo: MutableMapping[Any, Any]) -> dict[str, Any]:
     """
-    Santize a geo_interface to prepare it for serialization.
+    Sanitize a geo_interface to prepare it for serialization.
 
     * Make a copy
     * Convert type array or _Array to list
@@ -328,7 +334,7 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
         return False
 
 
-def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
+def sanitize_pandas_dataframe(df: _PandasDataFrameT) -> _PandasDataFrameT:  # noqa: C901
     """
     Sanitize a DataFrame to prepare it for serialization.
 
@@ -351,7 +357,7 @@ def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
     import numpy as np
     import pandas as pd
 
-    df = df.copy()
+    df = cast("_PandasDataFrameT", df.copy())
 
     if isinstance(df.columns, pd.RangeIndex):
         df.columns = df.columns.astype(str)
@@ -390,7 +396,7 @@ def sanitize_pandas_dataframe(df: pd.DataFrame) -> pd.DataFrame:  # noqa: C901
             # We can probably remove this part once we require pandas >= 1.0
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif dtype_name == "string":
+        elif dtype_name in ("string", "str"):
             # dedicated string datatype (since 1.0)
             # https://pandas.pydata.org/pandas-docs/version/1.0.0/whatsnew/v1.0.0.html#dedicated-string-data-type
             col = df[col_name].astype(object)
@@ -479,7 +485,12 @@ def sanitize_narwhals_dataframe(
         elif dtype == nw.Date:
             columns.append(nw.col(name).dt.to_string(local_iso_fmt_string))
         elif dtype == nw.Datetime:
-            columns.append(nw.col(name).dt.to_string(f"{local_iso_fmt_string}%.f"))
+            # Preserve timezone information when present so Vega-Lite can disambiguate
+            # repeated local times during DST transitions.
+            fmt = f"{local_iso_fmt_string}%.f"
+            if getattr(dtype, "time_zone", None) is not None:
+                fmt = f"{fmt}%z"
+            columns.append(nw.col(name).dt.to_string(fmt))
         elif dtype == nw.Duration:
             msg = (
                 f'Field "{name}" has type "{dtype}" which is '
@@ -722,44 +733,61 @@ def infer_vegalite_type_for_narwhals(
         raise ValueError(msg)
 
 
-def use_signature(tp: Callable[P, Any], /):
+def _wrap_and_copy_doc(tp: Callable[..., Any], cb: Callable[..., Any]) -> None:
     """
-    Use the signature and doc of ``tp`` for the decorated callable ``cb``.
+    Raises when no doc was found.
 
-    - **Overload 1**: Decorating method
-    - **Overload 2**: Decorating function
+    Notes
+    -----
+    - Reference to ``tp`` is stored in ``cb.__wrapped__``.
+    - The doc for ``cb`` will have a ``.rst`` link added, referring  to ``tp``.
+    """
+    cb.__wrapped__ = getattr(tp, "__init__", tp)  # type: ignore[attr-defined]
+
+    if doc_in := tp.__doc__:
+        line_1 = f"{cb.__doc__ or f'Refer to :class:`{tp.__name__}`'}\n"
+        cb.__doc__ = "".join((line_1, *doc_in.splitlines(keepends=True)[1:]))
+    else:
+        msg = f"Found no doc for {tp!r}"
+        raise AttributeError(msg)
+
+
+class _MethodSignatureCopier(Protocol[P]):
+    def __call__(self, cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...
+
+
+def use_signature(tp: Callable[P, Any], /) -> _MethodSignatureCopier[P]:
+    """
+    Use the signature and doc of ``tp`` for the decorated method ``cb``.
 
     Returns
     -------
-    **Adding the annotation breaks typing**:
-
-        Overload[Callable[[WrapsMethod[T, R]], WrappedMethod[T, P, R]], Callable[[WrapsFunc[R]], WrappedFunc[P, R]]]
+    A decorator that copies the doc and static typing signature from ``tp`` to ``cb``.
     """
 
-    @overload
-    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]: ...  # pyright: ignore[reportOverlappingOverload]
+    def decorate(cb: WrapsMethod[T, R], /) -> WrappedMethod[T, P, R]:
+        _wrap_and_copy_doc(tp, cb)
+        return cb
 
-    @overload
-    def decorate(cb: WrapsFunc[R], /) -> WrappedFunc[P, R]: ...  # pyright: ignore[reportOverlappingOverload]
+    return decorate
 
-    def decorate(cb: WrapsFunc[R], /) -> WrappedMethod[T, P, R] | WrappedFunc[P, R]:
-        """
-        Raises when no doc was found.
 
-        Notes
-        -----
-        - Reference to ``tp`` is stored in ``cb.__wrapped__``.
-        - The doc for ``cb`` will have a ``.rst`` link added, referring  to ``tp``.
-        """
-        cb.__wrapped__ = getattr(tp, "__init__", tp)  # type: ignore[attr-defined]
+class _FunctionSignatureCopier(Protocol[P]):
+    def __call__(self, cb: Callable[..., R], /) -> Callable[P, R]: ...
 
-        if doc_in := tp.__doc__:
-            line_1 = f"{cb.__doc__ or f'Refer to :class:`{tp.__name__}`'}\n"
-            cb.__doc__ = "".join((line_1, *doc_in.splitlines(keepends=True)[1:]))
-            return cb
-        else:
-            msg = f"Found no doc for {tp!r}"
-            raise AttributeError(msg)
+
+def use_signature_func(tp: Callable[P, Any], /) -> _FunctionSignatureCopier[P]:
+    """
+    Use the signature and doc of ``tp`` for the decorated function ``cb``.
+
+    Returns
+    -------
+    A decorator that copies the doc and static typing signature from ``tp`` to ``cb``.
+    """
+
+    def decorate(fn: Callable[..., R], /) -> Callable[P, R]:
+        _wrap_and_copy_doc(tp, fn)
+        return fn
 
     return decorate
 
@@ -910,7 +938,7 @@ def _init_channel_to_name():
     -------
         mapping: dict[type[`<subclass of FieldChannelMixin and SchemaBase>`] | type[`<subclass of ValueChannelMixin and SchemaBase>`] | type[`<subclass of DatumChannelMixin and SchemaBase>`], str]
     """
-    from altair.vegalite.v5.schema import channels as ch
+    from altair.vegalite.v6.schema import channels as ch
 
     mixins = ch.FieldChannelMixin, ch.ValueChannelMixin, ch.DatumChannelMixin
 

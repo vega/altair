@@ -96,8 +96,13 @@ properly displayed on mobile devices and not restricted to 20% */
 
 /* Configurations for the start page
 ------------------------------------ */
+/* Make the title fit on one row */
+.bd-article > section > h1 {
+    font-size: 2.5rem;
+}
+
 .lead {
-  font-size: 1.3em;
+  font-size: 1.14em;
   font-weight: 300;
   margin-top: 22px;
   margin-bottom: 22px;

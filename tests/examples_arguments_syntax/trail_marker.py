@@ -5,7 +5,7 @@ This is example of using the ``trail`` marker to vary the size of a line.
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.wheat()
 

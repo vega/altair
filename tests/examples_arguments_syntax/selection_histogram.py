@@ -7,7 +7,7 @@ of items in each category within the selection.
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.cars()
 

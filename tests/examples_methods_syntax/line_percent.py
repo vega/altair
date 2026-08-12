@@ -5,7 +5,7 @@ This example shows how to format the tick labels of the y-axis of a chart as per
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.jobs.url
 

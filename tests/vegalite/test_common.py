@@ -3,7 +3,7 @@
 import pandas as pd
 import pytest
 
-from altair.vegalite import v5
+from altair.vegalite import v6
 
 
 @pytest.fixture
@@ -40,7 +40,7 @@ def make_basic_chart(alt):
     return alt.Chart(data).mark_bar().encode(x="a", y="b")
 
 
-@pytest.mark.parametrize("alt", [v5])
+@pytest.mark.parametrize("alt", [v6])
 def test_basic_chart_to_dict(alt, basic_spec):
     chart = (
         alt.Chart("data.csv")
@@ -56,7 +56,7 @@ def test_basic_chart_to_dict(alt, basic_spec):
     assert dct == make_final_spec(alt, basic_spec)
 
 
-@pytest.mark.parametrize("alt", [v5])
+@pytest.mark.parametrize("alt", [v6])
 def test_basic_chart_from_dict(alt, basic_spec):
     chart = alt.Chart.from_dict(basic_spec)
     dct = chart.to_dict()
@@ -68,7 +68,7 @@ def test_basic_chart_from_dict(alt, basic_spec):
     assert dct == make_final_spec(alt, basic_spec)
 
 
-@pytest.mark.parametrize("alt", [v5])
+@pytest.mark.parametrize("alt", [v6])
 def test_theme_enable(alt, basic_spec):
     from altair.theme import _themes
 
@@ -91,7 +91,7 @@ def test_theme_enable(alt, basic_spec):
         _themes.enable(active_theme)  # pyright: ignore[reportArgumentType]
 
 
-@pytest.mark.parametrize("alt", [v5])
+@pytest.mark.parametrize("alt", [v6])
 def test_max_rows(alt):
     basic_chart = make_basic_chart(alt)
 

@@ -16,7 +16,7 @@ body:
       label: What happened?
       description: |
         Describe what happened and how to reproduce the bug.
-        Include the full code and data to reproduce it. Use a simple toy data set, e.g. from `vega_datasets`.
+        Include the full code and data to reproduce it. Use a simple toy data set, e.g. from `altair.datasets`.
     validations:
       required: true
   - type: textarea

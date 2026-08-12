@@ -1,0 +1,5 @@
+tag_prefix = "v"
+from_latest_tag = true
+ignore_merge_commits = true
+branch_whitelist = ["main"]
+disable_changelog = true

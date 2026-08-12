@@ -5,7 +5,7 @@ How to make a line chart with a bootstrapped 95% confidence interval band.
 """
 # category: uncertainties and trends
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 source = data.cars()
 

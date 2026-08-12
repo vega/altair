@@ -1,34 +1,33 @@
 """
 Repeated Density Estimates
 --------------------------
-Density estimates for each feature of iris flower.
+Density estimates for each measurement of penguins.
 This is what we call a "repeated" plot, with one subplot
-for each feature.
+for each measurement type. All measurements are in millimeters,
+making them directly comparable on a shared x-axis.
 """
 # category: distributions
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
-source = data.iris()
+source = data.penguins()
 
 alt.Chart(source).transform_fold(
     [
-        "petalWidth",
-        "petalLength",
-        "sepalWidth",
-        "sepalLength",
+        "Beak Length (mm)",
+        "Beak Depth (mm)",
+        "Flipper Length (mm)",
     ],
-    as_=["Measurement_type", "value"],
+    as_=["Measurement Type", "value"],
 ).transform_density(
     density="value",
-    bandwidth=0.3,
-    groupby=["Measurement_type"],
-    extent=[0, 8],
+    groupby=["Measurement Type"]
 ).mark_area().encode(
     alt.X("value:Q"),
     alt.Y("density:Q"),
-    alt.Row("Measurement_type:N"),
+    alt.Row("Measurement Type:N", header=alt.Header(labelAngle=0, labelAlign="left"))
 ).properties(
-    width=300, height=50
+    width=300,
+    height=50
 )

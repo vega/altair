@@ -1,7 +1,7 @@
 """
 Confidence Interval Ellipses
 ----------------------------
-This example shows bivariate deviation ellipses of petal length and width of three iris species.
+This example shows bivariate deviation ellipses of flipper length and body mass of three penguin species.
 
 Inspired by `ggplot2.stat_ellipse`_ and directly based on `Deviation ellipses example`_ by `@essicolo`_
 
@@ -19,7 +19,7 @@ import pandas as pd
 from scipy.stats import f as F
 
 import altair as alt
-from vega_datasets import data
+from altair.datasets import data
 
 
 def confidence_region_2d(arr, conf_level=0.95, segments=50):
@@ -55,22 +55,22 @@ def grouped_confidence_regions(df, col_x, col_y, col_group):
     ellipses = []
     ser: pd.Series[float] = df[col_group]
     for group in ser.drop_duplicates():
-        arr = df.loc[ser == group, cols].to_numpy()
+        arr = df.loc[ser == group, cols].to_numpy(dtype=np.float64)
         ellipse = pd.DataFrame(confidence_region_2d(arr), columns=cols)
         ellipse[col_group] = group
         ellipses.append(ellipse)
     return pd.concat(ellipses).reset_index(names="order")
 
 
-col_x = "petalLength"
-col_y = "petalWidth"
-col_group = "species"
+col_x = "Flipper Length (mm)"
+col_y = "Body Mass (g)"
+col_group = "Species"
 
 x = alt.X(col_x).scale(zero=False)
 y = alt.Y(col_y).scale(zero=False)
 color = alt.Color(col_group)
 
-source = data.iris()
+source = data.penguins().dropna(subset=[col_x, col_y, col_group])
 ellipse = grouped_confidence_regions(source, col_x=col_x, col_y=col_y, col_group=col_group)
 points = alt.Chart(source).mark_circle(size=50, tooltip=True).encode(
     x=x,

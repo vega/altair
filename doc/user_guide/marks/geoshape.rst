@@ -17,7 +17,7 @@ Altair can work with many different geographical data formats, including geojson
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
     import geopandas as gpd
 
     url = "https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip"
@@ -110,6 +110,10 @@ In the following example the input geometry is not projected and is instead rend
         type='identity',
         reflectY=True
     )
+
+.. note::
+
+    When working with spatial data, it's important to be aware of coordinate reference systems and geometry winding order. For detailed information on projections and winding order, see the :ref:`Spatial Data <spatial-data>` section in the data guide.
 
 Mapping Polygons
 ^^^^^^^^^^^^^^^^
@@ -251,10 +255,9 @@ Here we lookup the field ``rate`` from the ``df_us_unemp`` DataFrame, where the 
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    import geopandas as gpd
+    from altair.datasets import data
 
-    gdf_us_counties = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='counties')
+    gdf_us_counties = data.us_10m(layer="counties")
     df_us_unemp = data.unemployment()
 
     alt.Chart(gdf_us_counties).mark_geoshape().transform_lookup(
@@ -289,8 +292,7 @@ We apply it to define a choropleth map of the unemployment statistics of 2018 of
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    import geopandas as gpd
+    from altair.datasets import data
 
     def classify(type, domain=None, nice=False, title=None):
         # define data
@@ -439,7 +441,7 @@ the color encoding as ``alt.repeat('row')``
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     states = alt.topo_feature(data.us_10m.url, 'states')
     source = data.population_engineers_hurricanes.url
@@ -470,7 +472,7 @@ regular faceting will not work for geographic visualization:
 .. altair-plot::
 
     source = data.population_engineers_hurricanes().melt(id_vars=['state', 'id'])
-    us_states = gpd.read_file(data.us_10m.url, driver='TopoJSON', layer='states')
+    us_states = data.us_10m(layer="states")
     gdf_comb = gpd.GeoDataFrame(source.join(us_states, on='id', rsuffix='_y'))
 
     alt.Chart(gdf_comb).mark_geoshape().encode(
@@ -492,6 +494,10 @@ and create a small multiples chart via concatenation
 as in the following example:
 
 .. altair-plot::
+
+    source = data.population_engineers_hurricanes().melt(id_vars=['state', 'id'])
+    us_states = data.us_10m(layer="states")
+    gdf_comb = gpd.GeoDataFrame(source.join(us_states, on='id', rsuffix='_y'))
 
     alt.concat(
         *(
@@ -520,11 +526,10 @@ populous states. Using an ``alt.selection_point()`` we define a selection parame
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    import geopandas as gpd
+    from altair.datasets import data
 
     # load the data
-    us_states = gpd.read_file(data.us_10m.url, driver="TopoJSON", layer="states")
+    us_states = data.us_10m(layer="states")
     us_population = data.population_engineers_hurricanes()[["state", "id", "population"]]
 
     # define a pointer selection
@@ -579,12 +584,11 @@ We use here an elegant way to access the nested point coordinates from the geome
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    import geopandas as gpd
+    from altair.datasets import data
 
     # load data
-    gdf_quakies = gpd.read_file(data.earthquakes.url, driver="GeoJSON")
-    gdf_world = gpd.read_file(data.world_110m.url, driver="TopoJSON")
+    gdf_quakies = data.earthquakes()
+    gdf_world = data.world_110m(layer="countries")
 
     # define parameters
     range0 = alt.binding_range(min=-180, max=180, step=5, name='rotate longitude ')

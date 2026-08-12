@@ -27,7 +27,7 @@ All the properties and usage of error band are identical to error bar’s, excep
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars.url
 
@@ -45,7 +45,7 @@ All the properties and usage of error band are identical to error bar’s, excep
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars.url
 
@@ -111,7 +111,7 @@ A **1D error band** shows the error range of a continuous field; it can be used 
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars.url
 
@@ -131,7 +131,7 @@ A **2D error** band shows the error range of a continuous field for each dimensi
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars()
 
@@ -156,7 +156,7 @@ Here is an example of a ``errorband`` with the ``color`` encoding channel set to
 
 .. altair-plot::
     import altair as alt
-    from vega_datasets import data
+    from altair.datasets import data
 
     source = data.cars.url
 

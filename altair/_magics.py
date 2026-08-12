@@ -10,20 +10,20 @@ from typing import Any
 from IPython.core import magic_arguments
 from narwhals.stable.v1.dependencies import is_pandas_dataframe
 
-from altair.vegalite import v5 as vegalite_v5
+from altair.vegalite import v6 as vegalite_v6
 
 __all__ = ["vegalite"]
 
 RENDERERS = {
     "vega-lite": {
-        "5": vegalite_v5.VegaLite,
+        "6": vegalite_v6.VegaLite,
     },
 }
 
 
 TRANSFORMERS = {
     "vega-lite": {
-        "5": vegalite_v5.data_transformers,
+        "6": vegalite_v6.data_transformers,
     },
 }
 
@@ -66,13 +66,13 @@ def _get_variable(name: str) -> Any:
     nargs="?",
     help="local variablename of a pandas DataFrame to be used as the dataset",
 )
-@magic_arguments.argument("-v", "--version", dest="version", default="v5")
+@magic_arguments.argument("-v", "--version", dest="version", default="v6")
 @magic_arguments.argument("-j", "--json", dest="json", action="store_true")
-def vegalite(line, cell) -> vegalite_v5.VegaLite:
+def vegalite(line, cell) -> vegalite_v6.VegaLite:
     """
     Cell magic for displaying vega-lite visualizations in CoLab.
 
-    %%vegalite [dataframe] [--json] [--version='v5']
+    %%vegalite [dataframe] [--json] [--version='v6']
 
     Visualize the contents of the cell using Vega-Lite, optionally
     specifying a pandas DataFrame object to be used as the dataset.
@@ -80,7 +80,7 @@ def vegalite(line, cell) -> vegalite_v5.VegaLite:
     if --json is passed, then input is parsed as json rather than yaml.
     """
     args = magic_arguments.parse_argstring(vegalite, line)
-    existing_versions = {"v5": "5"}
+    existing_versions = {"v6": "6"}
     version = existing_versions[args.version]
     assert version in RENDERERS["vega-lite"]
     VegaLite = RENDERERS["vega-lite"][version]

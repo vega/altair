@@ -9,7 +9,7 @@ This is a more polished version of the simpler chart in :ref:`gallery_bar_and_li
 # category: case studies
 import altair as alt
 import pandas as pd
-from vega_datasets import data
+from altair.datasets import data
 
 
 base_wheat = alt.Chart(data.wheat.url).transform_calculate(year_end="+datum.year + 5")

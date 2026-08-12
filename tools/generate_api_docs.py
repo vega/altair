@@ -110,8 +110,22 @@ Typing
 
    {typing_objects}
 
+.. _api-datasets:
+
+Datasets
+--------
+.. currentmodule:: altair.datasets
+
+.. autosummary::
+   :toctree: generated/datasets/
+   :nosignatures:
+
+   {datasets_objects}
+
 .. _Generic:
     https://typing.readthedocs.io/en/latest/spec/generics.html#generics
+.. _vega-datasets:
+    https://github.com/vega/vega-datasets
 """
 
 
@@ -171,6 +185,10 @@ def theme() -> list[str]:
     return sort_3
 
 
+def datasets() -> list[str]:
+    return alt.datasets.__all__
+
+
 def lowlevel_wrappers() -> list[str]:
     objects = sorted(iter_objects(alt.schema.core, restrict_to_subclass=alt.SchemaBase))
     # The names of these two classes are also used for classes in alt.channels. Due to
@@ -194,6 +212,7 @@ def write_api_file() -> None:
             api_classes=sep.join(api_classes()),
             typing_objects=sep.join(type_hints()),
             theme_objects=sep.join(theme()),
+            datasets_objects=sep.join(datasets()),
         ),
         encoding="utf-8",
     )
