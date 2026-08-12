@@ -58,6 +58,6 @@ chart = (
     .transform_filter(alt.datum.date >= alt.expr.timeParse(start_date, "%Y-%m-%d"))
     .transform_filter(alt.datum.visitors >= minimum_visitors)
     .add_params(start_date, minimum_visitors)
-)
+) + alt.Chart().mark_rule(strokeDash=(5,3)).encode(alt.Y(datum=minimum_visitors, type='quantitative'))
 
 chart
