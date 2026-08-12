@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import collections
 import filecmp
 import hashlib
@@ -39,6 +40,7 @@ if TYPE_CHECKING:
 
 
 EXAMPLE_MODULE = "altair.examples"
+EXAMPLES_INDEX = Path(__file__).parents[1] / "_data" / "examples.json"
 
 
 GALLERY_TEMPLATE = jinja2.Template(
@@ -260,16 +262,39 @@ def populate_examples(**kwds: Any) -> list[dict[str, Any]]:
     return examples
 
 
+def _example_description(docstring: str, /) -> str:
+    lines = docstring.strip().splitlines()
+    if len(lines) > 1 and lines[1] and set(lines[1]) <= {"=", "-"}:
+        lines = lines[2:]
+    return "\n".join(line.rstrip() for line in lines).strip()
+
+
+def _example_datasets(code: str, /) -> list[str]:
+    tree = ast.parse(code)
+    data_names = {
+        alias.asname or alias.name
+        for node in ast.walk(tree)
+        if isinstance(node, ast.ImportFrom) and node.module == "altair.datasets"
+        for alias in node.names
+        if alias.name == "data"
+    }
+    return sorted(
+        {
+            node.attr
+            for node in ast.walk(tree)
+            if isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id in data_names
+        }
+    )
+
+
 def _indices(x: str, /) -> list[int]:
     return [int(idx) for idx in x.split()]
 
 
 def _example_names() -> set[str]:
     return {example["name"] for example in iter_examples_arguments_syntax()}
-
-
-def _example_code_map() -> dict[str, str]:
-    return {example["name"]: example["code"] for example in populate_examples()}
 
 
 def _doc_ref(
@@ -287,20 +312,13 @@ def _doc_ref(
     return (label, refuri)
 
 
-def _heuristic_links_for_example(  # noqa C901
-    app: Sphinx,
-    docname: str,
-    example_name: str,
-) -> list[tuple[str, str]]:
-    code = _example_code_map().get(example_name, "")
-    if not code:
-        return []
-
-    links: list[tuple[str, str]] = []
+def _heuristic_doc_refs(code: str, /) -> list[tuple[str, str, str | None]]:  # noqa C901
+    refs: list[tuple[str, str, str | None]] = []
 
     def add(to_doc: str, label: str, anchor: str | None = None) -> None:
-        if (ref := _doc_ref(app, docname, to_doc, label, anchor)) and ref not in links:
-            links.append(ref)
+        ref = (to_doc, label, anchor)
+        if ref not in refs:
+            refs.append(ref)
 
     # Mark pages
     marks = set(re.findall(r"\.mark_([a-zA-Z0-9_]+)\(", code))
@@ -404,7 +422,17 @@ def _heuristic_links_for_example(  # noqa C901
         add("user_guide/times_and_dates", "Times & Dates")
         add("user_guide/transform/timeunit", "Transform: timeunit")
 
-    return links
+    return refs
+
+
+def _heuristic_links_for_example(
+    app: Sphinx, docname: str, code: str
+) -> list[tuple[str, str]]:
+    return [
+        ref
+        for to_doc, label, anchor in _heuristic_doc_refs(code)
+        if (ref := _doc_ref(app, docname, to_doc, label, anchor)) is not None
+    ]
 
 
 def _section_context(
@@ -479,7 +507,59 @@ def _purge_gallery_backrefs(app: Sphinx, env: BuildEnvironment, docname: str) ->
         env._altair_gallery_doc_backrefs.pop(docname, None)
 
 
-def _add_gallery_backrefs_section(  # noqa C901
+def _explicit_doc_refs(
+    env: BuildEnvironment, gallery_dir: str, example_name: str
+) -> list[tuple[str, str | None, str]]:
+    refs = [
+        (source_doc, anchor, section_title)
+        for source_doc, doc_refs in getattr(
+            env, "_altair_gallery_doc_backrefs", {}
+        ).items()
+        if not source_doc.startswith(f"{gallery_dir}/")
+        for ref_example, anchor, section_title in doc_refs
+        if ref_example == example_name
+    ]
+    return sorted(set(refs), key=lambda x: (x[0], x[1] or "", x[2]))
+
+
+def _write_examples_index(app: Sphinx, env: BuildEnvironment) -> None:
+    gallery_dir = app.config.altair_gallery_dir
+    records = []
+    for example in populate_examples():
+        explicit_refs = _explicit_doc_refs(env, gallery_dir, example["name"])
+        related_docs = [
+            f"{docname}#{anchor}" if anchor else docname
+            for docname, anchor, _section_title in explicit_refs
+        ]
+        related_docs.extend(
+            f"{docname}#{anchor}" if anchor else docname
+            for docname, _label, anchor in _heuristic_doc_refs(example["code"])
+            if docname in env.found_docs
+        )
+        records.append(
+            {
+                "name": example["name"],
+                "title": example["title"],
+                "description": _example_description(example["docstring"]),
+                "categories": [example["category"].lower()],
+                "path": Path(example["filename"])
+                .relative_to(EXAMPLES_INDEX.parents[1])
+                .as_posix(),
+                "related_docs": list(dict.fromkeys(related_docs)),
+                "datasets": _example_datasets(example["code"]),
+            }
+        )
+
+    EXAMPLES_INDEX.parent.mkdir(exist_ok=True)
+    index_text = json.dumps(records, indent=2, ensure_ascii=False) + "\n"
+    if (
+        not EXAMPLES_INDEX.exists()
+        or EXAMPLES_INDEX.read_text(encoding="utf-8") != index_text
+    ):
+        EXAMPLES_INDEX.write_text(index_text, encoding="utf-8")
+
+
+def _add_gallery_backrefs_section(
     app: Sphinx, doctree: nodes.document, docname: str
 ) -> None:
     gallery_dir = app.config.altair_gallery_dir
@@ -488,17 +568,7 @@ def _add_gallery_backrefs_section(  # noqa C901
 
     example_name = docname.rsplit("/", 1)[-1]
     env = app.env
-    all_refs = getattr(env, "_altair_gallery_doc_backrefs", {})
-
-    matched: list[tuple[str, str | None, str]] = []
-    for source_doc, refs in all_refs.items():
-        if source_doc.startswith(f"{gallery_dir}/"):
-            continue
-        for ref_example, anchor, section_title in refs:
-            if ref_example == example_name:
-                matched.append((source_doc, anchor, section_title))
-
-    matched = sorted(set(matched), key=lambda x: (x[0], x[1] or "", x[2]))
+    matched = _explicit_doc_refs(env, gallery_dir, example_name)
 
     def _build_explicit_links() -> list[tuple[str, str]]:
         links: list[tuple[str, str]] = []
@@ -533,7 +603,15 @@ def _add_gallery_backrefs_section(  # noqa C901
     container += nodes.raw("", "<p></p>", format="html")
     container += nodes.raw("", "<p></p>", format="html")
     container += nodes.paragraph(text="Learn more in these related doc sections:")
-    heuristic_links = _heuristic_links_for_example(app, docname, example_name)
+    code = next(
+        (
+            example["code"]
+            for example in populate_examples()
+            if example["name"] == example_name
+        ),
+        "",
+    )
+    heuristic_links = _heuristic_links_for_example(app, docname, code)
     explicit_links = _build_explicit_links()
     explicit_uris = {uri for _label, uri in explicit_links}
     extra_links = [
@@ -692,6 +770,7 @@ def setup(app) -> None:
     app.connect("doctree-read", _collect_gallery_backrefs)
     app.connect("doctree-resolved", _add_gallery_backrefs_section)
     app.connect("env-purge-doc", _purge_gallery_backrefs)
+    app.connect("env-updated", _write_examples_index)
     app.add_css_file("altair-gallery.css")
     app.add_config_value("altair_gallery_dir", "gallery", "env")
     app.add_config_value("altair_gallery_ref", "example-gallery", "env")
