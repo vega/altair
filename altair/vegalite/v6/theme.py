@@ -103,16 +103,20 @@ themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 themes.register(
     "default",
-    lambda: {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}},  # ty: ignore
+    lambda: ThemeConfig(
+        config={
+            "view": {"continuousWidth": 300, "continuousHeight": 300},
+        },
+    ),
 )
 themes.register(
     "opaque",
-    lambda: {
-        "config": {
+    lambda: ThemeConfig(
+        config={
             "background": "white",
             "view": {"continuousWidth": 300, "continuousHeight": 300},
-        }
-    },  # ty: ignore
+        },
+    ),
 )
 themes.register("none", ThemeConfig)
 
