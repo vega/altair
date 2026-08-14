@@ -152,9 +152,9 @@ jobs:
           @joelostblom @mattijn @alec-bike
           A release candidate for $TAG has been prepared from commit \`$COMMIT\`. Please assign yourself to this issue if you have capacity to release this version.
 
-          No version tag or GitHub release has been created yet. This keeps version tags immutable and avoids burning a version number if this candidate is rejected.
+          Next, review the release notes preview below and [the docs preview](${{ steps.docs-preview.outputs.url }}) (scan the gallery thumbnails for broken examples). If everything looks correct, approve [the release deployment](https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}); otherwise reject it and close this issue.
 
-          Next, review the release notes preview below and [the docs preview](${{ steps.docs-preview.outputs.url }}) (scan the gallery thumbnails for broken examples). If everything looks correct, [approve the release deployment](https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}); otherwise reject it and close this issue. Approval creates the immutable version tag at the candidate commit and a draft GitHub release. Publishing the GitHub release will trigger the PyPI release; close this issue after publishing.
+          Approving the release deployment creates the immutable version tag at the candidate commit and drafts a GitHub release. Double check that the changes in the draft release notes match the preview below and elaborate where needed, e.g. adding examples for new features. Publishing the GitHub release will trigger the PyPI release; close this issue after publishing.
 
           You can read [the general release notes](https://github.com/vega/altair/blob/main/RELEASING.md) for more details, including what to do after a release.
 
