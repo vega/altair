@@ -8,7 +8,7 @@
 **Vega-Altair** is a declarative statistical visualization library for Python. With Vega-Altair, you can spend more time understanding your data and its meaning. Vega-Altair's
 API is simple, friendly and consistent and built on top of the powerful
 [Vega-Lite](https://github.com/vega/vega-lite) JSON specification. This elegant
-simplicity produces beautiful and effective visualizations with a minimal amount of code. 
+simplicity produces beautiful and effective visualizations with a minimal amount of code.
 
 *Vega-Altair was originally developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
 Granger](https://github.com/ellisonbg) in close collaboration with the [UW
@@ -44,10 +44,10 @@ alt.Chart(cars).mark_point().encode(
 
 ![Vega-Altair Visualization](https://raw.githubusercontent.com/altair-viz/altair/main/images/cars.png)
 
-One of the unique features of Vega-Altair, inherited from Vega-Lite, is a declarative grammar of not just visualization, but _interaction_. 
+One of the unique features of Vega-Altair, inherited from Vega-Lite, is a declarative grammar of not just visualization, but _interaction_.
 With a few modifications to the example above we can create a linked histogram that is filtered based on a selection of the scatter plot.
 
-```python 
+```python
 import altair as alt
 from altair.datasets import data
 
@@ -55,22 +55,20 @@ source = data.cars()
 
 brush = alt.selection_interval()
 
-points = (
-    alt.Chart(source)
-    .mark_point()
-    .encode(
-        x="Horsepower",
-        y="Miles_per_Gallon",
-        color=alt.when(brush).then("Origin").otherwise(alt.value("lightgray")),
-    )
-    .add_params(brush)
+points = alt.Chart(source).mark_point().encode(
+    x="Horsepower",
+    y="Miles_per_Gallon",
+    color=alt.when(brush).then("Origin").otherwise(alt.value("lightgray")),
+).add_params(
+    brush
 )
 
-bars = (
-    alt.Chart(source)
-    .mark_bar()
-    .encode(y="Origin", color="Origin", x="count(Origin)")
-    .transform_filter(brush)
+bars = alt.Chart(source).mark_bar().encode(
+    x="count(Origin)",
+    y="Origin",
+    color="Origin",
+).transform_filter(
+    brush
 )
 
 points & bars
@@ -80,24 +78,26 @@ points & bars
 
 ## Features
 
-* Carefully-designed, declarative Python API.
-* Auto-generated internal Python API that guarantees visualizations are type-checked and
+- Carefully-designed, declarative Python API.
+- Auto-generated internal Python API that guarantees visualizations are type-checked and
   in full conformance with the [Vega-Lite](https://github.com/vega/vega-lite)
   specification.
-* Display visualizations in JupyterLab, Jupyter Notebook, Visual Studio Code, on GitHub and
+- Display visualizations in JupyterLab, Jupyter Notebook, Visual Studio Code, on GitHub and
   [nbviewer](https://nbviewer.jupyter.org/), and many more.
-* Export visualizations to various formats such as PNG/SVG images, stand-alone HTML pages and the
-[Online Vega-Lite Editor](https://vega.github.io/editor/#/).
-* Serialize visualizations as JSON files.
+- Export visualizations to various formats such as PNG/SVG images, stand-alone HTML pages and the
+  [Online Vega-Lite Editor](https://vega.github.io/editor/#/).
+- Serialize visualizations as JSON files.
 
 ## Installation
 
 Vega-Altair can be installed with:
+
 ```bash
 pip install altair
 ```
 
 If you are using the conda package manager, the equivalent is:
+
 ```bash
 conda install altair -c conda-forge
 ```
@@ -106,11 +106,12 @@ For full installation instructions, please see [the documentation](https://altai
 
 ## Getting Help
 
-If you have a question that is not addressed in the documentation, 
+If you have a question that is not addressed in the documentation,
 you can post it on [StackOverflow](https://stackoverflow.com/questions/tagged/altair) using the `altair` tag.
 For bugs and feature requests, please open a [Github Issue](https://github.com/vega/altair/issues).
 
 ## Development
+
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![pytest](https://img.shields.io/badge/logo-pytest-blue?logo=pytest&labelColor=5c5c5c&label=%20)](https://github.com/pytest-dev/pytest)
@@ -138,6 +139,7 @@ If you use Vega-Altair in academic work, please consider citing https://joss.the
     journal = {Journal of Open Source Software}
 }
 ```
+
 Please additionally consider citing the [Vega-Lite](https://vega.github.io/vega-lite/) project, which Vega-Altair is based on: https://dl.acm.org/doi/10.1109/TVCG.2016.2599030
 
 ```bib

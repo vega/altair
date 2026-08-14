@@ -152,6 +152,7 @@ extend-exclude = [
     "build",
     "tests/examples_arguments_syntax",
     "tests/examples_methods_syntax",
+    "README.md",
 ]
 indent-width = 4
 line-length = 88
