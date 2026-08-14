@@ -100,8 +100,9 @@ ENTRY_POINT_GROUP: Final = "altair.vegalite.v6.theme"
 
 # NOTE: `themes` def has an entry point group
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
+register = super(ThemeRegistry, themes).register
 
-themes.register(
+register(
     "default",
     lambda: ThemeConfig(
         config={
@@ -109,7 +110,7 @@ themes.register(
         },
     ),
 )
-themes.register(
+register(
     "opaque",
     lambda: ThemeConfig(
         config={
@@ -118,9 +119,9 @@ themes.register(
         },
     ),
 )
-themes.register("none", ThemeConfig)
+register("none", ThemeConfig)
 
 for theme in VEGA_THEMES:
-    themes.register(theme, VegaTheme(theme))
+    register(theme, VegaTheme(theme))
 
 themes.enable("default")
