@@ -20,14 +20,22 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  prepare-release-draft:
+  prepare-release-candidate:
     runs-on: ubuntu-latest
+    outputs:
+      commit: ${{ steps.candidate.outputs.commit }}
+      should-release: ${{ steps.next-version.outputs.should-release }}
+      tag: ${{ steps.next-version.outputs.tag }}
+      version: ${{ steps.next-version.outputs.version }}
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           fetch-depth: 0
           # Use RELEASE_TOKEN when branch protection blocks github.token pushes.
           token: ${{ secrets.RELEASE_TOKEN || github.token }}
+      - name: Record release candidate commit
+        id: candidate
+        run: echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
@@ -46,19 +54,22 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      - name: Check for an existing draft release
-        id: existing-draft
+      - name: Check for existing release candidate
+        id: existing-review
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
         run: |
-          if gh release list --limit 20 --json isDraft,tagName --jq '.[] | select(.isDraft) | .tagName' | grep -q .; then
-            echo "A draft release already exists. Review or delete it before preparing another one."
+          if gh release list --limit 20 --json isDraft --jq '[.[] | select(.isDraft)] | length' | grep -qv '^0$'; then
+            echo "A draft release already exists. Publish or delete it before preparing another candidate."
+            echo "should-release=false" >> "$GITHUB_OUTPUT"
+          elif gh issue list --state open --search "Review release candidate in:title" --json number --jq 'length' | grep -qv '^0$'; then
+            echo "An open release review issue already exists. Review or close it before preparing another one."
             echo "should-release=false" >> "$GITHUB_OUTPUT"
           else
             echo "should-release=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Determine next release version
-        if: steps.existing-draft.outputs.should-release == 'true'
+        if: steps.existing-review.outputs.should-release == 'true'
         id: next-version
         run: |
           set +e
@@ -81,23 +92,18 @@ jobs:
       - name: Test with pytest
         if: steps.next-version.outputs.should-release == 'true'
         run: uv run task test
-      - name: Create release tag
-        if: steps.next-version.outputs.should-release == 'true'
-        id: bump
-        run: |
-          cog bump --auto --disable-bump-commit --annotated "Version {{version}} release"
-          git push origin "refs/tags/${{ steps.next-version.outputs.tag }}"
-      - name: Create draft GitHub release
+      - name: Generate release notes preview
         if: steps.next-version.outputs.should-release == 'true'
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
         run: |
           TAG="${{ steps.next-version.outputs.tag }}"
-          gh release create "$TAG" \
-            --draft \
-            --verify-tag \
-            --title "$TAG" \
-            --generate-notes
+          gh api \
+            "repos/${GITHUB_REPOSITORY}/releases/generate-notes" \
+            --method POST \
+            -f tag_name="$TAG" \
+            -f target_commitish="${{ steps.candidate.outputs.commit }}" \
+            --jq .body > release-notes-preview.md
       - name: Build docs preview
         if: steps.next-version.outputs.should-release == 'true'
         env:
@@ -141,15 +147,87 @@ jobs:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
         run: |
           TAG="${{ steps.next-version.outputs.tag }}"
+          COMMIT="${{ steps.candidate.outputs.commit }}"
           cat > release-review-issue.md <<EOF
           @joelostblom @mattijn @alec-bike
-          A tag and release note draft for $TAG has been created. Please assign yourself to this issue if you have capacity to release this version.
+          A release candidate for $TAG has been prepared from commit \`$COMMIT\`. Please assign yourself to this issue if you have capacity to release this version.
 
-          Next, review [the draft release notes](https://github.com/vega/altair/releases) and [the docs preview](${{ steps.docs-preview.outputs.url }}) (scan the gallery thumbnails for broken examples). If everything looks correct, publish the release on GitHub; this will also trigger a PyPI release.
+          No version tag or GitHub release has been created yet. This keeps version tags immutable and avoids burning a version number if this candidate is rejected.
+
+          Next, review the release notes preview below and [the docs preview](${{ steps.docs-preview.outputs.url }}) (scan the gallery thumbnails for broken examples). If everything looks correct, [approve the release deployment](https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}); otherwise reject it and close this issue. Approval creates the immutable version tag at the candidate commit and a draft GitHub release. Publishing the GitHub release will trigger the PyPI release; close this issue after publishing.
 
           You can read [the general release notes](https://github.com/vega/altair/blob/main/RELEASING.md) for more details, including what to do after a release.
+
+          ## Release notes preview
           EOF
 
+          sed -E 's/ by @[A-Za-z0-9-]+//g' release-notes-preview.md >> release-review-issue.md
+
           gh issue create \
-            --title "Review draft release $TAG" \
+            --title "Review release candidate $TAG" \
             --body-file release-review-issue.md
+
+  create-draft-release:
+    needs: prepare-release-candidate
+    if: needs.prepare-release-candidate.outputs.should-release == 'true'
+    environment: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify release environment requires approval
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+        run: |
+          REVIEWER_COUNT=$(gh api \
+            "repos/${GITHUB_REPOSITORY}/environments/release" \
+            --jq '[.protection_rules[] | select(.type == "required_reviewers") | .reviewers[]] | length')
+          if [ "$REVIEWER_COUNT" -eq 0 ]; then
+            echo "The release environment must have at least one required reviewer."
+            exit 1
+          fi
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          ref: ${{ needs.prepare-release-candidate.outputs.commit }}
+          fetch-depth: 0
+          # Use RELEASE_TOKEN when branch protection blocks github.token pushes.
+          token: ${{ secrets.RELEASE_TOKEN || github.token }}
+      - name: Configure release git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Create immutable release tag
+        env:
+          COMMIT: ${{ needs.prepare-release-candidate.outputs.commit }}
+          TAG: ${{ needs.prepare-release-candidate.outputs.tag }}
+          VERSION: ${{ needs.prepare-release-candidate.outputs.version }}
+        run: |
+          git fetch --force --tags origin
+          if git show-ref --verify --quiet "refs/tags/$TAG"; then
+            TAG_COMMIT=$(git rev-list -n 1 "$TAG")
+            if [ "$TAG_COMMIT" != "$COMMIT" ]; then
+              echo "Tag $TAG already exists at $TAG_COMMIT, not candidate commit $COMMIT."
+              exit 1
+            fi
+            echo "Tag $TAG already exists at the candidate commit; reusing it."
+          else
+            git tag -a "$TAG" "$COMMIT" -m "Version $VERSION release"
+            git push origin "refs/tags/$TAG"
+          fi
+      - name: Create draft GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
+          TAG: ${{ needs.prepare-release-candidate.outputs.tag }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            IS_DRAFT=$(gh release view "$TAG" --json isDraft --jq .isDraft)
+            if [ "$IS_DRAFT" != "true" ]; then
+              echo "A non-draft GitHub release for $TAG already exists."
+              exit 1
+            fi
+            echo "Draft GitHub release for $TAG already exists; nothing to do."
+          else
+            gh release create "$TAG" \
+              --draft \
+              --verify-tag \
+              --title "$TAG" \
+              --generate-notes
+          fi
