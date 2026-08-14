@@ -161,7 +161,7 @@ jobs:
           ## Release notes preview
           EOF
 
-          cat release-notes-preview.md >> release-review-issue.md
+          sed -E 's/ by @[A-Za-z0-9-]+//g' release-notes-preview.md >> release-review-issue.md
 
           gh issue create \
             --title "Review release candidate $TAG" \
