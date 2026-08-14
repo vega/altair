@@ -91,13 +91,13 @@ Recently Added |gallery-new-pill|
    
    <a class="imagegroup imagegroup-recent" href="interactive_date_input.html">
    <span
-         class="image" alt="Filter a Time Series with a Date Input"
+         class="image" alt="Filter a Time Series with Date and Number Inputs"
 
         style="background-image: url(../_static/interactive_date_input-thumb.png);"
 
     ></span>
 
-     <span class="image-title">Filter a Time Series with a Date Input</span>
+     <span class="image-title">Filter a Time Series with Date and Number Inputs</span>
    </a>
    
    <a class="imagegroup imagegroup-recent" href="grouped_bar_chart_overlapping_bars.html">
@@ -1860,13 +1860,13 @@ Interactive Charts
    <span class="image-tag">new</span>
    
    <span
-         class="image" alt="Filter a Time Series with a Date Input"
+         class="image" alt="Filter a Time Series with Date and Number Inputs"
 
         style="background-image: url(../_static/interactive_date_input-thumb.png);"
 
     ></span>
 
-     <span class="image-title">Filter a Time Series with a Date Input</span>
+     <span class="image-title">Filter a Time Series with Date and Number Inputs</span>
    </a>
    
    <a class="imagegroup" href="selection_layer_bar_month.html">

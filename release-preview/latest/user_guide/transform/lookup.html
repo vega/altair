@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Lookup &#8212; Vega-Altair 6.2.2.post11+gc217ba4b documentation</title>
+    <title>Lookup &#8212; Vega-Altair 6.2.2.post15+gb95e5c4d documentation</title>
   
   
   
@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=a3ab8c07"></script>
+    <script src="../../_static/documentation_options.js?v=be86bde0"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
@@ -63,7 +63,7 @@
     <link rel="prev" title="Join Aggregate" href="joinaggregate.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="6.2.2.post11+gc217ba4b" />
+  <meta name="docsearch:version" content="6.2.2.post15+gb95e5c4d" />
   </head>
   
   
@@ -130,8 +130,8 @@
     
     
     
-    <img src="../../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.2.2.post11+gc217ba4b documentation - Home"/>
-    <img src="../../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.2.2.post11+gc217ba4b documentation - Home"/>
+    <img src="../../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.2.2.post15+gb95e5c4d documentation - Home"/>
+    <img src="../../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.2.2.post15+gb95e5c4d documentation - Home"/>
   
   
 </a></div>
@@ -669,6 +669,15 @@ chart specification itself, we can do the following:</p>
 and the <code class="docutils literal notranslate"><span class="pre">from_</span></code> argument specifies a <a class="reference internal" href="../generated/core/altair.LookupData.html#altair.LookupData" title="altair.LookupData"><code class="xref py py-class docutils literal notranslate"><span class="pre">LookupData</span></code></a> structure where
 we supply the second dataset, the lookup key, and the fields we would like to
 extract.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure the lookup fields use compatible values and data types. For
+example, a zero-padded spatial ID such as <code class="docutils literal notranslate"><span class="pre">&quot;06001&quot;</span></code> will not match the
+numeric spatial ID <code class="docutils literal notranslate"><span class="pre">6001</span></code>. If your dataframe contains zero-padded spatial
+IDs as strings while the geographic data uses numeric IDs, convert the column
+to a compatible type before creating the chart. For example, in pandas use
+<code class="docutils literal notranslate"><span class="pre">df[&quot;id&quot;]</span> <span class="pre">=</span> <span class="pre">df[&quot;spatial_id&quot;].astype(int)</span></code>.</p>
+</div>
 </section>
 <section id="example-lookup-transforms-for-geographical-visualization">
 <h2>Example: Lookup Transforms for Geographical Visualization<a class="headerlink" href="#example-lookup-transforms-for-geographical-visualization" title="Link to this heading">#</a></h2>

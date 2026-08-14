@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Filter a Time Series with a Date Input &#8212; Vega-Altair 6.2.2.post11+gc217ba4b documentation</title>
+    <title>Filter a Time Series with Date and Number Inputs &#8212; Vega-Altair 6.2.2.post15+gb95e5c4d documentation</title>
   
   
   
@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=a3ab8c07"></script>
+    <script src="../_static/documentation_options.js?v=be86bde0"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer="defer" type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
@@ -61,7 +61,7 @@
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="6.2.2.post11+gc217ba4b" />
+  <meta name="docsearch:version" content="6.2.2.post15+gb95e5c4d" />
   </head>
   
   
@@ -128,8 +128,8 @@
     
     
     
-    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.2.2.post11+gc217ba4b documentation - Home"/>
-    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.2.2.post11+gc217ba4b documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-light" alt="Vega-Altair 6.2.2.post15+gb95e5c4d documentation - Home"/>
+    <img src="../_static/altair-logo-light.png" class="logo__image only-dark pst-js-only" alt="Vega-Altair 6.2.2.post15+gb95e5c4d documentation - Home"/>
   
   
 </a></div>
@@ -418,7 +418,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Filter a Time Series with a Date Input</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Filter a Time Series with Date and Number Inputs</span></li>
   </ul>
 </nav>
 </div>
@@ -435,17 +435,17 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="filter-a-time-series-with-a-date-input">
-<span id="gallery-interactive-date-input"></span><h1>Filter a Time Series with a Date Input<a class="headerlink" href="#filter-a-time-series-with-a-date-input" title="Link to this heading">#</a></h1>
-<p>This example shows how to bind an HTML date input to a parameter and use the
-selected date to filter a time-series chart.</p>
+  <section id="filter-a-time-series-with-date-and-number-inputs">
+<span id="gallery-interactive-date-input"></span><h1>Filter a Time Series with Date and Number Inputs<a class="headerlink" href="#filter-a-time-series-with-date-and-number-inputs" title="Link to this heading">#</a></h1>
+<p>This example shows how to bind HTML date and number inputs to parameters and
+use the selected values to filter a time-series chart.</p>
 
 <div id="interactive_date_input-rst-altair-plot-0">
 <script>
   // embed when document is loaded, to ensure vega library is available
   // this works on all modern browsers, except IE8 and older
   document.addEventListener("DOMContentLoaded", function(event) {
-      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-670f28c259ef532b6d32c399236def59"}, "mark": {"type": "line", "point": true}, "encoding": {"tooltip": [{"field": "date", "title": "Date", "type": "temporal"}, {"field": "visitors", "title": "Visitors", "type": "quantitative"}], "x": {"field": "date", "type": "temporal"}, "y": {"field": "visitors", "type": "quantitative"}}, "params": [{"name": "start_date", "bind": {"input": "date", "name": "Start date: "}, "value": "2024-01-05"}], "transform": [{"filter": "(datum.date >= timeParse(start_date,'%Y-%m-%d'))"}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-670f28c259ef532b6d32c399236def59": [{"date": "2024-01-01T00:00:00", "visitors": 120}, {"date": "2024-01-02T00:00:00", "visitors": 135}, {"date": "2024-01-03T00:00:00", "visitors": 128}, {"date": "2024-01-04T00:00:00", "visitors": 142}, {"date": "2024-01-05T00:00:00", "visitors": 160}, {"date": "2024-01-06T00:00:00", "visitors": 175}, {"date": "2024-01-07T00:00:00", "visitors": 168}, {"date": "2024-01-08T00:00:00", "visitors": 155}, {"date": "2024-01-09T00:00:00", "visitors": 172}, {"date": "2024-01-10T00:00:00", "visitors": 184}, {"date": "2024-01-11T00:00:00", "visitors": 191}, {"date": "2024-01-12T00:00:00", "visitors": 205}, {"date": "2024-01-13T00:00:00", "visitors": 198}, {"date": "2024-01-14T00:00:00", "visitors": 214}]}};
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"data": {"name": "data-670f28c259ef532b6d32c399236def59"}, "mark": {"type": "line", "point": true}, "encoding": {"tooltip": [{"field": "date", "title": "Date", "type": "temporal"}, {"field": "visitors", "title": "Visitors", "type": "quantitative"}], "x": {"field": "date", "type": "temporal"}, "y": {"field": "visitors", "type": "quantitative"}}, "transform": [{"filter": "(datum.date >= timeParse(start_date,'%Y-%m-%d'))"}, {"filter": "(datum.visitors >= minimum_visitors)"}]}, {"data": {"name": "empty"}, "mark": {"type": "rule", "strokeDash": [5, 3]}, "encoding": {"y": {"type": "quantitative", "datum": {"expr": "minimum_visitors"}}}}], "params": [{"name": "start_date", "bind": {"input": "date", "name": "Start date: "}, "value": "2024-01-05"}, {"name": "minimum_visitors", "bind": {"input": "number", "name": "Minimum visitors: "}, "value": 180}], "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json", "datasets": {"data-670f28c259ef532b6d32c399236def59": [{"date": "2024-01-01T00:00:00", "visitors": 120}, {"date": "2024-01-02T00:00:00", "visitors": 135}, {"date": "2024-01-03T00:00:00", "visitors": 128}, {"date": "2024-01-04T00:00:00", "visitors": 142}, {"date": "2024-01-05T00:00:00", "visitors": 160}, {"date": "2024-01-06T00:00:00", "visitors": 175}, {"date": "2024-01-07T00:00:00", "visitors": 168}, {"date": "2024-01-08T00:00:00", "visitors": 155}, {"date": "2024-01-09T00:00:00", "visitors": 172}, {"date": "2024-01-10T00:00:00", "visitors": 184}, {"date": "2024-01-11T00:00:00", "visitors": 191}, {"date": "2024-01-12T00:00:00", "visitors": 205}, {"date": "2024-01-13T00:00:00", "visitors": 198}, {"date": "2024-01-14T00:00:00", "visitors": 214}], "empty": [{}]}};
       var opt = {
         "mode": "vega-lite",
         "renderer": "canvas",
@@ -489,6 +489,12 @@ Method syntax</label><div class="sd-tab-content docutils">
     <span class="n">bind</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">binding</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Start date: &quot;</span><span class="p">),</span>
 <span class="p">)</span>
 
+<span class="n">minimum_visitors</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;minimum_visitors&quot;</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span>
+    <span class="n">bind</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">binding</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="s2">&quot;number&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Minimum visitors: &quot;</span><span class="p">),</span>
+<span class="p">)</span>
+
 <span class="n">chart</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
     <span class="o">.</span><span class="n">mark_line</span><span class="p">(</span><span class="n">point</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -501,8 +507,9 @@ Method syntax</label><div class="sd-tab-content docutils">
         <span class="p">],</span>
     <span class="p">)</span>
     <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">date</span> <span class="o">&gt;=</span> <span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">timeParse</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">))</span>
-    <span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">start_date</span><span class="p">)</span>
-<span class="p">)</span>
+    <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">visitors</span> <span class="o">&gt;=</span> <span class="n">minimum_visitors</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">minimum_visitors</span><span class="p">)</span>
+<span class="p">)</span> <span class="o">+</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">()</span><span class="o">.</span><span class="n">mark_rule</span><span class="p">(</span><span class="n">strokeDash</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="n">datum</span><span class="o">=</span><span class="n">minimum_visitors</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;quantitative&#39;</span><span class="p">))</span>
 
 <span class="n">chart</span>
 </pre></div>
@@ -542,6 +549,12 @@ Attribute syntax</label><div class="sd-tab-content docutils">
     <span class="n">bind</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">binding</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Start date: &quot;</span><span class="p">),</span>
 <span class="p">)</span>
 
+<span class="n">minimum_visitors</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;minimum_visitors&quot;</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span>
+    <span class="n">bind</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">binding</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="s2">&quot;number&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Minimum visitors: &quot;</span><span class="p">),</span>
+<span class="p">)</span>
+
 <span class="n">chart</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
     <span class="o">.</span><span class="n">mark_line</span><span class="p">(</span><span class="n">point</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -554,8 +567,9 @@ Attribute syntax</label><div class="sd-tab-content docutils">
         <span class="p">],</span>
     <span class="p">)</span>
     <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">date</span> <span class="o">&gt;=</span> <span class="n">alt</span><span class="o">.</span><span class="n">expr</span><span class="o">.</span><span class="n">timeParse</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">))</span>
-    <span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">start_date</span><span class="p">)</span>
-<span class="p">)</span>
+    <span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">visitors</span> <span class="o">&gt;=</span> <span class="n">minimum_visitors</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">add_params</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">minimum_visitors</span><span class="p">)</span>
+<span class="p">)</span> <span class="o">+</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">()</span><span class="o">.</span><span class="n">mark_rule</span><span class="p">(</span><span class="n">strokeDash</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="n">datum</span><span class="o">=</span><span class="n">minimum_visitors</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;quantitative&#39;</span><span class="p">))</span>
 
 <span class="n">chart</span>
 </pre></div>
