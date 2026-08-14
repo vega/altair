@@ -161,7 +161,11 @@ jobs:
           ## Release notes preview
           EOF
 
-          sed -E 's/ by @[A-Za-z0-9-]+//g' release-notes-preview.md >> release-review-issue.md
+          sed -E \
+            -e 's/ by @[A-Za-z0-9-]+//g' \
+            -e '/^## New Contributors$/,/^\*\*Full Changelog\*\*/ { /^\*\*Full Changelog\*\*/!d; }' \
+            -e 's/^/> /' \
+            release-notes-preview.md >> release-review-issue.md
 
           gh issue create \
             --title "Review release candidate $TAG" \
