@@ -31,12 +31,10 @@ you can [use the fetch upstream button on GitHub](https://docs.github.com/en/pul
 > [!NOTE]
 > Altair's local version is derived from Git release tags. If your fork
 > is missing the latest upstream tags, the version reported by a local install
-> may be using an older tag as the base (or even fall back to a synthetic
-> `0...` version if no upstream tags are present). This doesn't affect the
-> development experience in any meaningful way and you can still see the latest
-> commit SHA in the reported version, but if you want more accurate version
-> reporting for a locally installed development version, make sure to fetch all
-> upstream tags:
+> may be using an older tag as the base (or be reported as
+> `4.0.0+fallback` if no upstream tags are present). If you want accurate
+> version reporting for a locally installed development version, make sure to
+> fetch all upstream tags:
 >
 > ```cmd
 > git fetch --tags https://github.com/vega/altair.git
