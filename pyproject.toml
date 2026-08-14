@@ -125,6 +125,7 @@ metadata = { allow-direct-references = true }
 
 [tool.hatch.version]
 source = "versioningit"
+default-version = "4.0.0+fallback"  # Must satisfy sphinxext-altair's altair>=4
 
 [tool.hatch.version.vcs]
 # "git-archive" is required (not the default "git") so that version calculation
@@ -133,8 +134,6 @@ source = "versioningit"
 # time via the export-subst attribute in .gitattributes.
 method = "git-archive"
 describe-subst = "$Format:%(describe:tags,match=v[0-9]*)$"
-# Keep tagless forks compatible with sphinxext-altair's altair>=4 requirement.
-default-tag = "v4.0.0"
 
 [tool.hatch.envs]
 # https://hatch.pypa.io/latest/how-to/environment/select-installer/#enabling-uv
