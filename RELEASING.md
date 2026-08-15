@@ -13,19 +13,21 @@ Check that all [Vega project](https://github.com/orgs/vega/repositories?type=sou
 
 ### Semi-Automated Release
 
-1. A couple of times a month, GitHub actions will check if notable commits has been made to main (e.g. fixes and features) since the last release. If so, a draft release will be prepared and an issue will be opened tagging the maintainers to review it before releasing.
+The `release` environment in the repository settings must have at least one required reviewer. The workflow verifies this before creating a version tag.
+
+1. A couple of times a month, GitHub Actions will check if notable commits have been made to main (e.g. fixes and features) since the last release. If so, a release candidate will be prepared and an issue will be opened tagging the maintainers to review it before releasing.
     - It is also possible to trigger this release workflow manually: go to the "Actions" tab, click the `Prepare Release Draft` workflow to the left, and then "Run workflow".
     - This workflow automates the following steps:
-        1. Checks for an existing draft release and exits if one already exists.
+        1. Checks for an existing release review issue or draft release and exits if one already exists.
         2. Uses Cocogitto to inspect conventional commits since the latest `v*` tag.
         3. Skips the release if no SemVer-relevant changes are found.
         4. Runs the test suite.
-        5. Commits the release version and creates a `vX.Y.Z` tag.
-        6. Creates a draft GitHub release.
-        7. Builds and publishes docs preview with a draft-release banner at `release-preview/latest/`.
-        8. Opens an issue with the instructions for manual review before releasing.
-2. Review the issue that was opened by the workflow. This contains instructions on what to review before publishing the draft release, e.g. the release notes and the preview version of the docs.
-3. Publish the release on Github.
+        5. Generates a release notes preview without creating a version tag.
+        6. Builds and publishes a docs preview from the candidate commit with a release-candidate banner at `release-preview/latest/`.
+        7. Opens an issue with the candidate commit, release notes, docs preview, and review instructions.
+        8. Waits for approval through the protected `release` environment.
+2. Review the issue opened by the workflow. Approve the pending release deployment if the release notes and docs preview look correct, or reject it to abort the release. Rejection creates no version tag or GitHub release.
+3. Approval creates an immutable `vX.Y.Z` tag at the exact reviewed commit and creates a draft GitHub release. Review the draft, publish it on GitHub, and close the release review issue.
     - Publishing a non-prerelease GitHub release whose tag matches `vX.Y.Z` triggers the `Publish Release to PyPI` workflow. That workflow checks out the release tag, builds the package, publishes to PyPI using trusted publishing, and updates the official documentation.
 
 ### Manual Release
