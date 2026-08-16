@@ -41,6 +41,9 @@ if TYPE_CHECKING:
 
 EXAMPLE_MODULE = "altair.examples"
 EXAMPLES_INDEX = Path(__file__).parents[1] / "_data" / "examples.json"
+GALLERY_NAME = "altair"
+GALLERY_REPOSITORY = "https://github.com/vega/altair"
+GALLERY_DOCS_URL = "https://altair-viz.github.io/"
 
 
 GALLERY_TEMPLATE = jinja2.Template(
@@ -567,31 +570,44 @@ def _write_examples_index(app: Sphinx, env: BuildEnvironment) -> None:
     records = []
     for example in populate_examples():
         explicit_refs = _explicit_doc_refs(env, gallery_dir, example["name"])
-        related_docs = [
+        explicit_docs = [
             f"{docname}#{anchor}" if anchor else docname
             for docname, anchor, _section_title in explicit_refs
         ]
-        related_docs.extend(
+        inferred_docs = [
             f"{docname}#{anchor}" if anchor else docname
             for docname, _label, anchor in _heuristic_doc_refs(example["code"])
             if docname in env.found_docs
-        )
+            and (f"{docname}#{anchor}" if anchor else docname) not in explicit_docs
+        ]
         records.append(
             {
                 "name": example["name"],
                 "title": example["title"],
-                "description": _example_description(example["docstring"]),
-                "categories": [example["category"].lower()],
+                "url": f"{GALLERY_DOCS_URL}{gallery_dir}/{example['name']}.html",
                 "path": Path(example["filename"])
                 .relative_to(EXAMPLES_INDEX.parents[1])
                 .as_posix(),
-                "related_docs": list(dict.fromkeys(related_docs)),
+                "description": _example_description(example["docstring"]),
+                "categories": [example["category"].lower()],
                 "datasets": _example_datasets(example["code"]),
+                "related_docs": {
+                    "explicit": explicit_docs,
+                    "inferred": inferred_docs,
+                },
             }
         )
 
     EXAMPLES_INDEX.parent.mkdir(exist_ok=True)
-    index_text = json.dumps(records, indent=2, ensure_ascii=False) + "\n"
+    index = {
+        "gallery": {
+            "name": GALLERY_NAME,
+            "repository": GALLERY_REPOSITORY,
+            "docs_url": GALLERY_DOCS_URL,
+        },
+        "examples": records,
+    }
+    index_text = json.dumps(index, indent=2, ensure_ascii=False) + "\n"
     if (
         not EXAMPLES_INDEX.exists()
         or EXAMPLES_INDEX.read_text(encoding="utf-8") != index_text
