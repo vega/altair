@@ -1028,6 +1028,44 @@ def test_union_branch_enum_error_not_hidden_by_fallback_branch() -> None:
     assert error.message == "'typo' is not one of ['allowed']"
 
 
+def test_union_branch_discriminator_value_selects_matching_branch() -> None:
+    # When a required value satisfies one branch's const/enum discriminator it
+    # unambiguously identifies that branch, so contradicting branches must not
+    # leak their discriminator errors into the final message.
+    schema = {
+        "anyOf": [
+            {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {
+                    "kind": {"const": "integer"},
+                    "payload": {"type": "integer"},
+                },
+                "additionalProperties": False,
+            },
+            {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {
+                    "kind": {"const": "string"},
+                    "payload": {"type": "string"},
+                },
+                "additionalProperties": False,
+            },
+        ]
+    }
+
+    class Example(SchemaBase):
+        _schema = schema
+
+    with pytest.raises(SchemaValidationError) as err:
+        Example(kind="integer", payload="bad").to_dict()
+
+    message = str(err.value)
+    assert "is an invalid value for `kind`" not in message
+    assert "'bad' is an invalid value for `payload`" in message
+
+
 def test_binding_input_typo_is_reported_over_unknown_parameters() -> None:
     # Regression test: a typo'd `input` discriminator must not be masked by
     # reporting `min`/`max` as unknown parameters of the generic BindInput
@@ -1043,7 +1081,7 @@ def test_binding_input_typo_is_reported_over_unknown_parameters() -> None:
                 alt.param(
                     name="threshold",
                     value=5,
-                    bind={"input": "ragne", "min": 0, "max": 10},
+                    bind={"input": "ragne", "min": 0, "max": 10},  # type: ignore[arg-type]
                 )
             )
         ).to_dict()

@@ -475,6 +475,28 @@ def _value_fails_only_by_constraint(value: Any, schema: Any) -> bool:
     return jsonschema.Draft7Validator(relaxed).is_valid(value)
 
 
+def _value_matches_any_branch_discriminator(
+    value: Any,
+    property_name: str,
+    branch_schemas: dict[int, dict[str, Any] | None],
+) -> bool:
+    """Return True when ``value`` satisfies a const/enum discriminator of any branch."""
+    for schema in branch_schemas.values():
+        if schema is None:
+            continue
+        property_schemas = _property_schemas(schema, property_name)
+        if property_schemas is None:
+            continue
+        for property_schema in property_schemas:
+            if (
+                isinstance(property_schema, dict)
+                and ("const" in property_schema or "enum" in property_schema)
+                and _value_matches_schema(value, property_schema) is True
+            ):
+                return True
+    return False
+
+
 def _property_schemas(schema: dict[str, Any], property_name: str) -> list[Any] | None:
     properties = schema.get("properties", {})
     pattern_properties = schema.get("patternProperties", {})
@@ -555,6 +577,7 @@ def _branch_excludes_required_value(
     schema: dict[str, Any] | None,
     required: set[str],
     instance: dict[str, Any],
+    branch_schemas: dict[int, dict[str, Any] | None],
 ) -> bool:
     if schema is None:
         return False
@@ -563,13 +586,15 @@ def _branch_excludes_required_value(
         if property_schemas is None:
             return False
         for property_schema in property_schemas:
-            if (
-                _value_matches_schema(instance.get(name), property_schema) is False
-                # A const/enum mismatch is not an unambiguous discriminator: it
-                # may be the actual error rather than a reason to discard the
-                # branch (a generic fallback branch could accept the type).
-                and not _value_fails_only_by_constraint(
-                    instance.get(name), property_schema
+            # A const/enum mismatch is only ambiguous when the value is not a
+            # valid discriminator: when it satisfies another branch's const/enum
+            # it unambiguously identifies that branch, so the mismatch
+            # contradicts this one. When it satisfies no branch's const/enum it
+            # may be the actual error to surface instead.
+            if _value_matches_schema(instance.get(name), property_schema) is False and (
+                not _value_fails_only_by_constraint(instance.get(name), property_schema)
+                or _value_matches_any_branch_discriminator(
+                    instance.get(name), name, branch_schemas
                 )
             ):
                 return True
@@ -584,7 +609,7 @@ def _required_values_identify_branch(
 ) -> bool:
     return all(
         index == branch_index
-        or _branch_excludes_required_value(schema, required, instance)
+        or _branch_excludes_required_value(schema, required, instance, branch_schemas)
         for index, schema in branch_schemas.items()
     )
 
