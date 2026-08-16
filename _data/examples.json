@@ -1,0 +1,4373 @@
+{
+  "gallery": {
+    "name": "altair",
+    "repository": "https://github.com/vega/altair",
+    "docs_url": "https://altair-viz.github.io/"
+  },
+  "examples": [
+    {
+      "name": "airport_connections",
+      "title": "Connections Among U.S. Airports Interactive",
+      "url": "https://altair-viz.github.io/gallery/airport_connections.html",
+      "path": "tests/examples_arguments_syntax/airport_connections.py",
+      "description": "This example shows all the connections between major U.S. airports. Lookup transformations\nare used to find the coordinates of each airport and connecting airports. Connections\nare displayed on pointerover via a single selection.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "airports",
+        "flights_airport",
+        "us_10m"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#position"
+        ],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/geoshape",
+          "user_guide/marks/rule",
+          "user_guide/transform/aggregate",
+          "user_guide/transform/filter",
+          "user_guide/transform/lookup",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "andrews_curves",
+      "title": "Andrews Curves",
+      "url": "https://altair-viz.github.io/gallery/andrews_curves.html",
+      "path": "tests/examples_arguments_syntax/andrews_curves.py",
+      "description": "`Andrews curves <https://en.wikipedia.org/wiki/Andrews_plot>`_ visualize\nclusters in multivariate data by mapping each observation to a finite Fourier\nseries and drawing it as a single line. Observations that belong to the same\ngroup tend to trace out similar shapes.\n\nA curve has the functional form::\n\n    f(t) = x_1/sqrt(2) + x_2 sin(t) + x_3 cos(t) + x_4 sin(2t) + ...\n\nwhere the ``x`` coefficients are the (normalized) values of each dimension and\n``t`` is spaced linearly between ``-pi`` and ``+pi``.\n\nThis example shows an Andrews curves chart of the Penguins dataset, where each\nspecies traces a recognizable band of curves.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "penguins"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "annual_weather_heatmap",
+      "title": "Annual Weather Heatmap",
+      "url": "https://altair-viz.github.io/gallery/annual_weather_heatmap.html",
+      "path": "tests/examples_arguments_syntax/annual_weather_heatmap.py",
+      "description": "",
+      "categories": [
+        "tables"
+      ],
+      "datasets": [
+        "seattle_weather"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/rect",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "anscombe_plot",
+      "title": "Anscombe's Quartet",
+      "url": "https://altair-viz.github.io/gallery/anscombe_plot.html",
+      "path": "tests/examples_arguments_syntax/anscombe_plot.py",
+      "description": "`Anscombe's Quartet <https://en.wikipedia.org/wiki/Anscombe%27s_quartet>`_\nis a famous dataset constructed by Francis Anscombe.\nIt is made of 4 different subsets of data.\nEach subset has very different characteristics, even though common summary\nstatistics such as mean and variance are identical.\n\nThis example shows how to make a faceted plot, with each facet\nshowing a different subset of the data.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "anscombe"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle"
+        ]
+      }
+    },
+    {
+      "name": "area_chart_gradient",
+      "title": "Area Chart with Gradient",
+      "url": "https://altair-viz.github.io/gallery/area_chart_gradient.html",
+      "path": "tests/examples_arguments_syntax/area_chart_gradient.py",
+      "description": "This example shows how to make an area chart with a gradient fill.\nFor more information about gradient options see the Vega-Lite `Gradient documentation <https://vega.github.io/vega-lite/docs/types.html#gradient>`_.",
+      "categories": [
+        "area charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "area_faceted",
+      "title": "Faceted Area Chart",
+      "url": "https://altair-viz.github.io/gallery/area_faceted.html",
+      "path": "tests/examples_arguments_syntax/area_faceted.py",
+      "description": "Multiple area subcharts, one for each company.\nWe also show filtering out one of the companies,\nand sorting the companies in a custom order.",
+      "categories": [
+        "area charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "bar_and_line_with_dual_axis",
+      "title": "Bar Chart with Line on Dual Axis",
+      "url": "https://altair-viz.github.io/gallery/bar_and_line_with_dual_axis.html",
+      "path": "tests/examples_arguments_syntax/bar_and_line_with_dual_axis.py",
+      "description": "This example shows how to combine two plots and keep their axes.\n\nFor a more polished version of this chart, see :ref:`gallery_wheat_wages`.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "wheat"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "bar_chart_faceted_compact",
+      "title": "Compact Faceted Grid of Bar Charts",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_faceted_compact.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_faceted_compact.py",
+      "description": "A simple grid of bar charts to compare performance data,\none subchart for each subset of the data.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "bar_chart_horizontal",
+      "title": "Horizontal Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_horizontal.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_horizontal.py",
+      "description": "This example is a bar chart drawn horizontally by putting the quantitative value on the x axis.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "wheat"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "bar_chart_sorted",
+      "title": "Sorted Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_sorted.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_sorted.py",
+      "description": "This example shows a bar chart sorted by a calculated value.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "bar_chart_with_highlighted_bar",
+      "title": "Bar Chart with Highlighted Bar",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_with_highlighted_bar.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_with_highlighted_bar.py",
+      "description": "This example shows a basic bar chart with a single bar highlighted.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "wheat"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "bar_chart_with_highlighted_segment",
+      "title": "Bar Chart with Highlighted Segment",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_with_highlighted_segment.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_with_highlighted_segment.py",
+      "description": "This example shows a bar chart that highlights values beyond a threshold.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "wheat"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/rule",
+          "user_guide/transform/calculate",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "bar_chart_with_labels",
+      "title": "Bar Chart with Labels",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_with_labels.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_with_labels.py",
+      "description": "This example shows a basic horizontal bar chart with labels created with Altair.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "wheat"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "bar_chart_with_labels_measured_luminance",
+      "title": "Bar Chart with Labels based on Measured Luminance",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_with_labels_measured_luminance.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_with_labels_measured_luminance.py",
+      "description": "This example shows a basic horizontal bar chart with labels where the measured luminance to decides if the text overlay is be colored ``black`` or ``white``.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "bar_chart_with_mean_line",
+      "title": "Bar Chart with Line at Mean",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_with_mean_line.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_with_mean_line.py",
+      "description": "This example shows the mean value overlaid on a bar chart.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "wheat"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/rule",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "bar_chart_with_negatives",
+      "title": "Bar Chart with Negative Values",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_with_negatives.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_with_negatives.py",
+      "description": "This example shows a bar chart with both positive and negative values.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "us_employment"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "bar_chart_with_range",
+      "title": "Bar Chart with Range",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_with_range.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_with_range.py",
+      "description": "This example shows a range bar chart where each bar displays information of a low and high value.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "seattle_weather"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "bar_chart_with_single_threshold",
+      "title": "Bar Chart Highlighting Values beyond a Threshold",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_with_single_threshold.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_with_single_threshold.py",
+      "description": "This example shows a bar chart highlighting values beyond a threshold.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/rule",
+          "user_guide/marks/text",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "bar_faceted_stacked",
+      "title": "Faceted Stacked Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/bar_faceted_stacked.html",
+      "path": "tests/examples_arguments_syntax/bar_faceted_stacked.py",
+      "description": "A horizontal stacked bar chart using barley crop yield data.\nThe chart is horizontally faceted based on the year,\nand vertically faceted based on variety.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "bar_rounded",
+      "title": "Bar Chart with Rounded Edges",
+      "url": "https://altair-viz.github.io/gallery/bar_rounded.html",
+      "path": "tests/examples_arguments_syntax/bar_rounded.py",
+      "description": "This example shows how to create a bar chart with rounded edges.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "seattle_weather"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "bar_with_rolling_mean",
+      "title": "Bar Chart with Rolling Mean",
+      "url": "https://altair-viz.github.io/gallery/bar_with_rolling_mean.html",
+      "path": "tests/examples_arguments_syntax/bar_with_rolling_mean.py",
+      "description": "A bar chart overlaid with a rolling mean. In this example the average of values over the previous decade is displayed as a line.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "wheat"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/line",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "beckers_barley_facet",
+      "title": "Becker's Barley Faceted Plot",
+      "url": "https://altair-viz.github.io/gallery/beckers_barley_facet.html",
+      "path": "tests/examples_arguments_syntax/beckers_barley_facet.py",
+      "description": "The example demonstrates the faceted charts created by Richard Becker,\nWilliam Cleveland and others in the 1990s. Using the visualization technique\nwhere each row is a different site (i.e. the chart is faceted by site),\nthey identified an anomaly in a widely used agriculatural dataset,\nwhere the \"Morris\" site accidentally had the years 1931 and 1932 swapped.\nThey named this\n`\"The Morris Mistake.\" <http://ml.stat.purdue.edu/stat695t/writings/Trellis.User.pdf>`_.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#facet"
+        ],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "beckers_barley_wrapped_facet",
+      "title": "Becker's Barley Wrapped Facet Plot",
+      "url": "https://altair-viz.github.io/gallery/beckers_barley_wrapped_facet.html",
+      "path": "tests/examples_arguments_syntax/beckers_barley_wrapped_facet.py",
+      "description": "The example demonstrates the faceted charts created by Richard Becker,\nWilliam Cleveland and others in the 1990s. Using the visualization technique\nwhere each row is a different site (i.e. the chart is faceted by site),\nthey identified an anomaly in a widely used agriculatural dataset,\nwhere the \"Morris\" site accidentally had the years 1931 and 1932 swapped.\nThey named this\n`\"The Morris Mistake.\" <http://ml.stat.purdue.edu/stat695t/writings/Trellis.User.pdf>`_.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "boxplot",
+      "title": "Boxplot with Min/Max Whiskers",
+      "url": "https://altair-viz.github.io/gallery/boxplot.html",
+      "path": "tests/examples_arguments_syntax/boxplot.py",
+      "description": "This example shows how to make a boxplot using US Population data from 2000.\nNote that the default value of the `extent` property is 1.5,\nwhich represents the convention of extending the whiskers\nto the furthest points within 1.5 * IQR from the first and third quartile.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "population"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/marks/index#marks",
+          "user_guide/transform/aggregate#central-tendency-measures",
+          "user_guide/transform/aggregate#distribution-statistics",
+          "user_guide/transform/aggregate#range-functions"
+        ],
+        "inferred": [
+          "user_guide/marks/boxplot",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "bubble_plot",
+      "title": "Bubble Plot",
+      "url": "https://altair-viz.github.io/gallery/bubble_plot.html",
+      "path": "tests/examples_arguments_syntax/bubble_plot.py",
+      "description": "This example shows how to make a bubble plot.",
+      "categories": [
+        "scatter plots"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point"
+        ]
+      }
+    },
+    {
+      "name": "bump_chart",
+      "title": "Bump Chart",
+      "url": "https://altair-viz.github.io/gallery/bump_chart.html",
+      "path": "tests/examples_arguments_syntax/bump_chart.py",
+      "description": "This example shows a bump chart.  The data is first grouped into six-month\nintervals using pandas. The ranks are computed by Altair using a\nwindow transform.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "calculate_residuals",
+      "title": "Calculate Residuals",
+      "url": "https://altair-viz.github.io/gallery/calculate_residuals.html",
+      "path": "tests/examples_arguments_syntax/calculate_residuals.py",
+      "description": "A dot plot showing each movie in the database, and the difference from the average movie rating.\nThe display is sorted by year to visualize everything in sequential order.\nThe graph is for all Movies before 2019.\nAdapted from `Calculate Residuals <https://vega.github.io/vega-lite/examples/joinaggregate_residual_graph.html>`_.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/transform/calculate",
+          "user_guide/transform/filter",
+          "user_guide/transform/joinaggregate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "candlestick_chart",
+      "title": "Candlestick Chart",
+      "url": "https://altair-viz.github.io/gallery/candlestick_chart.html",
+      "path": "tests/examples_arguments_syntax/candlestick_chart.py",
+      "description": "A candlestick chart inspired from `Protovis <http://mbostock.github.io/protovis/ex/candlestick.html>`_.\nThis example shows the performance of the Chicago Board Options Exchange `Volatility Index <https://en.wikipedia.org/wiki/VIX>`_ (VIX)\nin the summer of 2009. The thick bar represents the opening and closing prices,\nwhile the thin bar shows intraday high and low prices; if the index closed higher on a given day, the bars are colored green rather than red.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "ohlc"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#position"
+        ],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/rule",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "choropleth",
+      "title": "Choropleth Map",
+      "url": "https://altair-viz.github.io/gallery/choropleth.html",
+      "path": "tests/examples_arguments_syntax/choropleth.py",
+      "description": "A choropleth map of unemployment rate per county in the US",
+      "categories": [
+        "maps"
+      ],
+      "datasets": [
+        "unemployment",
+        "us_10m"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/geoshape",
+          "user_guide/transform/lookup",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "choropleth_repeat",
+      "title": "Repeated Choropleth Map",
+      "url": "https://altair-viz.github.io/gallery/choropleth_repeat.html",
+      "path": "tests/examples_arguments_syntax/choropleth_repeat.py",
+      "description": "Three choropleths representing disjoint data from the same table.",
+      "categories": [
+        "maps"
+      ],
+      "datasets": [
+        "population_engineers_hurricanes",
+        "us_10m"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/geoshape",
+          "user_guide/transform/lookup",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "co2_concentration",
+      "title": "Atmospheric CO2 Concentration",
+      "url": "https://altair-viz.github.io/gallery/co2_concentration.html",
+      "path": "tests/examples_arguments_syntax/co2_concentration.py",
+      "description": "This example is a fully developed line chart that uses a window transformation.\nIt was inspired by `Gregor Aisch's work at datawrapper\n<https://www.datawrapper.de/_/OHgEm/>`_.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "co2_concentration"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/text",
+          "user_guide/transform/calculate",
+          "user_guide/transform/filter",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "comet_chart",
+      "title": "Comet Chart",
+      "url": "https://altair-viz.github.io/gallery/comet_chart.html",
+      "path": "tests/examples_arguments_syntax/comet_chart.py",
+      "description": "Inspired by `Zan Armstrong's comet chart <https://www.zanarmstrong.com/infovisresearch>`_\nthis plot uses ``mark_trail`` to visualize change of grouped data over time.\nA more elaborate example and explanation of creating comet charts in Altair\nis shown in `this blogpost <https://medium.com/de-dataverbinders/comet-charts-in-python-visualizing-statistical-mix-effects-and-simpsons-paradox-with-altair-6cd51fb58b7c>`_.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/trail",
+          "user_guide/transform/calculate",
+          "user_guide/transform/fold",
+          "user_guide/transform/pivot",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "cumulative_count_chart",
+      "title": "Cumulative Count Chart",
+      "url": "https://altair-viz.github.io/gallery/cumulative_count_chart.html",
+      "path": "tests/examples_arguments_syntax/cumulative_count_chart.py",
+      "description": "This example shows an area chart with cumulative count.\nAdapted from https://vega.github.io/vega-lite/examples/area_cumulative_freq.html",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "dendrogram",
+      "title": "Dendrogram of Hierarchical Clustering",
+      "url": "https://altair-viz.github.io/gallery/dendrogram.html",
+      "path": "tests/examples_arguments_syntax/dendrogram.py",
+      "description": "This is a dendrogram from the result of a hierarchical clustering. It's based on the example from\nhttps://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_dendrogram.html",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/rule",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "density_repeat",
+      "title": "Repeated Density Estimates",
+      "url": "https://altair-viz.github.io/gallery/density_repeat.html",
+      "path": "tests/examples_arguments_syntax/density_repeat.py",
+      "description": "Density estimates for each measurement of penguins.\nThis is what we call a \"repeated\" plot, with one subplot\nfor each measurement type. All measurements are in millimeters,\nmaking them directly comparable on a shared x-axis.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "penguins"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/transform/density",
+          "user_guide/transform/fold",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "density_stack",
+      "title": "Stacked Density Estimates",
+      "url": "https://altair-viz.github.io/gallery/density_stack.html",
+      "path": "tests/examples_arguments_syntax/density_stack.py",
+      "description": "To plot a stacked graph of estimates, use a shared ``extent`` and a fixed\nnumber of subdivision ``steps`` to ensure that the points for each area align\nwell.  Density estimates of body mass for each penguin species are plotted\nin a stacked method.  In addition, setting ``counts`` to true multiplies the\ndensities by the number of data points in each group, preserving proportional\ndifferences.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "penguins"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/transform/density",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "deviation_ellipses",
+      "title": "Confidence Interval Ellipses",
+      "url": "https://altair-viz.github.io/gallery/deviation_ellipses.html",
+      "path": "tests/examples_arguments_syntax/deviation_ellipses.py",
+      "description": "This example shows bivariate deviation ellipses of flipper length and body mass of three penguin species.\n\nInspired by `ggplot2.stat_ellipse`_ and directly based on `Deviation ellipses example`_ by `@essicolo`_\n\n.. _ggplot2.stat_ellipse:\n    https://ggplot2.tidyverse.org/reference/stat_ellipse.html#ref-examples\n.. _Deviation ellipses example:\n    https://github.com/vega/altair/pull/514\n.. _@essicolo:\n    https://github.com/essicolo",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "penguins"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "distributions_and_medians_of_likert_scale_ratings",
+      "title": "Distributions and Medians of Likert Scale Ratings",
+      "url": "https://altair-viz.github.io/gallery/distributions_and_medians_of_likert_scale_ratings.html",
+      "path": "tests/examples_arguments_syntax/distributions_and_medians_of_likert_scale_ratings.py",
+      "description": "Distributions and Medians of Likert Scale Ratings. (Figure 9 from @jhoffswell and @zcliu’s ‘Interactive Repair of Tables Extracted from PDF Documents on Mobile Devices’ – http://idl.cs.washington.edu/files/2019-InteractiveTableRepair-CHI.pdf).\n\nAdapted from `Distributions and Medians of Likert Scale Ratings <https://vega.github.io/vega-lite/examples/layer_likert.html>`_.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/text",
+          "user_guide/marks/tick",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "distributions_faceted_histogram",
+      "title": "Faceted Histogram",
+      "url": "https://altair-viz.github.io/gallery/distributions_faceted_histogram.html",
+      "path": "tests/examples_arguments_syntax/distributions_faceted_histogram.py",
+      "description": "This example shows how to make a basic faceted histogram,\nwith one histogram subplot for different subsets of the data.\n\nBased off the vega-lite example:\nhttps://vega.github.io/vega-lite/examples/trellis_bar_histogram.html",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "diverging_stacked_bar_chart",
+      "title": "Diverging Stacked Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/diverging_stacked_bar_chart.html",
+      "path": "tests/examples_arguments_syntax/diverging_stacked_bar_chart.py",
+      "description": "This example shows a diverging stacked bar chart for sentiments towards a set of eight questions, displayed as percentages with neutral responses straddling the 0% mark.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "donut_chart",
+      "title": "Donut Chart",
+      "url": "https://altair-viz.github.io/gallery/donut_chart.html",
+      "path": "tests/examples_arguments_syntax/donut_chart.py",
+      "description": "This example shows how to make a Donut Chart using ``mark_arc``.\nThis is adapted from a corresponding Vega-Lite Example:\n`Donut Chart <https://vega.github.io/vega-lite/examples/arc_donut.html>`_.",
+      "categories": [
+        "circular plots"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/arc",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "dot_dash_plot",
+      "title": "Dot Dash Plot",
+      "url": "https://altair-viz.github.io/gallery/dot_dash_plot.html",
+      "path": "tests/examples_arguments_syntax/dot_dash_plot.py",
+      "description": "How to make the dot-dash plot presented in Edward Tufte's `Visual Display of Quantitative Information <https://www.edwardtufte.com/tufte/books_vdqi>`_. Based\non a JavaScript implementation by `g3o2 <https://bl.ocks.org/g3o2/bd4362574137061c243a2994ba648fb8>`_.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/interactions/parameters#understanding-when"
+        ],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/marks/tick",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "empirical_cumulative_distribution_function",
+      "title": "Empirical Cumulative Distribution Function",
+      "url": "https://altair-viz.github.io/gallery/empirical_cumulative_distribution_function.html",
+      "path": "tests/examples_arguments_syntax/empirical_cumulative_distribution_function.py",
+      "description": "This example shows an empirical cumulative distribution function.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "errorbars_with_ci",
+      "title": "Error Bars with Confidence Interval",
+      "url": "https://altair-viz.github.io/gallery/errorbars_with_ci.html",
+      "path": "tests/examples_arguments_syntax/errorbars_with_ci.py",
+      "description": "This example shows how to show error bars using confidence intervals.\nThe confidence intervals are computed internally in vega by a non-parametric\n`bootstrap of the mean <https://github.com/vega/vega-statistics/blob/master/src/bootstrapCI.js>`_.",
+      "categories": [
+        "uncertainties and trends"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/marks/index#marks"
+        ],
+        "inferred": [
+          "user_guide/marks/errorbar",
+          "user_guide/marks/point",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "errorbars_with_std",
+      "title": "Error Bars with Standard Deviation",
+      "url": "https://altair-viz.github.io/gallery/errorbars_with_std.html",
+      "path": "tests/examples_arguments_syntax/errorbars_with_std.py",
+      "description": "This example shows how to show error bars with standard deviation using crop yields data of different\nin the years of 1930s.",
+      "categories": [
+        "uncertainties and trends"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/errorbar",
+          "user_guide/marks/point",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "falkensee",
+      "title": "Population of Falkensee from 1875 to 2014",
+      "url": "https://altair-viz.github.io/gallery/falkensee.html",
+      "path": "tests/examples_arguments_syntax/falkensee.py",
+      "description": "This example is a reproduction of the Falkensee plot found in the Vega-Lite examples.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/point",
+          "user_guide/marks/rect",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "filled_step_chart",
+      "title": "Filled Step Chart",
+      "url": "https://altair-viz.github.io/gallery/filled_step_chart.html",
+      "path": "tests/examples_arguments_syntax/filled_step_chart.py",
+      "description": "This example shows Google's stock price over time as a step chart with its area filled in and its line emphasized.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "gantt_chart",
+      "title": "Gantt Chart",
+      "url": "https://altair-viz.github.io/gallery/gantt_chart.html",
+      "path": "tests/examples_arguments_syntax/gantt_chart.py",
+      "description": "This example shows how to make a simple Gantt chart.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#position"
+        ],
+        "inferred": [
+          "user_guide/marks/bar"
+        ]
+      }
+    },
+    {
+      "name": "gapminder_bubble_plot",
+      "title": "Gapminder Bubble Plot",
+      "url": "https://altair-viz.github.io/gallery/gapminder_bubble_plot.html",
+      "path": "tests/examples_arguments_syntax/gapminder_bubble_plot.py",
+      "description": "This example shows how to make a bubble plot showing the correlation between\nhealth and income for 187 countries in the world (modified from an example\nin Lisa Charlotte Rost's blog post `'One Chart, Twelve Charting Libraries' <http://lisacharlotterost.github.io/2016/05/17/one-chart-code/>`_.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "gapminder_health_income"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "groupby-map",
+      "title": "Grouped Points with Proportional Symbols Map",
+      "url": "https://altair-viz.github.io/gallery/groupby-map.html",
+      "path": "tests/examples_arguments_syntax/groupby-map.py",
+      "description": "This is a layered geographic visualization that groups points by state.",
+      "categories": [
+        "maps"
+      ],
+      "datasets": [
+        "airports",
+        "us_10m"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/geoshape",
+          "user_guide/transform/aggregate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "grouped_bar_chart",
+      "title": "Grouped Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/grouped_bar_chart.html",
+      "path": "tests/examples_arguments_syntax/grouped_bar_chart.py",
+      "description": "This example shows a grouped bar chart.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "grouped_bar_chart2",
+      "title": "Grouped Bar Chart with xOffset",
+      "url": "https://altair-viz.github.io/gallery/grouped_bar_chart2.html",
+      "path": "tests/examples_arguments_syntax/grouped_bar_chart2.py",
+      "description": "Like :ref:`gallery_grouped_bar_chart`, this example shows a grouped bar chart.  Whereas :ref:`gallery_grouped_bar_chart` used the ``column`` encoding channel, this example uses the ``xOffset`` encoding channel.  This is adapted from a corresponding Vega-Lite Example:\n`Grouped Bar Chart <https://vega.github.io/vega-lite/examples/bar_grouped.html>`_.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#position"
+        ],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "grouped_bar_chart_horizontal",
+      "title": "Horizontal Grouped Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/grouped_bar_chart_horizontal.html",
+      "path": "tests/examples_arguments_syntax/grouped_bar_chart_horizontal.py",
+      "description": "This example shows a horizontal grouped bar chart.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "grouped_bar_chart_overlapping_bars",
+      "title": "Grouped Bar Chart with xOffset and overlapping bars",
+      "url": "https://altair-viz.github.io/gallery/grouped_bar_chart_overlapping_bars.html",
+      "path": "tests/examples_arguments_syntax/grouped_bar_chart_overlapping_bars.py",
+      "description": "Like :ref:`gallery_grouped_bar_chart2`, this example shows a grouped bar chart using the ``xOffset`` encoding channel, but in this example the bars are partly overlapping within each group.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "grouped_bar_chart_with_error_bars",
+      "title": "Grouped Bar Chart with Error Bars",
+      "url": "https://altair-viz.github.io/gallery/grouped_bar_chart_with_error_bars.html",
+      "path": "tests/examples_arguments_syntax/grouped_bar_chart_with_error_bars.py",
+      "description": "This example shows a grouped bar chart with error bars.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/errorbar",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "heat_lane",
+      "title": "Heat Lane Chart",
+      "url": "https://altair-viz.github.io/gallery/heat_lane.html",
+      "path": "tests/examples_arguments_syntax/heat_lane.py",
+      "description": "This example shows how to make an alternative form of a histogram `designed at Google <https://www.smashingmagazine.com/2022/07/accessibility-first-approach-chart-visual-design/>`_ with the goal of increasing accessibility.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/transform/aggregate",
+          "user_guide/transform/bin",
+          "user_guide/transform/calculate",
+          "user_guide/transform/joinaggregate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "hexbins",
+      "title": "Hexbin Chart",
+      "url": "https://altair-viz.github.io/gallery/hexbins.html",
+      "path": "tests/examples_arguments_syntax/hexbins.py",
+      "description": "This example shows a hexbin chart.",
+      "categories": [
+        "tables"
+      ],
+      "datasets": [
+        "seattle_weather"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/transform/calculate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "histogram_gradient_color",
+      "title": "Histogram with Gradient Color",
+      "url": "https://altair-viz.github.io/gallery/histogram_gradient_color.html",
+      "path": "tests/examples_arguments_syntax/histogram_gradient_color.py",
+      "description": "This example shows how to make a histogram with gradient color.\nThe low-high IMDB rating is represented with the color scheme `pinkyellowgreen`.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "histogram_heatmap",
+      "title": "2D Histogram Heatmap",
+      "url": "https://altair-viz.github.io/gallery/histogram_heatmap.html",
+      "path": "tests/examples_arguments_syntax/histogram_heatmap.py",
+      "description": "This example shows how to make a heatmap from binned quantitative data.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/rect",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "histogram_responsive",
+      "title": "Histogram with Responsive Bins",
+      "url": "https://altair-viz.github.io/gallery/histogram_responsive.html",
+      "path": "tests/examples_arguments_syntax/histogram_responsive.py",
+      "description": "This shows an example of a histogram with bins that are responsive to a\nselection domain. Click and drag on the bottom panel to see the bins\nchange on the top panel.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "flights_5k"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/transform/calculate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/interactions/index",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "histogram_scatterplot",
+      "title": "2D Histogram Scatter Plot",
+      "url": "https://altair-viz.github.io/gallery/histogram_scatterplot.html",
+      "path": "tests/examples_arguments_syntax/histogram_scatterplot.py",
+      "description": "This example shows how to make a 2d histogram scatter plot.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "histogram_with_a_global_mean_overlay",
+      "title": "Histogram with a Global Mean Overlay",
+      "url": "https://altair-viz.github.io/gallery/histogram_with_a_global_mean_overlay.html",
+      "path": "tests/examples_arguments_syntax/histogram_with_a_global_mean_overlay.py",
+      "description": "This example shows a histogram with a global mean overlay.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/rule",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "horizon_graph",
+      "title": "Horizon Graph",
+      "url": "https://altair-viz.github.io/gallery/horizon_graph.html",
+      "path": "tests/examples_arguments_syntax/horizon_graph.py",
+      "description": "This example shows how to make a Horizon Graph with 2 layers. (See https://idl.cs.washington.edu/papers/horizon/ for more details on Horizon Graphs.)",
+      "categories": [
+        "area charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#mark-property"
+        ],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/transform/calculate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "horizontal_stacked_bar_chart",
+      "title": "Horizontal Stacked Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/horizontal_stacked_bar_chart.html",
+      "path": "tests/examples_arguments_syntax/horizontal_stacked_bar_chart.py",
+      "description": "This is an example of a horizontal stacked bar chart using data which contains crop yields over different regions and different years in the 1930s.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates"
+        ]
+      }
+    },
+    {
+      "name": "interactive_aggregation",
+      "title": "Interactive Chart with Aggregation",
+      "url": "https://altair-viz.github.io/gallery/interactive_aggregation.html",
+      "path": "tests/examples_arguments_syntax/interactive_aggregation.py",
+      "description": "This example shows an interactive chart where the range binder controls a\nthreshold as rule where the datapoints on the left-side are aggregated and on the\nright-side are drawn as is.\nThe ability to slide back and fourth may help you understand how the visualization\nrepresents the aggregation. Adapted from an example by @dwootton.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/rule",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "interactive_bar_select_highlight",
+      "title": "Bar Chart with Highlighting on Hover and Selection on Click",
+      "url": "https://altair-viz.github.io/gallery/interactive_bar_select_highlight.html",
+      "path": "tests/examples_arguments_syntax/interactive_bar_select_highlight.py",
+      "description": "This example shows a bar chart with highlighting on hover and selecting on click. (Inspired by Tableau's interaction style.)\n\nBased on https://vega.github.io/vega-lite/examples/interactive_bar_select_highlight.html",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/interactions/parameters#understanding-when"
+        ],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "interactive_bin_size",
+      "title": "Histogram with Adjustable Bin Size",
+      "url": "https://altair-viz.github.io/gallery/interactive_bin_size.html",
+      "path": "tests/examples_arguments_syntax/interactive_bin_size.py",
+      "description": "This example shows a 2D histogram heatmap whose bin size can be changed with a\nslider. Vega-Lite does not allow a parameter to drive ``maxbins`` directly, so\nwe draw one layer per available bin count and only show the layer that matches\nthe slider value.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/rect",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "interactive_brush",
+      "title": "Interactive Rectangular Brush",
+      "url": "https://altair-viz.github.io/gallery/interactive_brush.html",
+      "path": "tests/examples_arguments_syntax/interactive_brush.py",
+      "description": "This example shows how to add a simple rectangular brush to a scatter plot.\nBy clicking and dragging on the plot, you can highlight points within the\nrange.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "interactive_column_selection",
+      "title": "Interactive Selection of Columns",
+      "url": "https://altair-viz.github.io/gallery/interactive_column_selection.html",
+      "path": "tests/examples_arguments_syntax/interactive_column_selection.py",
+      "description": "This example shows how columns can be selected interactively\nby accessing the values from selector widgets,\nand then compute the difference of the selected columns.\nIt also illustrates how to use `indexof` to filter\ncolumns based on active selection values.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/interactions/bindings_widgets#encoding-channel-binding"
+        ],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/rect",
+          "user_guide/transform/calculate",
+          "user_guide/transform/filter",
+          "user_guide/transform/pivot",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "interactive_cross_highlight",
+      "title": "Interactive Chart with Cross-Highlight",
+      "url": "https://altair-viz.github.io/gallery/interactive_cross_highlight.html",
+      "path": "tests/examples_arguments_syntax/interactive_cross_highlight.py",
+      "description": "This example shows an interactive chart where selections in one portion of\nthe chart affect what is shown in other panels. Click on the bar chart to\nsee a detail of the distribution in the upper panel.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/point",
+          "user_guide/marks/rect",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "interactive_date_input",
+      "title": "Filter a Time Series with Date and Number Inputs",
+      "url": "https://altair-viz.github.io/gallery/interactive_date_input.html",
+      "path": "tests/examples_arguments_syntax/interactive_date_input.py",
+      "description": "This example shows how to bind HTML date and number inputs to parameters and\nuse the selected values to filter a time-series chart.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/rule",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "interactive_layered_crossfilter",
+      "title": "Interactive Crossfilter",
+      "url": "https://altair-viz.github.io/gallery/interactive_layered_crossfilter.html",
+      "path": "tests/examples_arguments_syntax/interactive_layered_crossfilter.py",
+      "description": "This example shows a multi-panel view of the same data, where you can interactively\nselect a portion of the data in any of the panels to highlight that portion in any\nof the other panels.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "flights_2k"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/transform/calculate",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "interactive_legend",
+      "title": "Interactive Legend",
+      "url": "https://altair-viz.github.io/gallery/interactive_legend.html",
+      "path": "tests/examples_arguments_syntax/interactive_legend.py",
+      "description": "The following shows how to create a chart with an interactive legend, by\nbinding the selection to ``\"legend\"``. Such a binding only works with\n``selection_point`` when projected over a single field or encoding.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "unemployment_across_industries"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "interactive_reorder_stacked_bars",
+      "title": "Reorder stacked bar segments",
+      "url": "https://altair-viz.github.io/gallery/interactive_reorder_stacked_bars.html",
+      "path": "tests/examples_arguments_syntax/interactive_reorder_stacked_bars.py",
+      "description": "This example uses a calculate transform\nto check the values of the \"site\" column\nvs the clicked values in the legend,\nand assigns a lower order (0)\nif there is a match.\nThe use of \"indexOf\" checks for equality in an array,\nwhich here allows for multiple segments to be reordered\nby holding down the shift key while clicking the legend.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/transform/calculate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "interactive_scatter_plot",
+      "title": "Simple Interactive Colored Scatter Plot",
+      "url": "https://altair-viz.github.io/gallery/interactive_scatter_plot.html",
+      "path": "tests/examples_arguments_syntax/interactive_scatter_plot.py",
+      "description": "This example shows how to make an interactive scatter plot.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "interval_selection",
+      "title": "Interval Selection with Initial Date Range",
+      "url": "https://altair-viz.github.io/gallery/interval_selection.html",
+      "path": "tests/examples_arguments_syntax/interval_selection.py",
+      "description": "This is an example of creating a stacked chart for which the domain of the\ntop chart can be selected by interacting with the bottom chart. The initial\nselection range is set using Python's native datetime objects.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "sp500"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/interactions/index",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "interval_selection_map_quakes",
+      "title": "Interval Selection on a Map",
+      "url": "https://altair-viz.github.io/gallery/interval_selection_map_quakes.html",
+      "path": "tests/examples_arguments_syntax/interval_selection_map_quakes.py",
+      "description": "This is an example of a binned bar chart on the right where the filtered overlay\nis adjusted by interacting with the map on the left.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "earthquakes",
+        "world_110m"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/marks/geoshape#interactions"
+        ],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/circle",
+          "user_guide/marks/geoshape",
+          "user_guide/transform/calculate",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "iowa_electricity",
+      "title": "Iowa's Renewable Energy Boom",
+      "url": "https://altair-viz.github.io/gallery/iowa_electricity.html",
+      "path": "tests/examples_arguments_syntax/iowa_electricity.py",
+      "description": "This example is a fully developed stacked chart using the sample dataset of Iowa's electricity sources.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "iowa_electricity"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "isotype",
+      "title": "Isotype Visualization",
+      "url": "https://altair-viz.github.io/gallery/isotype.html",
+      "path": "tests/examples_arguments_syntax/isotype.py",
+      "description": "Isotype Visualization shows the distribution of animals across UK and US.\nInspired by `Only An Ocean Between, 1943 <http://www.thomwhite.co.uk/?p=1303>`_. Population Live Stock, p.13.\nThis is adapted from Vega-Lite example https://vega.github.io/editor/#/examples/vega-lite/isotype_bar_chart",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "isotype_emoji",
+      "title": "Isotype Visualization with Emoji",
+      "url": "https://altair-viz.github.io/gallery/isotype_emoji.html",
+      "path": "tests/examples_arguments_syntax/isotype_emoji.py",
+      "description": "Isotype Visualization shows the distribution of animals across UK and US, using unicode emoji\nmarks rather than custom SVG paths (see https://altair-viz.github.io/gallery/isotype.html).\nThis is adapted from Vega-Lite example https://vega.github.io/vega-lite/examples/isotype_bar_chart_emoji.html.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/text",
+          "user_guide/transform/calculate",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "isotype_grid",
+      "title": "Isotype Grid",
+      "url": "https://altair-viz.github.io/gallery/isotype_grid.html",
+      "path": "tests/examples_arguments_syntax/isotype_grid.py",
+      "description": "This example is a grid of isotype figures.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/transform/calculate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "lasagna_plot",
+      "title": "Lasagna Plot (Dense Time-Series Heatmap)",
+      "url": "https://altair-viz.github.io/gallery/lasagna_plot.html",
+      "path": "tests/examples_arguments_syntax/lasagna_plot.py",
+      "description": "",
+      "categories": [
+        "tables"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/rect",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "layer_line_color_rule",
+      "title": "Line Chart with Layered Aggregates",
+      "url": "https://altair-viz.github.io/gallery/layer_line_color_rule.html",
+      "path": "tests/examples_arguments_syntax/layer_line_color_rule.py",
+      "description": "This example shows how to make a multi-series line chart of the daily closing\nstock prices for AAPL, AMZN, GOOG, IBM, and MSFT between 2000 and 2010, along\nwith a layered rule showing the average values.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/transform/aggregate#central-tendency-measures"
+        ],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/rule",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "layered_area_chart",
+      "title": "Layered Area Chart",
+      "url": "https://altair-viz.github.io/gallery/layered_area_chart.html",
+      "path": "tests/examples_arguments_syntax/layered_area_chart.py",
+      "description": "This example shows a layered area chart.",
+      "categories": [
+        "area charts"
+      ],
+      "datasets": [
+        "iowa_electricity"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "layered_bar_chart",
+      "title": "Layered Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/layered_bar_chart.html",
+      "path": "tests/examples_arguments_syntax/layered_bar_chart.py",
+      "description": "This example shows a segmented bar chart that is layered rather than stacked.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "iowa_electricity"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "layered_chart_bar_mark",
+      "title": "Bar and Tick Chart",
+      "url": "https://altair-viz.github.io/gallery/layered_chart_bar_mark.html",
+      "path": "tests/examples_arguments_syntax/layered_chart_bar_mark.py",
+      "description": "How to layer a tick chart on top of a bar chart.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/tick"
+        ]
+      }
+    },
+    {
+      "name": "layered_chart_with_dual_axis",
+      "title": "Layered chart with Dual-Axis",
+      "url": "https://altair-viz.github.io/gallery/layered_chart_with_dual_axis.html",
+      "path": "tests/examples_arguments_syntax/layered_chart_with_dual_axis.py",
+      "description": "This example shows how to create a second independent y axis.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "seattle_weather"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "layered_heatmap_text",
+      "title": "Text over a Heatmap",
+      "url": "https://altair-viz.github.io/gallery/layered_heatmap_text.html",
+      "path": "tests/examples_arguments_syntax/layered_heatmap_text.py",
+      "description": "An example of a layered chart of text over a heatmap using the cars dataset.",
+      "categories": [
+        "tables"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/rect",
+          "user_guide/marks/text",
+          "user_guide/transform/aggregate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "layered_histogram",
+      "title": "Layered Histogram",
+      "url": "https://altair-viz.github.io/gallery/layered_histogram.html",
+      "path": "tests/examples_arguments_syntax/layered_histogram.py",
+      "description": "This example shows how to use opacity to make a layered histogram in Altair.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/transform/fold",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "line_chart_with_arrows",
+      "title": "Line Chart with Arrows",
+      "url": "https://altair-viz.github.io/gallery/line_chart_with_arrows.html",
+      "path": "tests/examples_arguments_syntax/line_chart_with_arrows.py",
+      "description": "This example shows a simple line chart with two types of arrow annotations.\nThe Unicode character approach is simpler,\nwhile the line plus triangle :ref:`point mark <user-guide-point-marks>` allows for greater flexibility,\nsuch as customizable arrowheads.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/point",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "line_chart_with_color_datum",
+      "title": "Line Chart with Datum for Color",
+      "url": "https://altair-viz.github.io/gallery/line_chart_with_color_datum.html",
+      "path": "tests/examples_arguments_syntax/line_chart_with_color_datum.py",
+      "description": "An example of using ``datum`` and ``repeat`` to color a multi-series line chart.\nThis is adapted from this corresponding Vega-Lite Example:\n`Repeat and Layer to Show Different Movie Measures <https://vega.github.io/vega-lite/examples/repeat_layer.html>`_.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "line_chart_with_cumsum",
+      "title": "Line Chart with Cumulative Sum",
+      "url": "https://altair-viz.github.io/gallery/line_chart_with_cumsum.html",
+      "path": "tests/examples_arguments_syntax/line_chart_with_cumsum.py",
+      "description": "This chart creates a simple line chart from the cumulative sum of a fields.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "wheat"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "line_chart_with_cumsum_faceted",
+      "title": "Faceted Line Chart with Cumulative Sum",
+      "url": "https://altair-viz.github.io/gallery/line_chart_with_cumsum_faceted.html",
+      "path": "tests/examples_arguments_syntax/line_chart_with_cumsum_faceted.py",
+      "description": "This chart creates one facet per natural disaster and shows the cumulative number of deaths for that category.\nNote the use of different predicates to filter based on both a list and a range.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "disasters"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/transform/filter",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "line_chart_with_custom_legend",
+      "title": "Line Chart with Custom Legend",
+      "url": "https://altair-viz.github.io/gallery/line_chart_with_custom_legend.html",
+      "path": "tests/examples_arguments_syntax/line_chart_with_custom_legend.py",
+      "description": "This example uses the argmax aggregation function in order to create a custom\nlegend for a line chart.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/transform/aggregate#argmin-and-argmax-functions",
+          "user_guide/transform/aggregate#range-functions"
+        ],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/line",
+          "user_guide/marks/text",
+          "user_guide/transform/aggregate",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "line_chart_with_datum",
+      "title": "Line Chart with Datum",
+      "url": "https://altair-viz.github.io/gallery/line_chart_with_datum.html",
+      "path": "tests/examples_arguments_syntax/line_chart_with_datum.py",
+      "description": "An example of using ``datum`` to highlight certain values, including a ``DateTime`` value.\nThis is adapted from two corresponding Vega-Lite Examples:\n`Highlight a Specific Value <https://vega.github.io/vega-lite/docs/datum.html#highlight-a-specific-data-value>`_.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/rule",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "line_chart_with_generator",
+      "title": "Line Chart with Sequence Generator",
+      "url": "https://altair-viz.github.io/gallery/line_chart_with_generator.html",
+      "path": "tests/examples_arguments_syntax/line_chart_with_generator.py",
+      "description": "This examples shows how to create multiple lines using the sequence generator.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/transform/calculate",
+          "user_guide/transform/fold",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "line_chart_with_interpolation",
+      "title": "Line Chart with Interpolation",
+      "url": "https://altair-viz.github.io/gallery/line_chart_with_interpolation.html",
+      "path": "tests/examples_arguments_syntax/line_chart_with_interpolation.py",
+      "description": "This chart shows a line chart with the path interpolated. A full list of interpolation methods is available `in the documentation <https://altair-viz.github.io/user_guide/generated/core/altair.LineConfig.html?highlight=interpolate#altair-lineconfig>`_.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "line_chart_with_points",
+      "title": "Line Chart with Point Markers",
+      "url": "https://altair-viz.github.io/gallery/line_chart_with_points.html",
+      "path": "tests/examples_arguments_syntax/line_chart_with_points.py",
+      "description": "This chart shows a simple line chart with points marking each value.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "line_chart_with_points_stroked",
+      "title": "Line Chart with Stroked Point Markers",
+      "url": "https://altair-viz.github.io/gallery/line_chart_with_points_stroked.html",
+      "path": "tests/examples_arguments_syntax/line_chart_with_points_stroked.py",
+      "description": "This example shows a simple line chart with points in a different color.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "line_custom_order",
+      "title": "Line Chart with Custom Order",
+      "url": "https://altair-viz.github.io/gallery/line_custom_order.html",
+      "path": "tests/examples_arguments_syntax/line_custom_order.py",
+      "description": "By default, the line's path (order of points in the line) is\ndetermined by data values on the temporal/ordinal field.\nHowever, a field can be mapped to the order channel for a custom path.\n\nFor example, to show a pattern of data change over time between\ngasoline price and average miles driven per capita we use\norder channel to sort the points in the line by time field (year).\nThe earliest year (1956) is one endpoint and the latest year (2010)\nis the other endpoint.\n\nThis is based on Hannah Fairfield's article 'Driving Shifts Into Reverse'.\nSee https://archive.nytimes.com/www.nytimes.com/imagepages/2010/05/02/business/02metrics.html.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "driving"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line"
+        ]
+      }
+    },
+    {
+      "name": "line_percent",
+      "title": "Line Chart with Percent axis",
+      "url": "https://altair-viz.github.io/gallery/line_percent.html",
+      "path": "tests/examples_arguments_syntax/line_percent.py",
+      "description": "This example shows how to format the tick labels of the y-axis of a chart as percentages.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "jobs"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "line_with_ci",
+      "title": "Line Chart with Confidence Interval Band",
+      "url": "https://altair-viz.github.io/gallery/line_with_ci.html",
+      "path": "tests/examples_arguments_syntax/line_with_ci.py",
+      "description": "How to make a line chart with a bootstrapped 95% confidence interval band.",
+      "categories": [
+        "uncertainties and trends"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/marks/index#marks"
+        ],
+        "inferred": [
+          "user_guide/marks/errorband",
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-aggregates"
+        ]
+      }
+    },
+    {
+      "name": "line_with_last_value_labeled",
+      "title": "Line Chart with Last Value Labeled",
+      "url": "https://altair-viz.github.io/gallery/line_with_last_value_labeled.html",
+      "path": "tests/examples_arguments_syntax/line_with_last_value_labeled.py",
+      "description": "This chart shows a line chart with a label annotating the final value",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/line",
+          "user_guide/marks/text",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "line_with_log_scale",
+      "title": "Line Chart with Logarithmic Scale",
+      "url": "https://altair-viz.github.io/gallery/line_with_log_scale.html",
+      "path": "tests/examples_arguments_syntax/line_with_log_scale.py",
+      "description": "How to make a line chart on a `Logarithmic scale <https://en.wikipedia.org/wiki/Logarithmic_scale>`_.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "population"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "london_tube",
+      "title": "London Tube Lines",
+      "url": "https://altair-viz.github.io/gallery/london_tube.html",
+      "path": "tests/examples_arguments_syntax/london_tube.py",
+      "description": "This example shows the London tube lines against the background of the\nborough boundaries. It is based on the vega-lite example at\nhttps://vega.github.io/vega-lite/examples/geo_layer_line_london.html.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "london_boroughs",
+        "london_centroids",
+        "london_tube_lines"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/geoshape",
+          "user_guide/marks/text",
+          "user_guide/transform/calculate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "maps_faceted_species",
+      "title": "Faceted County-Level Choropleth Maps",
+      "url": "https://altair-viz.github.io/gallery/maps_faceted_species.html",
+      "path": "tests/examples_arguments_syntax/maps_faceted_species.py",
+      "description": "A set of maps arranged in a grid, each showing the distribution of a species' projected habitat across US counties. Each choropleth map uses color intensity to represent the percentage values within county boundaries.",
+      "categories": [
+        "maps"
+      ],
+      "datasets": [
+        "species",
+        "us_10m"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/geoshape",
+          "user_guide/transform/lookup",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "mosaic_with_labels",
+      "title": "Mosaic Chart with Labels",
+      "url": "https://altair-viz.github.io/gallery/mosaic_with_labels.html",
+      "path": "tests/examples_arguments_syntax/mosaic_with_labels.py",
+      "description": "",
+      "categories": [
+        "tables"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/rect",
+          "user_guide/marks/text",
+          "user_guide/transform/aggregate",
+          "user_guide/transform/calculate",
+          "user_guide/transform/stack",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "multi_series_line",
+      "title": "Multiple Series Line Chart",
+      "url": "https://altair-viz.github.io/gallery/multi_series_line.html",
+      "path": "tests/examples_arguments_syntax/multi_series_line.py",
+      "description": "This example shows how to make a line chart with multiple series of data.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#mark-property"
+        ],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "multifeature_scatter_plot",
+      "title": "Multifeature Scatter Plot",
+      "url": "https://altair-viz.github.io/gallery/multifeature_scatter_plot.html",
+      "path": "tests/examples_arguments_syntax/multifeature_scatter_plot.py",
+      "description": "This example shows how to make a scatter plot with multiple feature encodings.",
+      "categories": [
+        "scatter plots"
+      ],
+      "datasets": [
+        "penguins"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle"
+        ]
+      }
+    },
+    {
+      "name": "multiline_highlight",
+      "title": "Multi-Line Highlight",
+      "url": "https://altair-viz.github.io/gallery/multiline_highlight.html",
+      "path": "tests/examples_arguments_syntax/multiline_highlight.py",
+      "description": "This multi-line chart uses an invisible Voronoi tessellation to handle pointerover to\nidentify the nearest point and then highlight the line on which the point falls.\nIt is adapted from the Vega-Lite example found at\nhttps://bl.ocks.org/amitkaps/fe4238e716db53930b2f1a70d3401701",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "multiline_tooltip",
+      "title": "Multi-Line Tooltip",
+      "url": "https://altair-viz.github.io/gallery/multiline_tooltip.html",
+      "path": "tests/examples_arguments_syntax/multiline_tooltip.py",
+      "description": "This example shows how you can use selections and layers to create a\ntooltip-like behavior tied to the x position of the cursor.\nIf you are looking for more standard tooltips, see the :ref:`gallery_multiline_tooltip_standard` example.\n\nIn this example, we'll employ a little trick to isolate the x-position of the\ncursor: we add some transparent points with only an x encoding (no y encoding)\nand tie a *nearest* selection to these, tied to the \"x\" field.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/point",
+          "user_guide/marks/rule",
+          "user_guide/marks/text",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "multiline_tooltip_standard",
+      "title": "Multi-Line Tooltip (Standard)",
+      "url": "https://altair-viz.github.io/gallery/multiline_tooltip_standard.html",
+      "path": "tests/examples_arguments_syntax/multiline_tooltip_standard.py",
+      "description": "This example shows how to add a standard tooltip to the same chart\nas in :ref:`gallery_multiline_tooltip`. You can find another example\nusing this approach in the documentation on the :ref:`user-guide-pivot-transform` transformation.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/interactions/parameters#understanding-when"
+        ],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/point",
+          "user_guide/marks/rule",
+          "user_guide/transform/pivot",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "multiple_interactions",
+      "title": "Multiple Interactions",
+      "url": "https://altair-viz.github.io/gallery/multiple_interactions.html",
+      "path": "tests/examples_arguments_syntax/multiple_interactions.py",
+      "description": "This example shows how multiple user inputs can be layered onto a chart. The four inputs have functionality as follows:\n\n* Dropdown: Filters the movies by genre\n* Radio Buttons: Highlights certain films by Worldwide Gross\n* Mouse Drag and Scroll: Zooms the x and y scales to allow for panning.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/interactions/bindings_widgets#bindings-widgets"
+        ],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/transform/calculate",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "natural_disasters",
+      "title": "Global Deaths from Natural Disasters",
+      "url": "https://altair-viz.github.io/gallery/natural_disasters.html",
+      "path": "tests/examples_arguments_syntax/natural_disasters.py",
+      "description": "This example shows a proportional symbols visualization of deaths from natural disasters by year and type.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "disasters"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "normalized_stacked_area_chart",
+      "title": "Normalized Stacked Area Chart",
+      "url": "https://altair-viz.github.io/gallery/normalized_stacked_area_chart.html",
+      "path": "tests/examples_arguments_syntax/normalized_stacked_area_chart.py",
+      "description": "This example shows how to make a normalized stacked area chart.",
+      "categories": [
+        "area charts"
+      ],
+      "datasets": [
+        "iowa_electricity"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "normalized_stacked_bar_chart",
+      "title": "Normalized Stacked Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/normalized_stacked_bar_chart.html",
+      "path": "tests/examples_arguments_syntax/normalized_stacked_bar_chart.py",
+      "description": "This is an example of a normalized stacked bar chart using data which contains crop yields over different regions and different years in the 1930s.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates"
+        ]
+      }
+    },
+    {
+      "name": "normed_parallel_coordinates",
+      "title": "Normalized Parallel Coordinates",
+      "url": "https://altair-viz.github.io/gallery/normed_parallel_coordinates.html",
+      "path": "tests/examples_arguments_syntax/normed_parallel_coordinates.py",
+      "description": "A `Parallel Coordinates <https://en.wikipedia.org/wiki/Parallel_coordinates>`_\nchart is a chart that lets you visualize the individual data points by drawing\na single line for each of them.\n\nSuch a chart can be created in Altair by first transforming the data into a\nsuitable representation.\n\nThis example shows a modified parallel coordinates chart with the Penguins dataset,\nwhere the y-axis shows the value after min-max rather than the raw value. It's a\nsimplified Altair version of `the VegaLite version <https://vega.github.io/vega-lite/examples/parallel_coordinate.html>`_",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "penguins"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/transform/calculate",
+          "user_guide/transform/fold",
+          "user_guide/transform/joinaggregate",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "one_dot_per_zipcode",
+      "title": "One Dot Per Zipcode",
+      "url": "https://altair-viz.github.io/gallery/one_dot_per_zipcode.html",
+      "path": "tests/examples_arguments_syntax/one_dot_per_zipcode.py",
+      "description": "This example shows a geographical plot with one dot per zipcode.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "zipcodes"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/transform/calculate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "pacman_chart",
+      "title": "Pacman Chart",
+      "url": "https://altair-viz.github.io/gallery/pacman_chart.html",
+      "path": "tests/examples_arguments_syntax/pacman_chart.py",
+      "description": "Chart made using ``mark_arc`` and constant values.\nThis could also be made using\n``alt.Chart(source).mark_arc(color = \"gold\", theta = (5/8)*np.pi, theta2 = (19/8)*np.pi,radius=100)``.",
+      "categories": [
+        "circular plots"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#position"
+        ],
+        "inferred": [
+          "user_guide/marks/arc",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "parallel_coordinates",
+      "title": "Parallel Coordinates",
+      "url": "https://altair-viz.github.io/gallery/parallel_coordinates.html",
+      "path": "tests/examples_arguments_syntax/parallel_coordinates.py",
+      "description": "A `Parallel Coordinates <https://en.wikipedia.org/wiki/Parallel_coordinates>`_\nchart is a chart that lets you visualize the individual data points by drawing\na single line for each of them.\nSuch a chart can be created in Altair by first transforming the data into a\nsuitable representation.\nThis example shows a parallel coordinates chart with the Penguins dataset.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "penguins"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/transform/fold#fold"
+        ],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/transform/fold",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "percentage_of_total",
+      "title": "Calculating Percentage of Total",
+      "url": "https://altair-viz.github.io/gallery/percentage_of_total.html",
+      "path": "tests/examples_arguments_syntax/percentage_of_total.py",
+      "description": "This chart demonstrates how to use a joinaggregate transform to display\ndata values as a percentage of total.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/transform/calculate",
+          "user_guide/transform/joinaggregate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "pie_chart",
+      "title": "Pie Chart",
+      "url": "https://altair-viz.github.io/gallery/pie_chart.html",
+      "path": "tests/examples_arguments_syntax/pie_chart.py",
+      "description": "This example shows how to make a Pie Chart using ``mark_arc``.\nThis is adapted from a corresponding Vega-Lite Example:\n`Pie Chart <https://vega.github.io/vega-lite/examples/arc_pie.html>`_.",
+      "categories": [
+        "circular plots"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/arc",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "pie_chart_with_labels",
+      "title": "Pie Chart with Labels",
+      "url": "https://altair-viz.github.io/gallery/pie_chart_with_labels.html",
+      "path": "tests/examples_arguments_syntax/pie_chart_with_labels.py",
+      "description": "This example shows how to layer text over arc marks (``mark_arc``) to label pie charts.\nThis is adapted from a corresponding Vega-Lite Example:\n`Pie Chart with Labels <https://vega.github.io/vega-lite/examples/layer_arc_label.html>`_.",
+      "categories": [
+        "circular plots"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/arc",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "point_map",
+      "title": "Point map",
+      "url": "https://altair-viz.github.io/gallery/point_map.html",
+      "path": "tests/examples_arguments_syntax/point_map.py",
+      "description": "This is a layered map that shows the positions of airports on a background of U.S. states.",
+      "categories": [
+        "maps"
+      ],
+      "datasets": [
+        "airports",
+        "us_10m"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#position"
+        ],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/geoshape",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "polar_bar_chart",
+      "title": "Polar Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/polar_bar_chart.html",
+      "path": "tests/examples_arguments_syntax/polar_bar_chart.py",
+      "description": "This example shows how to make a polar bar chart using ``mark_arc``.\nThis could also have been called a \"pie chart with axis labels\",\nbut is more commonly referred to as a polar bar chart.\nThe axis lines are created using pie charts with only the stroke visible.",
+      "categories": [
+        "circular plots"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/arc",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "poly_fit_regression",
+      "title": "Polynomial Fit Plot with Regression Transform",
+      "url": "https://altair-viz.github.io/gallery/poly_fit_regression.html",
+      "path": "tests/examples_arguments_syntax/poly_fit_regression.py",
+      "description": "This example shows how to overlay data with multiple fitted polynomials using\nthe regression transform.",
+      "categories": [
+        "uncertainties and trends"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/line",
+          "user_guide/transform/fold",
+          "user_guide/transform/regression",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "pyramid",
+      "title": "Pyramid Pie Chart",
+      "url": "https://altair-viz.github.io/gallery/pyramid.html",
+      "path": "tests/examples_arguments_syntax/pyramid.py",
+      "description": "Altair reproduction of http://robslink.com/SAS/democd91/pyramid_pie.htm",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/arc",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "radial_chart",
+      "title": "Radial Chart",
+      "url": "https://altair-viz.github.io/gallery/radial_chart.html",
+      "path": "tests/examples_arguments_syntax/radial_chart.py",
+      "description": "This radial plot uses both angular and radial extent to convey multiple dimensions of data.\nThis is adapted from a corresponding Vega-Lite Example:\n`Radial Plot <https://vega.github.io/vega-lite/examples/arc_radial.html>`_.",
+      "categories": [
+        "circular plots"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#mark-property",
+          "user_guide/encodings/channels#position"
+        ],
+        "inferred": [
+          "user_guide/marks/arc",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "ranged_dot_plot",
+      "title": "Ranged Dot Plot",
+      "url": "https://altair-viz.github.io/gallery/ranged_dot_plot.html",
+      "path": "tests/examples_arguments_syntax/ranged_dot_plot.py",
+      "description": "This example shows a ranged dot plot to convey changing life expectancy for the five most populous countries (between 1955 and 2000).",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "countries"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#detail"
+        ],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/point",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "ridgeline_plot",
+      "title": "Ridgeline plot",
+      "url": "https://altair-viz.github.io/gallery/ridgeline_plot.html",
+      "path": "tests/examples_arguments_syntax/ridgeline_plot.py",
+      "description": "A `Ridgeline plot <https://serialmentor.com/blog/2017/9/15/goodbye-joyplots>`_\nlets you visualize distribution of a numeric value for different\nsubsets of data (what we call \"facets\" in Altair).\n\nSuch a chart can be created in Altair by first transforming the data into a\nsuitable representation.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "seattle_weather"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#mark-property"
+        ],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/transform/aggregate",
+          "user_guide/transform/bin",
+          "user_guide/transform/impute",
+          "user_guide/transform/joinaggregate",
+          "user_guide/transform/timeunit",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "scatter_faceted",
+      "title": "Faceted Scatter Plot",
+      "url": "https://altair-viz.github.io/gallery/scatter_faceted.html",
+      "path": "tests/examples_arguments_syntax/scatter_faceted.py",
+      "description": "A series of scatter plots, one for each country/area of origin.",
+      "categories": [
+        "scatter plots"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#facet"
+        ],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "scatter_href",
+      "title": "Scatter Plot with Href",
+      "url": "https://altair-viz.github.io/gallery/scatter_href.html",
+      "path": "tests/examples_arguments_syntax/scatter_href.py",
+      "description": "This example shows a scatter plot with an ``href`` encoding constructed from\nthe car name. With this encoding, you can click on any of the points to open\na google search for the car name.",
+      "categories": [
+        "scatter plots"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#hyperlink"
+        ],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/transform/calculate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "scatter_linked_brush",
+      "title": "Multi-panel Scatter Plot with Linked Brushing",
+      "url": "https://altair-viz.github.io/gallery/scatter_linked_brush.html",
+      "path": "tests/examples_arguments_syntax/scatter_linked_brush.py",
+      "description": "This is an example of using an interval selection to control the color of\npoints across multiple panels.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "scatter_linked_table",
+      "title": "Brushing Scatter Plot to Show Data on a Table",
+      "url": "https://altair-viz.github.io/gallery/scatter_linked_table.html",
+      "path": "tests/examples_arguments_syntax/scatter_linked_table.py",
+      "description": "A scatter plot of the cars dataset, with data tables for horsepower, MPG, and origin.\nThe tables update to reflect the selection on the scatter plot.",
+      "categories": [
+        "scatter plots"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/transform/index#accessing-transformed-data"
+        ],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/marks/text",
+          "user_guide/transform/filter",
+          "user_guide/transform/window",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "scatter_marginal_hist",
+      "title": "Scatter Plot with Faceted Marginal Histograms",
+      "url": "https://altair-viz.github.io/gallery/scatter_marginal_hist.html",
+      "path": "tests/examples_arguments_syntax/scatter_marginal_hist.py",
+      "description": "This example demonstrates how to generate a scatter plot,\nwith faceted marginal histograms that share their respective x- and y-limits.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "penguins"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/circle",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "scatter_matrix",
+      "title": "Scatter Matrix",
+      "url": "https://altair-viz.github.io/gallery/scatter_matrix.html",
+      "path": "tests/examples_arguments_syntax/scatter_matrix.py",
+      "description": "An example of using a RepeatChart to construct a multi-panel scatter plot\nwith linked panning and zooming.",
+      "categories": [
+        "scatter plots"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/interactions/index",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "scatter_point_paths_hover",
+      "title": "Scatter plot with point paths on hover and search box",
+      "url": "https://altair-viz.github.io/gallery/scatter_point_paths_hover.html",
+      "path": "tests/examples_arguments_syntax/scatter_point_paths_hover.py",
+      "description": "This example combines cross-sectional analysis (comparing countries at a single point in time)\nwith longitudinal analysis (tracking changes in individual countries over time), using\nan interactive visualization technique inspired by [this Vega example](https://vega.github.io/vega/examples/global-development/).\n\nKey features:\n1. Point Paths. On hover, shows data trajectories using a trail mark that\nthickens from past to present, clearly indicating the direction of time.\n2. Search Box. Implements a case-insensitive regex filter for country names,\nenabling dynamic, flexible data point selection to enhance exploratory analysis.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "gapminder"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/interactions/parameters#understanding-when"
+        ],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/point",
+          "user_guide/marks/text",
+          "user_guide/marks/trail",
+          "user_guide/transform/aggregate",
+          "user_guide/transform/calculate",
+          "user_guide/transform/filter",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "scatter_qq",
+      "title": "Quantile-Quantile Plot",
+      "url": "https://altair-viz.github.io/gallery/scatter_qq.html",
+      "path": "tests/examples_arguments_syntax/scatter_qq.py",
+      "description": "A quantile-quantile plot comparing input data to theoretical distributions.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "normal_2d"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/transform/calculate",
+          "user_guide/transform/quantile",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "scatter_tooltips",
+      "title": "Simple Scatter Plot with Tooltips",
+      "url": "https://altair-viz.github.io/gallery/scatter_tooltips.html",
+      "path": "tests/examples_arguments_syntax/scatter_tooltips.py",
+      "description": "A scatter plot of the cars dataset, with tooltips showing selected column\nvalues when you hover over points. We make the points larger so that it is\neasier to hover over them.",
+      "categories": [
+        "simple charts"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#position",
+          "user_guide/encodings/channels#text-and-tooltip"
+        ],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "scatter_with_histogram",
+      "title": "Scatter Plot and Histogram with Interval Selection",
+      "url": "https://altair-viz.github.io/gallery/scatter_with_histogram.html",
+      "path": "tests/examples_arguments_syntax/scatter_with_histogram.py",
+      "description": "This example shows how to link a scatter plot and a histogram\ntogether such that an interval selection in the histogram will\nplot the selected values in the scatter plot.\n\nNote that both subplots need to know about the `mbin` field created\nby the `transform_bin` method. In order to achieve this, the data is\nnot passed to the `Chart()` instances creating the subplots, but\ndirectly in the `hconcat()` function, which joins the two plots together.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/point",
+          "user_guide/transform/bin",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "scatter_with_labels",
+      "title": "Simple Scatter Plot with Labels",
+      "url": "https://altair-viz.github.io/gallery/scatter_with_labels.html",
+      "path": "tests/examples_arguments_syntax/scatter_with_labels.py",
+      "description": "This example shows a basic scatter plot with labels created with Altair.",
+      "categories": [
+        "scatter plots"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#text-and-tooltip"
+        ],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "scatter_with_layered_histogram",
+      "title": "Interactive Scatter Plot and Linked Layered Histogram",
+      "url": "https://altair-viz.github.io/gallery/scatter_with_layered_histogram.html",
+      "path": "tests/examples_arguments_syntax/scatter_with_layered_histogram.py",
+      "description": "This example shows how to link a scatter plot and a histogram\ntogether such that clicking on a point in the scatter plot will\nisolate the distribution corresponding to that point, and vice versa.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/transform/aggregate#central-tendency-measures"
+        ],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/point",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "scatter_with_loess",
+      "title": "Scatter Plot with LOESS Lines",
+      "url": "https://altair-viz.github.io/gallery/scatter_with_loess.html",
+      "path": "tests/examples_arguments_syntax/scatter_with_loess.py",
+      "description": "This example shows how to add a trend line to a scatter plot using\nthe LOESS transform (LOcally Estimated Scatter Plot Smoothing).",
+      "categories": [
+        "uncertainties and trends"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/marks/line",
+          "user_guide/transform/fold",
+          "user_guide/transform/loess",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "scatter_with_minimap",
+      "title": "Scatter Plot with Minimap",
+      "url": "https://altair-viz.github.io/gallery/scatter_with_minimap.html",
+      "path": "tests/examples_arguments_syntax/scatter_with_minimap.py",
+      "description": "This example shows how to create a miniature version of a plot\nsuch that creating a selection in the miniature version\nadjusts the axis limits in another, more detailed view.",
+      "categories": [
+        "scatter plots"
+      ],
+      "datasets": [
+        "seattle_weather"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "scatter_with_rolling_mean",
+      "title": "Scatter Plot with Rolling Mean",
+      "url": "https://altair-viz.github.io/gallery/scatter_with_rolling_mean.html",
+      "path": "tests/examples_arguments_syntax/scatter_with_rolling_mean.py",
+      "description": "A scatter plot with a rolling mean overlay. In this example a 30 day window\nis used to calculate the mean of the maximum temperature around each date.",
+      "categories": [
+        "scatter plots"
+      ],
+      "datasets": [
+        "seattle_weather"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/point",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "scatter_with_shaded_area",
+      "title": "Scatter Plot with Shaded Area",
+      "url": "https://altair-viz.github.io/gallery/scatter_with_shaded_area.html",
+      "path": "tests/examples_arguments_syntax/scatter_with_shaded_area.py",
+      "description": "This example shows a scatter plot with shaded area,\nconstructed using :ref:`area mark <user-guide-area-marks>` and :ref:`rect mark <user-guide-rect-marks>`.",
+      "categories": [
+        "scatter plots"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/marks/point",
+          "user_guide/marks/rect",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "seattle_weather_interactive",
+      "title": "Seattle Weather Interactive",
+      "url": "https://altair-viz.github.io/gallery/seattle_weather_interactive.html",
+      "path": "tests/examples_arguments_syntax/seattle_weather_interactive.py",
+      "description": "This chart provides an interactive exploration of Seattle weather over the\ncourse of the year. It includes a one-axis brush selection to easily\nsee the distribution of weather types in a particular date range.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "seattle_weather"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/point",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "select_detail",
+      "title": "Selection Detail",
+      "url": "https://altair-viz.github.io/gallery/select_detail.html",
+      "path": "tests/examples_arguments_syntax/select_detail.py",
+      "description": "This example shows a selection that links two views of data: the left panel\ncontains one point per object, and the right panel contains one line per\nobject. Clicking on either the points or lines will select the corresponding\nobjects in both views of the data.\n\nThe challenge lies in expressing such hierarchical data in a way that Altair\ncan handle. We do this by merging the data into a \"long form\" dataframe, and\naggregating identical metadata for the final plot.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/marks/point",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "select_mark_area",
+      "title": "Using Selection Interval with mark_area",
+      "url": "https://altair-viz.github.io/gallery/select_mark_area.html",
+      "path": "tests/examples_arguments_syntax/select_mark_area.py",
+      "description": "Because area is considered one object, just using the plain\nselector will select the entire area instead of just one part of it.\n\nThis example shows how to use two areas, one on top of the other, and a\n`transform_filter` to fake out this effect.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "unemployment_across_industries"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/interactions/index",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "selection_histogram",
+      "title": "Selection Histogram",
+      "url": "https://altair-viz.github.io/gallery/selection_histogram.html",
+      "path": "tests/examples_arguments_syntax/selection_histogram.py",
+      "description": "This chart shows an example of using an interval selection to filter the\ncontents of an attached histogram, allowing the user to see the proportion\nof items in each category within the selection.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/point",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "selection_layer_bar_month",
+      "title": "Interactive Average",
+      "url": "https://altair-viz.github.io/gallery/selection_layer_bar_month.html",
+      "path": "tests/examples_arguments_syntax/selection_layer_bar_month.py",
+      "description": "The plot below uses an interval selection, which causes the chart to include an interactive brush\n(shown in grey). The brush selection parameterizes the red guideline, which visualizes the average\nvalue within the selected interval.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "seattle_weather"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/rule",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "selection_zorder",
+      "title": "Selection zorder",
+      "url": "https://altair-viz.github.io/gallery/selection_zorder.html",
+      "path": "tests/examples_arguments_syntax/selection_zorder.py",
+      "description": "This example shows how to bring selected points to the front/foreground\nby using a condition to change the point's (z)order\nas it is hovered over with the pointer.\nThis prevents that the selected points are obscured\nby those that are not selected.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/interactions/parameters#linking-conditions-across-charts"
+        ],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "simple_bar_chart",
+      "title": "Simple Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/simple_bar_chart.html",
+      "path": "tests/examples_arguments_syntax/simple_bar_chart.py",
+      "description": "This example shows a basic bar chart created with Altair.",
+      "categories": [
+        "simple charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar"
+        ]
+      }
+    },
+    {
+      "name": "simple_heatmap",
+      "title": "Simple Heatmap",
+      "url": "https://altair-viz.github.io/gallery/simple_heatmap.html",
+      "path": "tests/examples_arguments_syntax/simple_heatmap.py",
+      "description": "This example shows a simple heatmap for showing gridded data.",
+      "categories": [
+        "simple charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#mark-property",
+          "user_guide/transform/aggregate#count-related-functions"
+        ],
+        "inferred": [
+          "user_guide/marks/rect",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "simple_histogram",
+      "title": "Simple Histogram",
+      "url": "https://altair-viz.github.io/gallery/simple_histogram.html",
+      "path": "tests/examples_arguments_syntax/simple_histogram.py",
+      "description": "This example shows how to make a basic histogram, based on the vega-lite docs\nhttps://vega.github.io/vega-lite/examples/histogram.html",
+      "categories": [
+        "simple charts"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "simple_line_chart",
+      "title": "Simple Line Chart",
+      "url": "https://altair-viz.github.io/gallery/simple_line_chart.html",
+      "path": "tests/examples_arguments_syntax/simple_line_chart.py",
+      "description": "This chart shows the most basic line chart, made from a dataframe with two\ncolumns.",
+      "categories": [
+        "simple charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line"
+        ]
+      }
+    },
+    {
+      "name": "simple_scatter_with_errorbars",
+      "title": "Simple Scatter Plot with Errorbars",
+      "url": "https://altair-viz.github.io/gallery/simple_scatter_with_errorbars.html",
+      "path": "tests/examples_arguments_syntax/simple_scatter_with_errorbars.py",
+      "description": "A simple scatter plot of a data set with errorbars.",
+      "categories": [
+        "uncertainties and trends"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/errorbar",
+          "user_guide/marks/point",
+          "user_guide/transform/calculate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "simple_stacked_area_chart",
+      "title": "Simple Stacked Area Chart",
+      "url": "https://altair-viz.github.io/gallery/simple_stacked_area_chart.html",
+      "path": "tests/examples_arguments_syntax/simple_stacked_area_chart.py",
+      "description": "This example shows how to make a simple stacked area chart.",
+      "categories": [
+        "simple charts"
+      ],
+      "datasets": [
+        "iowa_electricity"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "slider_cutoff",
+      "title": "Slider Cutoff",
+      "url": "https://altair-viz.github.io/gallery/slider_cutoff.html",
+      "path": "tests/examples_arguments_syntax/slider_cutoff.py",
+      "description": "This example shows how to bind a variable parameter to a slider, and how to use the corresponding bound value to color data points.  This example is based on an example from the Altair 4 documentation for Interactions, in which the  interactivity was accomplished using a selection.  The version below has been simplified significantly through the use of a variable parameter.  Variable parameters were added in Altair 5.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "slope_graph",
+      "title": "Slope Graph",
+      "url": "https://altair-viz.github.io/gallery/slope_graph.html",
+      "path": "tests/examples_arguments_syntax/slope_graph.py",
+      "description": "This example shows how to make Slope Graph.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "sorted_error_bars_with_ci",
+      "title": "Sorted Error Bars showing Confidence Interval",
+      "url": "https://altair-viz.github.io/gallery/sorted_error_bars_with_ci.html",
+      "path": "tests/examples_arguments_syntax/sorted_error_bars_with_ci.py",
+      "description": "This example shows how to show error bars using confidence intervals, while also sorting the y-axis based on x-axis values.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/transform/aggregate#distribution-statistics"
+        ],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/marks/rule",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "stacked_bar_chart",
+      "title": "Stacked Bar Chart",
+      "url": "https://altair-viz.github.io/gallery/stacked_bar_chart.html",
+      "path": "tests/examples_arguments_syntax/stacked_bar_chart.py",
+      "description": "This is an example of a stacked bar chart using data which contains crop yields over different regions and different years in the 1930s.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates"
+        ]
+      }
+    },
+    {
+      "name": "stacked_bar_chart_sorted_segments",
+      "title": "Stacked Bar Chart with Sorted Segments",
+      "url": "https://altair-viz.github.io/gallery/stacked_bar_chart_sorted_segments.html",
+      "path": "tests/examples_arguments_syntax/stacked_bar_chart_sorted_segments.py",
+      "description": "This is an example of a stacked-bar chart with the segments of each bar resorted.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "stacked_bar_chart_with_text",
+      "title": "Stacked Bar Chart with Text Overlay",
+      "url": "https://altair-viz.github.io/gallery/stacked_bar_chart_with_text.html",
+      "path": "tests/examples_arguments_syntax/stacked_bar_chart_with_text.py",
+      "description": "This example shows how to overlay text on a stacked bar chart. For both the\nbar and text marks, we use the ``stack`` argument in the ``x`` encoding to\ncause the values to be stacked horizontally.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [
+        "barley"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "stem_and_leaf",
+      "title": "Stem and Leaf Plot",
+      "url": "https://altair-viz.github.io/gallery/stem_and_leaf.html",
+      "path": "tests/examples_arguments_syntax/stem_and_leaf.py",
+      "description": "This example shows how to make a stem and leaf plot.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "step_chart",
+      "title": "Step Chart",
+      "url": "https://altair-viz.github.io/gallery/step_chart.html",
+      "path": "tests/examples_arguments_syntax/step_chart.py",
+      "description": "This example shows Google's stock price over time.\nThis uses the \"step-after\" interpolation scheme.\nThe full list of interpolation options includes 'linear',\n'linear-closed', 'step', 'step-before', 'step-after', 'basis',\n'basis-open', 'basis-closed', 'cardinal', 'cardinal-open',\n'cardinal-closed', 'bundle', and 'monotone'.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "stocks"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "streamgraph",
+      "title": "Streamgraph",
+      "url": "https://altair-viz.github.io/gallery/streamgraph.html",
+      "path": "tests/examples_arguments_syntax/streamgraph.py",
+      "description": "This example shows the streamgraph from vega-lite examples.",
+      "categories": [
+        "area charts"
+      ],
+      "datasets": [
+        "unemployment_across_industries"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/transform/aggregate#basic-mathematical-operations"
+        ],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "strip_plot",
+      "title": "Simple Strip Plot",
+      "url": "https://altair-viz.github.io/gallery/strip_plot.html",
+      "path": "tests/examples_arguments_syntax/strip_plot.py",
+      "description": "A simple example of how to make a strip plot.",
+      "categories": [
+        "simple charts"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/tick",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "strip_plot_jitter",
+      "title": "Strip Plot with Jitter",
+      "url": "https://altair-viz.github.io/gallery/strip_plot_jitter.html",
+      "path": "tests/examples_arguments_syntax/strip_plot_jitter.py",
+      "description": "In this chart, we encode the ``Major Genre`` column from the ``movies`` dataset\nin the ``y``-channel. In the default presentation of this data, it would be\ndifficult to gauge the relative frequencies with which different values occur\nbecause there would be so much overlap. To address this, we use the ``yOffset``\nchannel to incorporate a random offset (jittering). The example is shown twice,\non the left side using normally distributed and on the right side using\nuniformally distributed jitter.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#position"
+        ],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/transform/calculate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "table_bubble_plot_github",
+      "title": "Table Bubble Plot (Github Punch Card)",
+      "url": "https://altair-viz.github.io/gallery/table_bubble_plot_github.html",
+      "path": "tests/examples_arguments_syntax/table_bubble_plot_github.py",
+      "description": "This example shows github contributions by the day of week and hour of the day.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "github"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#mark-property"
+        ],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "top_k_items",
+      "title": "Top K Items",
+      "url": "https://altair-viz.github.io/gallery/top_k_items.html",
+      "path": "tests/examples_arguments_syntax/top_k_items.py",
+      "description": "This example shows how to use the window and transformation filter to display\nthe Top items of a long list of items in decreasing order.\nHere we sort the top 10 highest ranking movies of IMDB.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/transform/filter",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "top_k_letters",
+      "title": "Top K Letters",
+      "url": "https://altair-viz.github.io/gallery/top_k_letters.html",
+      "path": "tests/examples_arguments_syntax/top_k_letters.py",
+      "description": "This example shows how to use a window transform in order to display only the\ntop K categories by number of entries. In this case, we rank the characters in\nthe first paragraph of Dickens' *A Tale of Two Cities* by number of occurrences.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/transform/aggregate",
+          "user_guide/transform/filter",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/encodings/index#datum-and-value"
+        ]
+      }
+    },
+    {
+      "name": "top_k_with_others",
+      "title": "Top-K Plot with Others",
+      "url": "https://altair-viz.github.io/gallery/top_k_with_others.html",
+      "path": "tests/examples_arguments_syntax/top_k_with_others.py",
+      "description": "This example shows how to use aggregate, window, and calculate transformations\nto display the top-k directors by average worldwide gross while grouping the\nremaining directors as 'All Others'.",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [
+        "movies"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/transform/aggregate",
+          "user_guide/transform/calculate",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "trail_marker",
+      "title": "Line Chart with Varying Size",
+      "url": "https://altair-viz.github.io/gallery/trail_marker.html",
+      "path": "tests/examples_arguments_syntax/trail_marker.py",
+      "description": "This is example of using the ``trail`` marker to vary the size of a line.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [
+        "wheat"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/trail",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "us_employment",
+      "title": "The U.S. Employment Crash During the Great Recession",
+      "url": "https://altair-viz.github.io/gallery/us_employment.html",
+      "path": "tests/examples_arguments_syntax/us_employment.py",
+      "description": "This example is a fully developed bar chart with negative values using the sample dataset of U.S. employment changes during the Great Recession.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "us_employment"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/rule",
+          "user_guide/marks/text",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when",
+          "user_guide/times_and_dates",
+          "user_guide/transform/timeunit"
+        ]
+      }
+    },
+    {
+      "name": "us_incomebrackets_by_state_facet",
+      "title": "US Income by State: Wrapped Facet",
+      "url": "https://altair-viz.github.io/gallery/us_incomebrackets_by_state_facet.html",
+      "path": "tests/examples_arguments_syntax/us_incomebrackets_by_state_facet.py",
+      "description": "This example shows how to create a map of income in the US by state,\nfaceted over income brackets",
+      "categories": [
+        "maps"
+      ],
+      "datasets": [
+        "income",
+        "us_10m"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#mark-property",
+          "user_guide/marks/geoshape#facet-a-map"
+        ],
+        "inferred": [
+          "user_guide/marks/geoshape",
+          "user_guide/transform/lookup",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "us_population_over_time",
+      "title": "US Population by Age and Sex",
+      "url": "https://altair-viz.github.io/gallery/us_population_over_time.html",
+      "path": "tests/examples_arguments_syntax/us_population_over_time.py",
+      "description": "This chart visualizes the age distribution of the US population over time.\nIt uses a slider widget that is bound to the year to visualize the age\ndistribution over time.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "population"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/interactions/bindings_widgets#bindings-widgets"
+        ],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/transform/calculate",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "us_population_over_time_facet",
+      "title": "US Population: Wrapped Facet",
+      "url": "https://altair-viz.github.io/gallery/us_population_over_time_facet.html",
+      "path": "tests/examples_arguments_syntax/us_population_over_time_facet.py",
+      "description": "This chart visualizes the age distribution of the US population over time,\nusing a wrapped faceting of the data by decade.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "population"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#facet"
+        ],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "us_population_pyramid_over_time",
+      "title": "US Population Pyramid Over Time",
+      "url": "https://altair-viz.github.io/gallery/us_population_pyramid_over_time.html",
+      "path": "tests/examples_arguments_syntax/us_population_pyramid_over_time.py",
+      "description": "A population pyramid shows the distribution of age groups within a population.\nIt uses a slider widget that is bound to the year to visualize the age\ndistribution over time.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "population"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/text",
+          "user_guide/transform/calculate",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/compound_charts"
+        ]
+      }
+    },
+    {
+      "name": "us_state_capitals",
+      "title": "U.S. State Capitals Overlaid on a Map of the U.S",
+      "url": "https://altair-viz.github.io/gallery/us_state_capitals.html",
+      "path": "tests/examples_arguments_syntax/us_state_capitals.py",
+      "description": "This is a layered geographic visualization that shows US capitals\noverlaid on a map.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "us_10m",
+        "us_state_capitals"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/geoshape",
+          "user_guide/marks/point",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
+      "name": "violin_plot",
+      "title": "Violin Plot",
+      "url": "https://altair-viz.github.io/gallery/violin_plot.html",
+      "path": "tests/examples_arguments_syntax/violin_plot.py",
+      "description": "This example shows how to make a Violin Plot using Altair's density transform.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/transform/density",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "waterfall_chart",
+      "title": "Waterfall Chart",
+      "url": "https://altair-viz.github.io/gallery/waterfall_chart.html",
+      "path": "tests/examples_arguments_syntax/waterfall_chart.py",
+      "description": "This example shows how to recreate a Vega-Lite implementation of a waterfall chart.\nOriginal inspiration is from https://vega.github.io/vega-lite/examples/waterfall_chart.html",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [
+          "user_guide/interactions/parameters#understanding-when"
+        ],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/rule",
+          "user_guide/marks/text",
+          "user_guide/transform/calculate",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
+      "name": "wheat_wages",
+      "title": "Wheat and Wages",
+      "url": "https://altair-viz.github.io/gallery/wheat_wages.html",
+      "path": "tests/examples_arguments_syntax/wheat_wages.py",
+      "description": "A recreation of William Playfair's classic chart visualizing\nthe price of wheat, the wages of a mechanic, and the reigning British monarch.\n\nThis is a more polished version of the simpler chart in :ref:`gallery_bar_and_line_with_dual_axis`.",
+      "categories": [
+        "case studies"
+      ],
+      "datasets": [
+        "monarchs",
+        "wheat"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/area",
+          "user_guide/marks/bar",
+          "user_guide/marks/line",
+          "user_guide/marks/rule",
+          "user_guide/marks/text",
+          "user_guide/transform/calculate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "wilkinson-dot-plot",
+      "title": "Wilkinson Dot Plot",
+      "url": "https://altair-viz.github.io/gallery/wilkinson-dot-plot.html",
+      "path": "tests/examples_arguments_syntax/wilkinson-dot-plot.py",
+      "description": "An example of a `Wilkinson Dot Plot <https://en.wikipedia.org/wiki/Dot_plot_(statistics)>`_",
+      "categories": [
+        "advanced calculations"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/circle",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "wind_vector_map",
+      "title": "Wind Vector Map",
+      "url": "https://altair-viz.github.io/gallery/wind_vector_map.html",
+      "path": "tests/examples_arguments_syntax/wind_vector_map.py",
+      "description": "An example showing a vector array map showing wind speed and direction using ``wedge``\nas shape for ``mark_point`` and ``angle`` encoding for the wind direction.\nThis is adapted from this corresponding Vega-Lite Example:\n`Wind Vector Map <https://vega.github.io/vega-lite/examples/point_angle_windvector.html>`_\nwith an added base map.",
+      "categories": [
+        "maps"
+      ],
+      "datasets": [
+        "windvectors",
+        "world_110m"
+      ],
+      "related_docs": {
+        "explicit": [
+          "user_guide/encodings/channels#mark-property"
+        ],
+        "inferred": [
+          "user_guide/marks/geoshape",
+          "user_guide/marks/point",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
+      "name": "window_rank",
+      "title": "Window Rank Line Chart",
+      "url": "https://altair-viz.github.io/gallery/window_rank.html",
+      "path": "tests/examples_arguments_syntax/window_rank.py",
+      "description": "This example shows the Group F rankings in the 2018 World Cup after each matchday.\nA window transformation is used to rank each after each match day, sorting by points and difference.",
+      "categories": [
+        "line charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/line",
+          "user_guide/transform/window",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option"
+        ]
+      }
+    },
+    {
+      "name": "world_map",
+      "title": "World Map",
+      "url": "https://altair-viz.github.io/gallery/world_map.html",
+      "path": "tests/examples_arguments_syntax/world_map.py",
+      "description": "This example shows how to create a world map using data generators for\ndifferent background layers.",
+      "categories": [
+        "maps"
+      ],
+      "datasets": [
+        "world_110m"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/geoshape"
+        ]
+      }
+    },
+    {
+      "name": "world_projections",
+      "title": "World Projections",
+      "url": "https://altair-viz.github.io/gallery/world_projections.html",
+      "path": "tests/examples_arguments_syntax/world_projections.py",
+      "description": "This example shows a map of the countries of the world.\nUse the dropdown menu to compare projections. For more details on the `project` arguments, see the API of `altair.Projection <https://altair-viz.github.io/user_guide/generated/core/altair.Projection.html>`_.",
+      "categories": [
+        "maps"
+      ],
+      "datasets": [
+        "world_110m"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/geoshape",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/interactions/index"
+        ]
+      }
+    }
+  ]
+}

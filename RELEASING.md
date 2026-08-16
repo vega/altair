@@ -16,7 +16,8 @@ Check that all [Vega project](https://github.com/orgs/vega/repositories?type=sou
 The `release` environment in the repository settings must have at least one required reviewer. The workflow verifies this before creating a version tag.
 
 1. A couple of times a month, GitHub Actions will check if notable commits have been made to main (e.g. fixes and features) since the last release. If so, a release candidate will be prepared and an issue will be opened tagging the maintainers to review it before releasing.
-    - It is also possible to trigger this release workflow manually: go to the "Actions" tab, click the `Prepare Release Draft` workflow to the left, and then "Run workflow".
+    - If a scheduled candidate proposes an undesired version bump, reject its pending deployment, close its review issue, and rerun the workflow manually. Manual workflow dispatch let's you choose whether to use a `major`, `minor`, or `patch` bump.
+        - To trigger this release workflow manually: go to the "Actions" tab, click the `Prepare Release Draft` workflow to the left, and then "Run workflow".
     - This workflow automates the following steps:
         1. Checks for an existing release review issue or draft release and exits if one already exists.
         2. Uses Cocogitto to inspect conventional commits since the latest `v*` tag.

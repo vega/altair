@@ -152,6 +152,7 @@ extend-exclude = [
     "build",
     "tests/examples_arguments_syntax",
     "tests/examples_methods_syntax",
+    "README.md",
 ]
 indent-width = 4
 line-length = 88
@@ -378,14 +379,12 @@ ignore = [
 ]
 
 [tool.ty]
-src.include = ["altair/typing", "altair/expr", "altair/vegalite"]
+src.include = ["altair/expr", "altair/typing", "altair/vegalite"]
 src.exclude = ["altair/vegalite/v6/schema"]
 analysis.respect-type-ignore-comments = true  # allow existing type: ignore
 
 [tool.ty.rules]
 unused-type-ignore-comment = "ignore"  # skip unused type: ignore
 # suppress these for now so ty check will pass
-deprecated = "ignore"
-no-matching-overload = "ignore"
 invalid-context-manager = "ignore"
 invalid-method-override = "ignore"
