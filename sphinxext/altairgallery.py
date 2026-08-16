@@ -77,7 +77,7 @@ If you can't find the plots you are looking for here, make sure to check out the
    <span class="gallery-inline-tag">new</span>
 
 Recently Added |gallery-new-pill|
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
 
