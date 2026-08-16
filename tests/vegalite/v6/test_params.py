@@ -448,6 +448,115 @@ def test_vconcat_layered_charts_with_parent_transforms_have_unique_names():
     assert line_names[1].endswith("_1")
 
 
+COLLIDING_NAME_WARNING = "unique view names"
+
+
+def _collision_warnings(caught) -> list:
+    return [w for w in caught if COLLIDING_NAME_WARNING in str(w.message)]
+
+
+def _faceted_panel(df, hover, name):
+    chart = alt.Chart(df, name=name).encode(x="x:Q", y="y:Q").mark_line()
+    return chart.add_params(hover).facet("category:N")
+
+
+def _layered_panel(df, hover, name, predicate):
+    base = alt.Chart(df, name=name).encode(x="x:Q", y="y:Q")
+    points = base.encode(
+        size=alt.condition(hover, alt.value(120), alt.value(40))
+    ).mark_circle()
+    return (base.mark_line() + points).transform_filter(predicate)
+
+
+def test_facet_chart_preserves_unique_user_set_names_in_concat():
+    # Issue #4070: a user-set name on a FacetChart's inner spec survives
+    # concatenation as long as it stays unique across the panels.
+    df = pd.DataFrame({"x": [1, 2, 3], "y": [1, 4, 9], "category": ["a", "b", "c"]})
+    hover = alt.selection_point(fields=["x"], on="mouseover", empty=False)
+
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        spec = alt.vconcat(
+            _faceted_panel(df, hover, "panel_top"),
+            _faceted_panel(df, hover, "panel_bottom"),
+        ).to_dict()
+
+    names = [panel["spec"]["name"] for panel in spec["vconcat"]]
+    assert names == ["panel_top", "panel_bottom"], names
+    assert not _collision_warnings(caught)
+
+
+def test_facet_chart_disambiguates_colliding_user_set_names():
+    # Keeping the same user-set name on both panels would reintroduce the #4066
+    # rendering bug, so the positional suffix wins and the user is warned.
+    df = pd.DataFrame({"x": [1, 2, 3], "y": [1, 4, 9], "category": ["a", "b", "c"]})
+    hover = alt.selection_point(fields=["x"], on="mouseover", empty=False)
+    faceted = _faceted_panel(df, hover, "my_panel")
+
+    with pytest.warns(UserWarning, match=COLLIDING_NAME_WARNING):
+        spec = alt.vconcat(faceted, faceted).to_dict()
+
+    names = [panel["spec"]["name"] for panel in spec["vconcat"]]
+    assert names == ["my_panel_0", "my_panel_1"], names
+
+
+def test_layer_chart_preserves_unique_user_set_names_in_concat():
+    # Issue #4070: user-set names on layers inside concatenated LayerCharts are
+    # preserved while they stay unique.
+    df = pd.DataFrame({"x": [1, 2, 3], "y": [1, 4, 9]})
+    hover = alt.selection_point(fields=["x"], on="mouseover", empty=False)
+    p1 = _layered_panel(df, hover, "panel_top", "datum.x > 1")
+    p2 = _layered_panel(df, hover, "panel_bottom", "datum.x < 3")
+
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        spec = alt.vconcat(p1, p2).add_params(hover).to_dict()
+
+    names = [panel["layer"][0]["name"] for panel in spec["vconcat"]]
+    assert names == ["panel_top", "panel_bottom"], names
+    assert not _collision_warnings(caught)
+
+
+def test_layer_chart_disambiguates_colliding_user_set_names():
+    # Both panels share one name and differ only through a parent-level
+    # transform, which is exactly the #4065 collision, so they get suffixed.
+    df = pd.DataFrame({"x": [1, 2, 3], "y": [1, 4, 9]})
+    hover = alt.selection_point(fields=["x"], on="mouseover", empty=False)
+    p1 = _layered_panel(df, hover, "my_panel", "datum.x > 1")
+    p2 = _layered_panel(df, hover, "my_panel", "datum.x < 3")
+
+    with pytest.warns(UserWarning, match=COLLIDING_NAME_WARNING):
+        spec = alt.vconcat(p1, p2).add_params(hover).to_dict()
+
+    names = [panel["layer"][0]["name"] for panel in spec["vconcat"]]
+    assert names == ["my_panel_0", "my_panel_1"], names
+
+
+def test_facet_chart_disambiguates_three_colliding_user_set_names():
+    # Issue #4070 follow-up (joelostblom's counter-example): two panels
+    # share the user-set name "report", and a third panel is already named
+    # "report_0". Renaming the first two to "report_0" and "report_1"
+    # naively would collide with the third panel's own name, so the final
+    # names must all differ, and the deduplicated selection parameter's
+    # views must match those final names exactly.
+    df = pd.DataFrame({"x": [1, 2, 3], "y": [1, 4, 9], "category": ["a", "b", "c"]})
+    hover = alt.selection_point(fields=["x"], on="mouseover", empty=False)
+
+    with pytest.warns(UserWarning, match=COLLIDING_NAME_WARNING):
+        spec = alt.vconcat(
+            _faceted_panel(df, hover, "report"),
+            _faceted_panel(df, hover, "report"),
+            _faceted_panel(df, hover, "report_0"),
+        ).to_dict()
+
+    names = [panel["spec"]["name"] for panel in spec["vconcat"]]
+    assert len(set(names)) == len(names), names
+
+    param_views = spec["params"][0]["views"]
+    assert set(param_views) == set(names)
+    assert len(param_views) == len(names)
+
+
 def test_vconcat_layered_charts_include_all_views_for_selection_params():
     df = pd.DataFrame(
         {
