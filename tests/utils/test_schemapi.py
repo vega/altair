@@ -889,6 +889,31 @@ def test_chart_validation_errors(chart_func, expected_error_message):
         chart.to_dict()
 
 
+def test_validation_error_uses_live_object_schema_for_value_channel() -> None:
+    """Regression test for #3752: reports the actually-unexpected properties, not the wrong branch's."""
+    channel = alt.value(1, bin=True, aggregate="sum")
+    chart = alt.Chart().mark_point().encode(y=channel)
+
+    with pytest.raises(SchemaValidationError) as err:
+        chart.to_dict()
+
+    assert str(err.value).splitlines()[0] == (
+        "`YValue` has no parameters named 'aggregate', 'bin'"
+    )
+
+
+def test_validation_error_uses_live_object_schema_for_datum_channel() -> None:
+    """A `datum=` channel reports only the truly unexpected property, not `datum` itself."""
+    chart = alt.Chart().mark_point().encode(x=alt.datum(1, wrong_argument=1))
+
+    with pytest.raises(SchemaValidationError) as err:
+        chart.to_dict()
+
+    assert str(err.value).splitlines()[0] == (
+        "`XDatum` has no parameter named 'wrong_argument'"
+    )
+
+
 def test_multiple_field_strings_in_condition():
     selection = alt.selection_point()
     expected_error_message = "A field cannot be used for both the `if_true` and `if_false` values of a condition. One of them has to specify a `value` or `datum` definition."

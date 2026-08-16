@@ -8,10 +8,11 @@ import datetime as dt
 import inspect
 import json
 import operator
+import re
 import sys
 import textwrap
 import zoneinfo
-from collections import defaultdict
+from collections import defaultdict, deque
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from functools import partial
 from importlib.metadata import version as importlib_version
@@ -623,6 +624,69 @@ def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
     return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
 
 
+def _live_object_at_path(obj: Any, path: Iterable[Any]) -> Any:
+    """Walk `obj` along `path` (attribute/item access), returning the object found there, or None if the path can't be followed."""
+    node = obj
+    for key in path:
+        try:
+            if isinstance(key, int) or isinstance(node, Mapping):
+                node = node[key]
+            else:
+                node = getattr(node, key)
+        except (AttributeError, KeyError, IndexError, TypeError):
+            return None
+    return node
+
+
+def _narrow_error_from_live_object(
+    obj: Any, error: jsonschema.exceptions.ValidationError
+) -> jsonschema.exceptions.ValidationError | None:
+    """
+    Re-validate `error`'s instance against the schema of the live object found at its path.
+
+    Returns a fresh error if that object exists, its own schema is not
+    itself a union, and it still rejects the instance. Returns None
+    otherwise (no live object at that path, no schema, or the schema is
+    itself a union).
+    """
+    node = _live_object_at_path(obj, error.absolute_path)
+    if not isinstance(node, SchemaBase) or node._schema is None:
+        return None
+    rootschema = node._rootschema or node._schema
+    resolved = _resolve_references(node._schema, rootschema)
+    if not isinstance(resolved, dict) or "anyOf" in resolved or "oneOf" in resolved:
+        return None
+    try:
+        instance = node.to_dict(validate=False)
+    except Exception:
+        return None
+    return validate_jsonschema(
+        instance, node._schema, rootschema=rootschema, raise_error=False
+    )
+
+
+def _narrow_grouped_errors(
+    obj: Any, grouped_errors: GroupedValidationErrors
+) -> GroupedValidationErrors:
+    """Prefer a narrower, unambiguous error for each group when the live object graph provides one."""
+    narrowed: GroupedValidationErrors = {}
+    for json_path, errors in grouped_errors.items():
+        narrow_error = _narrow_error_from_live_object(obj, errors[0])
+        if narrow_error is None:
+            narrowed[json_path] = errors
+            continue
+        prefix = errors[0].absolute_path
+        narrow_groups = getattr(narrow_error, "_all_errors", None) or {
+            "": [narrow_error]
+        }
+        for sub_errors in narrow_groups.values():
+            for sub_error in sub_errors:
+                rebased = deque(prefix) + sub_error.relative_path
+                sub_error.path = sub_error.relative_path = rebased
+            narrowed[_json_path(sub_errors[0])] = sub_errors
+    return narrowed
+
+
 class SchemaValidationError(jsonschema.ValidationError):
     _JS_TO_PY: ClassVar[Mapping[str, str]] = {
         "boolean": "bool",
@@ -658,6 +722,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         self._errors: GroupedValidationErrors = getattr(
             err, "_all_errors", {getattr(err, "json_path", _json_path(err)): [err]}
         )
+        self._errors = _narrow_grouped_errors(obj, self._errors)
         # This is the message from err
         self._original_message = self.message
         self.message = self._get_message()
@@ -715,12 +780,29 @@ class SchemaValidationError(jsonschema.ValidationError):
         param_dict_keys = inspect.signature(altair_cls).parameters.keys()
         param_names_table = self._format_params_as_table(param_dict_keys)
 
-        # Error messages for these errors look like this:
-        # "Additional properties are not allowed ('unknown' was unexpected)"
-        # Line below extracts "unknown" from this string
-        parameter_name = error.message.split("('")[-1].split("'")[0]
+        schema = error.schema if isinstance(error.schema, dict) else {}
+        instance = error.instance if isinstance(error.instance, dict) else {}
+        properties = schema.get("properties", {})
+        patterns = schema.get("patternProperties", {})
+        try:
+            parameter_names = sorted(
+                name
+                for name in instance
+                if name not in properties
+                and not any(re.search(pattern, name) for pattern in patterns)
+            )
+        except (re.error, TypeError):
+            parameter_names = []
+        if not parameter_names:
+            # Error messages for these errors look like this:
+            # "Additional properties are not allowed ('unknown' was unexpected)"
+            # Line below extracts "unknown" from this string
+            parameter_names = [error.message.split("('")[-1].split("'")[0]]
+
+        formatted_parameter_names = ", ".join(map(repr, parameter_names))
+        parameter_text = "parameter" if len(parameter_names) == 1 else "parameters"
         message = f"""\
-`{altair_cls.__name__}` has no parameter named '{parameter_name}'
+`{altair_cls.__name__}` has no {parameter_text} named {formatted_parameter_names}
 
 Existing parameter names are:
 {param_names_table}
