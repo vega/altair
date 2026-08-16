@@ -66,11 +66,10 @@ if TYPE_CHECKING:
     )
 
     if sys.version_info >= (3, 13):
-        from typing import Required, TypeIs
+        from typing import TypeIs
     else:
-        from typing import Required
         from typing_extensions import TypeIs
-    from typing import Never, Self
+    from typing import Never, Required, Self
 
     from altair.expr.core import (
         BinaryExpression,
