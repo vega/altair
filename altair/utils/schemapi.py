@@ -379,7 +379,9 @@ def _union_branch_schemas(
 
 
 def _excluded_union_branch_indexes(
-    errors: ValidationErrorList, instance: dict[str, Any]
+    errors: ValidationErrorList,
+    instance: dict[str, Any],
+    branch_schemas: dict[int, dict[str, Any] | None],
 ) -> set[int]:
     excluded: set[int] = set()
     for error in errors:
@@ -399,6 +401,10 @@ def _excluded_union_branch_indexes(
             len(schema_path) == 4
             and schema_path[1] == "properties"
             and error.validator in {"const", "enum"}
+            # A mismatched enum/const value is a real error, not a reason to
+            # discard the branch, unless the branch cannot accept the instance
+            # on its own merits (e.g. other unexpected properties).
+            and not _branch_fits_instance(branch_schemas.get(schema_path[0]), instance)
         )
         if is_missing_root_requirement or is_direct_value_mismatch:
             excluded.add(schema_path[0])
@@ -459,6 +465,18 @@ def _value_matches_schema(value: Any, schema: Any) -> bool | None:
     return jsonschema.Draft7Validator(schema).is_valid(value)
 
 
+def _value_fails_only_by_constraint(value: Any, schema: Any) -> bool:
+    """Return True when ``value`` fails ``schema`` only due to a const/enum constraint."""
+    if not isinstance(schema, dict) or _schema_contains_reference(schema):
+        return False
+    if jsonschema.Draft7Validator(schema).is_valid(value):
+        return False
+    relaxed = {
+        key: prop for key, prop in schema.items() if key not in {"const", "enum"}
+    }
+    return jsonschema.Draft7Validator(relaxed).is_valid(value)
+
+
 def _property_schemas(schema: dict[str, Any], property_name: str) -> list[Any] | None:
     properties = schema.get("properties", {})
     pattern_properties = schema.get("patternProperties", {})
@@ -480,6 +498,29 @@ def _property_schemas(schema: dict[str, Any], property_name: str) -> list[Any] |
     if not matched_schemas:
         matched_schemas.append(schema.get("additionalProperties", True))
     return matched_schemas
+
+
+def _branch_fits_instance(
+    schema: dict[str, Any] | None, instance: dict[str, Any]
+) -> bool:
+    """
+    Return True when every instance property is compatible with the branch schema.
+
+    A const/enum mismatch is not treated as incompatibility: it is a value-level
+    error which may be the very error the branch is intended to surface.
+    """
+    if schema is None:
+        return False
+    for name, value in instance.items():
+        property_schemas = _property_schemas(schema, name)
+        if property_schemas is None:
+            return False
+        for property_schema in property_schemas:
+            if _value_matches_schema(value, property_schema) is False and not (
+                _value_fails_only_by_constraint(value, property_schema)
+            ):
+                return False
+    return True
 
 
 def _required_values_match_instance(
@@ -523,11 +564,17 @@ def _branch_excludes_required_value(
         property_schemas = _property_schemas(schema, name)
         if property_schemas is None:
             return False
-        if any(
-            _value_matches_schema(instance.get(name), property_schema) is False
-            for property_schema in property_schemas
-        ):
-            return True
+        for property_schema in property_schemas:
+            if (
+                _value_matches_schema(instance.get(name), property_schema) is False
+                # A const/enum mismatch is not an unambiguous discriminator: it
+                # may be the actual error rather than a reason to discard the
+                # branch (a generic fallback branch could accept the type).
+                and not _value_fails_only_by_constraint(
+                    instance.get(name), property_schema
+                )
+            ):
+                return True
     return False
 
 
@@ -597,7 +644,9 @@ def _get_relevant_errors(
     matching_schema_indexes = _matching_union_branch_indexes(error, branch_schemas)
 
     if not matching_schema_indexes:
-        excluded_indexes = _excluded_union_branch_indexes(error.context, error.instance)
+        excluded_indexes = _excluded_union_branch_indexes(
+            error.context, error.instance, branch_schemas
+        )
         remaining_indexes = set(range(len(union_schemas))) - excluded_indexes
         mismatched_properties = _mismatched_union_property_names(error.context)
         if excluded_indexes and len(remaining_indexes) == 1:

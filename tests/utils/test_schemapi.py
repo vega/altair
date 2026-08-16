@@ -992,6 +992,67 @@ def test_binding_error_uses_matching_vegalite_branch(
     assert str(err.value) == expected_message
 
 
+def test_union_branch_enum_error_not_hidden_by_fallback_branch() -> None:
+    # A required property with an enum/const discriminator is not an unambiguous
+    # branch identifier: a generic fallback branch may accept the property's type
+    # while a specialized branch restricts it. When other instance properties
+    # identify the specialized branch, its enum error must not be hidden behind
+    # the fallback branch's `additionalProperties` error.
+    schema = {
+        "anyOf": [
+            {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {
+                    "kind": {"enum": ["allowed"]},
+                    "payload": {"type": "integer"},
+                },
+                "additionalProperties": False,
+            },
+            {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {"kind": {"type": "string"}},
+                "additionalProperties": False,
+            },
+        ]
+    }
+
+    error = validate_jsonschema(
+        {"kind": "typo", "payload": 1},
+        schema,
+        raise_error=False,
+    )
+
+    assert error is not None
+    assert error.message == "'typo' is not one of ['allowed']"
+
+
+def test_binding_input_typo_is_reported_over_unknown_parameters() -> None:
+    # Regression test: a typo'd `input` discriminator must not be masked by
+    # reporting `min`/`max` as unknown parameters of the generic BindInput
+    # branch. `min`/`max` identify the BindRange branch, whose const error on
+    # `input` is the actual problem. The validation fails while the slider
+    # parameter is constructed.
+    with pytest.raises(SchemaValidationError) as err:
+        (
+            alt.Chart({"values": [{"x": 1}]})
+            .mark_point()
+            .encode(x="x:Q")
+            .add_params(
+                alt.param(
+                    name="threshold",
+                    value=5,
+                    bind={"input": "ragne", "min": 0, "max": 10},
+                )
+            )
+        ).to_dict()
+
+    message = str(err.value)
+    assert "has no parameters named 'max', 'min'" not in message
+    assert "ragne" in message or "range" in message
+
+
 def test_union_reference_resolution_uses_validation_root_schema() -> None:
     root_schema = {
         "$schema": _JSON_SCHEMA_DRAFT_URL,
