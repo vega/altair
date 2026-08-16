@@ -7,7 +7,9 @@ on:
     paths: &docbuild_paths
       - ".github/workflows/docbuild.yml"
       - "doc/**"
+      - "_data/**"
       - "pyproject.toml"
+      - "sphinxext/**"
       - "tests/examples_*/**"
       - "tools/**"
       - "uv.lock"
@@ -39,6 +41,12 @@ jobs:
       run: |
         mkdir -p doc/_images
         uv run sphinx-build -b html -d doc/_build/doctrees doc doc/_build/html
+    - name: Check examples index is up to date
+      run: |
+        if ! git diff --exit-code -- _data/examples.json; then
+          echo "::error file=_data/examples.json::The examples index is stale. Run 'uv run python tools/docs_cli.py build --no-autosummary' and commit the updated _data/examples.json."
+          exit 1
+        fi
     - name: Upload docs preview artifact
       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
