@@ -532,6 +532,31 @@ def test_layer_chart_disambiguates_colliding_user_set_names():
     assert names == ["my_panel_0", "my_panel_1"], names
 
 
+def test_facet_chart_disambiguates_three_colliding_user_set_names():
+    # Issue #4070 follow-up (joelostblom's counter-example): two panels
+    # share the user-set name "report", and a third panel is already named
+    # "report_0". Renaming the first two to "report_0" and "report_1"
+    # naively would collide with the third panel's own name, so the final
+    # names must all differ, and the deduplicated selection parameter's
+    # views must match those final names exactly.
+    df = pd.DataFrame({"x": [1, 2, 3], "y": [1, 4, 9], "category": ["a", "b", "c"]})
+    hover = alt.selection_point(fields=["x"], on="mouseover", empty=False)
+
+    with pytest.warns(UserWarning, match=COLLIDING_NAME_WARNING):
+        spec = alt.vconcat(
+            _faceted_panel(df, hover, "report"),
+            _faceted_panel(df, hover, "report"),
+            _faceted_panel(df, hover, "report_0"),
+        ).to_dict()
+
+    names = [panel["spec"]["name"] for panel in spec["vconcat"]]
+    assert len(set(names)) == len(names), names
+
+    param_views = spec["params"][0]["views"]
+    assert set(param_views) == set(names)
+    assert len(param_views) == len(names)
+
+
 def test_vconcat_layered_charts_include_all_views_for_selection_params():
     df = pd.DataFrame(
         {
