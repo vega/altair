@@ -5,6 +5,16 @@ on:
   schedule:
     - cron: '30 14 1,15 * *'  # 1st and 15th of each month at 14:30 UTC.
   workflow_dispatch:
+    inputs:
+      bump-type:
+        description: 'Version bump type (override auto-detection from commit history)'
+        type: choice
+        default: 'auto'
+        options:
+          - auto
+          - major
+          - minor
+          - patch
 
 permissions:
   contents: write
@@ -71,9 +81,11 @@ jobs:
       - name: Determine next release version
         if: steps.existing-review.outputs.should-release == 'true'
         id: next-version
+        env:
+          BUMP_TYPE: ${{ inputs.bump-type || 'auto' }}
         run: |
           set +e
-          DRY_RUN_OUTPUT=$(cog bump --dry-run --auto 2>&1)
+          DRY_RUN_OUTPUT=$(cog bump --dry-run --"$BUMP_TYPE" 2>&1)
           STATUS=$?
           set -e
           printf '%s\n' "$DRY_RUN_OUTPUT"
