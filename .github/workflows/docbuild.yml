@@ -44,7 +44,7 @@ jobs:
     - name: Check examples index is up to date
       run: |
         if ! git diff --exit-code -- _data/examples.json; then
-          echo "::error file=_data/examples.json::The examples index is stale. Run 'uv run python tools/docs_cli.py build --no-autosummary' and commit the updated _data/examples.json."
+          echo "::error file=_data/examples.json::The examples index is stale. Run 'uv run task doc-build --no-autosummary' and commit the updated _data/examples.json."
           exit 1
         fi
     - name: Upload docs preview artifact
