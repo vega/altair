@@ -905,7 +905,10 @@ class _ChannelCache:
         elif isinstance(obj, SchemaLike):
             obj = obj.to_dict()
         if channel := self.name_to_channel.get(encoding):
-            tp = channel["value" if "value" in obj else "field"]
+            channel_type: _ChannelType = (
+                "value" if "value" in obj else "datum" if "datum" in obj else "field"
+            )
+            tp = channel.get(channel_type, channel["field"])
             try:
                 # Don't force validation here; some objects won't be valid until
                 # they're created in the context of a chart.
@@ -955,16 +958,12 @@ def _invert_group_channels(
     """Grouped inverted index for `_ChannelCache.channel_to_name`."""
 
     def _reduce(it: Iterator[tuple[type[Any], str]]) -> Any:
-        """
-        Returns a 1-2 item dict, per channel.
-
-        Never includes `datum`, as it is never utilized in `wrap_in_channel`.
-        """
+        """Returns a 1-3 item dict, per channel."""
         item: dict[Any, type[SchemaBase]] = {}
         for tp, _ in it:
             name = tp.__name__
             if name.endswith("Datum"):
-                continue
+                sub_key = "datum"
             elif name.endswith("Value"):
                 sub_key = "value"
             else:
