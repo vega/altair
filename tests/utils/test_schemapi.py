@@ -1093,8 +1093,8 @@ def DateTime(
         ),
         (
             (
-                dt.datetime(2003, 5, 1, 1, 30, tzinfo=dt.timezone.utc),
-                dt.datetime(2003, 6, 3, 4, 3, tzinfo=dt.timezone.utc),
+                dt.datetime(2003, 5, 1, 1, 30, tzinfo=dt.UTC),
+                dt.datetime(2003, 6, 3, 4, 3, tzinfo=dt.UTC),
             ),
             (
                 DateTime(2003, 5, 1, 1, 30, 0, 0, utc=True),

@@ -80,14 +80,9 @@ from altair.vegalite.v6.schema._config import (
 from altair.vegalite.v6.theme import themes as _themes
 
 if TYPE_CHECKING:
-    import sys
     from collections.abc import Callable
-    from typing import Any, Literal
+    from typing import Any, Literal, LiteralString
 
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
     from altair.utils.plugin_registry import Plugin
 
 

@@ -33,11 +33,7 @@ if sys.version_info >= (3, 12):
     from typing import TypeAliasType
 else:
     from typing_extensions import TypeAliasType
-if sys.version_info >= (3, 11):
-    from typing import LiteralString, Never
-else:
-    from typing_extensions import LiteralString, Never
-from typing import TypeAlias
+from typing import LiteralString, Never, TypeAlias
 
 T = TypeVar("T")
 
@@ -122,14 +118,13 @@ class _TypeAliasTracer:
             "import sys",
             "from datetime import date, datetime",
             "from collections.abc import Sequence, Mapping",
-            "from typing import Annotated, Any, Generic, Literal, TypeAlias, TypeVar, Union, get_args",
+            "from typing import Annotated, Any, Generic, Literal, LiteralString, TypeAlias, TypeVar, Union, get_args",
             "import re",
             import_typing_extensions(
                 (3, 15), "TypedDict", reason="https://peps.python.org/pep-0728/"
             ),
             import_typing_extensions((3, 13), "TypeIs"),
             import_typing_extensions((3, 12), "TypeAliasType"),
-            import_typing_extensions((3, 11), "LiteralString"),
         )
 
     def _update_literals(self, name: str, tp: str, /) -> None:

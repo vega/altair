@@ -4,17 +4,12 @@
 from __future__ import annotations
 
 import sys
-from typing import Literal, TypeAlias
+from typing import Literal, LiteralString, TypeAlias
 
 if sys.version_info >= (3, 15):
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
-
-if sys.version_info >= (3, 11):
-    from typing import LiteralString
-else:
-    from typing_extensions import LiteralString
 
 
 __all__ = ["Dataset", "Extension", "Metadata"]

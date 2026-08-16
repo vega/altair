@@ -50,10 +50,7 @@ else:
         TypeAliasType,
         runtime_checkable,
     )
-if sys.version_info >= (3, 11):
-    from typing import LiteralString
-else:
-    from typing_extensions import LiteralString
+from typing import LiteralString
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
@@ -69,13 +66,10 @@ if TYPE_CHECKING:
     )
 
     if sys.version_info >= (3, 13):
-        from typing import Required, TypeIs
+        from typing import TypeIs
     else:
-        from typing_extensions import Required, TypeIs
-    if sys.version_info >= (3, 11):
-        from typing import Never, Self
-    else:
-        from typing_extensions import Never, Self
+        from typing_extensions import TypeIs
+    from typing import Never, Required, Self
 
     from altair.expr.core import (
         BinaryExpression,
