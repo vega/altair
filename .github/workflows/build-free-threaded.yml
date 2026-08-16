@@ -35,7 +35,7 @@ jobs:
           uv pip install 'hatch>=1.13.0'
           uv pip install ipython
           uv pip install ipykernel
-          uv pip install 'pandas>=1.1.3'
+          uv pip install 'pandas>=1.5.3'
           uv pip install pyarrow-stubs
           uv pip install 'pytest-xdist[psutil]~=3.5'
           uv pip install mistune
