@@ -1608,10 +1608,10 @@
     },
     {
       "name": "interactive_date_input",
-      "title": "Filter a Time Series with a Date Input",
+      "title": "Filter a Time Series with Date and Number Inputs",
       "url": "https://altair-viz.github.io/gallery/interactive_date_input.html",
       "path": "tests/examples_arguments_syntax/interactive_date_input.py",
-      "description": "This example shows how to bind an HTML date input to a parameter and use the\nselected date to filter a time-series chart.",
+      "description": "This example shows how to bind HTML date and number inputs to parameters and\nuse the selected values to filter a time-series chart.",
       "categories": [
         "interactive charts"
       ],
@@ -1620,6 +1620,7 @@
         "explicit": [],
         "inferred": [
           "user_guide/marks/line",
+          "user_guide/marks/rule",
           "user_guide/transform/filter",
           "user_guide/transform/index#accessing-transformed-data",
           "user_guide/encodings/index#encoding-data-types",
