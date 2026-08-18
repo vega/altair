@@ -1162,6 +1162,11 @@ class ConfigMethodMixin:
     @use_signature(core.Config)
     def configure(self, *args, **kwargs) -> Self:
         copy = self.copy(deep=["config"])  # type: ignore[attr-defined]
+        if not args and not kwargs:
+            # A bare ``configure()`` resets the config, preserving the
+            # behaviour it had before merging was introduced.
+            copy.config = core.Config()
+            return copy
         if args or copy.config is Undefined:
             copy.config = core.Config(*args, **kwargs)
         else:

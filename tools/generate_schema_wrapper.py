@@ -236,6 +236,11 @@ CONFIG_METHOD: Final = """
 @use_signature(core.{classname})
 def {method}(self, *args, **kwargs) -> Self:
     copy = self.copy(deep=['config'])  # type: ignore[attr-defined]
+    if not args and not kwargs:
+        # A bare ``configure()`` resets the config, preserving the
+        # behaviour it had before merging was introduced.
+        copy.config = core.{classname}()
+        return copy
     if args or copy.config is Undefined:
         copy.config = core.{classname}(*args, **kwargs)
     else:

@@ -1588,6 +1588,16 @@ def test_configure_merges_repeated_calls():
     assert config["background"] == "blue"
 
 
+def test_configure_without_arguments_resets_config():
+    # A bare ``configure()`` still clears the config, as it does on ``main`` —
+    # merging must not turn that into a no-op (see review on #4035).
+    base = alt.Chart("data.txt").mark_point().encode(x="x:Q", y="y:Q")
+    configured = base.configure_axis(labelColor="red")
+
+    assert configured.to_dict()["config"]["axis"] == {"labelColor": "red"}
+    assert "axis" not in configured.configure().to_dict()["config"]
+
+
 def test_configure_does_not_mutate_source_chart():
     base = alt.Chart("data.txt").mark_point().encode(x="x:Q", y="y:Q")
     configured = base.configure_axisBottom(orient="top")
