@@ -5480,7 +5480,7 @@ def _combine_subchart_params(  # noqa: C901
                 if view_to_add not in views_after:
                     views_after.append(view_to_add)
 
-            if found:
+            if merge_idx is not None:
                 _, _, old_views = param_info[merge_idx]
                 new_views = [v for v in views_after if v not in old_views]
                 old_views += new_views
