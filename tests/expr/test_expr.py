@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime as dt
 import operator
+import zoneinfo
 from inspect import classify_class_attrs, getmembers, signature
 from typing import TYPE_CHECKING, Any, TypeVar, cast
 
@@ -197,8 +198,18 @@ def test_expression_function_nostring():
             dt.datetime(2003, 5, 1, 1, 30, tzinfo=dt.UTC),
             "utc(2003,4,1,1,30,0,0)",
         ),
+        (
+            dt.datetime(2003, 5, 1, 1, 30, tzinfo=zoneinfo.ZoneInfo("UTC")),
+            "utc(2003,4,1,1,30,0,0)",
+        ),
     ],
-    ids=["date", "datetime (no time)", "datetime (microseconds)", "datetime (UTC)"],
+    ids=[
+        "date",
+        "datetime (no time)",
+        "datetime (microseconds)",
+        "datetime (UTC)",
+        "datetime (ZoneInfo UTC)",
+    ],
 )
 def test_expr_datetime(value: Any, expected: str) -> None:
     r_datum = datum.date >= value
@@ -215,9 +226,10 @@ def test_expr_datetime(value: Any, expected: str) -> None:
         dt.timezone(dt.timedelta(hours=-3), "BRT"),
         dt.timezone(dt.timedelta(hours=9), "UTC"),
         dt.timezone(dt.timedelta(minutes=60), "utc"),
+        zoneinfo.ZoneInfo("Europe/London"),
     ],
 )
-def test_expr_datetime_unsupported_timezone(tzinfo: dt.timezone) -> None:
+def test_expr_datetime_unsupported_timezone(tzinfo: dt.tzinfo) -> None:
     datetime = dt.datetime(2003, 5, 1, 1, 30)
 
     result = datum.date == datetime
