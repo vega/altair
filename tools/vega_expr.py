@@ -384,7 +384,7 @@ class ReplaceMany:
 
     def _compile(self) -> Pattern[str]:
         if not self._mapping:
-            name = self._mapping.__qualname__  # type: ignore[attr-defined]
+            name = self._mapping.__qualname__  # type: ignore
             msg = (
                 f"Requires {name!r} to be populated, but got:\n{name}={self._mapping!r}"
             )
