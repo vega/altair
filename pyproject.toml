@@ -36,7 +36,8 @@ keywords = [
 ]
 requires-python = ">=3.11"
 dynamic = ["version"]
-license = { file = "LICENSE" }
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
@@ -371,12 +372,15 @@ ignore = [
     "./altair/vegalite/v6/schema/mixins.py",    # 1001 warns
     "./altair/jupyter/",                        # Mostly untyped
     "./tests/test_jupyter_chart.py",            # Based on untyped module
-    "../../../**/Lib",                          # stdlib
-    "../../../**/typeshed*"                     # typeshed-fallback
 ]
 
 [tool.ty]
-src.include = ["altair/expr", "altair/typing", "altair/vegalite"]
+src.include = [
+  "altair/expr",
+  "altair/typing",
+  "altair/vegalite",
+  "tools",
+]
 src.exclude = ["altair/vegalite/v6/schema"]
 analysis.respect-type-ignore-comments = true  # allow existing type: ignore
 
