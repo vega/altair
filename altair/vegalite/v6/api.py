@@ -4110,9 +4110,7 @@ class Chart(
         return self._compute_hash()
 
     @classmethod
-    def from_dict(
-        cls: type[_TSchemaBase], dct: dict[str, Any], validate: bool = True
-    ) -> _TSchemaBase:
+    def from_dict(cls: type[Self], dct: dict[str, Any], validate: bool = True) -> Self:
         """
         Construct a ``Chart`` from a dictionary representation.
 
@@ -4136,7 +4134,7 @@ class Chart(
                 pass
 
         # As a last resort, try using the Root vegalite object
-        return t.cast("_TSchemaBase", core.Root.from_dict(dct, validate))
+        return t.cast("Self", core.Root.from_dict(dct, validate))
 
     def to_dict(
         self,
