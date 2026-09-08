@@ -381,12 +381,14 @@ src.exclude = [
   "altair/jupyter",
   "altair/utils",
   "altair/vegalite/v6/schema/channels.py",
-  "altair/vegalite/v6/schema/mixins.py",
 ]
 analysis.respect-type-ignore-comments = true  # allow existing type: ignore
 
 [tool.ty.rules]
 unused-type-ignore-comment = "ignore"  # skip unused type: ignore
-# suppress these for now so ty check will pass
+# suppress these so ty check will pass
 invalid-context-manager = "ignore"
 invalid-method-override = "ignore"
+# suppressions just for schema/channels.py
+# invalid-overload = "ignore"
+# unresolved-attribute = "ignore"

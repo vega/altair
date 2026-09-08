@@ -1727,7 +1727,7 @@ class expr(_ExprRef, metaclass=_ExprMeta):
         return FunctionExpression("invert", (name, value, group))
 
     @classmethod
-    def copy(cls, name: IntoExpression, group: IntoExpression = None, /) -> Expression:  # type: ignore
+    def copy(cls, name: IntoExpression, group: IntoExpression = None, /) -> Expression:  # type: ignore[override]
         """
         Returns a copy (a new cloned instance) of the named scale transform of projection, or ``undefined`` if no scale or projection is found.
 
