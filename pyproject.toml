@@ -375,13 +375,14 @@ ignore = [
 ]
 
 [tool.ty]
-src.include = [
-  "altair/expr",
-  "altair/typing",
-  "altair/vegalite",
-  "tools",
+src.include = ["altair"]
+src.exclude = [
+  "altair/datasets",
+  "altair/jupyter",
+  "altair/utils",
+  "altair/vegalite/v6/schema/channels.py",
+  "altair/vegalite/v6/schema/mixins.py",
 ]
-src.exclude = ["altair/vegalite/v6/schema"]
 analysis.respect-type-ignore-comments = true  # allow existing type: ignore
 
 [tool.ty.rules]
