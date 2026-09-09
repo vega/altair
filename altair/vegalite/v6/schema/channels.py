@@ -215,7 +215,9 @@ class FieldChannelMixin:
             parsed = {"field": shorthand}
         context["parsed_shorthand"] = parsed
 
-        return super().to_dict(validate=validate, ignore=ignore, context=context)
+        return super().to_dict(  # ty: ignore
+            validate=validate, ignore=ignore, context=context
+        )
 
 
 class ValueChannelMixin:
@@ -238,7 +240,7 @@ class ValueChannelMixin:
                 kwds = parse_shorthand(condition["field"], context.get("data", None))
                 copy = self.copy(deep=["condition"])  # type: ignore
                 copy["condition"].update(kwds)
-        return super(ValueChannelMixin, copy).to_dict(
+        return super(ValueChannelMixin, copy).to_dict(  # ty: ignore
             validate=validate, ignore=ignore, context=context
         )
 
@@ -256,7 +258,7 @@ class DatumChannelMixin:
         ignore = ignore or []
         datum = self._get("datum", Undefined)  # type: ignore # noqa
         copy = self  # don't copy unless we need to
-        return super(DatumChannelMixin, copy).to_dict(
+        return super(DatumChannelMixin, copy).to_dict(  # ty: ignore
             validate=validate, ignore=ignore, context=context
         )
 
