@@ -10,7 +10,7 @@ from __future__ import annotations
 #   sense if there are multiple ones
 # However, we need these overloads due to how the propertysetter works
 # mypy: disable-error-code="no-overload-impl, empty-body, misc"
-from typing import TYPE_CHECKING, Any, Literal, TypedDict, Union, overload
+from typing import TYPE_CHECKING, Any, Literal, TypedDict, Union, cast, overload
 
 import narwhals.stable.v1 as nw
 
@@ -172,8 +172,11 @@ class FieldChannelMixin:
             kwds = self._kwds.copy()  # type: ignore
             kwds.pop("shorthand")
             return [
-                self.__class__(sh, **kwds).to_dict(  # type: ignore
-                    validate=validate, ignore=ignore, context=context
+                cast(
+                    "dict",
+                    self.__class__(sh, **kwds).to_dict(  # type: ignore
+                        validate=validate, ignore=ignore, context=context
+                    ),
                 )
                 for sh in shorthand
             ]

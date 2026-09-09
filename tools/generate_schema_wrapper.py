@@ -126,8 +126,11 @@ class FieldChannelMixin:
             kwds = self._kwds.copy()  # type: ignore
             kwds.pop("shorthand")
             return [
-                self.__class__(sh, **kwds).to_dict(  # type: ignore
-                    validate=validate, ignore=ignore, context=context
+                cast(
+                    dict,
+                    self.__class__(sh, **kwds).to_dict(  # type: ignore
+                        validate=validate, ignore=ignore, context=context
+                    ),
                 )
                 for sh in shorthand
             ]
@@ -878,7 +881,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
     it = chain.from_iterable(info.all_names for info in channel_infos.values())
     all_ = sorted(chain(it, COMPAT_EXPORTS))
     imports = [
-        "from typing import Any, overload, Literal, Union, TypedDict",
+        "from typing import Any, cast, overload, Literal, Union, TypedDict",
         "import narwhals.stable.v1 as nw",
         "from altair.utils import infer_encoding_types as _infer_encoding_types",
         "from altair.utils import parse_shorthand",
