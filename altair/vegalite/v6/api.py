@@ -2412,7 +2412,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # that save() will succeed even for large datasets that would
         # normally trigger a MaxRowsError
         if override_data_transformer:
-            with data_transformers.disable_max_rows():
+            with data_transformers.disable_max_rows():  # ty: ignore
                 save(**kwds)
         else:
             save(**kwds)
@@ -3847,7 +3847,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             options = renderers.options.copy()
             options["embed_options"] = options.get("embed_options", {}).copy()
             options["embed_options"].update(kwargs)
-            with renderers.enable(**options):
+            with renderers.enable(**options):  # ty: ignore
                 display(self)
         else:
             display(self)

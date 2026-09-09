@@ -386,7 +386,5 @@ analysis.respect-type-ignore-comments = true  # allow existing type: ignore
 [tool.ty.rules]
 unused-type-ignore-comment = "ignore"  # skip unused type: ignore
 # suppress these so ty check will pass
-invalid-context-manager = "ignore"  # v6/api.py (2)
 invalid-method-override = "ignore"  # many
 invalid-overload = "ignore"  # v6/schema/channels.py
-# unresolved-attribute = "ignore"  # v6/schema/channels.py (3)
