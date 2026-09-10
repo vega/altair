@@ -685,7 +685,7 @@ def _condition_to_selection(
         if isinstance(if_false, str):
             if_false = utils.parse_shorthand(if_false)
             if_false.update(kwargs)
-        selection = _Conditional(condition=cond_mutable, **if_false)  # type: ignore
+        selection = _Conditional(condition=cond_mutable, **if_false)  # type: ignore[typeddict-item]
     else:
         raise TypeError(if_false)
     return selection
@@ -912,13 +912,13 @@ def _parse_otherwise(
     selection: SchemaBase | _Conditional[Any]
     if isinstance(statement, SchemaBase):
         selection = statement.copy()
-        conditions.update(**kwds)  # type: ignore
+        conditions.update(**kwds)  # type: ignore[call-arg]
         selection.condition = conditions["condition"]
     else:
         if not isinstance(statement, Mapping):
             statement = _parse_literal(statement)
         selection = conditions
-        selection.update(**statement, **kwds)  # type: ignore
+        selection.update(**statement, **kwds)  # type: ignore[call-arg]
     return selection
 
 
@@ -3795,7 +3795,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     # Display-related methods
 
-    def _repr_mimebundle_(self, *args: Any, **kwds: Any) -> MimeBundleType | None:  # type:ignore
+    def _repr_mimebundle_(self, *args: Any, **kwds: Any) -> MimeBundleType | None:  # type:ignore[return]
         """Return a MIME bundle for display in Jupyter frontends."""
         # Catch errors explicitly to get around issues in Jupyter frontend
         # see https://github.com/ipython/ipython/issues/11038
