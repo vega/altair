@@ -1490,7 +1490,7 @@ class _FromDict:
         on recursive conversions of unhashable to hashable types; the former seems
         to be slightly faster in several benchmarks.
         """
-        if cls._hash_exclude_keys and isinstance(schema, dict):
+        if isinstance(schema, dict):
             schema = {
                 key: val
                 for key, val in schema.items()
