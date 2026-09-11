@@ -68,7 +68,7 @@ expressions can be passed directly to the encoding fields:
 
 This is functionally equivalent to the previous example,
 as Altair automatically adds a corresponding ``transform_calculate``
-internally and and binds the channel to the calculated field.
+internally and binds the channel to the calculated field.
 See :ref:`encoding-inline-expressions` for a full inline-encoding walkthrough,
 including how to set titles and types.
 

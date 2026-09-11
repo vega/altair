@@ -637,9 +637,9 @@ In this case, Altair automatically inserts an internal
 ``transform_calculate`` step and points the channel ``field``
 to a generated ``_calc_<hash>`` field name.
 This is equivalent to manually writing the calculate transform,
-but provides a more convenient syntax for common scenaiors
+but provides a more convenient syntax for common scenarios
 (for more complex scenarios, the explicit calculate transform
-can stil be used).
+can still be used).
 To avoid exposing hash-like generated names in guides, the default title for
 this inline-calculated path is ``None``; use ``.title()`` to override.
 Likewise, the heuristic to determine the field type can be overridden

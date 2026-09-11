@@ -255,7 +255,7 @@ can be made much smaller for generated data than for embedded data.
 Sequence Generator
 ^^^^^^^^^^^^^^^^^^
 Here is an example of using the :func:`sequence` function to generate a sequence of *x*
-data. The *y* values are computed using an :ref:`encoding-inline-expressions`.
+data. The *y* values are computed using :ref:`encoding-inline-expressions`.
 
 .. altair-plot::
 
