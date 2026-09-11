@@ -235,8 +235,11 @@ def mark_{mark}(self, **kwds: Any) -> Self:
 CONFIG_METHOD: Final = """
 @use_signature(core.{classname})
 def {method}(self, *args, **kwargs) -> Self:
-    copy = self.copy(deep=False)  # type: ignore[attr-defined]
-    copy.config = core.{classname}(*args, **kwargs)
+    copy = self.copy(deep=['config'])  # type: ignore[attr-defined]
+    if copy.config is Undefined:
+        copy.config = core.{classname}(*args, **kwargs)
+    else:
+        copy.config = core.{classname}(*args, **{{**copy.config._kwds, **kwargs}})
     return copy
 """
 

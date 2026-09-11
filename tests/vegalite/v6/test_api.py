@@ -376,6 +376,34 @@ def test_chart_operations():
     assert len(chart.vconcat) == 4
 
 
+def test_configure_merges_with_configure_prop_methods() -> None:
+    # https://github.com/altair-viz/altair/issues/3841
+    # `configure()` used to overwrite the whole `config` object, silently
+    # discarding anything set by an earlier `configure_axisBottom()` (or any
+    # other `configure_*` sub-method) call earlier in the chain.
+    data = pd.DataFrame({"foo": [1.1, 2.2, 3.3], "bar": [3, 2, 4]})
+    chart = (
+        alt.Chart(data)
+        .mark_circle()
+        .encode(x="foo", y="bar")
+        .configure_axisBottom(orient="top")
+        .configure(tooltipFormat={"numberFormat": ".2f"})
+    )
+    config = chart.config.to_dict()
+    assert config["axisBottom"] == {"orient": "top"}
+    assert config["tooltipFormat"] == {"numberFormat": ".2f"}
+
+    # A later `configure()` call for the same top-level key still overrides it.
+    chart2 = (
+        alt.Chart(data)
+        .mark_circle()
+        .encode(x="foo", y="bar")
+        .configure(background="white")
+        .configure(background="red")
+    )
+    assert chart2.config.to_dict()["background"] == "red"
+
+
 def test_when() -> None:
     select = alt.selection_point(name="select", on="click")
     condition = alt.condition(select, alt.value(1), "two", empty=False)["condition"]
