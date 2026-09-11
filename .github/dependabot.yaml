@@ -22,10 +22,15 @@ updates:
       interval: "quarterly"
     groups:
       uv-version-updates:
+        applies-to: "version-updates"
         patterns:
           - "*"
         update-types:
           - "minor"
           - "patch"
+      uv-security-updates:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
     commit-message:
       prefix: "build"
