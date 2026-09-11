@@ -235,8 +235,20 @@ def mark_{mark}(self, **kwds: Any) -> Self:
 CONFIG_METHOD: Final = """
 @use_signature(core.{classname})
 def {method}(self, *args, **kwargs) -> Self:
-    copy = self.copy(deep=False)  # type: ignore[attr-defined]
-    copy.config = core.{classname}(*args, **kwargs)
+    copy = self.copy(deep=['config'])  # type: ignore[attr-defined]
+    if not args and not kwargs:
+        # A bare ``configure()`` resets the config, preserving the
+        # behaviour it had before merging was introduced.
+        copy.config = core.{classname}()
+        return copy
+    if args or copy.config is Undefined:
+        copy.config = core.{classname}(*args, **kwargs)
+    else:
+        # Merge into the existing config so that properties set by earlier
+        # ``configure_*()`` calls are kept instead of silently discarded.
+        for prop, val in core.{classname}(**kwargs)._kwds.items():
+            if val is not Undefined:
+                copy.config[prop] = val
     return copy
 """
 

@@ -1157,8 +1157,20 @@ class ConfigMethodMixin:
 
     @use_signature(core.Config)
     def configure(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=False)  # type: ignore[attr-defined]
-        copy.config = core.Config(*args, **kwargs)
+        copy = self.copy(deep=["config"])  # type: ignore[attr-defined]
+        if not args and not kwargs:
+            # A bare ``configure()`` resets the config, preserving the
+            # behaviour it had before merging was introduced.
+            copy.config = core.Config()
+            return copy
+        if args or copy.config is Undefined:
+            copy.config = core.Config(*args, **kwargs)
+        else:
+            # Merge into the existing config so that properties set by earlier
+            # ``configure_*()`` calls are kept instead of silently discarded.
+            for prop, val in core.Config(**kwargs)._kwds.items():
+                if val is not Undefined:
+                    copy.config[prop] = val
         return copy
 
     @use_signature(core.RectConfig)
