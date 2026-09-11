@@ -151,7 +151,9 @@ class FieldChannelMixin:
             explicit_type = self._get("type")  # type: ignore[attr-defined]
             if explicit_type is not Undefined:
                 parsed["type"] = explicit_type
-            elif inferred := _infer_expr_type(shorthand_or_kwds):
+            elif "type" in self._kwds and (  # type: ignore[attr-defined]
+                inferred := _infer_expr_type(shorthand_or_kwds)
+            ):
                 parsed["type"] = inferred
 
             explicit_title = self._get("title")  # type: ignore[attr-defined]

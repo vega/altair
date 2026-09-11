@@ -2320,6 +2320,31 @@ def test_inline_calc_preserves_channel_options():
     }
 
 
+@pytest.mark.parametrize(
+    "channel",
+    [
+        "latitude2",
+        "longitude2",
+        "radius2",
+        "theta2",
+        "x2",
+        "xError",
+        "xError2",
+        "y2",
+        "yError",
+        "yError2",
+    ],
+)
+def test_inline_calc_secondary_channels_omit_type(channel):
+    chart = alt.Chart({"values": [{"x": 1}]}).mark_point().encode(
+        **{channel: alt.datum.x + 1}
+    )
+
+    encoding = chart.to_dict()["encoding"][channel]
+    assert encoding["field"] == "_calc_205e1813"
+    assert "type" not in encoding
+
+
 def test_inline_calc_datum_expr_with_explicit_type_serializes_standard_type():
     """Explicit StandardType values should serialize to schema-valid strings."""
     chart = (
