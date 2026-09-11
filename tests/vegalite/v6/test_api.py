@@ -2261,9 +2261,7 @@ def test_inline_calc_deduplication():
 def test_inline_calc_transform_uses_child_data_scope():
     def child(value):
         return (
-            alt.Chart({"values": [{"x": value}]})
-            .mark_point()
-            .encode(x=alt.datum.x + 1)
+            alt.Chart({"values": [{"x": value}]}).mark_point().encode(x=alt.datum.x + 1)
         )
 
     chart = child(1) | child(10)
@@ -2365,13 +2363,17 @@ def test_inline_calc_explicit_title_override_respected():
 
 
 def test_inline_calc_preserves_channel_options():
-    chart = alt.Chart({"values": [{"x": 1}]}).mark_point().encode(
-        x=alt.X(
-            alt.datum.x + 1,
-            axis=alt.Axis(title="Custom"),
-            scale=alt.Scale(zero=False),
-            sort="descending",
-            type="quantitative",
+    chart = (
+        alt.Chart({"values": [{"x": 1}]})
+        .mark_point()
+        .encode(
+            x=alt.X(
+                alt.datum.x + 1,
+                axis=alt.Axis(title="Custom"),
+                scale=alt.Scale(zero=False),
+                sort="descending",
+                type="quantitative",
+            )
         )
     )
 
@@ -2401,8 +2403,10 @@ def test_inline_calc_preserves_channel_options():
     ],
 )
 def test_inline_calc_secondary_channels_omit_type(channel):
-    chart = alt.Chart({"values": [{"x": 1}]}).mark_point().encode(
-        **{channel: alt.datum.x + 1}
+    chart = (
+        alt.Chart({"values": [{"x": 1}]})
+        .mark_point()
+        .encode(**{channel: alt.datum.x + 1})
     )
 
     encoding = chart.to_dict()["encoding"][channel]
