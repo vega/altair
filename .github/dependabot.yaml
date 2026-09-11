@@ -6,7 +6,7 @@ updates:
     schedule:
       interval: "quarterly"
     groups:
-      github-actions-version-updates:
+      github-actions:
         patterns:
           - "*"
         update-types:
@@ -21,14 +21,17 @@ updates:
     schedule:
       interval: "quarterly"
     groups:
-      uv-version-updates:
+      uv-MAJOR:
         applies-to: "version-updates"
         patterns:
           - "*"
         update-types:
-          - "minor"
-          - "patch"
-      uv-security-updates:
+          - "major"
+      uv-minor:
+        applies-to: "version-updates"
+        patterns:
+          - "*"
+      uv-security:
         applies-to: "security-updates"
         patterns:
           - "*"
