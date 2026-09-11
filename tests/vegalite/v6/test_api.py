@@ -2300,6 +2300,26 @@ def test_inline_calc_explicit_title_override_respected():
     assert spec["encoding"]["x"]["title"] == "X plus Y"
 
 
+def test_inline_calc_preserves_channel_options():
+    chart = alt.Chart({"values": [{"x": 1}]}).mark_point().encode(
+        x=alt.X(
+            alt.datum.x + 1,
+            axis=alt.Axis(title="Custom"),
+            scale=alt.Scale(zero=False),
+            sort="descending",
+        )
+    )
+
+    assert chart.to_dict()["encoding"]["x"] == {
+        "axis": {"title": "Custom"},
+        "field": "_calc_205e1813",
+        "scale": {"zero": False},
+        "sort": "descending",
+        "title": None,
+        "type": "quantitative",
+    }
+
+
 def test_inline_calc_datum_expr_with_explicit_type_serializes_standard_type():
     """Explicit StandardType values should serialize to schema-valid strings."""
     chart = (

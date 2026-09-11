@@ -201,27 +201,20 @@ class FieldChannelMixin:
                 calc_field_name, {"calculate": vega_expr, "as": calc_field_name}
             )
 
-            result: dict[str, Any] = {"field": calc_field_name}
+            parsed = {"field": calc_field_name}
             explicit_type = self._get("type")  # type: ignore[attr-defined]
             if explicit_type is not Undefined:
-                if hasattr(explicit_type, "to_dict"):
-                    result["type"] = explicit_type.to_dict()
-                else:
-                    result["type"] = explicit_type
+                parsed["type"] = explicit_type
             elif inferred := _infer_expr_type(shorthand_or_kwds):
-                result["type"] = inferred
+                parsed["type"] = inferred
 
             explicit_title = self._get("title")  # type: ignore[attr-defined]
-            if explicit_title is not Undefined:
-                if hasattr(explicit_title, "to_dict"):
-                    result["title"] = explicit_title.to_dict()
-                else:
-                    result["title"] = explicit_title
-            else:
+            if explicit_title is Undefined:
                 # Hide hash-based auto-calc field names by default.
-                result["title"] = None
+                parsed["title"] = None
 
-            return result
+            context["parsed_shorthand"] = parsed
+            return super().to_dict(validate=validate, ignore=ignore, context=context)
 
         if shorthand is Undefined:
             parsed = {}
