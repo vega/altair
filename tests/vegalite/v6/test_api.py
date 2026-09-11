@@ -2289,6 +2289,24 @@ def test_inline_calc_no_type_when_uninferrable():
     assert "type" not in spec["encoding"]["x"]
 
 
+@pytest.mark.parametrize(
+    ("expression", "expected_type"),
+    [
+        (alt.expr.PI, "quantitative"),
+        (alt.expr.PI + 1, "quantitative"),
+        (~(alt.datum.x > 1), "nominal"),
+        (alt.expr.lower(alt.datum.s) + "!", None),
+        (alt.expr.year(alt.datum.date), "quantitative"),
+        (alt.expr("year(datum.date) + 1"), None),
+        (alt.expr("random()"), "quantitative"),
+    ],
+)
+def test_inline_calc_type_inference_is_conservative(expression, expected_type):
+    encoding = alt.Chart().mark_point().encode(x=expression).to_dict()["encoding"]["x"]
+
+    assert encoding.get("type") == expected_type
+
+
 def test_inline_calc_exprref_string_syntax():
     """alt.expr("...") should work equivalently to Expression-based inline calc."""
     chart = (
@@ -2335,6 +2353,7 @@ def test_inline_calc_preserves_channel_options():
             axis=alt.Axis(title="Custom"),
             scale=alt.Scale(zero=False),
             sort="descending",
+            type="quantitative",
         )
     )
 

@@ -528,6 +528,15 @@ def _infer_expr_type(expr: Any) -> str | None:  # noqa: C901
     Returns one of ``"quantitative"``, ``"nominal"``, ``"temporal"``, or
     ``None`` when the type cannot be determined statically.
     """
+    if isinstance(expr, bool):
+        return "nominal"
+    elif isinstance(expr, (int, float)):
+        return "quantitative"
+    elif isinstance(expr, str):
+        return "nominal"
+    elif isinstance(expr, (dt.date, dt.datetime)):
+        return "temporal"
+
     from altair.expr.core import (
         BinaryExpression,
         ConstExpression,
@@ -537,37 +546,27 @@ def _infer_expr_type(expr: Any) -> str | None:  # noqa: C901
     )
 
     if isinstance(expr, ConstExpression):
-        val = expr._kwds.get("name", expr._kwds.get("value"))
-        if val is not None:
-            if isinstance(val, bool):
-                return "nominal"
-            elif isinstance(val, (int, float)):
-                return "quantitative"
-            elif isinstance(val, str):
-                return "nominal"
-            elif isinstance(val, (dt.date, dt.datetime)):
-                return "temporal"
-        return None
+        return "quantitative"
 
     if isinstance(expr, GetAttrExpression):
         return None
 
     if isinstance(expr, UnaryExpression):
-        return "quantitative"
+        return "nominal" if expr.op == "!" else "quantitative"
 
     if isinstance(expr, BinaryExpression):
         op = expr.op
-        if op in ("+", "-", "*", "/", "%", "**", "pow"):
+        if op in ("-", "*", "/", "%", "**", "pow"):
             return "quantitative"
         elif op in ("===", "!==", "<", ">", "<=", ">="):
             return "nominal"
         left_type = _infer_expr_type(expr.lhs)
-        if left_type:
-            return left_type
         right_type = _infer_expr_type(expr.rhs)
-        if right_type:
-            return right_type
-        return "quantitative"
+        if op == "+" and left_type == right_type == "quantitative":
+            return "quantitative"
+        elif op in ("&&", "||") and left_type == right_type:
+            return left_type
+        return None
 
     def _infer_function_name_type(name: str) -> str | None:
         if name in {
@@ -610,10 +609,30 @@ def _infer_expr_type(expr: Any) -> str | None:  # noqa: C901
             "indexof",
             "lastindexof",
             "random",
-            "now",
-            "time",
             "timezoneoffset",
             "peek",
+            "year",
+            "month",
+            "day",
+            "date",
+            "hours",
+            "minutes",
+            "seconds",
+            "milliseconds",
+            "quarter",
+            "week",
+            "dayofyear",
+            "utcyear",
+            "utcmonth",
+            "utcday",
+            "utcdate",
+            "utchours",
+            "utcminutes",
+            "utcseconds",
+            "utcmilliseconds",
+            "utcquarter",
+            "utcweek",
+            "utcdayofyear",
         }:
             return "quantitative"
         if name in {
@@ -654,28 +673,8 @@ def _infer_expr_type(expr: Any) -> str | None:  # noqa: C901
         }:
             return "nominal"
         if name in {
-            "year",
-            "month",
-            "day",
-            "date",
-            "hours",
-            "minutes",
-            "seconds",
-            "milliseconds",
-            "quarter",
-            "week",
-            "dayofyear",
-            "utcyear",
-            "utcmonth",
-            "utcday",
-            "utcdate",
-            "utchours",
-            "utcminutes",
-            "utcseconds",
-            "utcmilliseconds",
-            "utcquarter",
-            "utcweek",
-            "utcdayofyear",
+            "now",
+            "time",
             "datetime",
             "utc",
             "timeOffset",
@@ -694,11 +693,21 @@ def _infer_expr_type(expr: Any) -> str | None:  # noqa: C901
     # We support lightweight type inference for the common function-call form.
     expr_string = getattr(expr, "expr", None)
     if isinstance(expr_string, str):
-        stripped = expr_string.lstrip()
+        stripped = expr_string.strip()
         open_paren = stripped.find("(")
         if open_paren > 0:
             fn_name = stripped[:open_paren].strip()
-            if fn_name.isidentifier():
+            depth = 0
+            closes_at_end = False
+            for index, char in enumerate(stripped[open_paren:], start=open_paren):
+                if char == "(":
+                    depth += 1
+                elif char == ")":
+                    depth -= 1
+                    if depth == 0:
+                        closes_at_end = index == len(stripped) - 1
+                        break
+            if fn_name.isidentifier() and closes_at_end:
                 return _infer_function_name_type(fn_name)
 
     return None
