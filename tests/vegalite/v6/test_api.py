@@ -2339,3 +2339,26 @@ def test_inline_calc_does_not_rewrite_datum_expression_channels():
     }
     assert spec["encoding"]["x2"] == {"datum": {"expr": "domain('x',null)[1]"}}
     assert spec["encoding"]["y2"] == {"datum": {"expr": "domain('x',null)[1]"}}
+
+
+@pytest.mark.parametrize(
+    ("datum", "expected"),
+    [
+        (lambda param: param, "threshold"),
+        (lambda param: param + 1, "(threshold + 1)"),
+    ],
+)
+def test_datum_parameter_expressions_compile(datum, expected):
+    param = alt.param(name="threshold", value=3)
+    chart = (
+        alt.Chart()
+        .mark_rule()
+        .encode(y=alt.datum(datum(param), type="quantitative"))
+        .add_params(param)
+    )
+
+    assert chart.to_dict()["encoding"]["y"] == {
+        "datum": {"expr": expected},
+        "type": "quantitative",
+    }
+    chart.to_dict(format="vega")

@@ -29,7 +29,7 @@ class DatumType:
     def __call__(self, datum, **kwargs) -> dict[str, Any]:
         """Specify a datum for use in an encoding."""
         if isinstance(datum, OperatorMixin):
-            datum = {"expr": repr(datum)}
+            datum = {"expr": datum._to_expr()}
         return dict(datum=datum, **kwargs)
 
 
