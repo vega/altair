@@ -4129,7 +4129,7 @@ class Chart(
             If ``validate`` and ``dct`` does not conform to the schema
         """
         for tp in TopLevelMixin.__subclasses__():
-            _tp: Any = super() if tp is Chart else tp
+            _tp: Any = super() if tp is Chart else tp  # ty: ignore[invalid-super-argument]
             try:
                 return _tp.from_dict(dct, validate=validate)
             except jsonschema.ValidationError:
