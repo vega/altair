@@ -2240,6 +2240,34 @@ def test_inline_calc_deduplication():
     assert spec["encoding"]["y"]["field"] == field_name
 
 
+def test_inline_calc_transform_uses_child_data_scope():
+    def child(value):
+        return (
+            alt.Chart({"values": [{"x": value}]})
+            .mark_point()
+            .encode(x=alt.datum.x + 1)
+        )
+
+    chart = child(1) | child(10)
+    spec = chart.to_dict()
+
+    assert "transform" not in spec
+    assert [cell["transform"] for cell in spec["hconcat"]] == [
+        [{"calculate": "(datum.x + 1)", "as": "_calc_205e1813"}],
+        [{"calculate": "(datum.x + 1)", "as": "_calc_205e1813"}],
+    ]
+
+    compiled = chart.to_dict(format="vega")
+    formulas = [
+        transform
+        for data in compiled["data"]
+        for transform in data.get("transform", [])
+        if transform.get("type") == "formula"
+        and transform.get("as") == "_calc_205e1813"
+    ]
+    assert len(formulas) == 2
+
+
 def test_inline_calc_explicit_type_overrides_inferred():
     """An explicit type on the channel overrides type inference."""
     expr = alt.datum.x + alt.datum.y  # would infer "quantitative"
