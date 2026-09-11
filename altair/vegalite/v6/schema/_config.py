@@ -6590,7 +6590,7 @@ class SelectionConfigKwds(TypedDict, total=False):
     point: PointSelectionConfigWithoutTypeKwds
 
 
-class StepKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+class StepKwds(TypedDict, closed=True, total=False):
     """
     :class:`altair.Step` ``TypedDict`` wrapper.
 
@@ -6615,7 +6615,7 @@ class StepKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
     __extra_items__: StepFor_T
 
 
-class StyleConfigIndexKwds(TypedDict, closed=True, total=False):  # type: ignore[call-arg]
+class StyleConfigIndexKwds(TypedDict, closed=True, total=False):
     """
     :class:`altair.StyleConfigIndex` ``TypedDict`` wrapper.
 

@@ -147,7 +147,7 @@ class FieldChannelMixin:
                 calc_field_name, {"calculate": vega_expr, "as": calc_field_name}
             )
 
-            parsed = {"field": calc_field_name}
+            parsed: dict[str, Any] = {"field": calc_field_name}
             explicit_type = self._get("type")  # type: ignore[attr-defined]
             if explicit_type is not Undefined:
                 parsed["type"] = explicit_type
@@ -283,7 +283,7 @@ def configure_{prop}(self, *args, **kwargs) -> Self:
     return copy
 """
 UNIVERSAL_TYPED_DICT = '''
-class {name}(TypedDict{metaclass_kwds}):{comment}
+class {name}(TypedDict{metaclass_kwds}):
     """
     {summary}
 
@@ -912,7 +912,6 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
     all_ = sorted(chain(it, COMPAT_EXPORTS))
     imports = [
         "import hashlib",
-        "import sys",
         "from typing import Any, overload, Literal, Union, TypedDict",
         "import narwhals.stable.v1 as nw",
         "from altair.expr.core import Expression as _Expression",
@@ -943,8 +942,7 @@ def generate_vegalite_channel_wrappers(fp: Path, /) -> ModuleDef[list[str]]:
             "from altair.typing import Optional",
             f"from altair.vegalite.v6.schema.core import {', '.join(TYPING_CORE)}",
             f"from altair.vegalite.v6.api import {', '.join(TYPING_API)}",
-            "from typing import TypeAlias",
-            textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
+            "from typing import Self, TypeAlias",
         ),
         f"\n__all__ = {all_}\n",
         CHANNEL_MIXINS,
@@ -1026,7 +1024,6 @@ def generate_typed_dict(
     TARGET: Literal["annotation"] = "annotation"
     arg_info = codegen.get_args(info)
     metaclass_kwds = ", total=False"
-    comment = ""
     args_it: Iterable[str] = (
         (
             f"{p}: {p_info.to_type_repr(target=TARGET, use_concrete=True)}"
@@ -1049,7 +1046,6 @@ def generate_typed_dict(
         arg_info.iter_args(kwds, exclude=exclude)
     ):
         metaclass_kwds = f", closed=True{metaclass_kwds}"
-        comment = "  # type: ignore[call-arg]"
         kwds_all_tps = chain.from_iterable(
             info.to_type_repr(as_str=False, target=TARGET, use_concrete=True)
             for _, info in arg_info.iter_args(kwds, exclude=exclude)
@@ -1063,7 +1059,6 @@ def generate_typed_dict(
     return UNIVERSAL_TYPED_DICT.format(
         name=name,
         metaclass_kwds=metaclass_kwds,
-        comment=comment,
         summary=(summary or f":class:`altair.{info.title}` ``TypedDict`` wrapper."),
         doc=doc,
         td_args=args,
@@ -1281,9 +1276,8 @@ def vegalite_main(skip_download: bool = False) -> None:
         "\n".join(mixins_imports),
         "\n\n",
         import_type_checking(
-            "import sys",
             "from collections.abc import Sequence",
-            textwrap.indent(import_typing_extensions((3, 11), "Self"), "    "),
+            "from typing import Self",
             "from altair.typing import Optional",
             "from ._typing import * # noqa: F403",
             "from altair import Parameter",

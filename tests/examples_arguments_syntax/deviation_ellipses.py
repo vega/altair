@@ -12,7 +12,7 @@ Inspired by `ggplot2.stat_ellipse`_ and directly based on `Deviation ellipses ex
 .. _@essicolo:
     https://github.com/essicolo
 """
-
+# :new:
 # category: case studies
 import numpy as np
 import pandas as pd

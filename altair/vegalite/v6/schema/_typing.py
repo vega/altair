@@ -7,7 +7,16 @@ import re
 import sys
 from collections.abc import Mapping, Sequence
 from datetime import date, datetime
-from typing import Annotated, Any, Generic, Literal, TypeAlias, TypeVar, get_args
+from typing import (
+    Annotated,
+    Any,
+    Generic,
+    Literal,
+    LiteralString,
+    TypeAlias,
+    TypeVar,
+    get_args,
+)
 
 if sys.version_info >= (3, 15):  # https://peps.python.org/pep-0728/
     from typing import TypedDict
@@ -23,11 +32,6 @@ if sys.version_info >= (3, 12):
     from typing import TypeAliasType
 else:
     from typing_extensions import TypeAliasType
-
-if sys.version_info >= (3, 11):
-    from typing import LiteralString
-else:
-    from typing_extensions import LiteralString
 
 
 __all__ = [

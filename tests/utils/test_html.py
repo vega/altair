@@ -50,3 +50,24 @@ def test_spec_to_html(requirejs, fullhtml, spec):
     assert f"vega-lite@{vegalite_version}" in html
     assert f"vega@{vega_version}" in html
     assert f"vega-embed@{vegaembed_version}" in html
+
+
+def test_spec_to_html_olli(spec):
+    html = spec_to_html(
+        spec,
+        mode="vega-lite",
+        vegalite_version="6.0",
+        vegaembed_version="7",
+        vega_version="6",
+        template="olli",
+    )
+
+    assert "olli@3" in html
+    assert "+esm" in html
+    assert "styles.css" in html
+    assert "olliVis" in html
+    assert "connectOlliToVegaLite" in html
+    assert "withExternalStateParam" in html
+    assert "looksLikeFips" in html
+    assert "enrichWithUSGeo" in html
+    assert "olli-adapters@" not in html

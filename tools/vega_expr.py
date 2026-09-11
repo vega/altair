@@ -24,18 +24,13 @@ from tools.markup import RSTRenderer as _RSTRenderer
 from tools.schemapi.schemapi import SchemaBase as _SchemaBase
 
 if TYPE_CHECKING:
-    import sys
     from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
     from pathlib import Path
     from re import Match, Pattern
+    from typing import LiteralString, Self
 
-    from mistune import BlockState
-
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString, Self
-    else:
-        from typing_extensions import LiteralString, Self
     from _typeshed import SupportsKeysAndGetItem
+    from mistune import BlockState
 
     from tools.markup import Url
 
@@ -624,6 +619,12 @@ class VegaExprDef:
         if s.isalnum():
             yield s
             return
+        if split := split_first_open_bracket(s):
+            before, after = split
+            yield from before
+            yield OPEN_BRACKET
+            yield from after
+            return
 
         end: list[str] = []
         original = s  # Save original string to detect changes
@@ -871,6 +872,16 @@ def expand_urls(url: str, /) -> str:
     else:
         url = url.replace(r"../", VEGA_DOCS_URL)
     return url
+
+
+def split_first_open_bracket(s: str, /) -> tuple[Iterator[str], Iterator[str]] | None:
+    """Split embedded optional-argument markers from mistune text tokens."""
+    if OPEN_BRACKET not in s:
+        return None
+    before, after = s.split(OPEN_BRACKET, maxsplit=1)
+    before_tokens = VegaExprDef._split_markers(before) if before else iter(())
+    after_tokens = VegaExprDef._split_markers(after) if after else iter(())
+    return before_tokens, after_tokens
 
 
 def format_doc(doc: str, /) -> str:

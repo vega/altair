@@ -40,10 +40,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import Unpack
 
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
+    from typing import LiteralString
 
     from altair.datasets._typing import FlFieldStr
     from altair.vegalite.v6.schema._typing import OneOrSeq
@@ -239,7 +236,7 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
 
     def by_dtype(self, name: _Dataset, *dtypes: type[DType]) -> list[str]:
         """
-        Return column names specfied in ``name``'s schema.
+        Return column names specified in ``name``'s schema.
 
         Parameters
         ----------
@@ -360,9 +357,11 @@ class DatasetCache:
         )
 
     def _download_one(self, url: str, fp: Path, /) -> Path:
+        fp.parent.mkdir(parents=True, exist_ok=True)
+        tmp = fp.with_name(f".{fp.name}.{os.getpid()}.tmp")
         with self._rd._opener.open(url) as f:
-            fp.touch()
-            fp.write_bytes(f.read())
+            tmp.write_bytes(f.read())
+        tmp.replace(fp)
         return fp
 
     @property

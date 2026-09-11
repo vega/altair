@@ -1,12 +1,45 @@
 version: 2
+
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "quarterly"
     groups:
       github-actions:
         patterns:
           - "*"
+        update-types:
+          - "major"
+          - "minor"
+          - "patch"
     commit-message:
       prefix: "ci"
+
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "quarterly"
+    groups:
+      # Date-only fourth-segment changes do not match Dependabot's patch filter.
+      uv-minor-date:
+        applies-to: "version-updates"
+        patterns:
+          - "pandas-stubs"
+          - "pyarrow-stubs"
+          - "scipy-stubs"
+          - "types-jsonschema"
+          - "types-setuptools"
+      uv-minor:
+        applies-to: "version-updates"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      uv-security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "build"

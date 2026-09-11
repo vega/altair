@@ -28,6 +28,7 @@ is not changed, then running the script should overwrite the schema wrappers
 with identical copies.
 
 ## Updating Vega versions
+
 All versions are maintained in [pyproject.toml](pyproject.toml).
 
 ### Python Packages
@@ -100,6 +101,20 @@ rewrites, because the internal structure of the schema changed appreciably.
 To cut a new release of Altair, follow the steps outlined in
 [RELEASING.md](RELEASING.md).
 
+## Previewing PR documentation
+
+The `docbuild` workflow uploads the built HTML documentation as a `docs-html`
+artifact. To download and serve the latest docs artifact for a pull request,
+run:
+
+```bash
+uv run task doc-preview-pr -- 1234
+```
+
+Replace `1234` with the pull request number. The command downloads the artifact
+to `./pr-preview-docs` and serves it at <http://localhost:8000>.
+
 ## Web analytics
+
 We use the privacy-friendly [plausible.io](https://plausible.io/) for tracking usage statistics of our documentation.
 It is hosted on [https://views.scientific-python.org](https://views.scientific-python.org). You can view the stats [here](https://views.scientific-python.org/altair-viz.github.io). To get an account to edit the settings of the web tracking, ask another maintainer.

@@ -88,7 +88,9 @@ def _parse_source_file(filename: str | Path) -> tuple[ast.Module | None, str]:
     return node, content
 
 
-def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, int]:
+def get_docstring_and_rest(
+    filename: str | Path,
+) -> tuple[str, str | None, str, int, bool]:
     """
     Separate ``filename`` content between docstring and the rest.
 
@@ -109,6 +111,8 @@ def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, 
         ``filename`` content without the docstring
     lineno: int
          the line number on which the code starts
+    is_new: bool
+        whether the file includes a ``# :new:`` marker before ``# category:``
 
     Notes
     -----
@@ -120,6 +124,15 @@ def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, 
     # Find the category comment
     find_category = re.compile(r"^#\s*category:\s*(.*)$", re.MULTILINE)
     match = find_category.search(content)
+    find_new = re.compile(r"^#\s*:new:\s*$", re.MULTILINE)
+    match_new = find_new.search(content)
+
+    is_new = bool(
+        match is not None
+        and match_new is not None
+        and match_new.start() < match.start()
+    )
+
     if match is not None:
         category = match.groups()[0]
         # remove this comment from the content
@@ -127,58 +140,26 @@ def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, 
     else:
         category = None
 
+    if is_new and match_new is not None:
+        content = content[: match_new.start()] + content[match_new.end() :]
+
     lineno = 1
 
     if node is None:
-        return SYNTAX_ERROR_DOCSTRING, category, content, lineno
+        return SYNTAX_ERROR_DOCSTRING, category, content, lineno, is_new
 
     if not isinstance(node, ast.Module):
         msg = f"This function only supports modules. You provided {node.__class__.__name__}"
         raise TypeError(msg)
-    try:
-        # In python 3.7 module knows its docstring.
-        # Everything else will raise an attribute error
-        docstring = node.docstring  # pyright: ignore[reportAttributeAccessIssue]
-
-        import tokenize
-        from io import BytesIO
-
-        ts = tokenize.tokenize(BytesIO(content).readline)  # pyright: ignore[reportArgumentType]
-        ds_lines = 0
-        # find the first string according to the tokenizer and get
-        # it's end row
-        for tk in ts:
-            if tk.exact_type == 3:
-                ds_lines, _ = tk.end
-                break
-        # grab the rest of the file
-        rest = "\n".join(content.split("\n")[ds_lines:])
-        lineno = ds_lines + 1
-
-    except AttributeError:
-        # this block can be removed when python 3.6 support is dropped
-        if (
-            node.body
-            and isinstance(node.body[0], ast.Expr)
-            and isinstance(node.body[0].value, ast.Constant)
-        ):
-            docstring_node = node.body[0]
-            docstring = docstring_node.value.s  # pyright: ignore[reportAttributeAccessIssue]
-            # python2.7: Code was read in bytes needs decoding to utf-8
-            # unless future unicode_literals is imported in source which
-            # make ast output unicode strings
-            if hasattr(docstring, "decode") and not isinstance(docstring, str):
-                docstring = docstring.decode("utf-8")
-            # python3.8: has end_lineno
-            lineno = getattr(
-                docstring_node, "end_lineno", docstring_node.lineno
-            )  # The last line of the string.
-            # This get the content of the file after the docstring last line
-            # Note: 'maxsplit' argument is not a keyword argument in python2
-            rest = content.split("\n", lineno)[-1]
-            lineno += 1
-        else:
-            docstring, rest = "", ""
+    docstring = ast.get_docstring(node, clean=False)
+    if docstring is not None:
+        docstring_node = node.body[0]
+        assert docstring_node.end_lineno is not None
+        lineno = docstring_node.end_lineno  # The last line of the string.
+        rest = content.split("\n", lineno)[-1]
+        lineno += 1
+    else:
+        rest = ""
 
     if not docstring:
         msg = (
@@ -186,7 +167,7 @@ def get_docstring_and_rest(filename: str | Path) -> tuple[str, str | None, str, 
             "A docstring is required for the example gallery."
         )
         raise ValueError(msg)
-    return docstring, category, rest, lineno
+    return docstring, category, rest, lineno, is_new
 
 
 def prev_this_next(

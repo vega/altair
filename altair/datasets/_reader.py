@@ -40,6 +40,7 @@ from altair.datasets._readimpl import IntoDataFrameT, IntoLazyFrameT, is_availab
 if TYPE_CHECKING:
     import sys
     from collections.abc import Callable, Sequence
+    from typing import LiteralString, TypeAlias
     from urllib.request import OpenerDirector
 
     import pandas as pd
@@ -59,12 +60,6 @@ if TYPE_CHECKING:
         from typing import Unpack
     else:
         from typing_extensions import Unpack
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
-    from typing import TypeAlias
-
     _Polars: TypeAlias = Literal["polars"]
     _Pandas: TypeAlias = Literal["pandas"]
     _PyArrow: TypeAlias = Literal["pyarrow"]
@@ -532,7 +527,7 @@ def _into_implementation(
         Requirement(str(backend)) if isinstance(backend, nw.Implementation) else backend
     )
     primary = _import_guarded(req)
-    impl = nw.Implementation.from_backend(primary)
+    impl = nw.Implementation.from_string(primary)
     if not _is_eager_allowed(impl):
         if impl is nw.Implementation.UNKNOWN:
             msg = f"Package {primary!r} is not supported by `narwhals`."
@@ -554,8 +549,8 @@ def _into_suffix(obj: Path | str, /) -> Any:
 def _steal_eager_parquet(
     read_fns: Sequence[Read[IntoDataFrameT]], /
 ) -> Sequence[Scan[Any]] | None:
-    if convertable := next((rd for rd in read_fns if rd.include <= is_parquet), None):
-        return (_readimpl.into_scan(convertable),)
+    if convertible := next((rd for rd in read_fns if rd.include <= is_parquet), None):
+        return (_readimpl.into_scan(convertible),)
     return None
 
 

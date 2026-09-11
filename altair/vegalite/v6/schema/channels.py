@@ -25,9 +25,8 @@ from ._typing import *  # noqa: F403
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
-    import sys
     from collections.abc import Sequence
-    from typing import TypeAlias
+    from typing import Self, TypeAlias
 
     from altair import Parameter, SchemaBase
     from altair.typing import Optional
@@ -42,11 +41,6 @@ if TYPE_CHECKING:
         Scale,
         TimeUnitParams,
     )
-
-    if sys.version_info >= (3, 11):
-        from typing import Self
-    else:
-        from typing_extensions import Self
 
 
 __all__ = [
@@ -201,7 +195,7 @@ class FieldChannelMixin:
                 calc_field_name, {"calculate": vega_expr, "as": calc_field_name}
             )
 
-            parsed = {"field": calc_field_name}
+            parsed: dict[str, Any] = {"field": calc_field_name}
             explicit_type = self._get("type")  # type: ignore[attr-defined]
             if explicit_type is not Undefined:
                 parsed["type"] = explicit_type

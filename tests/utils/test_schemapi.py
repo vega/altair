@@ -1093,8 +1093,8 @@ def DateTime(
         ),
         (
             (
-                dt.datetime(2003, 5, 1, 1, 30, tzinfo=dt.timezone.utc),
-                dt.datetime(2003, 6, 3, 4, 3, tzinfo=dt.timezone.utc),
+                dt.datetime(2003, 5, 1, 1, 30, tzinfo=dt.UTC),
+                dt.datetime(2003, 6, 3, 4, 3, tzinfo=dt.UTC),
             ),
             (
                 DateTime(2003, 5, 1, 1, 30, 0, 0, utc=True),
@@ -1145,6 +1145,24 @@ def test_to_dict_datetime_unsupported_timezone(tzinfo: dt.timezone) -> None:
 
     with pytest.raises(TypeError, match=r"Unsupported timezone.+\n.+UTC.+local"):
         alt.FieldEqualPredicate(datetime.replace(tzinfo=tzinfo), "column 1")
+
+
+@pytest.mark.parametrize("setter", ["scale", "axis", "sort"])
+def test_property_setter_rejects_multiple_positional_arguments(setter: str) -> None:
+    method = getattr(alt.X("field:Q"), setter)
+    with pytest.raises(
+        TypeError, match=rf"X\.{setter}\(\) accepts at most one positional argument"
+    ):
+        method(["M", "F"], ["#1FC3AA", "#8624F5"])
+
+
+@pytest.mark.parametrize("setter", ["scale", "axis", "sort"])
+def test_property_setter_rejects_positional_and_keyword_arguments(setter: str) -> None:
+    method = getattr(alt.X("field:Q"), setter)
+    with pytest.raises(
+        TypeError, match=rf"X\.{setter}\(\) cannot combine a positional argument"
+    ):
+        method(["M", "F"], domain=["M", "F"])
 
 
 def test_to_dict_datetime_typing() -> None:

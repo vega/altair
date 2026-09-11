@@ -3,6 +3,7 @@ Bar Chart with Labels based on Measured Luminance
 =================================================
 This example shows a basic horizontal bar chart with labels where the measured luminance to decides if the text overlay is be colored ``black`` or ``white``.
 """
+# :new:
 # category: bar charts
 import altair as alt
 from altair.datasets import data

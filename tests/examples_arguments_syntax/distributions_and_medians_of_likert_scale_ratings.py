@@ -223,6 +223,7 @@ values = pd.DataFrame(
 
 y_axis = alt.Y(
     "name",
+    sort=None,
     axis=alt.Axis(
         title=None,
         offset=50,

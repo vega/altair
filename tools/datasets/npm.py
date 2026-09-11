@@ -10,14 +10,8 @@ from urllib.request import Request
 from tools.datasets import datapackage
 
 if TYPE_CHECKING:
-    import sys
+    from typing import LiteralString, TypeAlias
     from urllib.request import OpenerDirector
-
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
-    from typing import TypeAlias
 
     from tools.datasets import PathMap
     from tools.datasets.datapackage import DataPackage

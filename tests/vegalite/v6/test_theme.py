@@ -17,16 +17,12 @@ from tests import slow
 
 if TYPE_CHECKING:
     import sys
+    from typing import LiteralString, TypeAlias
 
     if sys.version_info >= (3, 13):
         from typing import TypeIs
     else:
         from typing_extensions import TypeIs
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
-    from typing import TypeAlias
 
 T = TypeVar("T")
 

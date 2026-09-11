@@ -12,7 +12,7 @@ import typing as t
 from altair.datasets._loader import Loader
 
 if t.TYPE_CHECKING:
-    from typing_extensions import LiteralString
+    from typing import LiteralString
 
     import pandas as pd
     import polars as pl

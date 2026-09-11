@@ -31,7 +31,7 @@ Altair can also be installed with just the dependencies necessary for saving cha
     pip install "altair[save]"
 
 Installing Altair in WASM / Pyodide environments
------------------------------------------------
+------------------------------------------------
 
 Altair is included in the official Pyodide distribution. The version of Altair
 available in Pyodide can be found in the Pyodide package list:
@@ -51,7 +51,7 @@ To install a specific version of Altair, specify the version explicitly:
 
 .. code-block:: python
 
-    await micropip.install("altair==6.0.0")
+    await micropip.install("altair==6.1.0")
 
 Development Installation
 ========================

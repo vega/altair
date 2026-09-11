@@ -221,7 +221,7 @@ values = pd.DataFrame(
     ]
 )
 
-y_axis = alt.Y("name").axis(
+y_axis = alt.Y("name").sort(None).axis(
     title=None,
     offset=50,
     labelFontWeight="bold",

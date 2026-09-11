@@ -1,23 +1,29 @@
-name: build
+name: Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 env:
   UV_SYSTEM_PYTHON: 1
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
         required-dependencies: ["minimum", "latest"]
 
     name: py ${{ matrix.python-version }} with ${{ matrix.required-dependencies }} required deps
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install uv
@@ -36,18 +42,18 @@ jobs:
       - name: Maybe uninstall optional dependencies
         # We uninstall pyarrow and vegafusion for one job to test that we have not
         # accidentally introduced a hard dependency on these libraries.
-        # Uninstalling for Python 3.10 is an arbitrary choice.
+        # Uninstalling for Python 3.11 is an arbitrary choice.
         # Also see https://github.com/vega/altair/pull/3114
-        if: ${{ matrix.python-version == '3.10' }}
+        if: ${{ matrix.python-version == '3.11' }}
         run: |
           uv pip uninstall pyarrow vegafusion vl-convert-python anywidget
       - name: Maybe install lowest supported pandas version
         # We install the lowest supported pandas version for one job to test that
         # it still works. Downgrade to the oldest versions of pandas and numpy that include
-        # Python 3.10 wheels, so only run this job for Python 3.10
-        if: ${{ matrix.python-version == '3.10' }}
+        # Python 3.11 wheels, so only run this job for Python 3.11
+        if: ${{ matrix.python-version == '3.11' }}
         run: |
-          uv pip install pandas==1.3.4 numpy==1.21.2
+          uv pip install pandas==1.5.3 numpy==1.23.5
       - name: Test that schema generation has no effect
         run: |
           uv pip install vl-convert-python
@@ -87,3 +93,16 @@ jobs:
           uv run check-jsonschema --check-metaschema altair/vegalite/v6/schema/vega-lite-schema.json --disable-formats uri-reference
       - name: Show installed versions
         run: uv pip list
+
+  # Branch protection requires one stable check name; this aggregates the test matrix.
+  check-all-tests:
+    name: Check that all tests passed
+    runs-on: ubuntu-latest
+    needs: test
+    if: ${{ always() }}
+    steps:
+      - name: Check matrix result
+        run: |
+          if [ "${{ needs.test.result }}" != "success" ]; then
+            exit 1
+          fi

@@ -1,77 +1,72 @@
-1. Check all [Vega project](https://github.com/orgs/vega/repositories?type=source) versions are up-to-date. See [NOTES_FOR_MAINTAINERS.md](NOTES_FOR_MAINTAINERS.md)
+# Releasing Altair
 
+Altair has two release paths:
 
-2. Make sure to have [set up your environment](CONTRIBUTING.md#setting-up-your-environment).
-   Update your environment with the latest dependencies:
-   
-        uv sync --all-extras
+- Automated stable releases for routine releases where Cocogitto's SemVer calculation is appropriate.
+- Manual releases when maintainers need to choose the release tag themselves.
 
-3. Make certain your branch is in sync with head, and that you have no uncommitted modifications. If you work on a fork, replace `origin` with `upstream`:
- 
-        git checkout main
-        git pull origin main
-        git status  # Should show "nothing to commit, working tree clean"
+## Before Releasing
 
-4. Do a [clean doc build](CONTRIBUTING.md#building-the-documentation-locally):
-   
-   Navigate to http://localhost:8000 and ensure it looks OK (particularly
-   do a visual scan of the gallery thumbnails).
+Check that all [Vega project](https://github.com/orgs/vega/repositories?type=source) versions are up-to-date. See [NOTES_FOR_MAINTAINERS.md](NOTES_FOR_MAINTAINERS.md).
 
-5. Create a new release branch:
-       
-        git switch -c version_6.0.0
+## Releasing
 
-6. Update version to, e.g. 6.0.0:
+### Semi-Automated Release
 
-   - in ``altair/__init__.py``
-   - in ``doc/conf.py``
+The `release` environment in the repository settings must have at least one required reviewer. The workflow verifies this before creating a version tag.
 
-7. Commit changes and push:
+1. A couple of times a month, GitHub Actions will check if notable commits have been made to main (e.g. fixes and features) since the last release. If so, a release candidate will be prepared and an issue will be opened tagging the maintainers to review it before releasing.
+    - If a scheduled candidate proposes an undesired version bump, reject its pending deployment, close its review issue, and rerun the workflow manually. Manual workflow dispatch let's you choose whether to use a `major`, `minor`, or `patch` bump.
+        - To trigger this release workflow manually: go to the "Actions" tab, click the `Prepare Release Draft` workflow to the left, and then "Run workflow".
+    - This workflow automates the following steps:
+        1. Checks for an existing release review issue or draft release and exits if one already exists.
+        2. Uses Cocogitto to inspect conventional commits since the latest `v*` tag.
+        3. Skips the release if no SemVer-relevant changes are found.
+        4. Runs the test suite.
+        5. Generates a release notes preview without creating a version tag.
+        6. Builds and publishes a docs preview from the candidate commit with a release-candidate banner at `release-preview/latest/`.
+        7. Opens an issue with the candidate commit, release notes, docs preview, and review instructions.
+        8. Waits for approval through the protected `release` environment.
+2. Review the issue opened by the workflow. Approve the pending release deployment if the release notes and docs preview look correct, or reject it to abort the release. Rejection creates no version tag or GitHub release.
+3. Approval creates an immutable `vX.Y.Z` tag at the exact reviewed commit and creates a draft GitHub release. Review the draft, publish it on GitHub, and close the release review issue.
+    - Publishing a non-prerelease GitHub release whose tag matches `vX.Y.Z` triggers the `Publish Release to PyPI` workflow. That workflow checks out the release tag, builds the package, publishes to PyPI using trusted publishing, and updates the official documentation.
 
-        git add . -u
-        git commit -m "chore: Bump version to 6.0.0"
-        git push
+### Manual Release
 
-8. Merge release branch into main, make sure that all required checks pass
+Use this path for major releases, maintenance-branch releases, releases that should not follow Cocogitto's automatic SemVer calculation, or if the automated workflow fails. Unlike the automated workflow, the maintainer chooses and creates the release tag manually.
 
-9.  Switch to main, If you work on a fork, replace `origin` with `upstream`:
+1. Make sure to have [set up your environment](CONTRIBUTING.md#setting-up-your-environment). Update your environment with the latest dependencies:
 
-        git switch main
-        git pull origin main
-        
-10. Build a source distribution and universal wheel, 
-    publish to PyPI (Requires correct PyPI owner permissions and [UV_PUBLISH_TOKEN](https://docs.astral.sh/uv/configuration/environment/#uv_publish_token)):
+       uv sync --all-extras
 
-        uv run task publish
+2. Make certain your branch is in sync with head, and that you have no uncommitted modifications. If you work on a fork, replace `origin` with `upstream`:
 
-11. Build and publish docs (Requires write-access to [altair-viz/altair-viz.github.io](https://github.com/altair-viz/altair-viz.github.io)):
+       git checkout main
+       git pull origin main
+       git status  # Should show "nothing to commit, working tree clean"
 
-        uv run task doc-publish-clean-build
+3. Do a [clean doc build](CONTRIBUTING.md#building-the-documentation-locally):
 
-12. On main, tag the release. If you work on a fork, replace `origin` with `upstream`:
+       uv run task doc-build -- --clean
 
-       git tag -a v6.0.0 -m "Version 6.0.0 release"
-       git push origin v6.0.0
+   Navigate to http://localhost:8000 and ensure it looks OK, particularly the gallery thumbnails.
 
-13. Create a new branch:
-       
-       git switch -c maint_6.1.0dev
+4. Run the test suite:
 
-14. Update version and add 'dev' suffix, e.g. 6.1.0dev:
+       uv run task test
 
-    - in ``altair/__init__.py``
-    - in ``doc/conf.py``
+5. Tag the release. If you work on a fork, replace `origin` with `upstream`:
 
-15. Commit changes and push:
+        git tag -a v6.0.0 -m "Version 6.0.0 release"
+        git push origin tag v6.0.0
 
-        git add . -u
-        git commit -m "chore: Bump version to 6.1.0dev"
-        git push
-        
-16. Merge maintenance branch into main
+6. Create a draft release at https://github.com/vega/altair/releases/new for the tag. Review the release notes, then publish the release. Publishing the GitHub release triggers PyPI publishing automatically for `vX.Y.Z` tags.
 
-17. Double-check that a conda-forge pull request is generated from the updated
-    pip package by the conda-forge bot (may take up to several hours):
-    https://github.com/conda-forge/altair-feedstock/pulls
+7. Publish the updated documentation. To do this manually, write access to [altair-viz/altair-viz.github.io](https://github.com/altair-viz/altair-viz.github.io) is required:
 
-18. Publish a new release in https://github.com/vega/altair/releases/
+        uv run task doc-build -- --clean
+        uv run task doc-publish
+
+## After Releasing
+
+Double-check that a conda-forge pull request is generated from the updated PyPI package by the conda-forge bot. This is usually quick, but may take up to several hours: https://github.com/conda-forge/altair-feedstock/pulls
