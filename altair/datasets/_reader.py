@@ -527,7 +527,7 @@ def _into_implementation(
         Requirement(str(backend)) if isinstance(backend, nw.Implementation) else backend
     )
     primary = _import_guarded(req)
-    impl = nw.Implementation.from_backend(primary)
+    impl = nw.Implementation.from_string(primary)
     if not _is_eager_allowed(impl):
         if impl is nw.Implementation.UNKNOWN:
             msg = f"Package {primary!r} is not supported by `narwhals`."
