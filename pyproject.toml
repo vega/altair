@@ -375,9 +375,18 @@ ignore = [
 ]
 
 [tool.ty]
-src.include = ["altair", "doc", "tools"]
-src.exclude = ["altair/datasets", "altair/jupyter", "altair/utils"]
+src.include = [
+    "altair",
+    # "tests",
+    "tools",
+]
+src.exclude = [
+    "altair/datasets",
+    "altair/jupyter",
+    "altair/utils",
+]
 
 [tool.ty.rules]
-invalid-method-override = "ignore"  # many
-invalid-overload = "ignore"  # v6/schema/channels.py
+invalid-method-override = "ignore"
+invalid-overload = "ignore"
+deprecated = "ignore"
