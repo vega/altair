@@ -21,16 +21,22 @@ updates:
     schedule:
       interval: "quarterly"
     groups:
-      uv-MAJOR:
+      # Date-only fourth-segment changes do not match Dependabot's patch filter.
+      uv-minor-date:
         applies-to: "version-updates"
         patterns:
-          - "*"
-        update-types:
-          - "major"
+          - "pandas-stubs"
+          - "pyarrow-stubs"
+          - "scipy-stubs"
+          - "types-jsonschema"
+          - "types-setuptools"
       uv-minor:
         applies-to: "version-updates"
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
       uv-security:
         applies-to: "security-updates"
         patterns:
