@@ -12,10 +12,7 @@ else:
 
 
 if TYPE_CHECKING:
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
+    from typing import LiteralString
 
 __all__ = [
     "AltairDeprecationWarning",

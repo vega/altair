@@ -40,6 +40,7 @@ from altair.datasets._readimpl import IntoDataFrameT, IntoLazyFrameT, is_availab
 if TYPE_CHECKING:
     import sys
     from collections.abc import Callable, Sequence
+    from typing import LiteralString, TypeAlias
     from urllib.request import OpenerDirector
 
     import pandas as pd
@@ -59,12 +60,6 @@ if TYPE_CHECKING:
         from typing import Unpack
     else:
         from typing_extensions import Unpack
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
-    from typing import TypeAlias
-
     _Polars: TypeAlias = Literal["polars"]
     _Pandas: TypeAlias = Literal["pandas"]
     _PyArrow: TypeAlias = Literal["pyarrow"]

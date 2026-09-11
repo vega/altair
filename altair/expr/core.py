@@ -65,7 +65,7 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> str:
     args: tuple[int, ...] = obj.year, obj.month - 1, obj.day
     if isinstance(obj, dt.datetime):
         if tzinfo := obj.tzinfo:
-            if tzinfo is dt.timezone.utc:
+            if tzinfo is dt.UTC:
                 fn_name = "utc"
             else:
                 msg = (

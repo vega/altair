@@ -7,11 +7,7 @@ from typing import TYPE_CHECKING, Any, Literal, overload
 if TYPE_CHECKING:
     from collections.abc import Callable
     from os import PathLike
-
-    if sys.version_info >= (3, 11):
-        from typing import Self
-    else:
-        from typing_extensions import Self
+    from typing import Self
 
 
 class _CatchDisplay:

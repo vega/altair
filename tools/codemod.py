@@ -19,13 +19,8 @@ else:
     from typing_extensions import Protocol, TypeAliasType
 
 if TYPE_CHECKING:
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
-
     from collections.abc import Iterator
-    from typing import ClassVar, Literal
+    from typing import ClassVar, Literal, LiteralString
 
 
 __all__ = ["extract_func_def", "extract_func_def_embed", "ruff", "ruff_inline_docs"]

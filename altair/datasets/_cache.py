@@ -40,10 +40,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import Unpack
 
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
+    from typing import LiteralString
 
     from altair.datasets._typing import FlFieldStr
     from altair.vegalite.v6.schema._typing import OneOrSeq

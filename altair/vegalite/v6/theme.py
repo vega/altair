@@ -10,14 +10,8 @@ from altair.vegalite.v6.schema._config import ThemeConfig
 from altair.vegalite.v6.schema._typing import VegaThemes
 
 if TYPE_CHECKING:
-    import sys
     from functools import partial
-    from typing import TypeAlias
-
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
+    from typing import LiteralString, TypeAlias
 
     from altair.utils.plugin_registry import PluginEnabler
 
@@ -100,23 +94,28 @@ ENTRY_POINT_GROUP: Final = "altair.vegalite.v6.theme"
 
 # NOTE: `themes` def has an entry point group
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
+register = super(ThemeRegistry, themes).register
 
-themes.register(
+register(
     "default",
-    lambda: {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}},
+    lambda: ThemeConfig(
+        config={
+            "view": {"continuousWidth": 300, "continuousHeight": 300},
+        },
+    ),
 )
-themes.register(
+register(
     "opaque",
-    lambda: {
-        "config": {
+    lambda: ThemeConfig(
+        config={
             "background": "white",
             "view": {"continuousWidth": 300, "continuousHeight": 300},
-        }
-    },
+        },
+    ),
 )
-themes.register("none", ThemeConfig)
+register("none", ThemeConfig)
 
 for theme in VEGA_THEMES:
-    themes.register(theme, VegaTheme(theme))
+    register(theme, VegaTheme(theme))
 
 themes.enable("default")

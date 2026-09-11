@@ -24,18 +24,13 @@ from tools.markup import RSTRenderer as _RSTRenderer
 from tools.schemapi.schemapi import SchemaBase as _SchemaBase
 
 if TYPE_CHECKING:
-    import sys
     from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
     from pathlib import Path
     from re import Match, Pattern
+    from typing import LiteralString, Self
 
-    from mistune import BlockState
-
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString, Self
-    else:
-        from typing_extensions import LiteralString, Self
     from _typeshed import SupportsKeysAndGetItem
+    from mistune import BlockState
 
     from tools.markup import Url
 

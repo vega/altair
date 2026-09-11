@@ -11,13 +11,9 @@ from . import core
 
 if TYPE_CHECKING:
     # ruff: noqa: F405
-    import sys
     from collections.abc import Sequence
+    from typing import Self
 
-    if sys.version_info >= (3, 11):
-        from typing import Self
-    else:
-        from typing_extensions import Self
     from altair import Parameter
     from altair.typing import Optional
 

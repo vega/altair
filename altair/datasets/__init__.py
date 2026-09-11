@@ -80,13 +80,7 @@ from typing import TYPE_CHECKING
 from altair.datasets._loader import Loader
 
 if TYPE_CHECKING:
-    import sys
-    from typing import Any
-
-    if sys.version_info >= (3, 11):
-        from typing import LiteralString
-    else:
-        from typing_extensions import LiteralString
+    from typing import Any, LiteralString
 
     from altair.datasets._data import DataObject
     from altair.datasets._loader import _Load

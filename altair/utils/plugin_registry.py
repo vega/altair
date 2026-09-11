@@ -281,11 +281,4 @@ class PluginRegistry(Generic[PluginT, R]):
 
 def importlib_metadata_get(group):
     ep = entry_points()
-    # 'select' was introduced in Python 3.10 and 'get' got deprecated
-    # We don't check for Python version here as by checking with hasattr we
-    # also get compatibility with the importlib_metadata package which had a different
-    # deprecation cycle for 'get'
-    if hasattr(ep, "select"):
-        return ep.select(group=group)  # pyright: ignore
-    else:
-        return ep.get(group, [])
+    return ep.select(group=group)
