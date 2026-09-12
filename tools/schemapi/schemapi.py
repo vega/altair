@@ -518,6 +518,198 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> dict[str, Any]:
     return result
 
 
+def _infer_expr_type(expr: Any) -> str | None:  # noqa: C901
+    """
+    Infer the Vega-Lite encoding type for a Python expression object.
+
+    Returns one of ``"quantitative"``, ``"nominal"``, ``"temporal"``, or
+    ``None`` when the type cannot be determined statically.
+    """
+    if isinstance(expr, bool):
+        return "nominal"
+    elif isinstance(expr, (int, float)):
+        return "quantitative"
+    elif isinstance(expr, str):
+        return "nominal"
+    elif isinstance(expr, (dt.date, dt.datetime)):
+        return "temporal"
+
+    from altair.expr.core import (
+        BinaryExpression,
+        ConstExpression,
+        FunctionExpression,
+        GetAttrExpression,
+        UnaryExpression,
+    )
+
+    if isinstance(expr, ConstExpression):
+        return "quantitative"
+
+    if isinstance(expr, GetAttrExpression):
+        return None
+
+    if isinstance(expr, UnaryExpression):
+        return "nominal" if expr.op == "!" else "quantitative"
+
+    if isinstance(expr, BinaryExpression):
+        op = expr.op
+        if op in ("-", "*", "/", "%", "**", "pow"):
+            return "quantitative"
+        elif op in ("===", "!==", "<", ">", "<=", ">="):
+            return "nominal"
+        left_type = _infer_expr_type(expr.lhs)
+        right_type = _infer_expr_type(expr.rhs)
+        if op == "+" and left_type == right_type == "quantitative":
+            return "quantitative"
+        elif op in ("&&", "||") and left_type == right_type:
+            return left_type
+        return None
+
+    def _infer_function_name_type(name: str) -> str | None:
+        if name in {
+            "abs",
+            "ceil",
+            "floor",
+            "max",
+            "min",
+            "pow",
+            "round",
+            "sqrt",
+            "exp",
+            "log",
+            "sin",
+            "cos",
+            "tan",
+            "acos",
+            "asin",
+            "atan",
+            "clamp",
+            "hypot",
+            "sampleNormal",
+            "cumulativeNormal",
+            "densityNormal",
+            "quantileNormal",
+            "sampleLogNormal",
+            "cumulativeLogNormal",
+            "densityLogNormal",
+            "quantileLogNormal",
+            "sampleUniform",
+            "cumulativeUniform",
+            "densityUniform",
+            "quantileUniform",
+            "lerp",
+            "span",
+            "toNumber",
+            "parseFloat",
+            "parseInt",
+            "length",
+            "indexof",
+            "lastindexof",
+            "random",
+            "timezoneoffset",
+            "peek",
+            "year",
+            "month",
+            "day",
+            "date",
+            "hours",
+            "minutes",
+            "seconds",
+            "milliseconds",
+            "quarter",
+            "week",
+            "dayofyear",
+            "utcyear",
+            "utcmonth",
+            "utcday",
+            "utcdate",
+            "utchours",
+            "utcminutes",
+            "utcseconds",
+            "utcmilliseconds",
+            "utcquarter",
+            "utcweek",
+            "utcdayofyear",
+        }:
+            return "quantitative"
+        if name in {
+            "lower",
+            "upper",
+            "pad",
+            "replace",
+            "substring",
+            "trim",
+            "truncate",
+            "btoa",
+            "atob",
+            "join",
+            "slice",
+            "sort",
+            "reverse",
+            "toString",
+            "extent",
+            "split",
+            "format",
+            "dayFormat",
+            "dayAbbrevFormat",
+            "monthFormat",
+            "monthAbbrevFormat",
+            "isArray",
+            "isBoolean",
+            "isDate",
+            "isDefined",
+            "isNumber",
+            "isObject",
+            "isRegExp",
+            "isString",
+            "isValid",
+            "isNaN",
+            "isFinite",
+            "inrange",
+            "test",
+        }:
+            return "nominal"
+        if name in {
+            "now",
+            "time",
+            "datetime",
+            "utc",
+            "timeOffset",
+            "utcOffset",
+            "timeParse",
+            "utcParse",
+        }:
+            return "temporal"
+        return None
+
+    if isinstance(expr, FunctionExpression):
+        name = expr._kwds.get("name", "")
+        return _infer_function_name_type(name)
+
+    # `alt.expr("...")` returns an ExprRef rather than an Expression.
+    # We support lightweight type inference for the common function-call form.
+    expr_string = getattr(expr, "expr", None)
+    if isinstance(expr_string, str):
+        stripped = expr_string.strip()
+        open_paren = stripped.find("(")
+        if open_paren > 0:
+            fn_name = stripped[:open_paren].strip()
+            depth = 0
+            closes_at_end = False
+            for index, char in enumerate(stripped[open_paren:], start=open_paren):
+                if char == "(":
+                    depth += 1
+                elif char == ")":
+                    depth -= 1
+                    if depth == 0:
+                        closes_at_end = index == len(stripped) - 1
+                        break
+            if fn_name.isidentifier() and closes_at_end:
+                return _infer_function_name_type(fn_name)
+
+    return None
+
+
 def _todict(obj: Any, context: dict[str, Any] | None, np_opt: Any, pd_opt: Any) -> Any:  # noqa: C901
     """Convert an object to a dict representation."""
     if np_opt is not None:
