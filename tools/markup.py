@@ -148,14 +148,18 @@ class InlineParser(_InlineParser):
     def __init__(self, hard_wrap: bool = False) -> None:
         super().__init__(hard_wrap)
 
-    def process_text(self, text: str, state: InlineState) -> None:
+    def process_text(
+        self, text: str, state: InlineState, parse_emphasis: bool = True
+    ) -> None:
         """
         Removes `liquid`_ templating markup.
 
         .. _liquid:
             https://shopify.github.io/liquid/
         """
-        state.append_token({"type": "text", "raw": _RE_LIQUID_INCLUDE.sub(r"", text)})
+        super().process_text(
+            _RE_LIQUID_INCLUDE.sub(r"", text), state, parse_emphasis=parse_emphasis
+        )
 
 
 def read_ast_tokens(source: Url | Path, /) -> list[Token]:
