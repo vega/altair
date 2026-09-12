@@ -45,7 +45,7 @@ jobs:
         uv run ruff format --check --diff
     - name: mypy (type check)
       run: |
-        uv run mypy altair tests
+        uv run mypy altair tests tools
     - name: ty (type check)
       run: |
         uv run ty check
