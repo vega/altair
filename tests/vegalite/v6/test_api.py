@@ -1552,6 +1552,24 @@ def test_themes():
         assert "config" not in chart.to_dict()
 
 
+def test_configure_preserves_existing_config_methods():
+    data = pd.DataFrame({"foo": [1.1, 2.2, 3.3], "bar": [3, 2, 4]})
+
+    chart = (
+        alt.Chart(data)
+        .mark_circle()
+        .encode(x="foo", y="bar")
+        .configure_axisBottom(orient="top")
+        .configure(tooltipFormat={"numberFormat": ".2f"})
+    )
+
+    assert chart.to_dict()["config"] == {
+        "view": {"continuousWidth": 300, "continuousHeight": 300},
+        "axisBottom": {"orient": "top"},
+        "tooltipFormat": {"numberFormat": ".2f"},
+    }
+
+
 def test_chart_from_dict():
     base = alt.Chart("data.csv").mark_point().encode(x="x:Q", y="y:Q")
 
