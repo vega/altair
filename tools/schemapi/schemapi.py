@@ -618,13 +618,11 @@ def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
     return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
 
 
-def _live_object_schema(obj: Any, error: jsonschema.exceptions.ValidationError) -> Any:
+def _live_class_schema(obj: Any, error: jsonschema.exceptions.ValidationError) -> Any:
     """
-    Return the object `obj` holds at `error`'s path, with its resolved schema.
+    Return the class inferred for `error`'s path in `obj`, with its resolved schema.
 
-    Returns (None, None) when the path cannot be followed, the object is not a
-    `SchemaBase`, or its schema is a union and so no more specific than the
-    schema already reported.
+    (None, None) if there is no such class, or its schema is a union.
     """
     node = obj
     for key in error.absolute_path:
@@ -635,12 +633,15 @@ def _live_object_schema(obj: Any, error: jsonschema.exceptions.ValidationError) 
                 node = getattr(node, key)
         except (AttributeError, KeyError, IndexError, TypeError):
             return None, None
-    if not isinstance(node, SchemaBase) or node._schema is None:
+    if not isinstance(node, SchemaBase):
         return None, None
-    resolved = _resolve_references(node._schema, node._rootschema or node._schema)
+    tp = _maybe_channel(type(node), error.instance)
+    if not (isinstance(tp, type) and issubclass(tp, SchemaBase) and tp._schema):
+        return None, None
+    resolved = _resolve_references(tp._schema, tp._rootschema or tp._schema)
     if not isinstance(resolved, dict) or "anyOf" in resolved or "oneOf" in resolved:
         return None, None
-    return node, resolved
+    return tp, resolved
 
 
 class SchemaValidationError(jsonschema.ValidationError):
@@ -731,16 +732,12 @@ class SchemaValidationError(jsonschema.ValidationError):
         error: jsonschema.exceptions.ValidationError,
     ) -> str:
         """Output all existing parameters when an unknown parameter is specified."""
-        # The reported schema is whichever union branch failed, not necessarily
-        # the one the user meant - the object Altair constructed does know.
-        node, node_schema = _live_object_schema(self.obj, error)
-        altair_cls = (
-            type(node) if node is not None else self._get_altair_class_for_error(error)
-        )
+        live_cls, live_schema = _live_class_schema(self.obj, error)
+        altair_cls = live_cls or self._get_altair_class_for_error(error)
         param_dict_keys = inspect.signature(altair_cls).parameters.keys()
         param_names_table = self._format_params_as_table(param_dict_keys)
 
-        schema = node_schema if node_schema is not None else error.schema
+        schema = live_schema if live_schema is not None else error.schema
         instance = error.instance if isinstance(error.instance, dict) else {}
         properties = schema.get("properties", {}) if isinstance(schema, dict) else {}
         parameter_names = sorted(name for name in instance if name not in properties)
