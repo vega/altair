@@ -618,6 +618,31 @@ def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
     return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
 
 
+def _live_object_schema(obj: Any, error: jsonschema.exceptions.ValidationError) -> Any:
+    """
+    Return the object `obj` holds at `error`'s path, with its resolved schema.
+
+    Returns (None, None) when the path cannot be followed, the object is not a
+    `SchemaBase`, or its schema is a union and so no more specific than the
+    schema already reported.
+    """
+    node = obj
+    for key in error.absolute_path:
+        try:
+            if isinstance(key, int) or isinstance(node, Mapping):
+                node = node[key]
+            else:
+                node = getattr(node, key)
+        except (AttributeError, KeyError, IndexError, TypeError):
+            return None, None
+    if not isinstance(node, SchemaBase) or node._schema is None:
+        return None, None
+    resolved = _resolve_references(node._schema, node._rootschema or node._schema)
+    if not isinstance(resolved, dict) or "anyOf" in resolved or "oneOf" in resolved:
+        return None, None
+    return node, resolved
+
+
 class SchemaValidationError(jsonschema.ValidationError):
     _JS_TO_PY: ClassVar[Mapping[str, str]] = {
         "boolean": "bool",
@@ -706,16 +731,28 @@ class SchemaValidationError(jsonschema.ValidationError):
         error: jsonschema.exceptions.ValidationError,
     ) -> str:
         """Output all existing parameters when an unknown parameter is specified."""
-        altair_cls = self._get_altair_class_for_error(error)
+        # The reported schema is whichever union branch failed, not necessarily
+        # the one the user meant - the object Altair constructed does know.
+        node, node_schema = _live_object_schema(self.obj, error)
+        altair_cls = (
+            type(node) if node is not None else self._get_altair_class_for_error(error)
+        )
         param_dict_keys = inspect.signature(altair_cls).parameters.keys()
         param_names_table = self._format_params_as_table(param_dict_keys)
 
-        # Error messages for these errors look like this:
-        # "Additional properties are not allowed ('unknown' was unexpected)"
-        # Line below extracts "unknown" from this string
-        parameter_name = error.message.split("('")[-1].split("'")[0]
+        schema = node_schema if node_schema is not None else error.schema
+        instance = error.instance if isinstance(error.instance, dict) else {}
+        properties = schema.get("properties", {}) if isinstance(schema, dict) else {}
+        parameter_names = sorted(name for name in instance if name not in properties)
+        if not parameter_names:
+            # Extract "unknown" from messages shaped like:
+            # "Additional properties are not allowed ('unknown' was unexpected)"
+            parameter_names = [error.message.split("('")[-1].split("'")[0]]
+
+        formatted_parameter_names = ", ".join(map(repr, parameter_names))
+        parameter_text = "parameter" if len(parameter_names) == 1 else "parameters"
         message = f"""\
-`{altair_cls.__name__}` has no parameter named '{parameter_name}'
+`{altair_cls.__name__}` has no {parameter_text} named {formatted_parameter_names}
 
 Existing parameter names are:
 {param_names_table}

@@ -525,6 +525,11 @@ def chart_error_example__additional_value_argument():
     return alt.Chart().mark_point().encode(color=alt.value("red", predicate=True))
 
 
+def chart_error_example__multiple_additional_value_arguments():
+    # Error (#3752): bin and aggregate are not valid arguments to value
+    return alt.Chart().mark_point().encode(y=alt.value(1, bin=True, aggregate="sum"))
+
+
 def chart_error_example__invalid_value_type():
     # Error: Value cannot be an integer in this case
     return (
@@ -831,6 +836,15 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                 value   condition   
 
                 See the help for `ColorValue` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__multiple_additional_value_arguments,
+        r"""`YValue` has no parameters named 'aggregate', 'bin'
+
+                Existing parameter names are:
+                value   
+
+                See the help for `YValue` to read the full description of these parameters$""",
     ),
     (
         chart_error_example__invalid_value_type,
