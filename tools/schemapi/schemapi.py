@@ -618,11 +618,21 @@ def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
     return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
 
 
+def _known_properties(schema: Any, rootschema: Any, /) -> set[str]:
+    """Property names accepted by `schema`, or by any branch of it."""
+    if not isinstance(schema, dict):
+        return set()
+    resolved = _resolve_references(schema, rootschema)
+    if branches := (resolved.get("anyOf") or resolved.get("oneOf")):
+        return set().union(*(_known_properties(b, rootschema) for b in branches))
+    return set(resolved.get("properties", {}))
+
+
 def _live_class_schema(obj: Any, error: jsonschema.exceptions.ValidationError) -> Any:
     """
-    Return the class inferred for `error`'s path in `obj`, with its resolved schema.
+    Return the class inferred for `error`'s path in `obj`, with the names it accepts.
 
-    (None, None) if there is no such class, or its schema is a union.
+    (None, None) if there is no such class.
     """
     node = obj
     for key in error.absolute_path:
@@ -636,12 +646,7 @@ def _live_class_schema(obj: Any, error: jsonschema.exceptions.ValidationError) -
     if not isinstance(node, SchemaBase):
         return None, None
     tp = _maybe_channel(type(node), error.instance)
-    if not (isinstance(tp, type) and issubclass(tp, SchemaBase) and tp._schema):
-        return None, None
-    resolved = _resolve_references(tp._schema, tp._rootschema or tp._schema)
-    if not isinstance(resolved, dict) or "anyOf" in resolved or "oneOf" in resolved:
-        return None, None
-    return tp, resolved
+    return tp, _known_properties(tp._schema, tp._rootschema or tp._schema)
 
 
 class SchemaValidationError(jsonschema.ValidationError):
@@ -732,15 +737,20 @@ class SchemaValidationError(jsonschema.ValidationError):
         error: jsonschema.exceptions.ValidationError,
     ) -> str:
         """Output all existing parameters when an unknown parameter is specified."""
-        live_cls, live_schema = _live_class_schema(self.obj, error)
+        live_cls, known = _live_class_schema(self.obj, error)
         altair_cls = live_cls or self._get_altair_class_for_error(error)
         param_dict_keys = inspect.signature(altair_cls).parameters.keys()
         param_names_table = self._format_params_as_table(param_dict_keys)
 
-        schema = live_schema if live_schema is not None else error.schema
+        if known is None:
+            known = _known_properties(
+                getattr(altair_cls, "_schema", None),
+                getattr(altair_cls, "_rootschema", None),
+            )
         instance = error.instance if isinstance(error.instance, dict) else {}
-        properties = schema.get("properties", {}) if isinstance(schema, dict) else {}
-        parameter_names = sorted(name for name in instance if name not in properties)
+        # An empty `known` means the schema lists no properties at all, so it
+        # cannot tell us which names are unexpected.
+        parameter_names = sorted(n for n in instance if n not in known) if known else []
         if not parameter_names:
             # Extract "unknown" from messages shaped like:
             # "Additional properties are not allowed ('unknown' was unexpected)"
