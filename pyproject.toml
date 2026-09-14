@@ -282,7 +282,7 @@ lint       = "ruff check"
 format     = "ruff format --diff --check"
 ruff-check = "task lint && task format"
 ruff-fix   = "task lint && ruff format"
-type-check = "mypy altair tests && ty check"
+type-check = "mypy altair tests tools && ty check"
 
 pytest-serial = "pytest -m \"no_xdist\" --numprocesses=1"
 pytest        = "pytest && task pytest-serial"
@@ -293,7 +293,7 @@ test-datasets = "task ruff-fix && pytest tests -k test_datasets -m \"not no_xdis
 test-min      = "task ruff-check && task type-check && hatch test --python 3.11"
 test-all      = "task ruff-check && task type-check && hatch test --all"
 
-generate-schema-wrapper = "mypy tools && python tools/generate_schema_wrapper.py && task test"
+generate-schema-wrapper = "python tools/generate_schema_wrapper.py && task test"
 update-init-file        = "python tools/update_init_file.py && task ruff-fix"
 
 doc = "python tools/docs_cli.py"
