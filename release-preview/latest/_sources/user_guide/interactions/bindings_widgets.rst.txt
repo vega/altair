@@ -375,7 +375,8 @@ and populate the x-channel with the values from this data column.
         y='Miles_per_Gallon:Q',
         color='Origin:N'
     ).transform_calculate(
-        x=f'datum[{xcol_param.name}]'
+        x=alt.datum[xcol_param]
+        # x=f'datum[{xcol_param.name}]'  # Also works
     ).add_params(
         xcol_param
     )
