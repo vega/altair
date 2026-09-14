@@ -741,14 +741,18 @@ class SchemaValidationError(jsonschema.ValidationError):
         """Output all existing parameters when an unknown parameter is specified."""
         live_cls, known = _live_class_schema(self.obj, error)
         altair_cls = live_cls or self._get_altair_class_for_error(error)
-        param_dict_keys = inspect.signature(altair_cls).parameters.keys()
-        param_names_table = self._format_params_as_table(param_dict_keys)
-
         if known is None:
             known = _known_properties(
                 getattr(altair_cls, "_schema", None),
                 getattr(altair_cls, "_rootschema", None),
             )
+        # A union class has no written signature, only `(*args, **kwds)`.
+        params = [
+            name
+            for name in inspect.signature(altair_cls).parameters
+            if name not in {"args", "kwds", "self"}
+        ]
+        param_names_table = self._format_params_as_table(params or sorted(known))
         instance = error.instance if isinstance(error.instance, dict) else {}
         # An empty `known` means the schema lists no properties at all, so it
         # cannot tell us which names are unexpected.
@@ -794,13 +798,11 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         """Format param names into a table so that they are easier to read."""
         param_names: tuple[str, ...]
         name_lengths: tuple[int, ...]
+        names = [name for name in param_dict_keys if name not in {"kwds", "self"}]
+        if not names:
+            return ""
         param_names, name_lengths = zip(
-            *[
-                (name, len(name))
-                for name in param_dict_keys
-                if name not in {"kwds", "self"}
-            ],
-            strict=False,
+            *[(name, len(name)) for name in names], strict=False
         )
         # Worst case scenario with the same longest param name in the same
         # row for all columns
