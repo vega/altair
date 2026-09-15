@@ -620,6 +620,48 @@ def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
     return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
 
 
+def _union_forms(
+    schema: Any, rootschema: Any, /, name: str | None = None
+) -> list[tuple[str | None, set[str]]]:
+    """The definition name and accepted property names of each form of `schema`."""
+    if not isinstance(schema, dict):
+        return []
+    if ref := schema.get("$ref"):
+        name = ref.rsplit("/", 1)[-1]
+    resolved = _resolve_references(schema, rootschema)
+    if branches := (resolved.get("anyOf") or resolved.get("oneOf")):
+        return [f for b in branches for f in _union_forms(b, rootschema, name)]
+    return [(name, set(resolved.get("properties", {})))]
+
+
+def _known_properties(schema: Any, rootschema: Any, /) -> set[str]:
+    """Property names accepted by `schema`, or by any form of it."""
+    return set().union(*(props for _, props in _union_forms(schema, rootschema)))
+
+
+def _join(items: Sequence[str], conjunction: str, /) -> str:
+    """Readable enumeration, e.g. "'a', 'b' and 'c'"."""
+    if len(items) == 1:
+        return items[0]
+    return f"{', '.join(items[:-1])} {conjunction} {items[-1]}"
+
+
+def _live_class(obj: Any, error: jsonschema.exceptions.ValidationError, /) -> Any:
+    """The class of the object `obj` holds at `error`'s path, if there is one."""
+    node = obj
+    for key in error.absolute_path:
+        try:
+            if isinstance(key, int) or isinstance(node, Mapping):
+                node = node[key]
+            else:
+                node = getattr(node, key)
+        except (AttributeError, KeyError, IndexError, TypeError):
+            return None
+    if isinstance(node, SchemaBase):
+        return _maybe_channel(type(node), error.instance)
+    return None
+
+
 class SchemaValidationError(jsonschema.ValidationError):
     _JS_TO_PY: ClassVar[Mapping[str, str]] = {
         "boolean": "bool",
@@ -708,21 +750,74 @@ class SchemaValidationError(jsonschema.ValidationError):
         error: jsonschema.exceptions.ValidationError,
     ) -> str:
         """Output all existing parameters when an unknown parameter is specified."""
-        altair_cls = self._get_altair_class_for_error(error)
-        param_dict_keys = inspect.signature(altair_cls).parameters.keys()
-        param_names_table = self._format_params_as_table(param_dict_keys)
+        instance = error.instance if isinstance(error.instance, dict) else {}
+        altair_cls = _live_class(self.obj, error)
+        known = (
+            _known_properties(altair_cls._schema, altair_cls._rootschema)
+            if altair_cls
+            else set()
+        )
+        unexpected = sorted(n for n in instance if n not in known) if known else []
 
-        # Error messages for these errors look like this:
-        # "Additional properties are not allowed ('unknown' was unexpected)"
-        # Line below extracts "unknown" from this string
-        parameter_name = error.message.split("('")[-1].split("'")[0]
-        message = f"""\
-`{altair_cls.__name__}` has no parameter named '{parameter_name}'
+        if not unexpected:
+            # There is no such object, or the one Altair constructed knows every
+            # name here and so is not what this error is about.
+            altair_cls = self._get_altair_class_for_error(error)
+            known = _known_properties(altair_cls._schema, altair_cls._rootschema)
+            if known and all(n in known for n in instance):
+                return self._combined_names_message(altair_cls, instance)
+            # Without a datum/value key saying which variant the instance is,
+            # the class is only a guess from the path name.
+            if not _is_channel(instance):
+                known = _known_properties(error.schema, altair_cls._rootschema)
+            unexpected = sorted(n for n in instance if n not in known)
+        if not unexpected:
+            # Extract "unknown" from messages shaped like:
+            # "Additional properties are not allowed ('unknown' was unexpected)"
+            unexpected = [error.message.split("('")[-1].split("'")[0]]
+
+        # A union class has no written signature, only `(*args, **kwds)`.
+        params = [
+            name
+            for name in inspect.signature(altair_cls).parameters
+            if name not in {"args", "kwds", "self"}
+        ]
+        param_names_table = self._format_params_as_table(params or sorted(known))
+        parameter_text = "parameter" if len(unexpected) == 1 else "parameters"
+        formatted = ", ".join(map(repr, unexpected))
+        return f"""\
+`{altair_cls.__name__}` has no {parameter_text} named {formatted}
 
 Existing parameter names are:
 {param_names_table}
 See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
-        return message
+
+    def _combined_names_message(self, altair_cls: Any, instance: Any, /) -> str:
+        """Every name exists, but not in this combination - only a union can do that."""
+        from altair import vegalite
+
+        forms = [
+            (f, props)
+            for f, props in _union_forms(altair_cls._schema, altair_cls._rootschema)
+            if f
+        ]
+        belongs = []
+        for name in sorted(instance):
+            owners = [f for f, props in forms if name in props]
+            # A name every form accepts says nothing about the clash, and a form
+            # without a public class, e.g. `ConcatSpec<...>`, cannot be looked up.
+            shown = [f"`{f}`" for f in owners if hasattr(vegalite, f)]
+            if shown and len(owners) < len(forms):
+                belongs.append(f"{name!r} belongs to {_join(shown, 'or')}")
+        names = _join([repr(n) for n in sorted(instance)], "and")
+        parts = [f"`{altair_cls.__name__}` does not accept {names} together"]
+        if belongs:
+            parts.append("\n".join(belongs))
+        parts.append(
+            f"See the help for `{altair_cls.__name__}`"
+            " to read the full description of these parameters"
+        )
+        return "\n\n".join(parts)
 
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
@@ -750,13 +845,11 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         """Format param names into a table so that they are easier to read."""
         param_names: tuple[str, ...]
         name_lengths: tuple[int, ...]
+        names = [name for name in param_dict_keys if name not in {"kwds", "self"}]
+        if not names:
+            return ""
         param_names, name_lengths = zip(
-            *[
-                (name, len(name))
-                for name in param_dict_keys
-                if name not in {"kwds", "self"}
-            ],
-            strict=False,
+            *[(name, len(name)) for name in names], strict=False
         )
         # Worst case scenario with the same longest param name in the same
         # row for all columns
