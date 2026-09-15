@@ -1,3 +1,7 @@
+import pytest
+
+# `tools` depends on vl-convert-python at import time
+pytest.importorskip("vl_convert")
 from tools.vega_expr import RAW, SOFTBREAK, TEXT, TYPE, VegaExprDef
 
 
