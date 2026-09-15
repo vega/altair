@@ -137,7 +137,7 @@ def iter_objects(
 ) -> Iterator[str]:
     for name in dir(mod):
         obj = getattr(mod, name)
-        if ignore_private and name.startswith("_"):
+        if ignore_private and (name.startswith("_") or name.endswith("ChannelMixin")):
             continue
         if restrict_to_type is not None and not isinstance(obj, restrict_to_type):
             continue
