@@ -174,7 +174,7 @@ class FieldChannelMixin:
         )
 
 
-class ValueChannelMixin:
+class ValueChannelMixin(core.SchemaBase):
     _encoding_name: str
     def to_dict(
         self,
@@ -184,21 +184,21 @@ class ValueChannelMixin:
     ) -> dict:
         context = context or {}
         ignore = ignore or []
-        condition = self._get("condition", Undefined)  # type: ignore
+        condition = self._get("condition", Undefined)
         copy = self  # don't copy unless we need to
         if condition is not Undefined:
             if isinstance(condition, core.SchemaBase):
                 pass
             elif "field" in condition and "type" not in condition:
                 kwds = parse_shorthand(condition["field"], context.get("data", None))
-                copy = self.copy(deep=["condition"])  # type: ignore
+                copy = self.copy(deep=["condition"])
                 copy["condition"].update(kwds)
-        return super(ValueChannelMixin, copy).to_dict(  # ty: ignore
+        return super(ValueChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )
 
 
-class DatumChannelMixin:
+class DatumChannelMixin(core.SchemaBase):
     _encoding_name: str
     def to_dict(
         self,
@@ -208,9 +208,9 @@ class DatumChannelMixin:
     ) -> dict:
         context = context or {}
         ignore = ignore or []
-        datum = self._get("datum", Undefined)  # type: ignore # noqa
+        datum = self._get("datum", Undefined)  # noqa
         copy = self  # don't copy unless we need to
-        return super(DatumChannelMixin, copy).to_dict(  # ty: ignore
+        return super(DatumChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )
 """
@@ -307,7 +307,7 @@ EXTRA_ITEMS_MESSAGE: Final = """\
 """
 
 ENCODE_METHOD: Final = '''
-class _EncodingMixin:
+class _EncodingMixin(core.SchemaBase):
     def encode(self, *args: Any, {method_args}) -> Self:
         """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
         {docstring}"""
@@ -318,8 +318,7 @@ class _EncodingMixin:
         # Convert args to kwargs based on their types.
         kwargs = _infer_encoding_types(args, kwargs)
         # get a copy of the dict representation of the previous encoding
-        # ignore type as copy method comes from SchemaBase
-        copy = self.copy(deep=['encoding'])  # type: ignore
+        copy = self.copy(deep=['encoding'])
         encoding = copy._get('encoding', {{}})
         if isinstance(encoding, core.VegaLiteSchema):
             encoding = {{k: v for k, v in encoding._kwds.items() if v is not Undefined}}
