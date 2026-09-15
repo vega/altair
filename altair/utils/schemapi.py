@@ -410,7 +410,7 @@ def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidation
         # Ignore mypy error as err.validator as it wrongly sees err.validator
         # as of type Optional[Validator] instead of str which it is according
         # to the documentation and all tested cases
-        errors_by_validator[err.validator].append(err)  # type: ignore[index]
+        errors_by_validator[err.validator].append(err)  # type: ignore
     return dict(errors_by_validator)
 
 
@@ -1110,7 +1110,7 @@ class SchemaBase:
             only stored by reference.
         """
         if deep is True:
-            return cast("Self", _deep_copy(self, set(ignore) if ignore else set()))
+            return cast("Self", _deep_copy(self, set(ignore) if ignore else set()))  # ty: ignore
         with debug_mode(False):
             copy = self.__class__(*self._args, **self._kwds)
         if _is_iterable(deep):
@@ -1133,7 +1133,7 @@ class SchemaBase:
             return self._kwds[attr]
         else:
             try:
-                _getattr = super().__getattr__  # pyright: ignore[reportAttributeAccessIssue]
+                _getattr = super().__getattr__  # pyright: ignore  # ty: ignore
             except AttributeError:
                 _getattr = super().__getattribute__
             return _getattr(attr)
@@ -1326,7 +1326,7 @@ class SchemaBase:
             The altair Chart object built from the specification.
         """
         dct: dict[str, Any] = json.loads(json_string, **kwargs)
-        return cls.from_dict(dct, validate=validate)  # type: ignore[return-value]
+        return cls.from_dict(dct, validate=validate)  # type: ignore
 
     @classmethod
     def validate(
@@ -1490,7 +1490,7 @@ class _FromDict:
         on recursive conversions of unhashable to hashable types; the former seems
         to be slightly faster in several benchmarks.
         """
-        if cls._hash_exclude_keys and isinstance(schema, dict):
+        if isinstance(schema, dict):
             schema = {
                 key: val
                 for key, val in schema.items()

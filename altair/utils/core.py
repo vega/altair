@@ -742,7 +742,7 @@ def _wrap_and_copy_doc(tp: Callable[..., Any], cb: Callable[..., Any]) -> None:
     - Reference to ``tp`` is stored in ``cb.__wrapped__``.
     - The doc for ``cb`` will have a ``.rst`` link added, referring  to ``tp``.
     """
-    cb.__wrapped__ = getattr(tp, "__init__", tp)  # type: ignore[attr-defined]
+    cb.__wrapped__ = getattr(tp, "__init__", tp)  # type: ignore
 
     if doc_in := tp.__doc__:
         line_1 = f"{cb.__doc__ or f'Refer to :class:`{tp.__name__}`'}\n"

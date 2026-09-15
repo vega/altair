@@ -10,7 +10,7 @@ from __future__ import annotations
 #   sense if there are multiple ones
 # However, we need these overloads due to how the propertysetter works
 # mypy: disable-error-code="no-overload-impl, empty-body, misc"
-from typing import TYPE_CHECKING, Any, Literal, TypedDict, Union, overload
+from typing import TYPE_CHECKING, Any, Literal, TypedDict, Union, cast, overload
 
 import narwhals.stable.v1 as nw
 
@@ -160,8 +160,8 @@ class FieldChannelMixin:
     ) -> dict | list[dict]:
         context = context or {}
         ignore = ignore or []
-        shorthand = self._get("shorthand")  # type: ignore[attr-defined]
-        field = self._get("field")  # type: ignore[attr-defined]
+        shorthand = self._get("shorthand")  # type: ignore
+        field = self._get("field")  # type: ignore
 
         if shorthand is not Undefined and field is not Undefined:
             msg = f"{self.__class__.__name__} specifies both shorthand={shorthand} and field={field}. "
@@ -169,11 +169,14 @@ class FieldChannelMixin:
 
         if isinstance(shorthand, (tuple, list)):
             # If given a list of shorthands, then transform it to a list of classes
-            kwds = self._kwds.copy()  # type: ignore[attr-defined]
+            kwds = self._kwds.copy()  # type: ignore
             kwds.pop("shorthand")
             return [
-                self.__class__(sh, **kwds).to_dict(  # type: ignore[call-arg]
-                    validate=validate, ignore=ignore, context=context
+                cast(
+                    "dict",
+                    self.__class__(sh, **kwds).to_dict(  # type: ignore
+                        validate=validate, ignore=ignore, context=context
+                    ),
                 )
                 for sh in shorthand
             ]
@@ -183,9 +186,9 @@ class FieldChannelMixin:
         elif isinstance(shorthand, str):
             data: nw.DataFrame | Any = context.get("data", None)
             parsed = parse_shorthand(shorthand, data=data)
-            type_required = "type" in self._kwds  # type: ignore[attr-defined]
+            type_required = "type" in self._kwds  # type: ignore
             type_in_shorthand = "type" in parsed
-            type_defined_explicitly = self._get("type") is not Undefined  # type: ignore[attr-defined]
+            type_defined_explicitly = self._get("type") is not Undefined  # type: ignore
             if not type_required:
                 # Secondary field names don't require a type argument in VegaLite 3+.
                 # We still parse it out of the shorthand, but drop it here.
@@ -212,7 +215,9 @@ class FieldChannelMixin:
             parsed = {"field": shorthand}
         context["parsed_shorthand"] = parsed
 
-        return super().to_dict(validate=validate, ignore=ignore, context=context)
+        return super().to_dict(  # ty: ignore
+            validate=validate, ignore=ignore, context=context
+        )
 
 
 class ValueChannelMixin:
@@ -226,16 +231,16 @@ class ValueChannelMixin:
     ) -> dict:
         context = context or {}
         ignore = ignore or []
-        condition = self._get("condition", Undefined)  # type: ignore[attr-defined]
+        condition = self._get("condition", Undefined)  # type: ignore
         copy = self  # don't copy unless we need to
         if condition is not Undefined:
             if isinstance(condition, core.SchemaBase):
                 pass
             elif "field" in condition and "type" not in condition:
                 kwds = parse_shorthand(condition["field"], context.get("data", None))
-                copy = self.copy(deep=["condition"])  # type: ignore[attr-defined]
+                copy = self.copy(deep=["condition"])  # type: ignore
                 copy["condition"].update(kwds)
-        return super(ValueChannelMixin, copy).to_dict(
+        return super(ValueChannelMixin, copy).to_dict(  # ty: ignore
             validate=validate, ignore=ignore, context=context
         )
 
@@ -251,9 +256,9 @@ class DatumChannelMixin:
     ) -> dict:
         context = context or {}
         ignore = ignore or []
-        datum = self._get("datum", Undefined)  # type: ignore[attr-defined] # noqa
+        datum = self._get("datum", Undefined)  # type: ignore # noqa
         copy = self  # don't copy unless we need to
-        return super(DatumChannelMixin, copy).to_dict(
+        return super(DatumChannelMixin, copy).to_dict(  # ty: ignore
             validate=validate, ignore=ignore, context=context
         )
 
@@ -22289,7 +22294,7 @@ class _EncodingMixin:
         kwargs = _infer_encoding_types(args, kwargs)
         # get a copy of the dict representation of the previous encoding
         # ignore type as copy method comes from SchemaBase
-        copy = self.copy(deep=["encoding"])  # type: ignore[attr-defined]
+        copy = self.copy(deep=["encoding"])  # type: ignore
         encoding = copy._get("encoding", {})
         if isinstance(encoding, core.VegaLiteSchema):
             encoding = {k: v for k, v in encoding._kwds.items() if v is not Undefined}
