@@ -232,6 +232,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
           TAG: ${{ needs.prepare-release-candidate.outputs.tag }}
+          VERSION: ${{ needs.prepare-release-candidate.outputs.version }}
         run: |
           if gh release view "$TAG" >/dev/null 2>&1; then
             IS_DRAFT=$(gh release view "$TAG" --json isDraft --jq .isDraft)
@@ -244,6 +245,6 @@ jobs:
             gh release create "$TAG" \
               --draft \
               --verify-tag \
-              --title "$TAG" \
+              --title "Version $VERSION" \
               --generate-notes
           fi
