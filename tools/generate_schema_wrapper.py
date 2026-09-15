@@ -216,7 +216,7 @@ class DatumChannelMixin:
 """
 
 MARK_MIXIN: Final = '''
-class MarkMethodMixin:
+class MarkMethodMixin(SchemaBase):
     """A mixin class that defines mark methods"""
 
 {methods}
@@ -227,7 +227,7 @@ MARK_METHOD: Final = '''
 def mark_{mark}(self, **kwds: Any) -> Self:
     """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)."""
 
-    copy = self.copy(deep=False)  # type: ignore
+    copy = self.copy(deep=False)
     if any(val is not Undefined for val in kwds.values()):
         copy.mark = core.{mark_def}(type="{mark}", **kwds)
     else:
@@ -238,7 +238,7 @@ def mark_{mark}(self, **kwds: Any) -> Self:
 CONFIG_METHOD: Final = """
 @use_signature(core.{classname})
 def {method}(self, *args, **kwargs) -> Self:
-    copy = self.copy(deep=False)  # type: ignore
+    copy = self.copy(deep=False)
     copy.config = core.{classname}(*args, **kwargs)
     return copy
 """
@@ -246,7 +246,7 @@ def {method}(self, *args, **kwargs) -> Self:
 CONFIG_PROP_METHOD: Final = """
 @use_signature(core.{classname})
 def configure_{prop}(self, *args, **kwargs) -> Self:
-    copy = self.copy(deep=['config'])  # type: ignore
+    copy = self.copy(deep=['config'])
     if copy.config is Undefined:
         copy.config = core.Config()
     copy.config["{prop}"] = core.{classname}(*args, **kwargs)
@@ -1093,7 +1093,7 @@ def generate_vegalite_config_mixin(fp: Path, /) -> str:
     class_name = "ConfigMethodMixin"
     CONFIG: Literal["Config"] = "Config"
     code = [
-        f"class {class_name}:",
+        f"class {class_name}(SchemaBase):",
         '    """A mixin class that defines config methods"""',
     ]
     info = SchemaInfo.from_refname(CONFIG, rootschema=load_schema(fp))
