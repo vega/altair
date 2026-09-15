@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair", "pandas"]
+# ///
 """
 Multi-panel Scatter Plot with Linked Brushing
 ---------------------------------------------

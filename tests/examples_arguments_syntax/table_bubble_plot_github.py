@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair"]
+# ///
 """
 Table Bubble Plot (Github Punch Card)
 -------------------------------------
