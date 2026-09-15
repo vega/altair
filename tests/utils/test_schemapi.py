@@ -530,6 +530,30 @@ def chart_error_example__multiple_additional_value_arguments():
     return alt.Chart().mark_point().encode(y=alt.value(1, bin=True, aggregate="sum"))
 
 
+def chart_error_example__channel_of_another_type():
+    # Error: a Color channel passed to y, where legend is not a valid argument
+    return alt.Chart().mark_point().encode(y=alt.Color("test:N").legend())
+
+
+def chart_error_example__additional_config_argument():
+    # Error: bogus is not a valid argument to a legend config given as a dict
+    return alt.Chart(
+        mark="point",
+        config={"legend": {"gradientDirection": "horizontal", "bogus": 1}},
+    )
+
+
+def chart_error_example__additional_datum_argument_in_layer():
+    # Error: bin is not a valid argument to datum
+    bars = alt.Chart("data.csv").mark_bar().encode(x="Day:O", y="Value:Q")
+    return bars + alt.Chart().mark_rule().encode(y=alt.Y(datum=300, bin=True))
+
+
+def chart_error_example__value_on_latitude():
+    # Error: Latitude accepts no value argument
+    return alt.Chart().mark_point().encode(latitude=alt.value(1))
+
+
 def chart_error_example__invalid_value_type():
     # Error: Value cannot be an integer in this case
     return (
@@ -847,6 +871,44 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                 See the help for `YValue` to read the full description of these parameters$""",
     ),
     (
+        chart_error_example__channel_of_another_type,
+        r"""`Y` has no parameter named 'legend'
+
+                Existing parameter names are:
+                shorthand      bin      scale   timeUnit   
+                aggregate      field    sort    title      
+                axis           impute   stack   type       
+                bandPosition                               
+
+                See the help for `Y` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__additional_config_argument,
+        r"""`Legend` has no parameter named 'bogus'""",
+    ),
+    (
+        chart_error_example__additional_datum_argument_in_layer,
+        r"""`YDatum` has no parameter named 'bin'
+
+                Existing parameter names are:
+                datum          impute   title   
+                axis           scale    type    
+                bandPosition   stack            
+
+                See the help for `YDatum` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__value_on_latitude,
+        r"""`Latitude` has no parameter named 'value'
+
+                Existing parameter names are:
+                shorthand      bin        title   
+                aggregate      field      type    
+                bandPosition   timeUnit           
+
+                See the help for `Latitude` to read the full description of these parameters$""",
+    ),
+    (
         chart_error_example__invalid_value_type,
         rf"""'1' is an invalid value for `value`. Valid values are of type {re.escape("`str | Mapping[str, Any] | None`")}.$""",
     ),
@@ -901,6 +963,42 @@ def test_chart_validation_errors(chart_func, expected_error_message):
     expected_error_message = inspect.cleandoc(expected_error_message)
     with pytest.raises(SchemaValidationError, match=expected_error_message):
         chart.to_dict()
+
+
+@pytest.mark.parametrize(
+    ("construct", "expected_error_message"),
+    [
+        pytest.param(
+            lambda: alt.Data({"values": [], "graticule": True}),
+            r"""`Data` does not accept 'graticule' and 'values' together
+
+                'graticule' belongs to `GraticuleGenerator`
+                'values' belongs to `InlineData`
+
+                See the help for `Data` to read the full description of these parameters$""",
+            id="combination_of_two_forms",
+        ),
+        pytest.param(
+            lambda: alt.Data({"values": [], "bogus": 1}),
+            r"""`Data` has no parameter named 'bogus'
+
+                Existing parameter names are:
+                format      sequence   url      
+                graticule   sphere     values   
+                name                            
+
+                See the help for `Data` to read the full description of these parameters$""",
+            id="name_no_form_accepts",
+        ),
+    ],
+)
+def test_union_class_validation_errors(construct, expected_error_message):
+    # These classes validate on instantiation, so the error is raised before
+    # `to_dict` is reached.
+    with pytest.raises(
+        SchemaValidationError, match=inspect.cleandoc(expected_error_message)
+    ):
+        construct()
 
 
 def test_multiple_field_strings_in_condition():
