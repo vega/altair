@@ -1,7 +1,10 @@
 """Tests of various renderers."""
 
 import json
+import logging
 from importlib.metadata import version as importlib_version
+from types import SimpleNamespace
+from unittest.mock import Mock
 
 import pytest
 from packaging.version import Version
@@ -53,6 +56,95 @@ def test_html_renderer_embed_options(chart):
 
         with alt.renderers.set_embed_options(actions=True):
             assert_has_options(chart, mode="vega-lite", actions=True)
+
+
+@pytest.mark.parametrize(
+    ("vl_convert_version", "expected_kwargs"),
+    [
+        ("1.9.0", {"vl_version": "v6_4", "show_warnings": True}),
+        ("2.0.0-rc7", {"vl_version": "v6_4"}),
+    ],
+)
+def test_html_renderer_compiles_for_warnings(
+    chart, monkeypatch, vl_convert_version, expected_kwargs
+):
+    from altair.vegalite.v6 import display
+
+    compile_ = Mock(return_value={})
+    vlc = SimpleNamespace(__version__=vl_convert_version, vegalite_to_vega=compile_)
+    monkeypatch.setattr(display, "import_vl_convert", lambda: vlc)
+
+    with alt.renderers.enable("html"):
+        chart._repr_mimebundle_(None, None)
+
+    compile_.assert_called_once_with(chart.to_dict(), **expected_kwargs)
+
+
+def test_html_renderer_can_disable_warning_compilation(chart, monkeypatch):
+    from altair.vegalite.v6 import display
+
+    import_vl_convert = Mock()
+    monkeypatch.setattr(display, "import_vl_convert", import_vl_convert)
+
+    with alt.renderers.enable("html", show_warnings=False):
+        chart._repr_mimebundle_(None, None)
+
+    import_vl_convert.assert_not_called()
+
+
+def test_html_renderer_uses_vegafusion_compilation_for_warnings(chart, monkeypatch):
+    from altair.utils import display as display_utils
+    from altair.vegalite.v6 import display
+
+    import_vl_convert = Mock()
+    compile_with_vegafusion = Mock(return_value={})
+    monkeypatch.setattr(display, "import_vl_convert", import_vl_convert)
+    monkeypatch.setattr(
+        display_utils, "compile_with_vegafusion", compile_with_vegafusion
+    )
+
+    with alt.data_transformers.enable("vegafusion"), alt.renderers.enable("html"):
+        chart._repr_mimebundle_(None, None)
+
+    import_vl_convert.assert_not_called()
+    compile_with_vegafusion.assert_called_once_with(chart.to_dict())
+
+
+def test_html_renderer_can_disable_vegafusion_warnings(chart, monkeypatch, caplog):
+    from altair.utils import display as display_utils
+
+    logger = logging.getLogger("vl_convert")
+    logger_disabled = logger.disabled
+
+    def compile_with_warning(spec):
+        logger.warning("compile warning")
+        return {}
+
+    monkeypatch.setattr(display_utils, "compile_with_vegafusion", compile_with_warning)
+
+    with (
+        caplog.at_level(logging.WARNING, logger="vl_convert"),
+        alt.data_transformers.enable("vegafusion"),
+        alt.renderers.enable("html", show_warnings=False),
+    ):
+        chart._repr_mimebundle_(None, None)
+
+    assert "compile warning" not in caplog.messages
+    assert logger.disabled is logger_disabled
+
+
+@pytest.mark.parametrize("error", [ImportError, RuntimeError])
+def test_html_renderer_without_usable_vl_convert(chart, monkeypatch, error):
+    from altair.vegalite.v6 import display
+
+    def raise_error():
+        msg = "vl-convert is unavailable"
+        raise error(msg)
+
+    monkeypatch.setattr(display, "import_vl_convert", raise_error)
+
+    with alt.renderers.enable("html"):
+        assert "text/html" in chart._repr_mimebundle_(None, None)
 
 
 def test_mimetype_renderer_embed_options(chart):
