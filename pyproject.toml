@@ -329,6 +329,11 @@ markers = [
     "no_xdist: Unsafe to run in parallel",
     "geospatial: Tests that require geopandas (deselect with '-m \"not geospatial\"')"
 ]
+filterwarnings = [
+    "error::pytest.PytestRemovedIn10Warning",
+    "error:jsonschema.RefResolver is deprecated:DeprecationWarning",
+    "error:The class `RefResolver` is deprecated:DeprecationWarning",
+]
 
 [tool.mypy]
 warn_unused_ignores = true

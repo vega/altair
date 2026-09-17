@@ -193,9 +193,7 @@ def _get_errors_from_spec(
     else:
         # No resolver is necessary if the schema is already the full schema
         validator_kwargs["resolver"] = (
-            jsonschema.RefResolver.from_schema(rootschema)
-            if rootschema is not None
-            else None
+            _ref_resolver_from_schema(rootschema) if rootschema is not None else None
         )
 
     validator = validator_cls(schema, **validator_kwargs)
@@ -210,6 +208,20 @@ def _get_json_schema_draft_url(schema: dict[str, Any]) -> str:
 def _use_referencing_library() -> bool:
     """In version 4.18.0, the jsonschema package deprecated RefResolver in favor of the referencing library."""
     return Version(jsonschema_version_str) >= Version("4.18")
+
+
+def _ref_resolver_from_schema(schema: dict[str, Any]) -> Any:
+    """
+    Build a jsonschema RefResolver for jsonschema<4.18.
+
+    jsonschema 4.18 deprecated ``RefResolver`` in favor of the referencing library.
+    Keep this fallback for the jsonschema==3.0 CI job, but hide the class from type
+    checkers so ``ty``/pyright do not report the deprecation at the call sites.
+    """
+    if TYPE_CHECKING:
+        return None
+    else:
+        return jsonschema.RefResolver.from_schema(schema)
 
 
 def _prepare_references_in_schema(schema: dict[str, Any]) -> dict[str, Any]:
@@ -571,7 +583,7 @@ def _resolve_references(
                 _VEGA_LITE_ROOT_URI + schema["$ref"]
             ).contents
     else:
-        resolver = jsonschema.RefResolver.from_schema(rootschema or schema)
+        resolver = _ref_resolver_from_schema(rootschema or schema)
         while "$ref" in schema:
             with resolver.resolving(schema["$ref"]) as resolved:
                 schema = resolved
