@@ -369,7 +369,6 @@ reportUnsupportedDunderAll = "none"
 include = ["altair", "doc", "tests", "tools", "sphinxext"]
 ignore = [
     "./altair/vegalite/v6/schema/channels.py",  # 716 warns
-    "./altair/vegalite/v6/schema/mixins.py",    # 1001 warns
     "./altair/jupyter/",                        # Mostly untyped
     "./tests/test_jupyter_chart.py",            # Based on untyped module
 ]
@@ -377,16 +376,16 @@ ignore = [
 [tool.ty]
 src.include = [
     "altair",
-    # "tests",
     "tools",
+    # "tests",  # 807
 ]
 src.exclude = [
-    "altair/datasets",
-    "altair/jupyter",
-    "altair/utils",
+    "altair/datasets",  # 11
+    "altair/jupyter",  # 7
+    "altair/utils",  # 24
 ]
 
 [tool.ty.rules]
-invalid-method-override = "ignore"
-invalid-overload = "ignore"
-deprecated = "ignore"
+deprecated = "ignore"  # 2
+invalid-method-override = "ignore"  # 45
+invalid-overload = "ignore"  # 727
