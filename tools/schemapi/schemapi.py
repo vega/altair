@@ -12,7 +12,6 @@ import zoneinfo
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from functools import partial
-from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
 from math import ceil
 from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypeVar, cast, overload
@@ -21,8 +20,9 @@ import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
 import narwhals.stable.v1 as nw
+import referencing.jsonschema
 from narwhals.stable.v1.dependencies import is_narwhals_series
-from packaging.version import Version
+from referencing import Registry
 
 if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
@@ -34,7 +34,6 @@ if TYPE_CHECKING:
     from typing import ClassVar, TypeAlias
 
     from jsonschema.exceptions import ValidationError
-    from referencing import Registry
 
     from altair.typing import ChartType
 
@@ -71,8 +70,6 @@ _DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#
 # Individual schema classes can override this by setting the
 # class-level _class_is_valid_at_instantiation attribute to False
 DEBUG_MODE: bool = True
-
-jsonschema_version_str = importlib_version("jsonschema")
 
 
 def enable_debug_mode() -> None:
@@ -182,17 +179,10 @@ def _get_errors_from_spec(
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
 
-    if _use_referencing_library():
-        schema = _prepare_references_in_schema(schema)
-        validator_kwargs["registry"] = _get_referencing_registry(
-            rootschema or schema, json_schema_draft_url
-        )
-
-    else:
-        # No resolver is necessary if the schema is already the full schema
-        validator_kwargs["resolver"] = (
-            _ref_resolver_from_schema(rootschema) if rootschema is not None else None
-        )
+    schema = _prepare_references_in_schema(schema)
+    validator_kwargs["registry"] = _get_referencing_registry(
+        rootschema or schema, json_schema_draft_url
+    )
 
     validator = validator_cls(schema, **validator_kwargs)
     errors = list(validator.iter_errors(spec))
@@ -201,25 +191,6 @@ def _get_errors_from_spec(
 
 def _get_json_schema_draft_url(schema: dict[str, Any]) -> str:
     return schema.get("$schema", _DEFAULT_JSON_SCHEMA_DRAFT_URL)
-
-
-def _use_referencing_library() -> bool:
-    """In version 4.18.0, the jsonschema package deprecated RefResolver in favor of the referencing library."""
-    return Version(jsonschema_version_str) >= Version("4.18")
-
-
-def _ref_resolver_from_schema(schema: dict[str, Any]) -> Any:
-    """
-    Build a jsonschema RefResolver for jsonschema<4.18.
-
-    jsonschema 4.18 deprecated ``RefResolver`` in favor of the referencing library.
-    Keep this fallback for the jsonschema==3.0 CI job, but hide the class from type
-    checkers so ``ty``/pyright do not report the deprecation at the call sites.
-    """
-    if TYPE_CHECKING:
-        return None
-    else:
-        return jsonschema.RefResolver.from_schema(schema)
 
 
 def _prepare_references_in_schema(schema: dict[str, Any]) -> dict[str, Any]:
@@ -257,46 +228,16 @@ def _prepare_references_in_schema(schema: dict[str, Any]) -> dict[str, Any]:
     return schema
 
 
-# We do not annotate the return value here as the referencing library is not always
-# available and this function is only executed in those cases.
 def _get_referencing_registry(
     rootschema: dict[str, Any], json_schema_draft_url: str | None = None
 ) -> Registry:
-    # Referencing is a dependency of newer jsonschema versions, starting with the
-    # version that is specified in _use_referencing_library and we therefore
-    # can expect that it is installed if the function returns True.
-    # We ignore 'import' mypy errors which happen when the referencing library
-    # is not installed. That's ok as in these cases this function is not called.
-    # We also have to ignore 'unused-ignore' errors as mypy raises those in case
-    # referencing is installed.
-    import referencing  # type: ignore[import,unused-ignore]
-    import referencing.jsonschema  # type: ignore[import,unused-ignore]
-
+    """Build a ``referencing.Registry`` for the Vega-Lite rootschema."""
     if json_schema_draft_url is None:
         json_schema_draft_url = _get_json_schema_draft_url(rootschema)
 
     specification = referencing.jsonschema.specification_with(json_schema_draft_url)
     resource = specification.create_resource(rootschema)
-    return referencing.Registry().with_resource(
-        uri=_VEGA_LITE_ROOT_URI, resource=resource
-    )
-
-
-def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
-    """
-    Drop in replacement for the .json_path property of the jsonschema ValidationError class.
-
-    This is not available as property for ValidationError with jsonschema<4.0.1.
-
-    More info, see https://github.com/vega/altair/issues/3038.
-    """
-    path = "$"
-    for elem in err.absolute_path:
-        if isinstance(elem, int):
-            path += "[" + str(elem) + "]"
-        else:
-            path += "." + elem
-    return path
+    return Registry().with_resource(uri=_VEGA_LITE_ROOT_URI, resource=resource)
 
 
 def _group_errors_by_json_path(
@@ -311,7 +252,7 @@ def _group_errors_by_json_path(
     """
     errors_by_json_path = defaultdict(list)
     for err in errors:
-        err_key = getattr(err, "json_path", _json_path(err))
+        err_key = err.json_path
         errors_by_json_path[err_key].append(err)
     return dict(errors_by_json_path)
 
@@ -570,21 +511,9 @@ def _resolve_references(
     schema: dict[str, Any], rootschema: dict[str, Any] | None = None
 ) -> dict[str, Any]:
     """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
-    if _use_referencing_library():
-        registry = _get_referencing_registry(rootschema or schema)
-        # Using a different variable name to show that this is not the
-        # jsonschema.RefResolver but instead a Resolver from the referencing
-        # library
-        referencing_resolver = registry.resolver()
-        while "$ref" in schema:
-            schema = referencing_resolver.lookup(
-                _VEGA_LITE_ROOT_URI + schema["$ref"]
-            ).contents
-    else:
-        resolver = _ref_resolver_from_schema(rootschema or schema)
-        while "$ref" in schema:
-            with resolver.resolving(schema["$ref"]) as resolved:
-                schema = resolved
+    resolver = _get_referencing_registry(rootschema or schema).resolver()
+    while "$ref" in schema:
+        schema = resolver.lookup(_VEGA_LITE_ROOT_URI + schema["$ref"]).contents
     return schema
 
 
@@ -663,7 +592,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         super().__init__(**err._contents())
         self.obj = obj
         self._errors: GroupedValidationErrors = getattr(
-            err, "_all_errors", {getattr(err, "json_path", _json_path(err)): [err]}
+            err, "_all_errors", {err.json_path: [err]}
         )
         # This is the message from err
         self._original_message = self.message
