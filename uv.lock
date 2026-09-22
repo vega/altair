@@ -117,7 +117,7 @@ requires-dist = [
     { name = "ipython", marker = "extra == 'dev'" },
     { name = "jinja2" },
     { name = "jinja2", marker = "extra == 'doc'" },
-    { name = "jsonschema", specifier = ">=3.0" },
+    { name = "jsonschema", specifier = ">=4.18.0" },
     { name = "mistune", marker = "extra == 'dev'" },
     { name = "mypy", marker = "extra == 'dev'" },
     { name = "myst-parser", marker = "extra == 'doc'" },
