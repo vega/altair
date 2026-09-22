@@ -333,8 +333,6 @@ markers = [
 ]
 filterwarnings = [
     "error::pytest.PytestRemovedIn10Warning",
-    "error:jsonschema.RefResolver is deprecated:DeprecationWarning",
-    "error:The class `RefResolver` is deprecated:DeprecationWarning",
 ]
 
 [tool.mypy]
@@ -396,4 +394,3 @@ src.exclude = [
 [tool.ty.rules]
 invalid-method-override = "ignore"
 invalid-overload = "ignore"
-deprecated = "ignore"
