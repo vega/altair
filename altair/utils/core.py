@@ -945,7 +945,10 @@ def _init_channel_to_name():
     return {
         c: c._encoding_name
         for c in ch.__dict__.values()
-        if isinstance(c, type) and issubclass(c, mixins) and issubclass(c, SchemaBase)
+        if isinstance(c, type)
+        and issubclass(c, mixins)
+        and issubclass(c, SchemaBase)
+        and c not in mixins
     }
 
 
