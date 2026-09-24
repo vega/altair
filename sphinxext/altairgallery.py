@@ -200,6 +200,16 @@ EXAMPLE_TEMPLATE = jinja2.Template(
         .. code:: python
 
 {{ code | indent(12) }}
+
+    .. tab-item:: Interactive (marimo)
+
+        .. raw:: html
+
+            <iframe
+              src="https://marimo.app/github/vega/altair/blob/main/tests/examples_arguments_syntax/{{ name }}.py?embed=true"
+              sandbox="allow-scripts allow-same-origin allow-downloads allow-popups allow-forms"
+              allow="microphone" allowfullscreen
+              width="100%" height="850" frameborder="0"></iframe>
 """
 )
 

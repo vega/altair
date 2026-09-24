@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair", "pandas"]
+# ///
 """
 Filter a Time Series with Date and Number Inputs
 ================================================

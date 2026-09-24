@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair", "numpy", "pandas"]
+# ///
 """
 Polynomial Fit Plot with Regression Transform
 =============================================

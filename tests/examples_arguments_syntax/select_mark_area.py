@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair"]
+# ///
 """
 Using Selection Interval with mark_area
 =========================================

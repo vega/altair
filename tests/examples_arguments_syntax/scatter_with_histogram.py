@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair", "numpy", "pandas"]
+# ///
 """
 Scatter Plot and Histogram with Interval Selection
 ==================================================

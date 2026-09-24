@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair"]
+# ///
 """
 Scatter plot with point paths on hover and search box
 =====================================================
