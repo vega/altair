@@ -589,14 +589,14 @@ def _join(items: Sequence[str], conjunction: str, /) -> str:
 
 def _context_schema(error: jsonschema.exceptions.ValidationError, /) -> Any:
     """The schema at `error`'s location: the outermost union it failed within, if any."""
-    ctx = error
+    schema, parent = error.schema, error.parent
     while (
-        (parent := ctx.parent) is not None
+        parent is not None
         and parent.validator in {"anyOf", "oneOf"}
         and parent.absolute_path == error.absolute_path
     ):
-        ctx = parent
-    return ctx.schema
+        schema, parent = parent.schema, parent.parent
+    return schema
 
 
 def _definition_class(schema: Any, rootschema: Any, /) -> Any:
