@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair", "pandas"]
+# ///
 """
 Population of Falkensee from 1875 to 2014
 -----------------------------------------

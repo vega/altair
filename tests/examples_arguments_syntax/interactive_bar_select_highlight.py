@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair"]
+# ///
 """
 Bar Chart with Highlighting on Hover and Selection on Click
 -----------------------------------------------------------

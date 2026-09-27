@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair"]
+# ///
 """
 U.S. State Capitals Overlaid on a Map of the U.S
 -------------------------------------------------

@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair", "pandas"]
+# ///
 """
 The U.S. Employment Crash During the Great Recession
 ----------------------------------------------------
