@@ -2698,8 +2698,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_aggregate(
         self,
-        aggregate: Optional[list[AggregatedFieldDef]] = Undefined,
-        groupby: Optional[list[str | FieldName]] = Undefined,
+        aggregate: Optional[Sequence[AggregatedFieldDef]] = Undefined,
+        groupby: Optional[Sequence[str | FieldName]] = Undefined,
         **kwds: dict[str, Any] | str,
     ) -> Self:
         """
@@ -2759,8 +2759,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         alt.AggregateTransform : underlying transform object
 
         """
-        if aggregate is Undefined:
-            aggregate = []
+        aggregate_defs = [] if utils.is_undefined(aggregate) else list(aggregate)
         for key, val in kwds.items():
             parsed = utils.parse_shorthand(val)
             dct = {
@@ -2768,15 +2767,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "field": parsed.get("field", Undefined),
                 "op": parsed.get("aggregate", Undefined),
             }
-            assert isinstance(aggregate, list)
-            aggregate.append(core.AggregatedFieldDef(**dct))
+            aggregate_defs.append(core.AggregatedFieldDef(**dct))
         return self._add_transform(
-            core.AggregateTransform(aggregate=aggregate, groupby=groupby)
+            core.AggregateTransform(aggregate=aggregate_defs, groupby=groupby)
         )
 
     def transform_bin(
         self,
-        as_: Optional[str | FieldName | list[str | FieldName]] = Undefined,
+        as_: Optional[str | FieldName | Sequence[str | FieldName]] = Undefined,
         field: Optional[str | FieldName] = Undefined,
         bin: Literal[True] | BinParams = True,
         **kwargs: Any,
@@ -2906,12 +2904,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def transform_density(
         self,
         density: str | FieldName,
-        as_: Optional[list[str | FieldName]] = Undefined,
+        as_: Optional[Sequence[str | FieldName]] = Undefined,
         bandwidth: Optional[float] = Undefined,
         counts: Optional[bool] = Undefined,
         cumulative: Optional[bool] = Undefined,
-        extent: Optional[list[float]] = Undefined,
-        groupby: Optional[list[str | FieldName]] = Undefined,
+        extent: Optional[Sequence[float]] = Undefined,
+        groupby: Optional[Sequence[str | FieldName]] = Undefined,
         maxsteps: Optional[int] = Undefined,
         minsteps: Optional[int] = Undefined,
         steps: Optional[int] = Undefined,
@@ -2985,9 +2983,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         impute: str | FieldName,
         key: str | FieldName,
-        frame: Optional[list[int | None]] = Undefined,
-        groupby: Optional[list[str | FieldName]] = Undefined,
-        keyvals: Optional[list[Any] | ImputeSequence] = Undefined,
+        frame: Optional[Sequence[int | None]] = Undefined,
+        groupby: Optional[Sequence[str | FieldName]] = Undefined,
+        keyvals: Optional[Sequence[Any] | ImputeSequence] = Undefined,
         method: Optional[ImputeMethod_T | ImputeMethod] = Undefined,
         value: Optional[Any] = Undefined,
     ) -> Self:
@@ -3053,8 +3051,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_joinaggregate(
         self,
-        joinaggregate: Optional[list[JoinAggregateFieldDef]] = Undefined,
-        groupby: Optional[list[str | FieldName]] = Undefined,
+        joinaggregate: Optional[Sequence[JoinAggregateFieldDef]] = Undefined,
+        groupby: Optional[Sequence[str | FieldName]] = Undefined,
         **kwargs: str,
     ) -> Self:
         """
@@ -3092,8 +3090,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         --------
         alt.JoinAggregateTransform : underlying transform object
         """
-        if joinaggregate is Undefined:
-            joinaggregate = []
+        joinaggregate_defs = (
+            [] if utils.is_undefined(joinaggregate) else list(joinaggregate)
+        )
         for key, val in kwargs.items():
             parsed = utils.parse_shorthand(val)
             dct = {
@@ -3101,10 +3100,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 "field": parsed.get("field", Undefined),
                 "op": parsed.get("aggregate", Undefined),
             }
-            assert isinstance(joinaggregate, list)
-            joinaggregate.append(core.JoinAggregateFieldDef(**dct))
+            joinaggregate_defs.append(core.JoinAggregateFieldDef(**dct))
         return self._add_transform(
-            core.JoinAggregateTransform(joinaggregate=joinaggregate, groupby=groupby)
+            core.JoinAggregateTransform(
+                joinaggregate=joinaggregate_defs, groupby=groupby
+            )
         )
 
     def transform_extent(
@@ -3238,8 +3238,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_flatten(
         self,
-        flatten: list[str | FieldName],
-        as_: Optional[list[str | FieldName]] = Undefined,
+        flatten: Sequence[str | FieldName],
+        as_: Optional[Sequence[str | FieldName]] = Undefined,
     ) -> Self:
         """
         Add a :class:`FlattenTransform` to the schema.
@@ -3271,8 +3271,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_fold(
         self,
-        fold: list[str | FieldName],
-        as_: Optional[list[str | FieldName]] = Undefined,
+        fold: Sequence[str | FieldName],
+        as_: Optional[Sequence[str | FieldName]] = Undefined,
     ) -> Self:
         """
         Add a :class:`FoldTransform` to the spec.
@@ -3301,9 +3301,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         on: str | FieldName,
         loess: str | FieldName,
-        as_: Optional[list[str | FieldName]] = Undefined,
+        as_: Optional[Sequence[str | FieldName]] = Undefined,
         bandwidth: Optional[float] = Undefined,
-        groupby: Optional[list[str | FieldName]] = Undefined,
+        groupby: Optional[Sequence[str | FieldName]] = Undefined,
     ) -> Self:
         """
         Add a :class:`LoessTransform` to the spec.
@@ -3344,7 +3344,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         lookup: Optional[str] = Undefined,
         from_: Optional[LookupData | LookupSelection] = Undefined,
-        as_: Optional[str | FieldName | list[str | FieldName]] = Undefined,
+        as_: Optional[str | FieldName | Sequence[str | FieldName]] = Undefined,
         default: Optional[str] = Undefined,
         **kwargs: Any,
     ) -> Self:
@@ -3398,7 +3398,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         pivot: str | FieldName,
         value: str | FieldName,
-        groupby: Optional[list[str | FieldName]] = Undefined,
+        groupby: Optional[Sequence[str | FieldName]] = Undefined,
         limit: Optional[int] = Undefined,
         op: Optional[AggregateOp_T | AggregateOp] = Undefined,
     ) -> Self:
@@ -3444,9 +3444,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def transform_quantile(
         self,
         quantile: str | FieldName,
-        as_: Optional[list[str | FieldName]] = Undefined,
-        groupby: Optional[list[str | FieldName]] = Undefined,
-        probs: Optional[list[float]] = Undefined,
+        as_: Optional[Sequence[str | FieldName]] = Undefined,
+        groupby: Optional[Sequence[str | FieldName]] = Undefined,
+        probs: Optional[Sequence[float]] = Undefined,
         step: Optional[float] = Undefined,
     ) -> Self:
         """
@@ -3492,9 +3492,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self,
         on: str | FieldName,
         regression: str | FieldName,
-        as_: Optional[list[str | FieldName]] = Undefined,
-        extent: Optional[list[float]] = Undefined,
-        groupby: Optional[list[str | FieldName]] = Undefined,
+        as_: Optional[Sequence[str | FieldName]] = Undefined,
+        extent: Optional[Sequence[float]] = Undefined,
+        groupby: Optional[Sequence[str | FieldName]] = Undefined,
         method: Optional[
             Literal["linear", "log", "exp", "pow", "quad", "poly"]
         ] = Undefined,
@@ -3578,11 +3578,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_stack(
         self,
-        as_: str | FieldName | list[str],
+        as_: str | FieldName | Sequence[str],
         stack: str | FieldName,
-        groupby: list[str | FieldName],
+        groupby: Sequence[str | FieldName],
         offset: Optional[StackOffset_T] = Undefined,
-        sort: Optional[list[SortField]] = Undefined,
+        sort: Optional[Sequence[SortField]] = Undefined,
     ) -> Self:
         """
         Add a :class:`StackTransform` to the schema.
@@ -3703,11 +3703,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def transform_window(
         self,
-        window: Optional[list[WindowFieldDef]] = Undefined,
-        frame: Optional[list[int | None]] = Undefined,
-        groupby: Optional[list[str]] = Undefined,
+        window: Optional[Sequence[WindowFieldDef]] = Undefined,
+        frame: Optional[Sequence[int | None]] = Undefined,
+        groupby: Optional[Sequence[str]] = Undefined,
         ignorePeers: Optional[bool] = Undefined,
-        sort: Optional[list[SortField | dict[str, str]]] = Undefined,
+        sort: Optional[Sequence[SortField | dict[str, str]]] = Undefined,
         **kwargs: str,
     ) -> Self:
         """
@@ -3777,7 +3777,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         })
 
         """
-        w = window if isinstance(window, list) else []
+        w = [] if utils.is_undefined(window) else list(window)
         if kwargs:
             for as_, shorthand in kwargs.items():
                 kwds: dict[str, Any] = {"as": as_}
