@@ -12,6 +12,7 @@ import types
 import warnings
 from collections import deque
 from functools import partial
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import jsonschema
@@ -43,6 +44,9 @@ if TYPE_CHECKING:
 _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't
 # try to use SchemaBase objects defined elsewhere as wrappers.
+
+
+_REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_actual_json_schema_draft_is_same_as_hardcoded_default():
@@ -172,6 +176,37 @@ class Draft6Schema(_TestSchema):
         **_validation_selection_schema,
         "$schema": "http://json-schema.org/draft-06/schema#",
     }
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        _REPO_ROOT / "tools" / "schemapi" / "schemapi.py",
+        _REPO_ROOT / "altair" / "utils" / "schemapi.py",
+    ],
+)
+def test_schemapi_does_not_use_deprecated_refresolver(path: Path) -> None:
+    # jsonschema.RefResolver is deprecated as of 4.18.0. Type checkers and pytest
+    # (see filterwarnings in pyproject.toml) should not see that name in schemapi.
+    source = path.read_text(encoding="utf-8")
+    assert "RefResolver" not in source
+
+
+def test_resolve_references_follows_nested_refs() -> None:
+    class Nested(_TestSchema):
+        _schema = {"$ref": "#/definitions/Outer"}
+        _rootschema = {
+            "$schema": _JSON_SCHEMA_DRAFT_URL,
+            "definitions": {
+                "Inner": {"type": "string", "enum": ["A"]},
+                "Outer": {"$ref": "#/definitions/Inner"},
+            },
+        }
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", DeprecationWarning)
+        assert Nested.resolve_references() == {"type": "string", "enum": ["A"]}
+        assert Nested("A").to_dict() == "A"
 
 
 def test_construct_multifaceted_schema():

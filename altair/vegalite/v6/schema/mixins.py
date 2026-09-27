@@ -978,13 +978,13 @@ class _ErrorBandDef(SchemaBase):
         )
 
 
-class MarkMethodMixin:
+class MarkMethodMixin(SchemaBase):
     """A mixin class that defines mark methods."""
 
     @use_signature(_MarkDef)
     def mark_arc(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'arc' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="arc", **kwds)
         else:
@@ -994,7 +994,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_area(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'area' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="area", **kwds)
         else:
@@ -1004,7 +1004,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_bar(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'bar' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="bar", **kwds)
         else:
@@ -1014,7 +1014,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_image(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'image' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="image", **kwds)
         else:
@@ -1024,7 +1024,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_line(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'line' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="line", **kwds)
         else:
@@ -1034,7 +1034,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_point(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'point' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="point", **kwds)
         else:
@@ -1044,7 +1044,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_rect(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'rect' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rect", **kwds)
         else:
@@ -1054,7 +1054,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_rule(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'rule' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rule", **kwds)
         else:
@@ -1064,7 +1064,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_text(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'text' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="text", **kwds)
         else:
@@ -1074,7 +1074,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_tick(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'tick' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="tick", **kwds)
         else:
@@ -1084,7 +1084,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_trail(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'trail' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="trail", **kwds)
         else:
@@ -1094,7 +1094,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_circle(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'circle' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="circle", **kwds)
         else:
@@ -1104,7 +1104,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_square(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'square' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="square", **kwds)
         else:
@@ -1114,7 +1114,7 @@ class MarkMethodMixin:
     @use_signature(_MarkDef)
     def mark_geoshape(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'geoshape' (see :class:`MarkDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="geoshape", **kwds)
         else:
@@ -1124,7 +1124,7 @@ class MarkMethodMixin:
     @use_signature(_BoxPlotDef)
     def mark_boxplot(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'boxplot' (see :class:`BoxPlotDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.BoxPlotDef(type="boxplot", **kwds)
         else:
@@ -1134,7 +1134,7 @@ class MarkMethodMixin:
     @use_signature(_ErrorBarDef)
     def mark_errorbar(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'errorbar' (see :class:`ErrorBarDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.ErrorBarDef(type="errorbar", **kwds)
         else:
@@ -1144,7 +1144,7 @@ class MarkMethodMixin:
     @use_signature(_ErrorBandDef)
     def mark_errorband(self, **kwds: Any) -> Self:
         """Set the chart's mark to 'errorband' (see :class:`ErrorBandDef`)."""
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.ErrorBandDef(type="errorband", **kwds)
         else:
@@ -1152,18 +1152,18 @@ class MarkMethodMixin:
         return copy
 
 
-class ConfigMethodMixin:
+class ConfigMethodMixin(SchemaBase):
     """A mixin class that defines config methods."""
 
     @use_signature(core.Config)
     def configure(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=False)  # type: ignore
+        copy = self.copy(deep=False)
         copy.config = core.Config(*args, **kwargs)
         return copy
 
     @use_signature(core.RectConfig)
     def configure_arc(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["arc"] = core.RectConfig(*args, **kwargs)
@@ -1171,7 +1171,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AreaConfig)
     def configure_area(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["area"] = core.AreaConfig(*args, **kwargs)
@@ -1179,7 +1179,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axis(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axis"] = core.AxisConfig(*args, **kwargs)
@@ -1187,7 +1187,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisBand(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisBand"] = core.AxisConfig(*args, **kwargs)
@@ -1195,7 +1195,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisBottom(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisBottom"] = core.AxisConfig(*args, **kwargs)
@@ -1203,7 +1203,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisDiscrete(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisDiscrete"] = core.AxisConfig(*args, **kwargs)
@@ -1211,7 +1211,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisLeft(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisLeft"] = core.AxisConfig(*args, **kwargs)
@@ -1219,7 +1219,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisPoint(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisPoint"] = core.AxisConfig(*args, **kwargs)
@@ -1227,7 +1227,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisQuantitative(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisQuantitative"] = core.AxisConfig(*args, **kwargs)
@@ -1235,7 +1235,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisRight(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisRight"] = core.AxisConfig(*args, **kwargs)
@@ -1243,7 +1243,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisTemporal(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisTemporal"] = core.AxisConfig(*args, **kwargs)
@@ -1251,7 +1251,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisTop(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisTop"] = core.AxisConfig(*args, **kwargs)
@@ -1259,7 +1259,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisX(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisX"] = core.AxisConfig(*args, **kwargs)
@@ -1267,7 +1267,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisXBand(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisXBand"] = core.AxisConfig(*args, **kwargs)
@@ -1275,7 +1275,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisXDiscrete(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisXDiscrete"] = core.AxisConfig(*args, **kwargs)
@@ -1283,7 +1283,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisXPoint(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisXPoint"] = core.AxisConfig(*args, **kwargs)
@@ -1291,7 +1291,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisXQuantitative(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisXQuantitative"] = core.AxisConfig(*args, **kwargs)
@@ -1299,7 +1299,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisXTemporal(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisXTemporal"] = core.AxisConfig(*args, **kwargs)
@@ -1307,7 +1307,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisY(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisY"] = core.AxisConfig(*args, **kwargs)
@@ -1315,7 +1315,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisYBand(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisYBand"] = core.AxisConfig(*args, **kwargs)
@@ -1323,7 +1323,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisYDiscrete(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisYDiscrete"] = core.AxisConfig(*args, **kwargs)
@@ -1331,7 +1331,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisYPoint(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisYPoint"] = core.AxisConfig(*args, **kwargs)
@@ -1339,7 +1339,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisYQuantitative(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisYQuantitative"] = core.AxisConfig(*args, **kwargs)
@@ -1347,7 +1347,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.AxisConfig)
     def configure_axisYTemporal(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisYTemporal"] = core.AxisConfig(*args, **kwargs)
@@ -1355,7 +1355,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.BarConfig)
     def configure_bar(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["bar"] = core.BarConfig(*args, **kwargs)
@@ -1363,7 +1363,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.BoxPlotConfig)
     def configure_boxplot(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["boxplot"] = core.BoxPlotConfig(*args, **kwargs)
@@ -1371,7 +1371,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.MarkConfig)
     def configure_circle(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["circle"] = core.MarkConfig(*args, **kwargs)
@@ -1379,7 +1379,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.CompositionConfig)
     def configure_concat(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["concat"] = core.CompositionConfig(*args, **kwargs)
@@ -1387,7 +1387,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.ErrorBandConfig)
     def configure_errorband(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["errorband"] = core.ErrorBandConfig(*args, **kwargs)
@@ -1395,7 +1395,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.ErrorBarConfig)
     def configure_errorbar(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["errorbar"] = core.ErrorBarConfig(*args, **kwargs)
@@ -1403,7 +1403,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.CompositionConfig)
     def configure_facet(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["facet"] = core.CompositionConfig(*args, **kwargs)
@@ -1411,7 +1411,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.MarkConfig)
     def configure_geoshape(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["geoshape"] = core.MarkConfig(*args, **kwargs)
@@ -1419,7 +1419,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.HeaderConfig)
     def configure_header(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["header"] = core.HeaderConfig(*args, **kwargs)
@@ -1427,7 +1427,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.HeaderConfig)
     def configure_headerColumn(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["headerColumn"] = core.HeaderConfig(*args, **kwargs)
@@ -1435,7 +1435,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.HeaderConfig)
     def configure_headerFacet(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["headerFacet"] = core.HeaderConfig(*args, **kwargs)
@@ -1443,7 +1443,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.HeaderConfig)
     def configure_headerRow(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["headerRow"] = core.HeaderConfig(*args, **kwargs)
@@ -1451,7 +1451,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.RectConfig)
     def configure_image(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["image"] = core.RectConfig(*args, **kwargs)
@@ -1459,7 +1459,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.LegendConfig)
     def configure_legend(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["legend"] = core.LegendConfig(*args, **kwargs)
@@ -1467,7 +1467,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.LineConfig)
     def configure_line(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["line"] = core.LineConfig(*args, **kwargs)
@@ -1475,7 +1475,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.MarkConfig)
     def configure_mark(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["mark"] = core.MarkConfig(*args, **kwargs)
@@ -1483,7 +1483,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.MarkConfig)
     def configure_point(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["point"] = core.MarkConfig(*args, **kwargs)
@@ -1491,7 +1491,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.ProjectionConfig)
     def configure_projection(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["projection"] = core.ProjectionConfig(*args, **kwargs)
@@ -1499,7 +1499,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.RangeConfig)
     def configure_range(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["range"] = core.RangeConfig(*args, **kwargs)
@@ -1507,7 +1507,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.RectConfig)
     def configure_rect(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["rect"] = core.RectConfig(*args, **kwargs)
@@ -1515,7 +1515,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.MarkConfig)
     def configure_rule(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["rule"] = core.MarkConfig(*args, **kwargs)
@@ -1523,7 +1523,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.ScaleConfig)
     def configure_scale(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["scale"] = core.ScaleConfig(*args, **kwargs)
@@ -1531,7 +1531,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.SelectionConfig)
     def configure_selection(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["selection"] = core.SelectionConfig(*args, **kwargs)
@@ -1539,7 +1539,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.MarkConfig)
     def configure_square(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["square"] = core.MarkConfig(*args, **kwargs)
@@ -1547,7 +1547,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.MarkConfig)
     def configure_text(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["text"] = core.MarkConfig(*args, **kwargs)
@@ -1555,7 +1555,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.TickConfig)
     def configure_tick(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["tick"] = core.TickConfig(*args, **kwargs)
@@ -1563,7 +1563,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.TitleConfig)
     def configure_title(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["title"] = core.TitleConfig(*args, **kwargs)
@@ -1571,7 +1571,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.FormatConfig)
     def configure_tooltipFormat(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["tooltipFormat"] = core.FormatConfig(*args, **kwargs)
@@ -1579,7 +1579,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.LineConfig)
     def configure_trail(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["trail"] = core.LineConfig(*args, **kwargs)
@@ -1587,7 +1587,7 @@ class ConfigMethodMixin:
 
     @use_signature(core.ViewConfig)
     def configure_view(self, *args, **kwargs) -> Self:
-        copy = self.copy(deep=["config"])  # type: ignore
+        copy = self.copy(deep=["config"])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["view"] = core.ViewConfig(*args, **kwargs)

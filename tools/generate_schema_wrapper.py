@@ -174,7 +174,7 @@ class FieldChannelMixin:
         )
 
 
-class ValueChannelMixin:
+class ValueChannelMixin(core.SchemaBase):
     _encoding_name: str
     def to_dict(
         self,
@@ -184,21 +184,21 @@ class ValueChannelMixin:
     ) -> dict:
         context = context or {}
         ignore = ignore or []
-        condition = self._get("condition", Undefined)  # type: ignore
+        condition = self._get("condition", Undefined)
         copy = self  # don't copy unless we need to
         if condition is not Undefined:
             if isinstance(condition, core.SchemaBase):
                 pass
             elif "field" in condition and "type" not in condition:
                 kwds = parse_shorthand(condition["field"], context.get("data", None))
-                copy = self.copy(deep=["condition"])  # type: ignore
+                copy = self.copy(deep=["condition"])
                 copy["condition"].update(kwds)
-        return super(ValueChannelMixin, copy).to_dict(  # ty: ignore
+        return super(ValueChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )
 
 
-class DatumChannelMixin:
+class DatumChannelMixin(core.SchemaBase):
     _encoding_name: str
     def to_dict(
         self,
@@ -208,15 +208,15 @@ class DatumChannelMixin:
     ) -> dict:
         context = context or {}
         ignore = ignore or []
-        datum = self._get("datum", Undefined)  # type: ignore # noqa
+        datum = self._get("datum", Undefined)  # noqa
         copy = self  # don't copy unless we need to
-        return super(DatumChannelMixin, copy).to_dict(  # ty: ignore
+        return super(DatumChannelMixin, copy).to_dict(
             validate=validate, ignore=ignore, context=context
         )
 """
 
 MARK_MIXIN: Final = '''
-class MarkMethodMixin:
+class MarkMethodMixin(SchemaBase):
     """A mixin class that defines mark methods"""
 
 {methods}
@@ -227,7 +227,7 @@ MARK_METHOD: Final = '''
 def mark_{mark}(self, **kwds: Any) -> Self:
     """Set the chart's mark to '{mark}' (see :class:`{mark_def}`)."""
 
-    copy = self.copy(deep=False)  # type: ignore
+    copy = self.copy(deep=False)
     if any(val is not Undefined for val in kwds.values()):
         copy.mark = core.{mark_def}(type="{mark}", **kwds)
     else:
@@ -238,7 +238,7 @@ def mark_{mark}(self, **kwds: Any) -> Self:
 CONFIG_METHOD: Final = """
 @use_signature(core.{classname})
 def {method}(self, *args, **kwargs) -> Self:
-    copy = self.copy(deep=False)  # type: ignore
+    copy = self.copy(deep=False)
     copy.config = core.{classname}(*args, **kwargs)
     return copy
 """
@@ -246,7 +246,7 @@ def {method}(self, *args, **kwargs) -> Self:
 CONFIG_PROP_METHOD: Final = """
 @use_signature(core.{classname})
 def configure_{prop}(self, *args, **kwargs) -> Self:
-    copy = self.copy(deep=['config'])  # type: ignore
+    copy = self.copy(deep=['config'])
     if copy.config is Undefined:
         copy.config = core.Config()
     copy.config["{prop}"] = core.{classname}(*args, **kwargs)
@@ -307,7 +307,7 @@ EXTRA_ITEMS_MESSAGE: Final = """\
 """
 
 ENCODE_METHOD: Final = '''
-class _EncodingMixin:
+class _EncodingMixin(core.SchemaBase):
     def encode(self, *args: Any, {method_args}) -> Self:
         """Map properties of the data to visual properties of the chart (see :class:`FacetedEncoding`)
         {docstring}"""
@@ -318,8 +318,7 @@ class _EncodingMixin:
         # Convert args to kwargs based on their types.
         kwargs = _infer_encoding_types(args, kwargs)
         # get a copy of the dict representation of the previous encoding
-        # ignore type as copy method comes from SchemaBase
-        copy = self.copy(deep=['encoding'])  # type: ignore
+        copy = self.copy(deep=['encoding'])
         encoding = copy._get('encoding', {{}})
         if isinstance(encoding, core.VegaLiteSchema):
             encoding = {{k: v for k, v in encoding._kwds.items() if v is not Undefined}}
@@ -1093,7 +1092,7 @@ def generate_vegalite_config_mixin(fp: Path, /) -> str:
     class_name = "ConfigMethodMixin"
     CONFIG: Literal["Config"] = "Config"
     code = [
-        f"class {class_name}:",
+        f"class {class_name}(SchemaBase):",
         '    """A mixin class that defines config methods"""',
     ]
     info = SchemaInfo.from_refname(CONFIG, rootschema=load_schema(fp))

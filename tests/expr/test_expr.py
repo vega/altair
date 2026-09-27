@@ -103,7 +103,9 @@ def test_abs():
     assert repr(z) == "abs(datum.xxx)"
 
 
-@pytest.mark.parametrize(("veganame", "fn", "n_params"), _iter_classmethod_specs(expr))
+@pytest.mark.parametrize(
+    ("veganame", "fn", "n_params"), tuple(_iter_classmethod_specs(expr))
+)
 def test_expr_methods(
     veganame: str, fn: Callable[..., Expression], n_params: int
 ) -> None:
@@ -114,7 +116,7 @@ def test_expr_methods(
     assert repr(fn_call) == f"{veganame}({datum_args})"
 
 
-@pytest.mark.parametrize("constname", _get_property_names(_ExprMeta))
+@pytest.mark.parametrize("constname", tuple(_get_property_names(_ExprMeta)))
 def test_expr_consts(constname: str):
     """Test all constants defined in expr.consts."""
     const = getattr(expr, constname)
@@ -122,7 +124,7 @@ def test_expr_consts(constname: str):
     assert repr(z) == f"({constname} * datum.xxx)"
 
 
-@pytest.mark.parametrize("constname", _get_property_names(_ExprMeta))
+@pytest.mark.parametrize("constname", tuple(_get_property_names(_ExprMeta)))
 def test_expr_consts_immutable(constname: str):
     """Ensure e.g `alt.expr.PI = 2` is prevented."""
     pattern = f"property {constname!r}.+has no setter"

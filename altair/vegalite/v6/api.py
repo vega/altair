@@ -11,7 +11,16 @@ import typing as t
 import warnings
 from collections.abc import Mapping, Sequence
 from copy import deepcopy as _deepcopy
-from typing import TYPE_CHECKING, Any, Literal, TypeAlias, TypeVar, Union, overload
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    ClassVar,
+    Literal,
+    TypeAlias,
+    TypeVar,
+    Union,
+    overload,
+)
 
 import jsonschema
 import narwhals.stable.v1 as nw
@@ -328,7 +337,7 @@ class FacetMapping(core.FacetMapping):
         A field definition for the vertical facet of trellis plots.
     """
 
-    _class_is_valid_at_instantiation = False
+    _class_is_valid_at_instantiation: ClassVar[bool] = False
 
     def __init__(
         self,
@@ -2037,7 +2046,7 @@ def _top_schema_base(  # noqa: ANN202
 class TopLevelMixin(mixins.ConfigMethodMixin):
     """Mixin for top-level chart objects such as Chart, LayeredChart, etc."""
 
-    _class_is_valid_at_instantiation: bool = False
+    _class_is_valid_at_instantiation: ClassVar[bool] = False
     data: Any
 
     def to_dict(  # noqa: C901
