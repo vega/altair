@@ -570,6 +570,19 @@ def chart_error_example__channel_of_another_type():
     return alt.Chart().mark_point().encode(y=alt.Color("test:N").legend())
 
 
+def chart_error_example__channel_of_another_type_with_valid_argument():
+    # Error: legend is not a valid argument to y, axis is, though Color rejects it
+    return alt.Chart().mark_point().encode(y=alt.Color("test:N", axis=None).legend())
+
+
+def chart_error_example__config_argument_of_another_class():
+    # Error: format is not a valid argument to a legend config, only to a Legend
+    return alt.Chart(
+        mark="point",
+        config={"legend": {"direction": "horizontal", "format": ".2f"}},
+    )
+
+
 def chart_error_example__additional_config_argument():
     # Error: bogus is not a valid argument to a legend config given as a dict
     return alt.Chart(
@@ -918,8 +931,16 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                 See the help for `Y` to read the full description of these parameters$""",
     ),
     (
+        chart_error_example__channel_of_another_type_with_valid_argument,
+        r"""`Y` has no parameter named 'legend'""",
+    ),
+    (
+        chart_error_example__config_argument_of_another_class,
+        r"""`LegendConfig` has no parameter named 'format'""",
+    ),
+    (
         chart_error_example__additional_config_argument,
-        r"""`Legend` has no parameter named 'bogus'""",
+        r"""`LegendConfig` has no parameter named 'bogus'""",
     ),
     (
         chart_error_example__additional_datum_argument_in_layer,

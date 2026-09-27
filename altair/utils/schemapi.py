@@ -587,6 +587,27 @@ def _join(items: Sequence[str], conjunction: str, /) -> str:
     return f"{', '.join(items[:-1])} {conjunction} {items[-1]}"
 
 
+def _context_schema(error: jsonschema.exceptions.ValidationError, /) -> Any:
+    """The schema at `error`'s location: the outermost union it failed within, if any."""
+    ctx = error
+    while (
+        (parent := ctx.parent) is not None
+        and parent.validator in {"anyOf", "oneOf"}
+        and parent.absolute_path == error.absolute_path
+    ):
+        ctx = parent
+    return ctx.schema
+
+
+def _definition_class(schema: Any, rootschema: Any, /) -> Any:
+    """The public class for `schema`, if it is one of the definitions in `rootschema`."""
+    from altair import vegalite
+
+    definitions = rootschema.get("definitions", {})
+    name = next((n for n, d in definitions.items() if d is schema), None)
+    return getattr(vegalite, name, None) if name else None
+
+
 def _live_class(obj: Any, error: jsonschema.exceptions.ValidationError, /) -> Any:
     """The class of the object `obj` holds at `error`'s path, if there is one."""
     node = obj
@@ -692,25 +713,41 @@ class SchemaValidationError(jsonschema.ValidationError):
     ) -> str:
         """Output all existing parameters when an unknown parameter is specified."""
         instance = error.instance if isinstance(error.instance, dict) else {}
+        guessed = self._get_altair_class_for_error(error)
+        rootschema = guessed._rootschema
+        context = _context_schema(error)
+        forms = _union_forms(context, rootschema)
+        accepted = [props for _, props in forms]
+
+        def belongs(cls: Any) -> bool:
+            """Whether `cls` fits here, e.g. not a `Color` placed under `y`."""
+            return all(p in accepted for _, p in _union_forms(cls._schema, rootschema))
+
         altair_cls = _live_class(self.obj, error)
+        # Only an object that belongs here can tell which names are wrong.
         known = (
-            _known_properties(altair_cls._schema, altair_cls._rootschema)
-            if altair_cls
+            _known_properties(altair_cls._schema, rootschema)
+            if altair_cls and belongs(altair_cls)
             else set()
         )
         unexpected = sorted(n for n in instance if n not in known) if known else []
 
         if not unexpected:
-            # There is no such object, or the one Altair constructed knows every
-            # name here and so is not what this error is about.
-            altair_cls = self._get_altair_class_for_error(error)
-            known = _known_properties(altair_cls._schema, altair_cls._rootschema)
-            if known and all(n in known for n in instance):
-                return self._combined_names_message(altair_cls, instance)
+            # A class named after the path can differ from the one defined here,
+            # e.g. `Legend` for the `LegendConfig` under `config.legend`.
+            altair_cls = (
+                guessed
+                if belongs(guessed)
+                else _definition_class(context, rootschema) or guessed
+            )
+            if len(accepted) > 1 and all(
+                any(n in p for p in accepted) for n in instance
+            ):
+                return self._combined_names_message(altair_cls, instance, forms)
             # Without a datum/value key saying which variant the instance is,
             # the class is only a guess from the path name.
-            if not _is_channel(instance):
-                known = _known_properties(error.schema, altair_cls._rootschema)
+            schema = altair_cls._schema if _is_channel(instance) else error.schema
+            known = _known_properties(schema, rootschema)
             unexpected = sorted(n for n in instance if n not in known)
         if not unexpected:
             # Extract "unknown" from messages shaped like:
@@ -733,22 +770,24 @@ Existing parameter names are:
 {param_names_table}
 See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
 
-    def _combined_names_message(self, altair_cls: Any, instance: Any, /) -> str:
+    def _combined_names_message(
+        self,
+        altair_cls: Any,
+        instance: Any,
+        forms: list[tuple[str | None, set[str]]],
+        /,
+    ) -> str:
         """Every name exists, but not in this combination - only a union can do that."""
         from altair import vegalite
 
-        forms = [
-            (f, props)
-            for f, props in _union_forms(altair_cls._schema, altair_cls._rootschema)
-            if f
-        ]
+        named = {f: props for f, props in forms if f}
         belongs = []
         for name in sorted(instance):
-            owners = [f for f, props in forms if name in props]
+            owners = [f for f, props in named.items() if name in props]
             # A name every form accepts says nothing about the clash, and a form
             # without a public class, e.g. `ConcatSpec<...>`, cannot be looked up.
             shown = [f"`{f}`" for f in owners if hasattr(vegalite, f)]
-            if shown and len(owners) < len(forms):
+            if shown and len(owners) < len(named):
                 belongs.append(f"{name!r} belongs to {_join(shown, 'or')}")
         names = _join([repr(n) for n in sorted(instance)], "and")
         parts = [f"`{altair_cls.__name__}` does not accept {names} together"]
