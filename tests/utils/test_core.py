@@ -325,6 +325,15 @@ def test_infer_encoding_types(
     assert infer_encoding_types(args, kwds) == expected
 
 
+def test_infer_encoding_types_wraps_datum_in_its_own_channel_class():
+    """A `datum=` kwarg is wrapped in its `*Datum` class, like `value=` in `*Value`."""
+    from altair.vegalite.v6.schema.channels import XDatum
+
+    wrapped = infer_encoding_types((), {"x": alt.datum(1)})["x"]
+    assert isinstance(wrapped, XDatum)
+    assert wrapped.to_dict() == {"datum": 1}
+
+
 def test_infer_encoding_types_with_condition():
     args, kwds = _getargs(
         size=alt.condition("pred1", alt.value(1), alt.value(2)),
