@@ -2240,6 +2240,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         Embed a Vega/Vega-Lite spec into an HTML page.
 
+        When the VegaFusion data transformer is enabled, data transformations
+        are evaluated before embedding the resulting Vega specification.
+
         Parameters
         ----------
         base_url : string (optional)
@@ -2271,22 +2274,29 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         output : string
             an HTML string for rendering the chart.
         """
+        from altair.utils.mimebundle import spec_to_mimebundle
+
         if inline:
             kwargs["template"] = "inline"
-        return utils.spec_to_html(
-            self.to_dict(),
+        # Share the HTML export path with save(), without overriding the active
+        # data transformer or its row limit. Compile with VegaFusion only once,
+        # inside spec_to_mimebundle, where the embedding mode is also selected.
+        bundle = spec_to_mimebundle(
+            self.to_dict(context={"pre_transform": False}),
+            format="html",
             mode="vega-lite",
             vegalite_version=VEGALITE_VERSION,
             vegaembed_version=VEGAEMBED_VERSION,
             vega_version=VEGA_VERSION,
             base_url=base_url,
             output_div=output_div,
-            embed_options=embed_options,
+            embed_options={} if embed_options is None else embed_options,
             json_kwds=json_kwds,
             fullhtml=fullhtml,
             requirejs=requirejs,
             **kwargs,
         )
+        return bundle["text/html"]
 
     def to_url(self, *, fullscreen: bool = False, validate: bool = True) -> str:
         """
