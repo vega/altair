@@ -183,3 +183,27 @@ def test_dict_to_csv():
 
     assert result1 == result2
     assert data == {"values": output}
+
+
+@pytest.mark.parametrize("func", [to_json, to_csv])
+@pytest.mark.parametrize(
+    ("urlpath", "expected_prefix"),
+    [
+        ("", ""),
+        ("files", "files/"),
+        ("files/subdir/", "files/subdir/"),
+        ("http://localhost:8000/data", "http://localhost:8000/data/"),
+    ],
+)
+def test_to_text_urlpath(
+    func: Callable[..., Any],
+    urlpath: str,
+    expected_prefix: str,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The ``urlpath`` is joined to the filename as a URL, not a local path."""
+    monkeypatch.chdir(tmp_path)
+    result = func(_create_data_with_values(10), urlpath=urlpath)
+    filename = next(tmp_path.iterdir()).name
+    assert result["url"] == expected_prefix + filename
