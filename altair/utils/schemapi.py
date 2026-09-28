@@ -708,7 +708,9 @@ class SchemaValidationError(jsonschema.ValidationError):
         best = max(map(score, forms), default=(0, 0))
         closest = [f for f in forms if score(f) == best]
         known = set().union(*(props for _, props, _ in forms))
-        if len(closest) > 1 and instance.keys() <= known:
+        # Names every form may share cannot pick one, only its selecting keys can.
+        picked = [f for f in forms if score(f)[0] == best[0]]
+        if len(picked) > 1 and instance.keys() <= known:
             return self._combined_names_message(altair_cls, instance, forms)
         unexpected = sorted(
             instance.keys() - set().union(*(props for _, props, _ in closest))

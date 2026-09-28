@@ -1035,6 +1035,19 @@ def test_chart_validation_errors(chart_func, expected_error_message):
             id="combination_of_two_forms",
         ),
         pytest.param(
+            lambda: alt.Data(
+                {"values": [], "graticule": True, "format": {"type": "csv"}}
+            ),
+            r"""`Data` does not accept 'format', 'graticule' and 'values' together
+
+                'format' belongs to `UrlData`, `InlineData` or `NamedData`
+                'graticule' belongs to `GraticuleGenerator`
+                'values' belongs to `InlineData`
+
+                See the help for `Data` to read the full description of these parameters$""",
+            id="combination_despite_a_closer_form",
+        ),
+        pytest.param(
             lambda: alt.Data({"values": [], "bogus": 1}),
             r"""`Data` has no parameter named 'bogus'
 
