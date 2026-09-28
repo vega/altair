@@ -596,6 +596,13 @@ def _context_schema(error: jsonschema.exceptions.ValidationError, /) -> Any:
     return schema
 
 
+def _public_class(name: str | None, /) -> Any:
+    """The public class named `name`, if there is one."""
+    from altair import vegalite
+
+    return getattr(vegalite, name, None) if name else None
+
+
 def _definition_class(schema: Any, rootschema: Any, /) -> Any:
     """The public class for `schema`, if it is one of the definitions in `rootschema`."""
     from altair import vegalite
@@ -722,6 +729,10 @@ class SchemaValidationError(jsonschema.ValidationError):
         own = _union_forms(altair_cls._schema, rootschema)
         if not all(props in accepted for _, props, _ in own):
             altair_cls = _definition_class(context, rootschema) or altair_cls
+        # A union names the one form its selecting keys picked, e.g.
+        # `GraticuleGenerator` for `Data` given `graticule`.
+        if len(picked) == 1 and len(_union_forms(altair_cls._schema, rootschema)) > 1:
+            altair_cls = _public_class(picked[0][0]) or altair_cls
         if not unexpected:
             # Extract "unknown" from messages shaped like:
             # "Additional properties are not allowed ('unknown' was unexpected)"
@@ -761,7 +772,9 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
             shown = [f"`{f}`" for f in owners if hasattr(vegalite, f)]
             if shown and len(owners) < len(forms):
                 belongs.append(f"{name!r} belongs to {_join(shown, 'or')}")
-        names = _join([repr(n) for n in sorted(instance)], "and")
+        # A name every form accepts plays no part in the clash.
+        clashing = [n for n in sorted(instance) if not all(n in p for _, p, _ in forms)]
+        names = _join([repr(n) for n in clashing or sorted(instance)], "and")
         parts = [f"`{altair_cls.__name__}` does not accept {names} together"]
         if belongs:
             parts.append("\n".join(belongs))

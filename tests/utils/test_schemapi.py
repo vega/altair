@@ -561,7 +561,7 @@ def chart_error_example__additional_value_argument():
 
 
 def chart_error_example__multiple_additional_value_arguments():
-    # Error (#3752): bin and aggregate are not valid arguments to value
+    # Error: bin and aggregate are not valid arguments to value
     return alt.Chart().mark_point().encode(y=alt.value(1, bin=True, aggregate="sum"))
 
 
@@ -1045,18 +1045,37 @@ def test_chart_validation_errors(chart_func, expected_error_message):
                 'values' belongs to `InlineData`
 
                 See the help for `Data` to read the full description of these parameters$""",
-            id="combination_despite_a_closer_form",
+            id="combination_with_a_partly_shared_name",
+        ),
+        pytest.param(
+            lambda: alt.Data({"values": [], "graticule": True, "name": "n"}),
+            r"""`Data` does not accept 'graticule' and 'values' together
+
+                'graticule' belongs to `GraticuleGenerator`
+                'values' belongs to `InlineData`
+
+                See the help for `Data` to read the full description of these parameters$""",
+            id="combination_leaves_out_a_shared_name",
+        ),
+        pytest.param(
+            lambda: alt.Data({"graticule": True, "format": {"type": "csv"}}),
+            r"""`GraticuleGenerator` has no parameter named 'format'
+
+                Existing parameter names are:
+                graticule   name   
+
+                See the help for `GraticuleGenerator` to read the full description of these parameters$""",
+            id="name_the_picked_form",
         ),
         pytest.param(
             lambda: alt.Data({"values": [], "bogus": 1}),
-            r"""`Data` has no parameter named 'bogus'
+            r"""`InlineData` has no parameter named 'bogus'
 
                 Existing parameter names are:
-                format      sequence   url      
-                graticule   sphere     values   
-                name                            
+                values   name   
+                format          
 
-                See the help for `Data` to read the full description of these parameters$""",
+                See the help for `InlineData` to read the full description of these parameters$""",
             id="name_no_form_accepts",
         ),
     ],
