@@ -121,6 +121,32 @@ def test_sanitize_dataframe_arrow_columns():
     json.dumps(records)
 
 
+@skip_requires_pyarrow
+def test_sanitize_dataframe_arrow_temporal_columns():
+    import pyarrow as pa
+
+    df = pd.DataFrame(
+        {
+            "date": pd.array(
+                [pd.Timestamp("2012-01-01").date(), None],
+                dtype=pd.ArrowDtype(pa.date32()),
+            ),
+            "ts": pd.array(
+                [pd.Timestamp("2012-01-01 12:30"), None],
+                dtype=pd.ArrowDtype(pa.timestamp("us")),
+            ),
+        }
+    )
+    records = sanitize_pandas_dataframe(df).to_dict(orient="records")
+    assert records == [
+        {"date": "2012-01-01T00:00:00", "ts": "2012-01-01T12:30:00"},
+        {"date": "", "ts": ""},
+    ]
+
+    # Make sure we can serialize to JSON without error
+    json.dumps(records)
+
+
 @skip_requires_pyarrow(requires_tzdata=True)
 def test_sanitize_pyarrow_table_columns() -> None:
     import pyarrow as pa
