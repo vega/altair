@@ -1224,3 +1224,29 @@ def test_to_dict_datetime_typing() -> None:
     # NOTE: `*args` is not annotated?
     # - All of these uses *args incorrectly
     assert alt.Vector2DateTime(datetime_seq[:2])
+
+
+def test_schema_validation_error_names_correct_class():
+    """Test that SchemaValidationError names the user's class rather than schema names (#4155)."""
+    # Tooltip in a list should name Tooltip, not StringFieldDef
+    with pytest.raises(
+        SchemaValidationError,
+        match=r"`Tooltip` has no parameter named 'bogus'",
+    ):
+        alt.Chart("d.csv").mark_point().encode(
+            tooltip=[alt.Tooltip("a:N", bogus=1)]
+        ).to_dict()
+
+    # Y with value and datum should name Y, not YDatum
+    with pytest.raises(
+        SchemaValidationError,
+        match=r"`Y` has no parameter named 'value'",
+    ):
+        alt.Chart("d.csv").mark_point().encode(y=alt.Y(value=1, datum=2)).to_dict()
+
+    # Y with shorthand and datum should name Y, not YDatum
+    with pytest.raises(
+        SchemaValidationError,
+        match=r"`Y` has no parameter named 'datum'",
+    ):
+        alt.Chart("d.csv").mark_point().encode(y=alt.Y("a:Q", datum=1)).to_dict()
