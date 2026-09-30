@@ -674,6 +674,26 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         If we did not find a suitable class based on traversing the path so we fall
         back on the class of the top-level object which created the SchemaValidationError
         """
+        # If the object at error.absolute_path is a live SchemaBase instance,
+        # use its concrete class directly (e.g. alt.Tooltip in a list, alt.Y, etc.).
+        curr: Any = self.obj
+        for prop in error.absolute_path:
+            if isinstance(prop, int) and isinstance(curr, (list, tuple)):
+                try:
+                    curr = curr[prop]
+                except IndexError:
+                    curr = None
+                    break
+            elif hasattr(curr, str(prop)):
+                curr = getattr(curr, str(prop))
+            elif isinstance(curr, dict) and prop in curr:
+                curr = curr[prop]
+            else:
+                curr = None
+                break
+        if isinstance(curr, SchemaBase):
+            return type(curr)
+
         from altair import vegalite
 
         for prop_name in reversed(error.absolute_path):
