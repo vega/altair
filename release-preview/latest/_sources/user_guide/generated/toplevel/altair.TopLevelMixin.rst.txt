@@ -69,13 +69,17 @@
       ~TopLevelMixin.configure_tooltipFormat
       ~TopLevelMixin.configure_trail
       ~TopLevelMixin.configure_view
+      ~TopLevelMixin.copy
       ~TopLevelMixin.display
+      ~TopLevelMixin.from_dict
+      ~TopLevelMixin.from_json
       ~TopLevelMixin.open_editor
       ~TopLevelMixin.project
       ~TopLevelMixin.properties
       ~TopLevelMixin.repeat
       ~TopLevelMixin.resolve_axis
       ~TopLevelMixin.resolve_legend
+      ~TopLevelMixin.resolve_references
       ~TopLevelMixin.resolve_scale
       ~TopLevelMixin.save
       ~TopLevelMixin.serve
@@ -103,6 +107,8 @@
       ~TopLevelMixin.transform_stack
       ~TopLevelMixin.transform_timeunit
       ~TopLevelMixin.transform_window
+      ~TopLevelMixin.validate
+      ~TopLevelMixin.validate_property
    
    
 

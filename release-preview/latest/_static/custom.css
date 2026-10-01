@@ -96,13 +96,13 @@ properly displayed on mobile devices and not restricted to 20% */
 
 /* Configurations for the start page
 ------------------------------------ */
-/* Make the title fit on one row */
+/* Try to keep the title on one line across OSes */
 .bd-article > section > h1 {
-    font-size: 2.5rem;
+    font-size: clamp(1.9rem, 4vw, 2.4rem);
 }
 
 .lead {
-  font-size: 1.14em;
+  font-size: 1.13em;
   font-weight: 300;
   margin-top: 22px;
   margin-bottom: 22px;
