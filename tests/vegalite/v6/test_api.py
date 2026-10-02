@@ -376,6 +376,25 @@ def test_chart_operations():
     assert len(chart.vconcat) == 4
 
 
+@pytest.mark.parametrize(
+    ("combine", "op"),
+    [
+        (alt.hconcat, operator.or_),
+        (alt.vconcat, operator.and_),
+        (alt.concat, operator.or_),
+        (alt.layer, operator.add),
+    ],
+)
+def test_chart_operations_keep_transform_scoped(combine, op):
+    # https://github.com/vega/altair/issues/3141
+    data = pd.DataFrame({"x": [1, 2], "y": [1, 2], "k": [1, 2]})
+    base = alt.Chart(data).mark_point().encode(x="x:Q", y="y:Q")
+    left = combine(base, base).transform_filter(alt.datum.k == 1)
+    right = combine(base, base).transform_filter(alt.datum.k == 2)
+
+    assert op(left, right).to_dict() == combine(left, right).to_dict()
+
+
 def test_when() -> None:
     select = alt.selection_point(name="select", on="click")
     condition = alt.condition(select, alt.value(1), "two", empty=False)["condition"]
