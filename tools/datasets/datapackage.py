@@ -90,7 +90,13 @@ class DataPackage:
     @cached_property
     def core(self) -> pl.LazyFrame:
         """A minimal, tabular view of ``datapackage.json``."""
-        return pl.LazyFrame(self._resources).select(self._exprs).sort(self.sort_by)
+        return (
+            pl.LazyFrame(self._resources)
+            # Accept both bare filenames and data/-prefixed resource paths.
+            .with_columns(col("path").str.strip_prefix("data/"))
+            .select(self._exprs)
+            .sort(self.sort_by)
+        )
 
     def schemas(self) -> Mapping[Dataset, Mapping[str, FlFieldStr]]:
         """Reduce all datasets with schemas to a minimal mapping."""
