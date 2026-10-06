@@ -143,12 +143,14 @@ you can use the :meth:`Chart.to_html` method:
 
 .. code-block:: python
 
-    html_string = chart.to_html()
+    html_string = chart.to_html(fullhtml=False)
     # Use html_string in your custom HTML generation
 
 The :meth:`Chart.to_html` method returns a string containing the HTML representation
-of the chart, which can be embedded into larger HTML documents or processed
-programmatically.
+of the chart. Use ``fullhtml=False`` to return a snippet for embedding into a
+larger HTML document instead of a complete page. Each call generates a unique
+plot id, so multiple snippets can be included in the same document. To choose a
+specific id, pass ``output_div="my-chart"``; use a different id for each chart.
 
 
 .. note::
