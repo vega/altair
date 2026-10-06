@@ -912,6 +912,29 @@ def test_save_html(basic_chart, inline):
         assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@7' in content
 
 
+@pytest.mark.parametrize("fullhtml", [True, False])
+@pytest.mark.parametrize("requirejs", [True, False])
+def test_to_html_unique_output_div(basic_chart, fullhtml, requirejs):
+    first = basic_chart.to_html(fullhtml=fullhtml, requirejs=requirejs)
+    second = basic_chart.to_html(fullhtml=fullhtml, requirejs=requirejs)
+
+    [first_id] = re.findall(r'<div id="([^"]+)"></div>', first)
+    [second_id] = re.findall(r'<div id="([^"]+)"></div>', second)
+    assert first_id != second_id
+    for output_div, content in [(first_id, first), (second_id, second)]:
+        assert f'vegaEmbed("#{output_div}", spec, embedOpt)' in content
+        assert f"document.getElementById('{output_div}')" in content
+        assert f"#{output_div}.vega-embed" in content
+
+
+@pytest.mark.parametrize("output_div", ["vis", "custom-chart"])
+def test_to_html_explicit_output_div(basic_chart, output_div):
+    content = basic_chart.to_html(output_div=output_div)
+
+    assert f'<div id="{output_div}"></div>' in content
+    assert f'vegaEmbed("#{output_div}", spec, embedOpt)' in content
+
+
 @skip_requires_vl_convert
 def test_to_url(basic_chart):
     share_url = basic_chart.to_url()

@@ -8,6 +8,7 @@ import json
 import operator
 import sys
 import typing as t
+import uuid
 import warnings
 from collections.abc import Mapping, Sequence
 from copy import deepcopy as _deepcopy
@@ -2225,7 +2226,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def to_html(
         self,
         base_url: str = "https://cdn.jsdelivr.net/npm",
-        output_div: str = "vis",
+        output_div: str | None = None,
         embed_options: dict[str, Any] | None = None,
         json_kwds: dict[str, Any] | None = None,
         fullhtml: bool = True,
@@ -2242,6 +2243,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             The base url from which to load the javascript libraries.
         output_div : string (optional)
             The id of the div element where the plot will be shown.
+            If None (default), a unique id is generated for each call.
         embed_options : dict (optional)
             Dictionary of options to pass to the vega-embed script. Default
             entry is {'mode': mode}.
@@ -2267,6 +2269,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         output : string
             an HTML string for rendering the chart.
         """
+        if output_div is None:
+            output_div = f"altair-viz-{uuid.uuid4().hex}"
         if inline:
             kwargs["template"] = "inline"
         return utils.spec_to_html(
