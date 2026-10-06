@@ -30,6 +30,7 @@ from altair.utils.schemapi import Optional, SchemaValidationError, Undefined
 from tests import (
     skip_requires_duckdb,
     skip_requires_pyarrow,
+    skip_requires_vegafusion,
     skip_requires_vl_convert,
     slow,
 )
@@ -910,6 +911,110 @@ def test_save_html(basic_chart, inline):
         assert 'src="https://cdn.jsdelivr.net/npm/vega@6' in content
         assert 'src="https://cdn.jsdelivr.net/npm/vega-lite@6' in content
         assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@7' in content
+
+
+@pytest.mark.parametrize("requirejs", [False, True])
+@pytest.mark.parametrize("fullhtml", [False, True])
+@pytest.mark.parametrize(
+    "transformer",
+    [
+        "default",
+        pytest.param(
+            "vegafusion", marks=[skip_requires_vegafusion, skip_requires_vl_convert]
+        ),
+    ],
+)
+def test_to_html(transformer, fullhtml, requirejs, basic_chart):
+    with alt.data_transformers.enable(transformer):
+        content = basic_chart.to_html(
+            fullhtml=fullhtml,
+            requirejs=requirejs,
+            output_div="custom-chart",
+            base_url="https://example.com",
+            embed_options={"actions": False},
+            json_kwds={"indent": 2},
+        )
+
+    assert content.startswith("<!DOCTYPE html>") == fullhtml
+    assert ("require(" in content) == requirejs
+    assert 'id="custom-chart"' in content
+    assert "https://example.com/vega@" in content
+    assert '"actions": false' in content
+    mode = "vega" if transformer == "vegafusion" else "vega-lite"
+    assert f'"mode": "{mode}"' in content
+    assert f"schema/{mode}/" in content
+    assert '\n  "$schema":' in content
+    assert "vegafusion+dataset://" not in content
+
+
+@skip_requires_vl_convert
+@skip_requires_vegafusion
+@pytest.mark.parametrize("chart_type", ["chart", "layer", "facet"])
+def test_to_html_vegafusion_aggregates(chart_type):
+    source = pd.DataFrame({"group": ["A", "B"] * 3000, "unused": range(6000)})
+    chart = alt.Chart(source).mark_bar().encode(x="group:N", y="count()")
+    if chart_type == "layer":
+        chart = chart + chart.mark_point()
+    elif chart_type == "facet":
+        chart = chart.facet("group:N")
+
+    with alt.data_transformers.enable("vegafusion", max_rows=10):
+        content = chart.to_html()
+        assert alt.data_transformers.active == "vegafusion"
+        assert alt.data_transformers.options == {"max_rows": 10}
+
+    spec = json.JSONDecoder().raw_decode(content.split("var spec = ", 1)[1])[0]
+    assert "schema/vega/" in spec["$schema"]
+    values = [row for data in spec["data"] for row in data.get("values", [])]
+    assert len(values) < 10
+    assert all("unused" not in row for row in values)
+    assert any(row.get("__count") == 3000 for row in values)
+
+    import vl_convert as vlc
+
+    assert "role-mark" in vlc.vega_to_svg(spec)
+
+
+@skip_requires_vl_convert
+@skip_requires_vegafusion
+def test_to_html_vegafusion_inline(basic_chart):
+    with alt.data_transformers.enable("vegafusion"):
+        content = basic_chart.to_html(inline=True)
+    assert content.startswith("<!DOCTYPE html>")
+    assert '<script type="text/javascript">' in content
+    assert '<script src="https://cdn.jsdelivr.net/' not in content
+    assert "schema/vega/" in content
+    assert "vegafusion+dataset://" not in content
+
+
+@pytest.mark.parametrize(
+    "transformer",
+    [
+        "default",
+        pytest.param(
+            "vegafusion", marks=[skip_requires_vegafusion, skip_requires_vl_convert]
+        ),
+    ],
+)
+def test_to_html_preserves_row_limit(transformer):
+    chart = alt.Chart(pd.DataFrame({"x": range(5)})).mark_point().encode(x="x:Q")
+    with alt.data_transformers.enable(transformer, max_rows=2):
+        with pytest.raises(alt.MaxRowsError):
+            chart.to_html()
+        assert alt.data_transformers.active == transformer
+        assert alt.data_transformers.options == {"max_rows": 2}
+
+
+def test_to_html_preserves_data_transformer(tmp_path, basic_chart):
+    prefix = str(tmp_path / "chart-data")
+    with alt.data_transformers.enable("json", prefix=prefix):
+        content = basic_chart.to_html()
+        assert alt.data_transformers.active == "json"
+        assert alt.data_transformers.options == {"prefix": prefix}
+
+    spec = json.JSONDecoder().raw_decode(content.split("var spec = ", 1)[1])[0]
+    assert spec["data"]["url"].startswith(prefix)
+    assert pathlib.Path(spec["data"]["url"]).is_file()
 
 
 @skip_requires_vl_convert
