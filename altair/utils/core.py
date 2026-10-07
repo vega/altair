@@ -409,15 +409,18 @@ def sanitize_pandas_dataframe(df: _PandasDataFrameT) -> _PandasDataFrameT:  # no
             # https://pandas.io/docs/user_guide/boolean.html
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif dtype_name.startswith(("datetime", "timestamp")):
-            # Convert datetimes to strings. This needs to be a full ISO string
-            # with time, which is why we cannot use ``col.astype(str)``.
+        elif dtype_name.startswith(("datetime", "timestamp", "date32", "date64")):
+            # Convert datetimes (and pyarrow-backed dates) to strings. This needs
+            # to be a full ISO string with time, which is why we cannot use
+            # ``col.astype(str)``.
             # This is because Javascript parses date-only times in UTC, but
             # parses full ISO-8601 dates as local time, and dates in Vega and
             # Vega-Lite are displayed in local time by default.
             # (see https://github.com/vega/altair/issues/1027)
-            df[col_name] = (
-                df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
+            # Missing values are NaT for numpy-backed columns and NA for
+            # pyarrow-backed columns.
+            df[col_name] = df[col_name].apply(
+                lambda x: pd.Timestamp(x).isoformat() if pd.notna(x) else ""
             )
         elif dtype_name.startswith("timedelta"):
             msg = (
