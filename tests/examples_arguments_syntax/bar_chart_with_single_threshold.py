@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair", "pandas"]
+# ///
 """
 Bar Chart Highlighting Values beyond a Threshold
 ------------------------------------------------

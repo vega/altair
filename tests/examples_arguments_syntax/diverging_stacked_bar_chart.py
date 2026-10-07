@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair", "polars"]
+# ///
 """
 Diverging Stacked Bar Chart
 ---------------------------

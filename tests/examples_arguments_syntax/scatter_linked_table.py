@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair", "pandas"]
+# ///
 """
 Brushing Scatter Plot to Show Data on a Table
 ---------------------------------------------
