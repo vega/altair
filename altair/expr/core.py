@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime as dt
 import sys
+import zoneinfo
 from typing import TYPE_CHECKING, Any, Literal, Union
 
 from altair.utils import SchemaBase
@@ -65,7 +66,7 @@ def _from_date_datetime(obj: dt.date | dt.datetime, /) -> str:
     args: tuple[int, ...] = obj.year, obj.month - 1, obj.day
     if isinstance(obj, dt.datetime):
         if tzinfo := obj.tzinfo:
-            if tzinfo is dt.UTC:
+            if tzinfo in [dt.UTC, zoneinfo.ZoneInfo("UTC")]:
                 fn_name = "utc"
             else:
                 msg = (
