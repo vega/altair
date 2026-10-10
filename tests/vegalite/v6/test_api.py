@@ -1513,10 +1513,15 @@ def test_nested_concat_add_params_views():
 
 
 def test_selection_property():
+    # Regression test for https://github.com/vega/altair/issues/4104
     sel = alt.selection_interval()
     chart = alt.Chart("data.csv").mark_point().properties(selection=sel)
 
-    assert list(chart["selection"].keys()) == [sel.name]
+    assert [param.name for param in chart.params] == [sel.name]
+    # The legacy interface must produce a spec equivalent to add_params()
+    assert (
+        chart.to_dict() == alt.Chart("data.csv").mark_point().add_params(sel).to_dict()
+    )
 
 
 def test_LookupData():
