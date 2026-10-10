@@ -561,6 +561,57 @@ def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
     return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
 
 
+def _union_forms(
+    schema: Any, rootschema: Any, /, name: str | None = None
+) -> list[tuple[str | None, set[str], set[str]]]:
+    """The definition name, property names and required names of each form of `schema`."""
+    if not isinstance(schema, dict):
+        return []
+    if ref := schema.get("$ref"):
+        name = ref.rsplit("/", 1)[-1]
+    resolved = _resolve_references(schema, rootschema)
+    if branches := (resolved.get("anyOf") or resolved.get("oneOf")):
+        return [f for b in branches for f in _union_forms(b, rootschema, name)]
+    return [
+        (name, set(resolved.get("properties", {})), set(resolved.get("required", ())))
+    ]
+
+
+def _join(items: Sequence[str], conjunction: str, /) -> str:
+    """Readable enumeration, e.g. "'a', 'b' and 'c'"."""
+    if len(items) == 1:
+        return items[0]
+    return f"{', '.join(items[:-1])} {conjunction} {items[-1]}"
+
+
+def _context_schema(error: jsonschema.exceptions.ValidationError, /) -> Any:
+    """The schema at `error`'s location: the outermost union it failed within, if any."""
+    schema, parent = error.schema, error.parent
+    while (
+        parent is not None
+        and parent.validator in {"anyOf", "oneOf"}
+        and parent.absolute_path == error.absolute_path
+    ):
+        schema, parent = parent.schema, parent.parent
+    return schema
+
+
+def _public_class(name: str | None, /) -> Any:
+    """The public class named `name`, if there is one."""
+    from altair import vegalite
+
+    return getattr(vegalite, name, None) if name else None
+
+
+def _definition_class(schema: Any, rootschema: Any, /) -> Any:
+    """The public class for `schema`, if it is one of the definitions in `rootschema`."""
+    from altair import vegalite
+
+    definitions = rootschema.get("definitions", {})
+    name = next((n for n, d in definitions.items() if d is schema), None)
+    return getattr(vegalite, name, None) if name else None
+
+
 class SchemaValidationError(jsonschema.ValidationError):
     _JS_TO_PY: ClassVar[Mapping[str, str]] = {
         "boolean": "bool",
@@ -649,21 +700,89 @@ class SchemaValidationError(jsonschema.ValidationError):
         error: jsonschema.exceptions.ValidationError,
     ) -> str:
         """Output all existing parameters when an unknown parameter is specified."""
+        instance = error.instance if isinstance(error.instance, dict) else {}
         altair_cls = self._get_altair_class_for_error(error)
-        param_dict_keys = inspect.signature(altair_cls).parameters.keys()
-        param_names_table = self._format_params_as_table(param_dict_keys)
+        rootschema = altair_cls._rootschema
+        context = _context_schema(error)
+        forms = _union_forms(context, rootschema)
 
-        # Error messages for these errors look like this:
-        # "Additional properties are not allowed ('unknown' was unexpected)"
-        # Line below extracts "unknown" from this string
-        parameter_name = error.message.split("('")[-1].split("'")[0]
-        message = f"""\
-`{altair_cls.__name__}` has no parameter named '{parameter_name}'
+        def score(form: tuple[Any, set[str], set[str]]) -> tuple[int, int]:
+            # Keys that pick a form, e.g. `value` for `YValue`, outweigh the rest.
+            _, props, required = form
+            accepted = instance.keys() & props
+            return len(accepted & (required | {"datum", "value"})), len(accepted)
+
+        best = max(map(score, forms), default=(0, 0))
+        closest = [f for f in forms if score(f) == best]
+        known = set().union(*(props for _, props, _ in forms))
+        # Names every form may share cannot pick one, only its selecting keys can.
+        picked = [f for f in forms if score(f)[0] == best[0]]
+        if len(picked) > 1 and instance.keys() <= known:
+            return self._combined_names_message(altair_cls, instance, forms)
+        unexpected = sorted(
+            instance.keys() - set().union(*(props for _, props, _ in closest))
+        )
+
+        # The class named after the path can differ from the one defined here,
+        # e.g. `Legend` for the `LegendConfig` under `config.legend`.
+        accepted = [props for _, props, _ in forms]
+        own = _union_forms(altair_cls._schema, rootschema)
+        if not all(props in accepted for _, props, _ in own):
+            altair_cls = _definition_class(context, rootschema) or altair_cls
+        # A union names the one form its selecting keys picked, e.g.
+        # `GraticuleGenerator` for `Data` given `graticule`.
+        if len(picked) == 1 and len(_union_forms(altair_cls._schema, rootschema)) > 1:
+            altair_cls = _public_class(picked[0][0]) or altair_cls
+        if not unexpected:
+            # Extract "unknown" from messages shaped like:
+            # "Additional properties are not allowed ('unknown' was unexpected)"
+            unexpected = [error.message.split("('")[-1].split("'")[0]]
+
+        # A union class has no written signature, only `(*args, **kwds)`.
+        params = [
+            name
+            for name in inspect.signature(altair_cls).parameters
+            if name not in {"args", "kwds", "self"}
+        ]
+        param_names_table = self._format_params_as_table(params or sorted(known))
+        parameter_text = "parameter" if len(unexpected) == 1 else "parameters"
+        formatted = ", ".join(map(repr, unexpected))
+        return f"""\
+`{altair_cls.__name__}` has no {parameter_text} named {formatted}
 
 Existing parameter names are:
 {param_names_table}
 See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
-        return message
+
+    def _combined_names_message(
+        self,
+        altair_cls: Any,
+        instance: Any,
+        forms: list[tuple[str | None, set[str], set[str]]],
+        /,
+    ) -> str:
+        """Every name exists, but not in this combination - only a union can do that."""
+        from altair import vegalite
+
+        belongs = []
+        for name in sorted(instance):
+            owners = [f for f, props, _ in forms if f and name in props]
+            # A name every form accepts says nothing about the clash, and a form
+            # without a public class, e.g. `ConcatSpec<...>`, cannot be looked up.
+            shown = [f"`{f}`" for f in owners if hasattr(vegalite, f)]
+            if shown and len(owners) < len(forms):
+                belongs.append(f"{name!r} belongs to {_join(shown, 'or')}")
+        # A name every form accepts plays no part in the clash.
+        clashing = [n for n in sorted(instance) if not all(n in p for _, p, _ in forms)]
+        names = _join([repr(n) for n in clashing or sorted(instance)], "and")
+        parts = [f"`{altair_cls.__name__}` does not accept {names} together"]
+        if belongs:
+            parts.append("\n".join(belongs))
+        parts.append(
+            f"See the help for `{altair_cls.__name__}`"
+            " to read the full description of these parameters"
+        )
+        return "\n\n".join(parts)
 
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
