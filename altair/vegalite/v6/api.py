@@ -2527,7 +2527,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             if key == "selection" and isinstance(val, Parameter):
                 # TODO: Can this be removed
                 # For backward compatibility with old selection interface.
-                setattr(copy, key, {val.name: val.selection})
+                copy = copy.add_params(val)
             else:
                 # Don't validate data, because it hasn't been processed.
                 if key != "data":
