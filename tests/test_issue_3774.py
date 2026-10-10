@@ -27,7 +27,7 @@ EXAMPLES = [
 
 @pytest.mark.parametrize("example", EXAMPLES, ids=lambda path: path.parent.name)
 def test_rule_and_text_layers_have_own_data(example: Path) -> None:
-    chart = eval_block(example.read_text())
+    chart = eval_block(example.read_text(), strict=True)
     spec = chart.to_dict()
     for layer in spec["layer"]:
         mark = layer.get("mark", {})
