@@ -1519,7 +1519,9 @@ def test_selection_property():
 
     assert [param.name for param in chart.params] == [sel.name]
     # The legacy interface must produce a spec equivalent to add_params()
-    assert chart.to_dict() == alt.Chart("data.csv").mark_point().add_params(sel).to_dict()
+    assert (
+        chart.to_dict() == alt.Chart("data.csv").mark_point().add_params(sel).to_dict()
+    )
 
 
 def test_LookupData():
