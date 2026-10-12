@@ -66,18 +66,8 @@ the types within a :class:`Data` object, we must specify them manually
 (here we use :ref:`shorthand-description` to specify *nominal* (``N``) for ``x``
 and *quantitative* (``Q``) for ``y``; see :ref:`encoding-data-types`).
 
-Similarly, we must also specify the data type when referencing data by URL:
-
-.. altair-plot::
-
-    import altair as alt
-    from altair.datasets import data
-    url = data.cars.url
-
-    alt.Chart(url).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q'
-    )
+Similarly, we must specify data types when referencing data by URL.
+See :ref:`data-url` for a complete example.
 
 Encodings and their associated types are further discussed in :ref:`user-guide-encoding`.
 Below we go into more detail about the different ways of specifying data in an Altair chart.
