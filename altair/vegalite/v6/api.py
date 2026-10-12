@@ -54,11 +54,7 @@ else:
 if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
 else:
-    from typing_extensions import (  # noqa: F401
-        Protocol,
-        TypeAliasType,
-        runtime_checkable,
-    )
+    from typing_extensions import Protocol, TypeAliasType, runtime_checkable  # noqa: F401
 from typing import LiteralString
 
 if TYPE_CHECKING:
