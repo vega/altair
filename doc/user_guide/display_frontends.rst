@@ -77,6 +77,44 @@ You can use ``alt.renderers.names()`` to return all registered renderers as a Py
 Other renderers can be installed by third-party packages via Python's entrypoints system or you can create your own,
 see :ref:`customizing-renderers`.
 
+.. _display-chart-show:
+
+Explicitly displaying charts with ``show()``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In notebook environments, the final expression of a cell is displayed
+automatically. To display more than one chart in a single cell, invoke
+:meth:`Chart.show` on each chart instead. The method immediately invokes the
+active renderer instead of relying on the notebook's final-expression display
+mechanism.
+
+For example, this cell displays two separate charts:
+
+.. code-block:: python
+
+    import altair as alt
+    import pandas as pd
+
+    source = pd.DataFrame({
+        "category": ["A", "B", "C"],
+        "value": [2, 5, 3],
+    })
+    bars = alt.Chart(source).mark_bar().encode(
+        x="category:N", y="value:Q"
+    )
+    points = alt.Chart(source).mark_point().encode(
+        x="category:N", y="value:Q"
+    )
+
+    bars.show()
+    points.show()
+
+The behavior depends on the selected renderer. With the default HTML renderer
+in a supported notebook, both charts appear as separate cell outputs. With
+the ``"browser"`` renderer, each call opens the chart in a browser instead;
+see :ref:`display-browser` for its requirements and limitations.
+
+
 .. _display-jupyterlab:
 
 Displaying in JupyterLab
