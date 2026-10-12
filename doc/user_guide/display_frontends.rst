@@ -110,9 +110,11 @@ For example, this cell displays two separate charts:
     points.show()
 
 The behavior depends on the selected renderer. With the default HTML renderer
-in a supported notebook, both charts appear as separate cell outputs. With
-the ``"browser"`` renderer, each call opens the chart in a browser instead;
-see :ref:`display-browser` for its requirements and limitations.
+in a supported notebook, both charts appear as separate cell outputs. Other
+non-browser renderers also require an IPython environment for ``show()``.
+With the ``"browser"`` renderer, each call opens the chart in a browser
+instead, including from a standard Python REPL; see :ref:`display-browser`
+for its requirements and limitations.
 
 
 .. _display-jupyterlab:
