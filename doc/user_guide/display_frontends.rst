@@ -84,7 +84,7 @@ Explicitly displaying charts with ``show()``
 
 In notebook environments, the final expression of a cell is displayed
 automatically. To display more than one chart in a single cell, invoke
-:meth:`Chart.show` on each chart instead. The method immediately invokes the
+``chart.show()`` on each chart instead. The method immediately invokes the
 active renderer instead of relying on the notebook's final-expression display
 mechanism.
 
