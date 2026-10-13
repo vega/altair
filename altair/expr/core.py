@@ -226,13 +226,13 @@ class Expression(OperatorMixin, SchemaBase):
     def to_dict(self, *args, **kwargs):
         return repr(self)
 
-    def __setattr__(self, attr, val) -> None:
+    def __setattr__(self, item, val) -> None:
         # We don't need the setattr magic defined in SchemaBase
-        return object.__setattr__(self, attr, val)
+        return object.__setattr__(self, item, val)
 
     # item access
-    def __getitem__(self, val):
-        return GetItemExpression(self, val)
+    def __getitem__(self, item):
+        return GetItemExpression(self, item)
 
 
 class UnaryExpression(Expression):
