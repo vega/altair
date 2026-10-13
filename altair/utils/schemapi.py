@@ -12,7 +12,7 @@ import sys
 import textwrap
 import zoneinfo
 from collections import defaultdict
-from collections.abc import Iterable, Iterator, Mapping, Sequence
+from collections.abc import Generator, Iterable, Iterator, Mapping, Sequence
 from functools import partial
 from itertools import chain, zip_longest
 from math import ceil
@@ -85,7 +85,7 @@ def disable_debug_mode() -> None:
 
 
 @contextlib.contextmanager
-def debug_mode(arg: bool) -> Iterator[None]:
+def debug_mode(arg: bool) -> Generator[None]:
     global DEBUG_MODE
     original = DEBUG_MODE
     DEBUG_MODE = arg
