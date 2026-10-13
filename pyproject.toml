@@ -373,22 +373,32 @@ reportUnusedExpression = "none"
 reportUnsupportedDunderAll = "none"
 include = ["altair", "doc", "tests", "tools", "sphinxext"]
 ignore = [
-    "./altair/vegalite/v6/schema/channels.py",  # 716 warns
+    "./altair/vegalite/v6/schema/channels.py",  # 734 warns
     "./altair/jupyter/",                        # Mostly untyped
     "./tests/test_jupyter_chart.py",            # Based on untyped module
 ]
 
 [tool.ty]
+# src.include = ["altair", "tests", "tools"]  # required
 src.include = [
-    "altair",
+    "altair/expr",
+    "altair/vegalite",
+    # "tests/vegalite",
     "tools",
 ]
 src.exclude = [
-    "altair/datasets",
-    "altair/jupyter",
-    "altair/utils",
+    "altair/jupyter",  # match pyright suppression
 ]
 
 [tool.ty.rules]
-invalid-method-override = "ignore"  # 46 errors, mostly in channels.py
-invalid-overload = "ignore"  # 727 errors, all in channels.py
+# no global rules
+
+[[tool.ty.overrides]]
+include = ["altair/vegalite/v6/schema/channels.py"]
+# match mypy file-level suppressions in channels.py
+rules.invalid-overload = "ignore"
+rules.invalid-method-override = "ignore"
+
+[[tool.ty.overrides]]
+include = ["tests/vegalite"]
+rules.unresolved-attribute = "ignore"  # ty issue 2520
