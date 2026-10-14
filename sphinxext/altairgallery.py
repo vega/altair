@@ -179,37 +179,41 @@ EXAMPLE_TEMPLATE = jinja2.Template(
 
 {{ docstring }}
 
-.. altair-plot::
-    {% if code_below %}:remove-code:{% endif %}
-    {% if strict %}:strict:{% endif %}
+.. raw:: html
 
-{{ code | indent(4) }}
+    <button
+      type="button"
+      class="gallery-marimo-toggle"
+      data-marimo-src="https://marimo.app/github/vega/altair/blob/main/tests/examples_arguments_syntax/{{ name }}.py?embed=true"
+    >Open in marimo</button>
 
-.. tab-set::
+.. container:: gallery-static-example
 
-    .. tab-item:: Method syntax
-        :sync: method
+    .. altair-plot::
+        {% if code_below %}:remove-code:{% endif %}
+        {% if strict %}:strict:{% endif %}
 
-        .. code:: python
+{{ code | indent(8) }}
 
-{{ method_code | indent(12) }}
+    .. tab-set::
 
-    .. tab-item:: Attribute syntax
-        :sync: attribute
+        .. tab-item:: Method syntax
+            :sync: method
 
-        .. code:: python
+            .. code:: python
 
-{{ code | indent(12) }}
+{{ method_code | indent(16) }}
 
-    .. tab-item:: Interactive (marimo)
+        .. tab-item:: Attribute syntax
+            :sync: attribute
 
-        .. raw:: html
+            .. code:: python
 
-            <iframe
-              src="https://marimo.app/github/vega/altair/blob/main/tests/examples_arguments_syntax/{{ name }}.py?embed=true"
-              sandbox="allow-scripts allow-same-origin allow-downloads allow-popups allow-forms"
-              allow="microphone" allowfullscreen
-              width="100%" height="850" frameborder="0"></iframe>
+{{ code | indent(16) }}
+
+.. raw:: html
+
+    <div class="gallery-marimo-example" hidden></div>
 """
 )
 
@@ -841,6 +845,7 @@ def setup(app) -> None:
     app.connect("env-purge-doc", _purge_gallery_backrefs)
     app.connect("env-updated", _write_examples_index)
     app.add_css_file("altair-gallery.css")
+    app.add_js_file("gallery-marimo.js")
     app.add_config_value("altair_gallery_dir", "gallery", "env")
     app.add_config_value("altair_gallery_ref", "example-gallery", "env")
     app.add_config_value("altair_gallery_title", "Example Gallery", "env")

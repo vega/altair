@@ -211,3 +211,25 @@ div.bottomnav {
 .gallery-backlinks {
   margin-top: 2.5rem;
 }
+
+.gallery-marimo-toggle {
+  margin-bottom: 1rem;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--pst-color-primary);
+  border-radius: 0.25rem;
+  color: var(--pst-color-primary);
+  background: transparent;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.gallery-marimo-toggle:hover {
+  color: var(--pst-color-background);
+  background: var(--pst-color-primary);
+}
+
+.gallery-marimo-example iframe {
+  width: 100%;
+  height: 900px;
+  border: none;
+}
