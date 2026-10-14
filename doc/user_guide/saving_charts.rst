@@ -248,9 +248,12 @@ process or web server.
 Open ``dashboard.html`` in a modern browser to use the controls and hover
 tooltips without a running Python process. The example uses an in-memory
 DataFrame so that the chart data is embedded in the HTML output, not loaded
-from an external URL. Saving with ``inline=True`` requires
-:ref:`additional-dependencies` and produces a larger file than the default
-CDN-based HTML.
+from an external URL.
+
+.. note::
+
+   Saving with ``inline=True`` requires :ref:`additional-dependencies` and
+   produces a larger file than the default CDN-based HTML.
 
 These controls filter data in the browser. If your dashboard needs live
 database queries or Python callbacks, use a server-based dashboard framework
