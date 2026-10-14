@@ -20,8 +20,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   button.addEventListener("click", () => {
-    if (!marimoExample.firstChild) {
+    if (!marimoExample.querySelector("iframe")) {
+      // marimo's page can take a few seconds to load inside the iframe. We
+      // can't see its real progress, so the bar slows down as it nears 90%
+      // and only runs to the end once the page has loaded.
+      const progress = document.createElement("div");
+      progress.className = "gallery-marimo-progress";
+      progress.setAttribute("role", "progressbar");
+      progress.setAttribute("aria-label", "Loading marimo notebook");
+      marimoExample.appendChild(progress);
+      const growing = progress.animate([{ width: "0%" }, { width: "90%" }], {
+        duration: 4000,
+        easing: "cubic-bezier(0.1, 0.6, 0.3, 1)",
+        fill: "forwards",
+      });
+
       const iframe = document.createElement("iframe");
+      iframe.addEventListener(
+        "load",
+        () => {
+          growing.commitStyles();
+          growing.cancel();
+          progress
+            .animate(
+              [
+                { width: progress.style.width, opacity: 1 },
+                { width: "100%", opacity: 1, offset: 0.6 },
+                { width: "100%", opacity: 0 },
+              ],
+              { duration: 500, easing: "ease-out", fill: "forwards" }
+            )
+            .finished.then(() => progress.remove());
+        },
+        { once: true }
+      );
       iframe.src = button.dataset.marimoSrc;
       iframe.title = "Interactive marimo notebook";
       iframe.setAttribute(
