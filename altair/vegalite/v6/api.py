@@ -11,7 +11,16 @@ import typing as t
 import warnings
 from collections.abc import Mapping, Sequence
 from copy import deepcopy as _deepcopy
-from typing import TYPE_CHECKING, Any, Literal, TypeAlias, TypeVar, Union, overload
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    ClassVar,
+    Literal,
+    TypeAlias,
+    TypeVar,
+    Union,
+    overload,
+)
 
 import jsonschema
 import narwhals.stable.v1 as nw
@@ -45,11 +54,7 @@ else:
 if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
 else:
-    from typing_extensions import (  # noqa: F401
-        Protocol,
-        TypeAliasType,
-        runtime_checkable,
-    )
+    from typing_extensions import Protocol, TypeAliasType, runtime_checkable  # noqa: F401
 from typing import LiteralString
 
 if TYPE_CHECKING:
@@ -328,7 +333,7 @@ class FacetMapping(core.FacetMapping):
         A field definition for the vertical facet of trellis plots.
     """
 
-    _class_is_valid_at_instantiation = False
+    _class_is_valid_at_instantiation: ClassVar[bool] = False
 
     def __init__(
         self,
@@ -685,7 +690,7 @@ def _condition_to_selection(
         if isinstance(if_false, str):
             if_false = utils.parse_shorthand(if_false)
             if_false.update(kwargs)
-        selection = _Conditional(condition=cond_mutable, **if_false)  # type: ignore
+        selection = _Conditional(condition=cond_mutable, **if_false)  # type: ignore[typeddict-item]
     else:
         raise TypeError(if_false)
     return selection
@@ -912,13 +917,13 @@ def _parse_otherwise(
     selection: SchemaBase | _Conditional[Any]
     if isinstance(statement, SchemaBase):
         selection = statement.copy()
-        conditions.update(**kwds)  # type: ignore
+        conditions.update(**kwds)  # type: ignore[call-arg]
         selection.condition = conditions["condition"]
     else:
         if not isinstance(statement, Mapping):
             statement = _parse_literal(statement)
         selection = conditions
-        selection.update(**statement, **kwds)  # type: ignore
+        selection.update(**statement, **kwds)  # type: ignore[call-arg]
     return selection
 
 
@@ -2037,7 +2042,7 @@ def _top_schema_base(  # noqa: ANN202
 class TopLevelMixin(mixins.ConfigMethodMixin):
     """Mixin for top-level chart objects such as Chart, LayeredChart, etc."""
 
-    _class_is_valid_at_instantiation: bool = False
+    _class_is_valid_at_instantiation: ClassVar[bool] = False
     data: Any
 
     def to_dict(  # noqa: C901
@@ -2412,7 +2417,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # that save() will succeed even for large datasets that would
         # normally trigger a MaxRowsError
         if override_data_transformer:
-            with data_transformers.disable_max_rows():
+            with data_transformers.disable_max_rows():  # ty: ignore
                 save(**kwds)
         else:
             save(**kwds)
@@ -3795,7 +3800,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     # Display-related methods
 
-    def _repr_mimebundle_(self, *args: Any, **kwds: Any) -> MimeBundleType | None:  # type:ignore
+    def _repr_mimebundle_(self, *args: Any, **kwds: Any) -> MimeBundleType | None:  # type:ignore[return]
         """Return a MIME bundle for display in Jupyter frontends."""
         # Catch errors explicitly to get around issues in Jupyter frontend
         # see https://github.com/ipython/ipython/issues/11038
@@ -3847,7 +3852,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             options = renderers.options.copy()
             options["embed_options"] = options.get("embed_options", {}).copy()
             options["embed_options"].update(kwargs)
-            with renderers.enable(**options):
+            with renderers.enable(**options):  # ty: ignore
                 display(self)
         else:
             display(self)
@@ -4110,9 +4115,7 @@ class Chart(
         return self._compute_hash()
 
     @classmethod
-    def from_dict(
-        cls: type[_TSchemaBase], dct: dict[str, Any], validate: bool = True
-    ) -> _TSchemaBase:
+    def from_dict(cls: type[Self], dct: dict[str, Any], validate: bool = True) -> Self:
         """
         Construct a ``Chart`` from a dictionary representation.
 
@@ -4136,7 +4139,7 @@ class Chart(
                 pass
 
         # As a last resort, try using the Root vegalite object
-        return t.cast("_TSchemaBase", core.Root.from_dict(dct, validate))
+        return t.cast("Self", core.Root.from_dict(dct, validate))
 
     def to_dict(
         self,

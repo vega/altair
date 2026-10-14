@@ -466,6 +466,7 @@ def _pl_read_json_roundtrip(ns: ModuleType, /) -> Callable[..., pl.DataFrame]:
             return df
         buf = BytesIO()
         df.write_csv(buf)
+        buf.seek(0)
         if kwds:
             SHARED_KWDS = {"schema", "schema_overrides", "infer_schema_length"}
             kwds = {k: v for k, v in kwds.items() if k in SHARED_KWDS}
