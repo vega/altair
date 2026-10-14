@@ -1,6 +1,9 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["altair"]
+#
+# [tool.marimo.display]
+# cell_output = "above"
 # ///
 """
 2D Histogram Scatter Plot

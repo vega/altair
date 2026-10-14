@@ -1,6 +1,9 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["altair"]
+#
+# [tool.marimo.display]
+# cell_output = "above"
 # ///
 """
 Using Selection Interval with mark_area

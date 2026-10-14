@@ -1,6 +1,9 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["altair", "pandas"]
+#
+# [tool.marimo.display]
+# cell_output = "above"
 # ///
 """
 Scatter Plot with Faceted Marginal Histograms

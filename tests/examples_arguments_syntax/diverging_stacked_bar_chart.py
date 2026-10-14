@@ -1,6 +1,9 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["altair", "polars"]
+#
+# [tool.marimo.display]
+# cell_output = "above"
 # ///
 """
 Diverging Stacked Bar Chart

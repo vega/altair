@@ -1,6 +1,9 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["altair", "pandas"]
+#
+# [tool.marimo.display]
+# cell_output = "above"
 # ///
 """
 Filter a Time Series with Date and Number Inputs
