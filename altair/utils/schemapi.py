@@ -14,7 +14,6 @@ import zoneinfo
 from collections import defaultdict
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from functools import partial
-from importlib.metadata import version as importlib_version
 from itertools import chain, zip_longest
 from math import ceil
 from typing import TYPE_CHECKING, Any, Final, Generic, Literal, TypeVar, cast, overload
@@ -23,8 +22,9 @@ import jsonschema
 import jsonschema.exceptions
 import jsonschema.validators
 import narwhals.stable.v1 as nw
+import referencing.jsonschema
 from narwhals.stable.v1.dependencies import is_narwhals_series
-from packaging.version import Version
+from referencing import Registry
 
 if sys.version_info >= (3, 12):
     from typing import Protocol, TypeAliasType, runtime_checkable
@@ -36,7 +36,6 @@ if TYPE_CHECKING:
     from typing import ClassVar, TypeAlias
 
     from jsonschema.exceptions import ValidationError
-    from referencing import Registry
 
     from altair.typing import ChartType
 
@@ -73,8 +72,6 @@ _DEFAULT_JSON_SCHEMA_DRAFT_URL: Final = "http://json-schema.org/draft-07/schema#
 # Individual schema classes can override this by setting the
 # class-level _class_is_valid_at_instantiation attribute to False
 DEBUG_MODE: bool = True
-
-jsonschema_version_str = importlib_version("jsonschema")
 
 
 def enable_debug_mode() -> None:
@@ -184,19 +181,10 @@ def _get_errors_from_spec(
     if hasattr(validator_cls, "FORMAT_CHECKER"):
         validator_kwargs["format_checker"] = validator_cls.FORMAT_CHECKER
 
-    if _use_referencing_library():
-        schema = _prepare_references_in_schema(schema)
-        validator_kwargs["registry"] = _get_referencing_registry(
-            rootschema or schema, json_schema_draft_url
-        )
-
-    else:
-        # No resolver is necessary if the schema is already the full schema
-        validator_kwargs["resolver"] = (
-            jsonschema.RefResolver.from_schema(rootschema)
-            if rootschema is not None
-            else None
-        )
+    schema = _prepare_references_in_schema(schema)
+    validator_kwargs["registry"] = _get_referencing_registry(
+        rootschema or schema, json_schema_draft_url
+    )
 
     validator = validator_cls(schema, **validator_kwargs)
     errors = list(validator.iter_errors(spec))
@@ -205,11 +193,6 @@ def _get_errors_from_spec(
 
 def _get_json_schema_draft_url(schema: dict[str, Any]) -> str:
     return schema.get("$schema", _DEFAULT_JSON_SCHEMA_DRAFT_URL)
-
-
-def _use_referencing_library() -> bool:
-    """In version 4.18.0, the jsonschema package deprecated RefResolver in favor of the referencing library."""
-    return Version(jsonschema_version_str) >= Version("4.18")
 
 
 def _prepare_references_in_schema(schema: dict[str, Any]) -> dict[str, Any]:
@@ -247,46 +230,16 @@ def _prepare_references_in_schema(schema: dict[str, Any]) -> dict[str, Any]:
     return schema
 
 
-# We do not annotate the return value here as the referencing library is not always
-# available and this function is only executed in those cases.
 def _get_referencing_registry(
     rootschema: dict[str, Any], json_schema_draft_url: str | None = None
 ) -> Registry:
-    # Referencing is a dependency of newer jsonschema versions, starting with the
-    # version that is specified in _use_referencing_library and we therefore
-    # can expect that it is installed if the function returns True.
-    # We ignore 'import' mypy errors which happen when the referencing library
-    # is not installed. That's ok as in these cases this function is not called.
-    # We also have to ignore 'unused-ignore' errors as mypy raises those in case
-    # referencing is installed.
-    import referencing  # type: ignore[import,unused-ignore]
-    import referencing.jsonschema  # type: ignore[import,unused-ignore]
-
+    """Build a ``referencing.Registry`` for the Vega-Lite rootschema."""
     if json_schema_draft_url is None:
         json_schema_draft_url = _get_json_schema_draft_url(rootschema)
 
     specification = referencing.jsonschema.specification_with(json_schema_draft_url)
     resource = specification.create_resource(rootschema)
-    return referencing.Registry().with_resource(
-        uri=_VEGA_LITE_ROOT_URI, resource=resource
-    )
-
-
-def _json_path(err: jsonschema.exceptions.ValidationError) -> str:
-    """
-    Drop in replacement for the .json_path property of the jsonschema ValidationError class.
-
-    This is not available as property for ValidationError with jsonschema<4.0.1.
-
-    More info, see https://github.com/vega/altair/issues/3038.
-    """
-    path = "$"
-    for elem in err.absolute_path:
-        if isinstance(elem, int):
-            path += "[" + str(elem) + "]"
-        else:
-            path += "." + elem
-    return path
+    return Registry().with_resource(uri=_VEGA_LITE_ROOT_URI, resource=resource)
 
 
 def _group_errors_by_json_path(
@@ -301,7 +254,7 @@ def _group_errors_by_json_path(
     """
     errors_by_json_path = defaultdict(list)
     for err in errors:
-        err_key = getattr(err, "json_path", _json_path(err))
+        err_key = err.json_path
         errors_by_json_path[err_key].append(err)
     return dict(errors_by_json_path)
 
@@ -410,7 +363,7 @@ def _group_errors_by_validator(errors: ValidationErrorList) -> GroupedValidation
         # Ignore mypy error as err.validator as it wrongly sees err.validator
         # as of type Optional[Validator] instead of str which it is according
         # to the documentation and all tested cases
-        errors_by_validator[err.validator].append(err)  # type: ignore[index]
+        errors_by_validator[err.validator].append(err)  # type: ignore
     return dict(errors_by_validator)
 
 
@@ -560,21 +513,9 @@ def _resolve_references(
     schema: dict[str, Any], rootschema: dict[str, Any] | None = None
 ) -> dict[str, Any]:
     """Resolve schema references until there is no $ref anymore in the top-level of the dictionary."""
-    if _use_referencing_library():
-        registry = _get_referencing_registry(rootschema or schema)
-        # Using a different variable name to show that this is not the
-        # jsonschema.RefResolver but instead a Resolver from the referencing
-        # library
-        referencing_resolver = registry.resolver()
-        while "$ref" in schema:
-            schema = referencing_resolver.lookup(
-                _VEGA_LITE_ROOT_URI + schema["$ref"]
-            ).contents
-    else:
-        resolver = jsonschema.RefResolver.from_schema(rootschema or schema)
-        while "$ref" in schema:
-            with resolver.resolving(schema["$ref"]) as resolved:
-                schema = resolved
+    resolver = _get_referencing_registry(rootschema or schema).resolver()
+    while "$ref" in schema:
+        schema = resolver.lookup(_VEGA_LITE_ROOT_URI + schema["$ref"]).contents
     return schema
 
 
@@ -620,6 +561,57 @@ def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
     return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
 
 
+def _union_forms(
+    schema: Any, rootschema: Any, /, name: str | None = None
+) -> list[tuple[str | None, set[str], set[str]]]:
+    """The definition name, property names and required names of each form of `schema`."""
+    if not isinstance(schema, dict):
+        return []
+    if ref := schema.get("$ref"):
+        name = ref.rsplit("/", 1)[-1]
+    resolved = _resolve_references(schema, rootschema)
+    if branches := (resolved.get("anyOf") or resolved.get("oneOf")):
+        return [f for b in branches for f in _union_forms(b, rootschema, name)]
+    return [
+        (name, set(resolved.get("properties", {})), set(resolved.get("required", ())))
+    ]
+
+
+def _join(items: Sequence[str], conjunction: str, /) -> str:
+    """Readable enumeration, e.g. "'a', 'b' and 'c'"."""
+    if len(items) == 1:
+        return items[0]
+    return f"{', '.join(items[:-1])} {conjunction} {items[-1]}"
+
+
+def _context_schema(error: jsonschema.exceptions.ValidationError, /) -> Any:
+    """The schema at `error`'s location: the outermost union it failed within, if any."""
+    schema, parent = error.schema, error.parent
+    while (
+        parent is not None
+        and parent.validator in {"anyOf", "oneOf"}
+        and parent.absolute_path == error.absolute_path
+    ):
+        schema, parent = parent.schema, parent.parent
+    return schema
+
+
+def _public_class(name: str | None, /) -> Any:
+    """The public class named `name`, if there is one."""
+    from altair import vegalite
+
+    return getattr(vegalite, name, None) if name else None
+
+
+def _definition_class(schema: Any, rootschema: Any, /) -> Any:
+    """The public class for `schema`, if it is one of the definitions in `rootschema`."""
+    from altair import vegalite
+
+    definitions = rootschema.get("definitions", {})
+    name = next((n for n, d in definitions.items() if d is schema), None)
+    return getattr(vegalite, name, None) if name else None
+
+
 class SchemaValidationError(jsonschema.ValidationError):
     _JS_TO_PY: ClassVar[Mapping[str, str]] = {
         "boolean": "bool",
@@ -653,7 +645,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         super().__init__(**err._contents())
         self.obj = obj
         self._errors: GroupedValidationErrors = getattr(
-            err, "_all_errors", {getattr(err, "json_path", _json_path(err)): [err]}
+            err, "_all_errors", {err.json_path: [err]}
         )
         # This is the message from err
         self._original_message = self.message
@@ -708,21 +700,89 @@ class SchemaValidationError(jsonschema.ValidationError):
         error: jsonschema.exceptions.ValidationError,
     ) -> str:
         """Output all existing parameters when an unknown parameter is specified."""
+        instance = error.instance if isinstance(error.instance, dict) else {}
         altair_cls = self._get_altair_class_for_error(error)
-        param_dict_keys = inspect.signature(altair_cls).parameters.keys()
-        param_names_table = self._format_params_as_table(param_dict_keys)
+        rootschema = altair_cls._rootschema
+        context = _context_schema(error)
+        forms = _union_forms(context, rootschema)
 
-        # Error messages for these errors look like this:
-        # "Additional properties are not allowed ('unknown' was unexpected)"
-        # Line below extracts "unknown" from this string
-        parameter_name = error.message.split("('")[-1].split("'")[0]
-        message = f"""\
-`{altair_cls.__name__}` has no parameter named '{parameter_name}'
+        def score(form: tuple[Any, set[str], set[str]]) -> tuple[int, int]:
+            # Keys that pick a form, e.g. `value` for `YValue`, outweigh the rest.
+            _, props, required = form
+            accepted = instance.keys() & props
+            return len(accepted & (required | {"datum", "value"})), len(accepted)
+
+        best = max(map(score, forms), default=(0, 0))
+        closest = [f for f in forms if score(f) == best]
+        known = set().union(*(props for _, props, _ in forms))
+        # Names every form may share cannot pick one, only its selecting keys can.
+        picked = [f for f in forms if score(f)[0] == best[0]]
+        if len(picked) > 1 and instance.keys() <= known:
+            return self._combined_names_message(altair_cls, instance, forms)
+        unexpected = sorted(
+            instance.keys() - set().union(*(props for _, props, _ in closest))
+        )
+
+        # The class named after the path can differ from the one defined here,
+        # e.g. `Legend` for the `LegendConfig` under `config.legend`.
+        accepted = [props for _, props, _ in forms]
+        own = _union_forms(altair_cls._schema, rootschema)
+        if not all(props in accepted for _, props, _ in own):
+            altair_cls = _definition_class(context, rootschema) or altair_cls
+        # A union names the one form its selecting keys picked, e.g.
+        # `GraticuleGenerator` for `Data` given `graticule`.
+        if len(picked) == 1 and len(_union_forms(altair_cls._schema, rootschema)) > 1:
+            altair_cls = _public_class(picked[0][0]) or altair_cls
+        if not unexpected:
+            # Extract "unknown" from messages shaped like:
+            # "Additional properties are not allowed ('unknown' was unexpected)"
+            unexpected = [error.message.split("('")[-1].split("'")[0]]
+
+        # A union class has no written signature, only `(*args, **kwds)`.
+        params = [
+            name
+            for name in inspect.signature(altair_cls).parameters
+            if name not in {"args", "kwds", "self"}
+        ]
+        param_names_table = self._format_params_as_table(params or sorted(known))
+        parameter_text = "parameter" if len(unexpected) == 1 else "parameters"
+        formatted = ", ".join(map(repr, unexpected))
+        return f"""\
+`{altair_cls.__name__}` has no {parameter_text} named {formatted}
 
 Existing parameter names are:
 {param_names_table}
 See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
-        return message
+
+    def _combined_names_message(
+        self,
+        altair_cls: Any,
+        instance: Any,
+        forms: list[tuple[str | None, set[str], set[str]]],
+        /,
+    ) -> str:
+        """Every name exists, but not in this combination - only a union can do that."""
+        from altair import vegalite
+
+        belongs = []
+        for name in sorted(instance):
+            owners = [f for f, props, _ in forms if f and name in props]
+            # A name every form accepts says nothing about the clash, and a form
+            # without a public class, e.g. `ConcatSpec<...>`, cannot be looked up.
+            shown = [f"`{f}`" for f in owners if hasattr(vegalite, f)]
+            if shown and len(owners) < len(forms):
+                belongs.append(f"{name!r} belongs to {_join(shown, 'or')}")
+        # A name every form accepts plays no part in the clash.
+        clashing = [n for n in sorted(instance) if not all(n in p for _, p, _ in forms)]
+        names = _join([repr(n) for n in clashing or sorted(instance)], "and")
+        parts = [f"`{altair_cls.__name__}` does not accept {names} together"]
+        if belongs:
+            parts.append("\n".join(belongs))
+        parts.append(
+            f"See the help for `{altair_cls.__name__}`"
+            " to read the full description of these parameters"
+        )
+        return "\n\n".join(parts)
 
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
@@ -1110,7 +1170,7 @@ class SchemaBase:
             only stored by reference.
         """
         if deep is True:
-            return cast("Self", _deep_copy(self, set(ignore) if ignore else set()))
+            return _deep_copy(self, set(ignore) if ignore else set())  # type: ignore[return-value]
         with debug_mode(False):
             copy = self.__class__(*self._args, **self._kwds)
         if _is_iterable(deep):
@@ -1133,7 +1193,7 @@ class SchemaBase:
             return self._kwds[attr]
         else:
             try:
-                _getattr = super().__getattr__  # pyright: ignore[reportAttributeAccessIssue]
+                _getattr = super().__getattr__  # pyright: ignore  # ty: ignore
             except AttributeError:
                 _getattr = super().__getattribute__
             return _getattr(attr)
@@ -1326,7 +1386,7 @@ class SchemaBase:
             The altair Chart object built from the specification.
         """
         dct: dict[str, Any] = json.loads(json_string, **kwargs)
-        return cls.from_dict(dct, validate=validate)  # type: ignore[return-value]
+        return cls.from_dict(dct, validate=validate)  # type: ignore
 
     @classmethod
     def validate(
@@ -1490,7 +1550,7 @@ class _FromDict:
         on recursive conversions of unhashable to hashable types; the former seems
         to be slightly faster in several benchmarks.
         """
-        if cls._hash_exclude_keys and isinstance(schema, dict):
+        if isinstance(schema, dict):
             schema = {
                 key: val
                 for key, val in schema.items()

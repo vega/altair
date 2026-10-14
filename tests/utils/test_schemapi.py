@@ -12,6 +12,7 @@ import types
 import warnings
 from collections import deque
 from functools import partial
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import jsonschema
@@ -43,6 +44,9 @@ if TYPE_CHECKING:
 _JSON_SCHEMA_DRAFT_URL = load_schema()["$schema"]
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't
 # try to use SchemaBase objects defined elsewhere as wrappers.
+
+
+_REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_actual_json_schema_draft_is_same_as_hardcoded_default():
@@ -172,6 +176,37 @@ class Draft6Schema(_TestSchema):
         **_validation_selection_schema,
         "$schema": "http://json-schema.org/draft-06/schema#",
     }
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        _REPO_ROOT / "tools" / "schemapi" / "schemapi.py",
+        _REPO_ROOT / "altair" / "utils" / "schemapi.py",
+    ],
+)
+def test_schemapi_does_not_use_deprecated_refresolver(path: Path) -> None:
+    # jsonschema.RefResolver is deprecated as of 4.18.0. Type checkers and pytest
+    # (see filterwarnings in pyproject.toml) should not see that name in schemapi.
+    source = path.read_text(encoding="utf-8")
+    assert "RefResolver" not in source
+
+
+def test_resolve_references_follows_nested_refs() -> None:
+    class Nested(_TestSchema):
+        _schema = {"$ref": "#/definitions/Outer"}
+        _rootschema = {
+            "$schema": _JSON_SCHEMA_DRAFT_URL,
+            "definitions": {
+                "Inner": {"type": "string", "enum": ["A"]},
+                "Outer": {"$ref": "#/definitions/Inner"},
+            },
+        }
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", DeprecationWarning)
+        assert Nested.resolve_references() == {"type": "string", "enum": ["A"]}
+        assert Nested("A").to_dict() == "A"
 
 
 def test_construct_multifaceted_schema():
@@ -525,6 +560,48 @@ def chart_error_example__additional_value_argument():
     return alt.Chart().mark_point().encode(color=alt.value("red", predicate=True))
 
 
+def chart_error_example__multiple_additional_value_arguments():
+    # Error: bin and aggregate are not valid arguments to value
+    return alt.Chart().mark_point().encode(y=alt.value(1, bin=True, aggregate="sum"))
+
+
+def chart_error_example__channel_of_another_type():
+    # Error: a Color channel passed to y, where legend is not a valid argument
+    return alt.Chart().mark_point().encode(y=alt.Color("test:N").legend())
+
+
+def chart_error_example__channel_of_another_type_with_valid_argument():
+    # Error: legend is not a valid argument to y, axis is, though Color rejects it
+    return alt.Chart().mark_point().encode(y=alt.Color("test:N", axis=None).legend())
+
+
+def chart_error_example__config_argument_of_another_class():
+    # Error: format is not a valid argument to a legend config, only to a Legend
+    return alt.Chart(
+        mark="point",
+        config={"legend": {"direction": "horizontal", "format": ".2f"}},
+    )
+
+
+def chart_error_example__additional_config_argument():
+    # Error: bogus is not a valid argument to a legend config given as a dict
+    return alt.Chart(
+        mark="point",
+        config={"legend": {"gradientDirection": "horizontal", "bogus": 1}},
+    )
+
+
+def chart_error_example__additional_datum_argument_in_layer():
+    # Error: bin is not a valid argument to datum
+    bars = alt.Chart("data.csv").mark_bar().encode(x="Day:O", y="Value:Q")
+    return bars + alt.Chart().mark_rule().encode(y=alt.Y(datum=300, bin=True))
+
+
+def chart_error_example__value_on_latitude():
+    # Error: Latitude accepts no value argument
+    return alt.Chart().mark_point().encode(latitude=alt.value(1))
+
+
 def chart_error_example__invalid_value_type():
     # Error: Value cannot be an integer in this case
     return (
@@ -833,6 +910,61 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                 See the help for `ColorValue` to read the full description of these parameters$""",
     ),
     (
+        chart_error_example__multiple_additional_value_arguments,
+        r"""`YValue` has no parameters named 'aggregate', 'bin'
+
+                Existing parameter names are:
+                value   
+
+                See the help for `YValue` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__channel_of_another_type,
+        r"""`Y` has no parameter named 'legend'
+
+                Existing parameter names are:
+                shorthand      bin      scale   timeUnit   
+                aggregate      field    sort    title      
+                axis           impute   stack   type       
+                bandPosition                               
+
+                See the help for `Y` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__channel_of_another_type_with_valid_argument,
+        r"""`Y` has no parameter named 'legend'""",
+    ),
+    (
+        chart_error_example__config_argument_of_another_class,
+        r"""`LegendConfig` has no parameter named 'format'""",
+    ),
+    (
+        chart_error_example__additional_config_argument,
+        r"""`LegendConfig` has no parameter named 'bogus'""",
+    ),
+    (
+        chart_error_example__additional_datum_argument_in_layer,
+        r"""`YDatum` has no parameter named 'bin'
+
+                Existing parameter names are:
+                datum          impute   title   
+                axis           scale    type    
+                bandPosition   stack            
+
+                See the help for `YDatum` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__value_on_latitude,
+        r"""`Latitude` has no parameter named 'value'
+
+                Existing parameter names are:
+                shorthand      bin        title   
+                aggregate      field      type    
+                bandPosition   timeUnit           
+
+                See the help for `Latitude` to read the full description of these parameters$""",
+    ),
+    (
         chart_error_example__invalid_value_type,
         rf"""'1' is an invalid value for `value`. Valid values are of type {re.escape("`str | Mapping[str, Any] | None`")}.$""",
     ),
@@ -887,6 +1019,74 @@ def test_chart_validation_errors(chart_func, expected_error_message):
     expected_error_message = inspect.cleandoc(expected_error_message)
     with pytest.raises(SchemaValidationError, match=expected_error_message):
         chart.to_dict()
+
+
+@pytest.mark.parametrize(
+    ("construct", "expected_error_message"),
+    [
+        pytest.param(
+            lambda: alt.Data({"values": [], "graticule": True}),
+            r"""`Data` does not accept 'graticule' and 'values' together
+
+                'graticule' belongs to `GraticuleGenerator`
+                'values' belongs to `InlineData`
+
+                See the help for `Data` to read the full description of these parameters$""",
+            id="combination_of_two_forms",
+        ),
+        pytest.param(
+            lambda: alt.Data(
+                {"values": [], "graticule": True, "format": {"type": "csv"}}
+            ),
+            r"""`Data` does not accept 'format', 'graticule' and 'values' together
+
+                'format' belongs to `UrlData`, `InlineData` or `NamedData`
+                'graticule' belongs to `GraticuleGenerator`
+                'values' belongs to `InlineData`
+
+                See the help for `Data` to read the full description of these parameters$""",
+            id="combination_with_a_partly_shared_name",
+        ),
+        pytest.param(
+            lambda: alt.Data({"values": [], "graticule": True, "name": "n"}),
+            r"""`Data` does not accept 'graticule' and 'values' together
+
+                'graticule' belongs to `GraticuleGenerator`
+                'values' belongs to `InlineData`
+
+                See the help for `Data` to read the full description of these parameters$""",
+            id="combination_leaves_out_a_shared_name",
+        ),
+        pytest.param(
+            lambda: alt.Data({"graticule": True, "format": {"type": "csv"}}),
+            r"""`GraticuleGenerator` has no parameter named 'format'
+
+                Existing parameter names are:
+                graticule   name   
+
+                See the help for `GraticuleGenerator` to read the full description of these parameters$""",
+            id="name_the_picked_form",
+        ),
+        pytest.param(
+            lambda: alt.Data({"values": [], "bogus": 1}),
+            r"""`InlineData` has no parameter named 'bogus'
+
+                Existing parameter names are:
+                values   name   
+                format          
+
+                See the help for `InlineData` to read the full description of these parameters$""",
+            id="name_no_form_accepts",
+        ),
+    ],
+)
+def test_union_class_validation_errors(construct, expected_error_message):
+    # These classes validate on instantiation, so the error is raised before
+    # `to_dict` is reached.
+    with pytest.raises(
+        SchemaValidationError, match=inspect.cleandoc(expected_error_message)
+    ):
+        construct()
 
 
 def test_multiple_field_strings_in_condition():

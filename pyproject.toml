@@ -19,8 +19,10 @@ authors = [{ name = "Vega-Altair Contributors" }]
 dependencies = [
     "typing_extensions>=4.12.0; python_version<'3.15'",
     "jinja2",
-    # If you update the minimum required jsonschema version, also update it in tests.yml
-    "jsonschema>=3.0",
+    # If you update the minimum required jsonschema version, also update it in tests.yml.
+    # 4.18.0 is the first release that provides the referencing registry API and
+    # deprecates jsonschema.RefResolver.
+    "jsonschema>=4.18.0",
     "packaging",
     "narwhals>=2.4.0",
 ]
@@ -36,7 +38,8 @@ keywords = [
 ]
 requires-python = ">=3.11"
 dynamic = ["version"]
-license = { file = "LICENSE" }
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
@@ -282,7 +285,7 @@ lint       = "ruff check"
 format     = "ruff format --diff --check"
 ruff-check = "task lint && task format"
 ruff-fix   = "task lint && ruff format"
-type-check = "mypy altair tests && ty check"
+type-check = "mypy altair tests tools && ty check"
 
 pytest-serial = "pytest -m \"no_xdist\" --numprocesses=1"
 pytest        = "pytest && task pytest-serial"
@@ -293,7 +296,7 @@ test-datasets = "task ruff-fix && pytest tests -k test_datasets -m \"not no_xdis
 test-min      = "task ruff-check && task type-check && hatch test --python 3.11"
 test-all      = "task ruff-check && task type-check && hatch test --all"
 
-generate-schema-wrapper = "mypy tools && python tools/generate_schema_wrapper.py && task test"
+generate-schema-wrapper = "python tools/generate_schema_wrapper.py && task test"
 update-init-file        = "python tools/update_init_file.py && task ruff-fix"
 
 doc = "python tools/docs_cli.py"
@@ -327,6 +330,9 @@ markers = [
     "datasets_debug: Disabled by default due to high number of requests",
     "no_xdist: Unsafe to run in parallel",
     "geospatial: Tests that require geopandas (deselect with '-m \"not geospatial\"')"
+]
+filterwarnings = [
+    "error::pytest.PytestRemovedIn10Warning",
 ]
 
 [tool.mypy]
@@ -368,20 +374,21 @@ reportUnsupportedDunderAll = "none"
 include = ["altair", "doc", "tests", "tools", "sphinxext"]
 ignore = [
     "./altair/vegalite/v6/schema/channels.py",  # 716 warns
-    "./altair/vegalite/v6/schema/mixins.py",    # 1001 warns
     "./altair/jupyter/",                        # Mostly untyped
     "./tests/test_jupyter_chart.py",            # Based on untyped module
-    "../../../**/Lib",                          # stdlib
-    "../../../**/typeshed*"                     # typeshed-fallback
 ]
 
 [tool.ty]
-src.include = ["altair/expr", "altair/typing", "altair/vegalite"]
-src.exclude = ["altair/vegalite/v6/schema"]
-analysis.respect-type-ignore-comments = true  # allow existing type: ignore
+src.include = [
+    "altair",
+    "tools",
+]
+src.exclude = [
+    "altair/datasets",
+    "altair/jupyter",
+    "altair/utils",
+]
 
 [tool.ty.rules]
-unused-type-ignore-comment = "ignore"  # skip unused type: ignore
-# suppress these for now so ty check will pass
-invalid-context-manager = "ignore"
-invalid-method-override = "ignore"
+invalid-method-override = "ignore"  # 46 errors, mostly in channels.py
+invalid-overload = "ignore"  # 727 errors, all in channels.py

@@ -9,7 +9,7 @@ import numpy as np
 import pytest
 from jsonschema.exceptions import ValidationError
 
-from altair import datum, expr, ExprRef
+from altair import datum, expr, ExprRef, param
 from altair.expr import _ExprMeta
 from altair.expr.core import Expression, GetAttrExpression
 
@@ -103,7 +103,9 @@ def test_abs():
     assert repr(z) == "abs(datum.xxx)"
 
 
-@pytest.mark.parametrize(("veganame", "fn", "n_params"), _iter_classmethod_specs(expr))
+@pytest.mark.parametrize(
+    ("veganame", "fn", "n_params"), tuple(_iter_classmethod_specs(expr))
+)
 def test_expr_methods(
     veganame: str, fn: Callable[..., Expression], n_params: int
 ) -> None:
@@ -114,7 +116,7 @@ def test_expr_methods(
     assert repr(fn_call) == f"{veganame}({datum_args})"
 
 
-@pytest.mark.parametrize("constname", _get_property_names(_ExprMeta))
+@pytest.mark.parametrize("constname", tuple(_get_property_names(_ExprMeta)))
 def test_expr_consts(constname: str):
     """Test all constants defined in expr.consts."""
     const = getattr(expr, constname)
@@ -122,7 +124,7 @@ def test_expr_consts(constname: str):
     assert repr(z) == f"({constname} * datum.xxx)"
 
 
-@pytest.mark.parametrize("constname", _get_property_names(_ExprMeta))
+@pytest.mark.parametrize("constname", tuple(_get_property_names(_ExprMeta)))
 def test_expr_consts_immutable(constname: str):
     """Ensure e.g `alt.expr.PI = 2` is prevented."""
     pattern = f"property {constname!r}.+has no setter"
@@ -156,6 +158,18 @@ def test_datum_getattr():
     magic_attr = "__magic__"
     with pytest.raises(AttributeError):
         getattr(datum, magic_attr)
+
+
+def test_datum_getitem_param():
+    """datum[param] should use the bare signal name, not a quoted string."""
+    p = param(name="xcol", value="Horsepower")
+    assert repr(datum[p]) == "datum[xcol]"
+
+    # String key should still be quoted (field name literal, not a signal)
+    assert repr(datum["Horsepower"]) == "datum['Horsepower']"
+
+    # Works inside a compound expression
+    assert repr(datum[p] > 100) == "(datum[xcol] > 100)"
 
 
 def test_expression_getitem():

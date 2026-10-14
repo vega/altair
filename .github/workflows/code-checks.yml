@@ -12,9 +12,9 @@ jobs:
     name: Check linting, formatting, types, and lockfile
     steps:
     - name: "Set up Python"
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
-        python-version: "3.12"
+        python-version: "3.14"
     - uses: actions/checkout@v7
       with:
         fetch-depth: 0
@@ -45,7 +45,7 @@ jobs:
         uv run ruff format --check --diff
     - name: mypy (type check)
       run: |
-        uv run mypy altair tests
+        uv run mypy altair tests tools
     - name: ty (type check)
       run: |
         uv run ty check

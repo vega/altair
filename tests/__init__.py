@@ -17,9 +17,7 @@ if TYPE_CHECKING:
     from typing import TypeAlias
 
     from _pytest.mark import ParameterSet  # pyright: ignore[reportPrivateImportUsage]
-    from _pytest.mark.structures import (
-        Markable,  # pyright: ignore[reportPrivateImportUsage]
-    )
+    from _pytest.mark.structures import Markable  # pyright: ignore[reportPrivateImportUsage]
 
     MarksType: TypeAlias = (
         "pytest.MarkDecorator | Collection[pytest.MarkDecorator | pytest.Mark]"

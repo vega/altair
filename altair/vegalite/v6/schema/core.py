@@ -7,12 +7,7 @@ import json
 import pkgutil
 from typing import TYPE_CHECKING, Any, Literal
 
-from altair.utils.schemapi import (  # noqa: F401
-    SchemaBase,
-    Undefined,
-    UndefinedType,
-    _subclasses,
-)
+from altair.utils.schemapi import SchemaBase, Undefined, UndefinedType, _subclasses  # noqa: F401
 
 if TYPE_CHECKING:
     # ruff: noqa: F405

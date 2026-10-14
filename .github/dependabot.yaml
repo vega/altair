@@ -6,7 +6,7 @@ updates:
     schedule:
       interval: "quarterly"
     groups:
-      github-actions-version-updates:
+      github-actions:
         patterns:
           - "*"
         update-types:
@@ -21,11 +21,25 @@ updates:
     schedule:
       interval: "quarterly"
     groups:
-      uv-version-updates:
+      # Date-only fourth-segment changes do not match Dependabot's patch filter.
+      uv-minor-date:
+        applies-to: "version-updates"
+        patterns:
+          - "pandas-stubs"
+          - "pyarrow-stubs"
+          - "scipy-stubs"
+          - "types-jsonschema"
+          - "types-setuptools"
+      uv-minor:
+        applies-to: "version-updates"
         patterns:
           - "*"
         update-types:
           - "minor"
           - "patch"
+      uv-security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
     commit-message:
       prefix: "build"
