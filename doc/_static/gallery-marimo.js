@@ -9,6 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  // The title comes from the example docstring, so the button can only be
+  // placed next to it after the page has been rendered.
+  const title = button.closest("section")?.querySelector("h1");
+  if (title) {
+    const titleRow = document.createElement("div");
+    titleRow.className = "gallery-title-row";
+    title.before(titleRow);
+    titleRow.append(title, button);
+  }
+
   button.addEventListener("click", () => {
     if (!marimoExample.firstChild) {
       const iframe = document.createElement("iframe");

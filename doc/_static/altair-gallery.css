@@ -212,8 +212,25 @@ div.bottomnav {
   margin-top: 2.5rem;
 }
 
+.gallery-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.gallery-title-row h1 {
+  margin: 0;
+}
+
+.gallery-title-row .gallery-marimo-toggle {
+  margin-bottom: 0;
+}
+
 .gallery-marimo-toggle {
   margin-bottom: 1rem;
+  white-space: nowrap;
   padding: 0.35rem 0.9rem;
   border: 1px solid var(--pst-color-primary);
   border-radius: 0.25rem;
