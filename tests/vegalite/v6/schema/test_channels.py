@@ -53,11 +53,11 @@ def test_channels_typing() -> None:
     assert angle.sort(dates_mixed).to_dict()
 
     # NOTE: Triggering static and runtime errors
-    invariant_sequence = angle.sort([*nums, *dates])  # type: ignore[arg-type]
+    invariant_sequence = angle.sort([*nums, *dates])  # type: ignore
     with pytest.raises(SchemaValidationError):
         invariant_sequence.to_dict()
 
-    positional_as_keyword = angle.sort(_="ascending")  # type: ignore[call-overload]
+    positional_as_keyword = angle.sort(_="ascending")  # type: ignore
     with pytest.raises(
         SchemaValidationError,
         match=r"'{'_': 'ascending'}' is an invalid value for `sort`",
@@ -67,11 +67,11 @@ def test_channels_typing() -> None:
     with pytest.raises(
         TypeError, match=r"sort\(\) accepts at most one positional argument"
     ):
-        angle.sort("field:Q", "min", "descending")  # type: ignore[call-overload]
+        angle.sort("field:Q", "min", "descending")  # type: ignore
     angle.sort(field="field:Q", op="min", order="descending")
 
     with pytest.raises(
         TypeError, match=r"sort\(\) accepts at most one positional argument"
     ):
-        angle.sort("x", "ascending")  # type: ignore[call-overload]
+        angle.sort("x", "ascending")  # type: ignore
     assert angle.sort(encoding="x", order="ascending").to_dict()

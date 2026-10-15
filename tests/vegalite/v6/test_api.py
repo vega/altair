@@ -622,7 +622,7 @@ def test_when_expressions_inside_parameters() -> None:
     text_conditioned = bar.mark_text(
         align="left",
         baseline="middle",
-        dx=alt.expr(actual),  # type: ignore
+        dx=alt.expr(actual),  # type: ignore[arg-type]
     ).encode(text="b")
 
     chart = bar + text_conditioned
@@ -703,8 +703,8 @@ def test_when_typing(cars) -> None:
         # The latter fails validation since it does not have a default `value`
         chart.encode(
             color=then,
-            x=alt.X("Cylinders:N").axis(labelColor=then),  # type: ignore
-            y=alt.Y("Origin:N", axis=alt.Axis(labelColor=then)),  # type: ignore
+            x=alt.X("Cylinders:N").axis(labelColor=then),  # type: ignore[call-overload]
+            y=alt.Y("Origin:N", axis=alt.Axis(labelColor=then)),  # type: ignore[arg-type]
         )
 
     # NOTE: Passing validation then requires an `.otherwise()` **only** for the property cases
