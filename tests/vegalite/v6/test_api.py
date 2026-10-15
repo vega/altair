@@ -1143,7 +1143,7 @@ def test_transforms():
     agg1 = alt.AggregatedFieldDef(op="mean", field="y", **{"as": "x1"})
     agg2 = alt.AggregatedFieldDef(op="median", field="z", **{"as": "x2"})
     chart = alt.Chart().transform_aggregate([agg1], ["foo"], x2="median(z)")
-    kwds = {"aggregate": [agg1, agg2], "groupby": ["foo"]}
+    kwds: dict[str, Any] = {"aggregate": [agg1, agg2], "groupby": ["foo"]}
     assert chart.transform == [alt.AggregateTransform(**kwds)]
 
     # bin transform
