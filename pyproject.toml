@@ -394,11 +394,17 @@ src.exclude = [
 # no global rules
 
 [[tool.ty.overrides]]
+include = ["altair/datasets"]
+rules.unresolved-import = "ignore"  # match mypy
+
+[[tool.ty.overrides]]
 include = ["altair/vegalite/v6/schema/channels.py"]
 # match mypy file-level suppressions in channels.py
 rules.invalid-overload = "ignore"
 rules.invalid-method-override = "ignore"
 
 [[tool.ty.overrides]]
-include = ["tests/vegalite"]
+include = ["tests"]
 rules.unresolved-attribute = "ignore"  # ty issue 2520
+rules.unsupported-operator = "ignore"  # ty issue 2520
+rules.invalid-key = "ignore"  # match mypy
