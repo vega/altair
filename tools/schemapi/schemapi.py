@@ -1168,7 +1168,7 @@ class SchemaBase:
             only stored by reference.
         """
         if deep is True:
-            return _deep_copy(self, set(ignore) if ignore else set())  # type: ignore[return-value]
+            return _deep_copy(self, set(ignore) if ignore else set())  # type: ignore
         with debug_mode(False):
             copy = self.__class__(*self._args, **self._kwds)
         if _is_iterable(deep):
