@@ -15,11 +15,11 @@ def test_disable_max_rows(sample_data):
     with alt.data_transformers.enable("default", max_rows=5):
         # Ensure max rows error is raised.
         with pytest.raises(alt.MaxRowsError):
-            alt.data_transformers.get()(sample_data)
+            alt.data_transformers.get()(sample_data)  # ty: ignore
 
         # Ensure that max rows error is properly disabled.
         with alt.data_transformers.disable_max_rows():
-            alt.data_transformers.get()(sample_data)
+            alt.data_transformers.get()(sample_data)  # ty: ignore
 
     try:
         # Ensure that there is no TypeError for non-max_rows transformers.
@@ -27,7 +27,7 @@ def test_disable_max_rows(sample_data):
             alt.data_transformers.enable("json"),
             alt.data_transformers.disable_max_rows(),
         ):
-            jsonfile = alt.data_transformers.get()(sample_data)
+            jsonfile = alt.data_transformers.get()(sample_data)  # ty: ignore
     except TypeError:
         jsonfile = {}
     finally:

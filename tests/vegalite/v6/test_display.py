@@ -14,7 +14,7 @@ def check_render_options(**options):
         assert alt.renderers.options == options
 
     _display = IPython.display.display
-    IPython.display.display = check_options
+    IPython.display.display = check_options  # ty: ignore
     try:
         yield
     finally:

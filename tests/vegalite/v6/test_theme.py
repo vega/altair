@@ -455,7 +455,7 @@ def googlecharts_theme() -> ThemeConfig:
                 "fontWeight": "bold",
             },
         }
-    }
+    }  # ty: ignore
 
 
 def latimes_theme() -> ThemeConfig:
