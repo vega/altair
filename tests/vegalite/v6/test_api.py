@@ -399,11 +399,11 @@ def test_when() -> None:
     assert when_constraint._condition["test"] == expected_constraint
     assert when_constraints._condition["test"] == expected_constraints
     with pytest.raises((NotImplementedError, TypeError), match="list"):
-        alt.when([1, 2, 3])  # type: ignore
+        alt.when([1, 2, 3])  # type: ignore[arg-type]
     with pytest.raises(TypeError, match="Undefined"):
         alt.when()
     with pytest.raises(TypeError, match="int"):
-        alt.when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore
+        alt.when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore[arg-type]
 
 
 def test_when_then() -> None:
@@ -420,7 +420,7 @@ def test_when_then() -> None:
         when.then(pathlib.Path("some"))  # type: ignore
 
     with pytest.raises(TypeError, match="float"):
-        when_then.when(select, alt.datum.Name != "Name_2", 86.123, empty=True)  # type: ignore
+        when_then.when(select, alt.datum.Name != "Name_2", 86.123, empty=True)  # type: ignore[arg-type]
 
 
 def test_when_then_only(basic_chart) -> None:
@@ -594,7 +594,7 @@ def test_when_labels_position_based_on_condition() -> None:
         param_width < 200, alt.value("red"), alt.value("black")
     )
     with pytest.raises(SchemaValidationError, match="invalid value for `expr`"):
-        alt.param(expr=fail_condition)  # type: ignore
+        alt.param(expr=fail_condition)  # type: ignore[arg-type]
 
 
 def test_when_expressions_inside_parameters() -> None:
@@ -622,7 +622,7 @@ def test_when_expressions_inside_parameters() -> None:
     text_conditioned = bar.mark_text(
         align="left",
         baseline="middle",
-        dx=alt.expr(actual),  # type: ignore[arg-type]
+        dx=alt.expr(actual),  # type: ignore
     ).encode(text="b")
 
     chart = bar + text_conditioned
@@ -703,8 +703,8 @@ def test_when_typing(cars) -> None:
         # The latter fails validation since it does not have a default `value`
         chart.encode(
             color=then,
-            x=alt.X("Cylinders:N").axis(labelColor=then),  # type: ignore[call-overload]
-            y=alt.Y("Origin:N", axis=alt.Axis(labelColor=then)),  # type: ignore[arg-type]
+            x=alt.X("Cylinders:N").axis(labelColor=then),  # type: ignore
+            y=alt.Y("Origin:N", axis=alt.Axis(labelColor=then)),  # type: ignore
         )
 
     # NOTE: Passing validation then requires an `.otherwise()` **only** for the property cases
@@ -1143,7 +1143,7 @@ def test_transforms():
     agg1 = alt.AggregatedFieldDef(op="mean", field="y", **{"as": "x1"})
     agg2 = alt.AggregatedFieldDef(op="median", field="z", **{"as": "x2"})
     chart = alt.Chart().transform_aggregate([agg1], ["foo"], x2="median(z)")
-    kwds: dict[str, Any] = {"aggregate": [agg1, agg2], "groupby": ["foo"]}
+    kwds: dict[str, Any] = {"aggregate": [agg1, agg2], "groupby": ["foo"]}  # type: ignore[annotation-unchecked]
     assert chart.transform == [alt.AggregateTransform(**kwds)]
 
     # bin transform
@@ -2125,7 +2125,7 @@ def test_binding() -> None:
 
     # NOTE: Both type checkers can detect the issue on the new signature
     with pytest.raises(TypeError, match=MISSING_INPUT):
-        alt.binding(placeholder="Country", name="Search")  # type: ignore[call-arg]
+        alt.binding(placeholder="Country", name="Search")  # type: ignore
 
 
 def _view_name_of_concat_cell(cell: dict) -> str:
