@@ -1738,7 +1738,7 @@ def test_layer_errors():
         toplevel_chart + simple_chart
 
     with pytest.raises(TypeError, match=r"Concat.+cannot.+layered.+before concat"):
-        alt.hconcat(simple_chart) + simple_chart  # ty: ignore
+        alt.hconcat(simple_chart) + simple_chart
 
     with pytest.raises(TypeError, match=r"Repeat.+cannot.+layered.+before repeat"):
         repeat_chart + simple_chart
