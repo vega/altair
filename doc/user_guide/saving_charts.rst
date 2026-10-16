@@ -248,7 +248,8 @@ process or web server.
 Open ``dashboard.html`` in a modern browser to use the controls and hover
 tooltips without a running Python process. The example uses an in-memory
 DataFrame so that the chart data is embedded in the HTML output, not loaded
-from an external URL.
+from an external URL. You can view the generated offline example here:
+`dashboard.html </_static/dashboard.html>`_.
 
 .. note::
 
