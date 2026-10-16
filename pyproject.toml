@@ -379,7 +379,7 @@ ignore = [
 ]
 
 [tool.ty]
-# src.include = ["altair", "tests", "tools"]  # 41 errors
+# src.include = ["altair", "tests", "tools"]  # 38 errors
 src.include = [
     "altair/expr",
     "altair/vegalite",

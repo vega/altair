@@ -656,7 +656,7 @@ def parse_shorthand(  # noqa: C901
         attrs = shorthand
     else:
         attrs = next(
-            exp.match(shorthand).groupdict()  # type: ignore[union-attr]
+            exp.match(shorthand).groupdict()  # type: ignore
             for exp in regexps
             if exp.match(shorthand) is not None
         )
