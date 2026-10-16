@@ -58,16 +58,21 @@ jobs:
               browser = playwright.chromium.launch(headless=True)
               page = browser.new_page(viewport={"width": 1360, "height": 860})
               errors = []
-              page.on("pageerror", lambda error: errors.append(str(error)))
+              page.on("pageerror", lambda error: errors.append("pageerror: " + str(error)))
+              page.on("console", lambda msg: errors.append("console: " + msg.text) if msg.type == "error" else None)
               page.route("https://**", lambda route: route.abort())
               page.route("http://**", lambda route: route.abort())
               page.goto(html_url, wait_until="load")
-              page.wait_for_selector(".vega-embed canvas", timeout=45000)
+              page.wait_for_timeout(3500)
+              page.screenshot(path="dashboard-browser-validation.png", full_page=True)
+              print("DOM:", page.locator("#vis").inner_html()[:1500])
+              print("Elements:", {key: page.locator(key).count() for key in [".vega-embed", "canvas", "svg", "select", "input[type=search]", "input[type=range]"]})
+              print("Errors:", errors)
+              assert page.locator("#vis canvas, #vis svg").count() >= 1, "Vega chart not rendered"
               assert page.locator("select").count() >= 1
               assert page.locator("input[type=search]").count() >= 1
               assert page.locator("input[type=range]").count() >= 1
               assert not errors, errors
-              page.screenshot(path="dashboard-browser-validation.png", full_page=True)
               print("PASS: 2 charts and 3 controls rendered without network")
               browser.close()
           PY
