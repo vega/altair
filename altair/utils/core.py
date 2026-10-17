@@ -499,6 +499,10 @@ def sanitize_narwhals_dataframe(
                 ""
             )
             raise ValueError(msg)
+        elif dtype.is_float():
+            columns.append(
+                nw.when(nw.col(name).is_finite()).then(nw.col(name)).otherwise(None)
+            )
         else:
             columns.append(name)
     return data.select(columns)
