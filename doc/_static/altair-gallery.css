@@ -213,19 +213,20 @@ div.bottomnav {
 }
 
 .gallery-title-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 0.625rem;
   margin-bottom: 1rem;
 }
 
 .gallery-title-row h1 {
+  display: inline;
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .gallery-title-row .gallery-marimo-toggle {
+  display: inline-block;
+  margin-left: 0.625rem;
   margin-bottom: 0;
+  vertical-align: 0.65em;
   /* Align with the visible heading text rather than its taller line box. */
   transform: translateY(0.1rem);
 }
