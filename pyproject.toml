@@ -379,16 +379,11 @@ ignore = [
 ]
 
 [tool.ty]
-# src.include = ["altair", "tests", "tools"]  # 38 errors
-src.include = [
-    "altair/expr",
-    "altair/vegalite",
-    "tests/expr",
-    "tests/vegalite",
-    "tools",
-]
+src.include = ["altair", "tests", "tools"]
 src.exclude = [
+    "altair/datasets",  # to fix, 9 errors
     "altair/jupyter",  # match pyright
+    "altair/utils",  # to fix, 16 errors
 ]
 analysis.allowed-unresolved-imports = ["polars_st"]  # match mypy
 
@@ -405,8 +400,15 @@ rules.unsupported-operator = "ignore"  # ty issue 2520
 
 [[tool.ty.overrides]]
 include = [
-    "tests/vegalite/v6/test_api.py",  # ty issue 2520
     "tests/examples_*",  # ty issue 2520
-    "tests/utils/test_schemapi.py",  # test wrong type
+    "tests/test_transformed_data.py",  # to fix, 4 errors
+    "tests/utils/test_schemapi.py",  # intentional type errors
+    "tests/vegalite/v6/test_api.py",  # ty issue 2520
 ]
 rules.invalid-argument-type = "ignore"
+
+[[tool.ty.overrides]]
+include = [
+    "tests/utils/test_utils.py",  # to fix, 6 errors
+]
+rules.invalid-assignment = "ignore"
