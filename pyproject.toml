@@ -373,22 +373,42 @@ reportUnusedExpression = "none"
 reportUnsupportedDunderAll = "none"
 include = ["altair", "doc", "tests", "tools", "sphinxext"]
 ignore = [
-    "./altair/vegalite/v6/schema/channels.py",  # 716 warns
+    "./altair/vegalite/v6/schema/channels.py",  # 734 warns
     "./altair/jupyter/",                        # Mostly untyped
     "./tests/test_jupyter_chart.py",            # Based on untyped module
 ]
 
 [tool.ty]
-src.include = [
-    "altair",
-    "tools",
-]
+src.include = ["altair", "tests", "tools"]
 src.exclude = [
-    "altair/datasets",
-    "altair/jupyter",
-    "altair/utils",
+    "altair/datasets",  # to fix, 9 errors
+    "altair/jupyter",  # match pyright
+    "altair/utils",  # to fix, 16 errors
 ]
+analysis.allowed-unresolved-imports = ["polars_st"]  # match mypy
 
-[tool.ty.rules]
-invalid-method-override = "ignore"  # 46 errors, mostly in channels.py
-invalid-overload = "ignore"  # 727 errors, all in channels.py
+[[tool.ty.overrides]]
+include = ["altair/vegalite/v6/schema/channels.py"]
+rules.invalid-method-override = "ignore"  # match mypy
+rules.invalid-overload = "ignore"  # match mypy
+
+[[tool.ty.overrides]]
+include = ["tests"]
+rules.invalid-key = "ignore"  # match mypy
+rules.unresolved-attribute = "ignore"  # ty issue 2520
+rules.unsupported-operator = "ignore"  # ty issue 2520
+
+[[tool.ty.overrides]]
+include = [
+    "tests/examples_*",  # ty issue 2520
+    "tests/test_transformed_data.py",  # to fix, 4 errors
+    "tests/utils/test_schemapi.py",  # intentional type errors
+    "tests/vegalite/v6/test_api.py",  # ty issue 2520
+]
+rules.invalid-argument-type = "ignore"
+
+[[tool.ty.overrides]]
+include = [
+    "tests/utils/test_utils.py",  # to fix, 6 errors
+]
+rules.invalid-assignment = "ignore"

@@ -329,7 +329,7 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
     import numpy as np
 
     try:
-        return cast("bool", np.issubdtype(dtype, subtype))
+        return np.issubdtype(dtype, subtype)
     except (NotImplementedError, TypeError):
         return False
 
@@ -357,7 +357,7 @@ def sanitize_pandas_dataframe(df: _PandasDataFrameT) -> _PandasDataFrameT:  # no
     import numpy as np
     import pandas as pd
 
-    df = cast("_PandasDataFrameT", df.copy())
+    df = df.copy()
 
     if isinstance(df.columns, pd.RangeIndex):
         df.columns = df.columns.astype(str)
@@ -656,7 +656,7 @@ def parse_shorthand(  # noqa: C901
         attrs = shorthand
     else:
         attrs = next(
-            exp.match(shorthand).groupdict()  # type: ignore[union-attr]
+            exp.match(shorthand).groupdict()  # type: ignore
             for exp in regexps
             if exp.match(shorthand) is not None
         )

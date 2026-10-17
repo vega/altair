@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import struct
-from typing import TYPE_CHECKING, Any, Literal, cast, overload
+from typing import TYPE_CHECKING, Any, Literal, overload
 
 from ._importers import import_vl_convert, vl_version_for_vl_convert
 from .html import spec_to_html
@@ -135,7 +135,7 @@ def spec_to_mimebundle(
     if format in {"png", "svg", "pdf", "vega"}:
         return _spec_to_mimebundle_with_engine(
             spec,
-            cast("Literal['png', 'svg', 'pdf', 'vega']", format),
+            format,
             internal_mode,
             engine=engine,
             format_locale=embed_options.get("formatLocale", None),
