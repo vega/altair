@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!button || !staticExample || !marimoExample) {
     return;
   }
+  const editorTooltip = button.title;
 
   // The title comes from the example docstring, so the button can only be
   // placed next to it after the page has been rendered.
@@ -68,6 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const showMarimo = marimoExample.hidden;
     marimoExample.hidden = !showMarimo;
     staticExample.hidden = showMarimo;
-    button.textContent = showMarimo ? "Show static example" : "Open in marimo";
+    button.textContent = showMarimo ? "Back to static page" : "Try this example";
+    button.title = showMarimo
+      ? "Return to the static chart and code."
+      : editorTooltip;
   });
 });

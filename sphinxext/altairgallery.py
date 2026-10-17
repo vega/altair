@@ -184,8 +184,9 @@ EXAMPLE_TEMPLATE = jinja2.Template(
     <button
       type="button"
       class="gallery-marimo-toggle"
+      title="Edit and run Python in your browser. Powered by marimo."
       data-marimo-src="https://marimo.app/github/vega/altair/blob/main/tests/examples_arguments_syntax/{{ name }}.py?embed=true"
-    >Open in marimo</button>
+    >Try this example</button>
 
 .. container:: gallery-static-example
 
