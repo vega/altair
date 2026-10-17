@@ -384,6 +384,7 @@ src.exclude = [
     "altair/datasets",  # to fix, 9 errors
     "altair/jupyter",  # match pyright
     "altair/utils",  # to fix, 16 errors
+    "tests/examples_*",  # ty issue 2520
 ]
 analysis.allowed-unresolved-imports = ["polars_st"]  # match mypy
 
@@ -400,7 +401,6 @@ rules.unsupported-operator = "ignore"  # ty issue 2520
 
 [[tool.ty.overrides]]
 include = [
-    "tests/examples_*",  # ty issue 2520
     "tests/test_transformed_data.py",  # to fix, 4 errors
     "tests/utils/test_schemapi.py",  # intentional type errors
     "tests/vegalite/v6/test_api.py",  # ty issue 2520
