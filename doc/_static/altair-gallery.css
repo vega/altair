@@ -216,7 +216,7 @@ div.bottomnav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1.25rem;
+  gap: 0.5rem 0.625rem;
   margin-bottom: 1rem;
 }
 
@@ -226,6 +226,8 @@ div.bottomnav {
 
 .gallery-title-row .gallery-marimo-toggle {
   margin-bottom: 0;
+  /* Align with the visible heading text rather than its taller line box. */
+  transform: translateY(0.1rem);
 }
 
 .gallery-marimo-toggle {
