@@ -1,3 +1,10 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair", "numpy"]
+#
+# [tool.marimo.display]
+# cell_output = "above"
+# ///
 """
 Pacman Chart
 ------------
