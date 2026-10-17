@@ -1264,6 +1264,53 @@ def test_transforms():
     )
 
 
+@pytest.mark.parametrize("container", [list, tuple])
+def test_transforms_accept_field_def_sequences(
+    container: type[list[Any]] | type[tuple[Any, ...]],
+) -> None:
+    mean_y = alt.AggregatedFieldDef(op="mean", field="y", **{"as": "mean_y"})
+    max_y = alt.JoinAggregateFieldDef(op="max", field="y", **{"as": "max_y"})
+    rank = alt.WindowFieldDef(op="rank", param=Undefined, **{"as": "rank"})
+    aggregate = container([mean_y])
+    joinaggregate = container([max_y])
+    window = container([rank])
+
+    chart = (
+        alt.Chart()
+        .transform_aggregate(aggregate, container(["a"]), sum_y="sum(y)")
+        .transform_joinaggregate(joinaggregate, container(["a"]), min_y="min(y)")
+        .transform_window(window, groupby=container(["a"]), cumsum="sum(y)")
+    )
+
+    assert [t.to_dict() for t in chart.transform] == [
+        {
+            "aggregate": [
+                {"op": "mean", "field": "y", "as": "mean_y"},
+                {"op": "sum", "field": "y", "as": "sum_y"},
+            ],
+            "groupby": ["a"],
+        },
+        {
+            "joinaggregate": [
+                {"op": "max", "field": "y", "as": "max_y"},
+                {"op": "min", "field": "y", "as": "min_y"},
+            ],
+            "groupby": ["a"],
+        },
+        {
+            "window": [
+                {"op": "rank", "as": "rank"},
+                {"op": "sum", "field": "y", "as": "cumsum"},
+            ],
+            "groupby": ["a"],
+        },
+    ]
+    # field definitions built from keyword arguments are not added to the caller's sequence
+    assert list(aggregate) == [mean_y]
+    assert list(joinaggregate) == [max_y]
+    assert list(window) == [rank]
+
+
 def test_filter_transform_selection_predicates():
     selector1 = alt.selection_interval(name="s1")
     selector2 = alt.selection_interval(name="s2")
