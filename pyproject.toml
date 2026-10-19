@@ -379,12 +379,15 @@ ignore = [
 ]
 
 [tool.ty]
+# Some rules are suppressed until existing ty issues are resolved:
+# https://github.com/astral-sh/ty/issues/2520
+# https://github.com/astral-sh/ty/issues/4566
 src.include = ["altair", "tests", "tools"]
 src.exclude = [
     "altair/datasets",  # to fix
     "altair/utils",  # to fix
     "altair/jupyter",  # match pyright
-    "tests/examples_arguments_syntax",  # ty#4566, ty#2520
+    "tests/examples_arguments_syntax",  # ty-4566, ty-2520
 ]
 analysis.allowed-unresolved-imports = ["polars_st"]  # match mypy
 
@@ -396,14 +399,13 @@ rules.invalid-overload = "ignore"  # match mypy
 [[tool.ty.overrides]]
 include = ["tests"]
 rules.invalid-key = "ignore"  # match mypy
-rules.unresolved-attribute = "ignore"  # ty#2520
-rules.unsupported-operator = "ignore"  # ty#2520
+rules.unresolved-attribute = "ignore"  # ty-2520
+rules.unsupported-operator = "ignore"  # ty-2520
 
 [[tool.ty.overrides]]
 include = [
-    "tests/test_transformed_data.py",  # to fix
-    "tests/examples_methods_syntax", # ty#2520
-    "tests/vegalite/v6/test_api.py",  # ty#2520
+    "tests/examples_methods_syntax", # ty-2520
+    "tests/vegalite/v6/test_api.py",  # ty-2520
     "tests/utils/test_schemapi.py",  # intentional type errors
 ]
 rules.invalid-argument-type = "ignore"
