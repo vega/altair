@@ -1,3 +1,10 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["altair", "pandas"]
+#
+# [tool.marimo.display]
+# cell_output = "above"
+# ///
 """
 U.S. State Capitals Overlaid on a Map of the U.S
 -------------------------------------------------
