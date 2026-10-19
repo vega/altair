@@ -211,3 +211,59 @@ div.bottomnav {
 .gallery-backlinks {
   margin-top: 2.5rem;
 }
+
+.gallery-title-row {
+  margin-bottom: 1rem;
+}
+
+.gallery-title-row h1 {
+  display: inline;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.gallery-title-row .gallery-marimo-toggle {
+  display: inline-block;
+  margin-left: 0.625rem;
+  margin-bottom: 0;
+  vertical-align: 0.65em;
+  /* Align with the visible heading text rather than its taller line box. */
+  transform: translateY(0.1rem);
+}
+
+.gallery-marimo-toggle {
+  margin-bottom: 1rem;
+  white-space: nowrap;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--pst-color-primary);
+  border-radius: 0.25rem;
+  color: var(--pst-color-primary);
+  background: transparent;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.gallery-marimo-toggle:hover {
+  color: var(--pst-color-background);
+  background: var(--pst-color-primary);
+}
+
+.gallery-marimo-example {
+  position: relative;
+}
+
+.gallery-marimo-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  border-radius: 0 2px 2px 0;
+  background: var(--pst-color-primary);
+}
+
+.gallery-marimo-example iframe {
+  width: 100%;
+  height: 900px;
+  border: none;
+}
