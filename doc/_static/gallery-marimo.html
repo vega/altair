@@ -23,6 +23,9 @@
         display: none !important;
       }
       #App .cm-editor {
+        --gallery-active-line-background: #EFF7FF;
+        --gallery-editor-end-padding: 24px;
+        padding-right: var(--gallery-editor-end-padding);
         background-color: #FEFEFE !important;
       }
       #App .cm-gutters {
@@ -33,7 +36,15 @@
       }
       #App .cm-editor.cm-focused .cm-activeLine:not(.cm-error-line),
       #App .cm-editor.cm-focused .cm-activeLineGutter {
-        background-color: #EFF7FF !important;
+        background-color: var(--gallery-active-line-background) !important;
+      }
+      #App .cm-editor.cm-focused .cm-activeLine:not(.cm-error-line) {
+        /* Paint through the editor's reserved right-side padding. */
+        box-shadow: var(--gallery-editor-end-padding) 0 0 var(--gallery-active-line-background);
+      }
+      #App .cm-editor.cm-focused .cm-lineNumbers .cm-activeLineGutter {
+        color: #1D4ED8 !important;
+        font-weight: 600;
       }
       /* Keep the cell's run/menu controls visible without hovering. */
       #App .marimo-cell .tray [role="toolbar"] {
