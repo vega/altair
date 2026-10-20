@@ -21,7 +21,7 @@ There are many different ways of specifying a dataset:
   are also supported.
 - as a :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
 - as a Python dictionary with inline ``values`` records
-- as a url string pointing to a data file
+- as a URL string pointing to a data file
 - as a `geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_ or other objects that support the ``__geo_interface__``
 - as a generated dataset such as numerical sequences or geographic reference elements
 
@@ -33,9 +33,6 @@ Long-form vs. Wide-form Data
 There are two common conventions for storing tabular data, sometimes called
 *long-form* and *wide-form*. Both are sensible patterns for storing data in
 a tabular format; briefly, the difference is this:
-
-- **Wide-form data** stores each company’s prices in a separate column, with one row per date.  
-- **Long-form data** stores company names and prices in separate columns, with one row per date–company combination
 
 - **Wide-form data** stores related measurements in separate columns, with some data such as categorical labelsstored in the column names.
 - **Long-form data** stores those measurements in one or more value columns, with additional columns identifying the category, group, or measurement represented by each row, so that there is one row per observation.
@@ -120,7 +117,7 @@ For example,
 here Altair automatically detects that the y-column
 should be visualized on a categorical (nominal) scale
 and that the x-column should be visualized on a quantitative scale
-from columns data types stored in the Polars dataframes:
+based on the column data types stored in the Polars dataframes:
 
 .. altair-plot::
 
@@ -154,7 +151,7 @@ And here we do the same thing for pandas:
 By comparison,
 for inline records, URL data, and named data,
 field encoding types generally need to be specified explicitly,
-as can be seen in the corresponding section further down.
+as can be seen in `Inline Data`_ and `Data by URL`_.
 
 .. _data-in-index:
 
@@ -207,23 +204,24 @@ with a ``"values"`` key.
 
    data = alt.Data(
        values=[
-           {'x': 'A', 'y': 5},
-           {'x': 'B', 'y': 3},
-           {'x': 'C', 'y': 6},
-           {'x': 'D', 'y': 7},
-           {'x': 'E', 'y': 2}
+           {'y': 'A', 'x': 5},
+           {'y': 'B', 'x': 3},
+           {'y': 'C', 'x': 6},
+           {'y': 'D', 'x': 7},
+           {'y': 'E', 'x': 2}
        ]
    )
    alt.Chart(data).mark_bar().encode(
-       x='x:N',  # specify nominal data
-       y='y:Q',  # specify quantitative data
+       x='x:Q',  # specify quantitative data
+       y='y:N',  # specify nominal data
    )
 
-Notice the extra markup required in the encoding; because there is no underlying
+Notice the extra markup required in the encoding;
+because there is no underlying
 dataframe library providing the columns data type for each column,
 we must specify them manually
-(here we use :ref:`shorthand-description` to specify *nominal* (``N``) for ``x``
-and *quantitative* (``Q``) for ``y``; see :ref:`encoding-data-types`).
+(here we use :ref:`shorthand-description` to specify *nominal* (``N``) for ``y``
+and *quantitative* (``Q``) for ``x``; see :ref:`encoding-data-types`).
 
 .. _data-url:
 
