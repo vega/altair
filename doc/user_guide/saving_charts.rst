@@ -172,6 +172,95 @@ As an alternative, the ``inline=True`` keyword argument may be provided to ``cha
    Calling ``chart.save`` with ``inline=True`` requires :ref:`additional-dependencies`.
 
 
+Interactive dashboard in a single HTML file
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can combine multiple charts and interactive controls into a standalone
+HTML dashboard. The following example includes a search box, a dropdown,
+a slider, and tooltips on hover. All of the data and JavaScript dependencies
+are stored in the resulting file; sharing it does not require a Python
+process or web server.
+
+.. code-block:: python
+
+    import altair as alt
+    import pandas as pd
+
+    source = pd.DataFrame({
+        "Month": ["Jan", "Feb", "Mar", "Jan", "Feb", "Mar"],
+        "Region": ["East", "East", "East", "West", "West", "West"],
+        "Product": ["Alpha", "Beta", "Alpha", "Beta", "Alpha", "Beta"],
+        "Sales": [120, 90, 150, 80, 130, 110],
+    })
+
+    region = alt.param(
+        name="region_filter",
+        value="All",
+        bind=alt.binding_select(
+            options=["All", "East", "West"], name="Region: "
+        ),
+    )
+    search = alt.param(
+        name="search_product",
+        value="",
+        bind=alt.binding(
+            input="search", placeholder="Product", name="Search: "
+        ),
+    )
+    minimum = alt.param(
+        name="minimum_sales",
+        value=0,
+        bind=alt.binding_range(
+            min=0, max=150, step=10, name="Minimum sales: "
+        ),
+    )
+
+    filtered = (
+        alt.Chart(source)
+        .transform_filter(
+            "region_filter == 'All' || datum.Region == region_filter"
+        )
+        .transform_filter(
+            "indexof(lower(datum.Product), lower(search_product)) >= 0"
+        )
+        .transform_filter(alt.datum.Sales >= minimum)
+    )
+
+    totals = filtered.mark_bar().encode(
+        x="Product:N",
+        y="sum(Sales):Q",
+        tooltip=["Product:N", "sum(Sales):Q"],
+    )
+    observations = filtered.mark_circle(size=100).encode(
+        x="Month:O",
+        y="Sales:Q",
+        color="Region:N",
+        tooltip=["Product:N", "Month:O", "Sales:Q"],
+    )
+    dashboard = (
+        alt.hconcat(totals, observations)
+        .add_params(region, search, minimum)
+        .properties(title="Sales explorer")
+    )
+
+    dashboard.save("dashboard.html", inline=True)
+
+Open ``dashboard.html`` in a modern browser to use the controls and hover
+tooltips without a running Python process. The example uses an in-memory
+DataFrame so that the chart data is embedded in the HTML output, not loaded
+from an external URL. You can view the generated offline example here:
+`dashboard.html </_static/dashboard.html>`_.
+
+.. note::
+
+   Saving with ``inline=True`` requires :ref:`additional-dependencies` and
+   produces a larger file than the default CDN-based HTML.
+
+These controls filter data in the browser. If your dashboard needs live
+database queries or Python callbacks, use a server-based dashboard framework
+instead (see :ref:`display_dashboards`).
+
+
 .. _saving-png:
 
 PNG, SVG, and PDF format
