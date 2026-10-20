@@ -96,6 +96,7 @@ doc = [
     "docutils",
     "sphinxext_altair",
     "jinja2",
+    "lzstring>=1.0.4",
     "numpydoc",
     "pillow",
     "pydata-sphinx-theme>=0.14.1",
