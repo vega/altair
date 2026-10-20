@@ -15,70 +15,147 @@ and :class:`FacetChart`) accepts a dataset as its first argument.
 
 There are many different ways of specifying a dataset:
 
-- as a `pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
-- as a DataFrame that supports the DataFrame Interchange Protocol (contains a ``__dataframe__`` attribute), e.g. polars and pyarrow. This is experimental.
+- as an eager DataFrame or table supported by `Narwhals <https://narwhals-dev.github.io/narwhals/>`_,
+  such as a pandas DataFrame, a Polars DataFrame, or a PyArrow Table.
+  Objects implementing the DataFrame Interchange Protocol (``__dataframe__``)
+  are also supported.
 - as a :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
 - as a Python dictionary with inline ``values`` records
-- as a url string pointing to a ``json`` or ``csv`` formatted text file
+- as a url string pointing to a data file
 - as a `geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_ or other objects that support the ``__geo_interface__``
 - as a generated dataset such as numerical sequences or geographic reference elements
 
-When data is specified as a pandas DataFrame, Altair
-uses the data type information provided by pandas to automatically determine
-the data types required in the encoding. For example, here we specify data via a pandas DataFrame
-and Altair automatically detects that the x-column should be visualized on a categorical (nominal) scale
-and that the y-column should be visualized on a quantitative scale:
+.. _data-long-vs-wide:
+
+Long-form vs. Wide-form Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are two common conventions for storing tabular data, sometimes called
+*long-form* and *wide-form*. Both are sensible patterns for storing data in
+a tabular format; briefly, the difference is this:
+
+- **wide-form data** has one row per *independent variable*, with some catecorical
+  labels recorded in the *row and column labels*.
+- **long-form data** has one row per *observation*, with categorical labels recorded
+  within the table as *values*.
+
+A concrete example will help in making this distinction more clear.
+Consider a dataset consisting of stock prices of several companies over time.
+The wide-form version of the data might be arranged as follows:
+
+.. altair-plot::
+    :output: repr
+    :chart-var-name: wide_form
+    :remove-code:
+
+    import polars as pl
+    pl.Config(
+        tbl_hide_column_data_types=True,
+        tbl_hide_dataframe_shape=True,
+        tbl_formatting="NOTHING"
+    )
+
+    wide_form = pl.DataFrame({
+        'Date': ['2007-10-01', '2007-11-01', '2007-12-01'],
+        'AAPL': [189.95, 182.22, 198.08],
+        'AMZN': [89.15, 90.56, 92.64],
+        'GOOG': [707.00, 693.00, 691.48]
+    })
+    wide_form
+
+Notice that each row corresponds to a single time-stamp
+(here time is the independent variable),
+while the stock category for each observation
+(i.e. company name) is stored within the column labels.
+The long-form version of the same data would look like this:
+
+.. altair-plot::
+    :output: repr
+    :chart-var-name: long_form
+    :remove-code:
+
+    long_form = pl.DataFrame({
+        'Date': ['2007-10-01', '2007-11-01', '2007-12-01',
+                 '2007-10-01', '2007-11-01', '2007-12-01',
+                 '2007-10-01', '2007-11-01', '2007-12-01'],
+        'company': ['AAPL', 'AAPL', 'AAPL',
+                    'AMZN', 'AMZN', 'AMZN',
+                    'GOOG', 'GOOG', 'GOOG'],
+        'price': [189.95, 182.22, 198.08,
+                  89.15,  90.56,  92.64,
+                  707.00, 693.00, 691.48]
+    })
+    long_form
+
+Notice here that each row contains a single observation (i.e. price), along
+with the catergorical labels for this observation (the date and company name).
+Importantly, the column and index labels no longer contain any data,
+just the name of the variables.
+
+Altair's grammar works best with **long-form** data because all relevant
+data are stored within the table itself, rather than within the
+names of rows and columns:
+Wide-form data can be visualized using e.g. layering
+(see :ref:`layer-chart`), but it is far less convenient within Altair's grammar.
+
+If you would like to convert data from wide-form to long-form, there are two possible
+approaches: it can be done as a preprocessing step using the dataframe library,
+e.g. by using `melt in pandas`_ or `unpivot in Polars`_,
+or with the :ref:`Fold Transform <user-guide-fold-transform>` in Altair.
+
+.. _pandas: http://pandas.pydata.org/
+.. _melt in pandas: https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html#melt-and-wide-to-long
+.. _unpivot in Polars: https://docs.pola.rs/user-guide/transformations/unpivot/
+
+
+DataFrames and Tables
+~~~~~~~~~~~~~~~~~~~~~
+
+When data is specified as a DataFrame (or Table),
+Altair uses the data type information
+provided by the dataframe library to automatically determine
+the data types required in the encoding.
+For example,
+here Altair automatically detects that the x-column
+should be visualized on a categorical (nominal) scale
+and that the y-column should be visualized on a quantitative scale
+for both pandas and polars dataframes:
 
 .. altair-plot::
 
    import altair as alt
    import pandas as pd
 
-   data = pd.DataFrame({'x': ['A', 'B', 'C', 'D', 'E'],
-                        'y': [5, 3, 6, 7, 2]})
+   data = pd.DataFrame({
+       'x': [5, 3, 6, 7, 2],
+       'y': ['A', 'B', 'C', 'D', 'E']
+   })
+   alt.Chart(data).mark_bar().encode(
+       x='x',
+       y='y',
+   )
+
+And here we do the same thing for polars:
+
+.. altair-plot::
+
+   import polars as pl
+
+   data_pl = pl.DataFrame(data)
    alt.Chart(data).mark_bar().encode(
        x='x',
        y='y',
    )
 
 By comparison,
-all other ways of specifying the data (including non-pandas DataFrames)
-requires encoding types to be declared explicitly.
-Here we create the same chart as above using a :class:`Data` object,
-with the data specified as a JSON-style list of records:
-
-.. altair-plot::
-
-   import altair as alt
-
-   data = alt.Data(values=[{'x': 'A', 'y': 5},
-                           {'x': 'B', 'y': 3},
-                           {'x': 'C', 'y': 6},
-                           {'x': 'D', 'y': 7},
-                           {'x': 'E', 'y': 2}])
-   alt.Chart(data).mark_bar().encode(
-       x='x:N',  # specify nominal data
-       y='y:Q',  # specify quantitative data
-   )
-
-Notice the extra markup required in the encoding; because Altair cannot infer
-the types within a :class:`Data` object, we must specify them manually
-(here we use :ref:`shorthand-description` to specify *nominal* (``N``) for ``x``
-and *quantitative* (``Q``) for ``y``; see :ref:`encoding-data-types`).
-
-Similarly, we must specify data types when referencing data by URL.
-See :ref:`data-url` for a complete example.
-
-Encodings and their associated types are further discussed in :ref:`user-guide-encoding`.
-Below we go into more detail about the different ways of specifying data in an Altair chart.
-
-pandas DataFrame
-~~~~~~~~~~~~~~~~
+all other ways of specifying the data
+requires encoding types to be declared explicitly,
+as can be seen in the corresponding section further down.
 
 .. _data-in-index:
 
-Including Index Data
-^^^^^^^^^^^^^^^^^^^^
+Including Pandas Index Data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 By design Altair only accesses dataframe columns, not dataframe indices.
 At times, relevant data appears in the index. For example:
 
@@ -88,12 +165,19 @@ At times, relevant data appears in the index. For example:
    import numpy as np
    rand = np.random.RandomState(0)
 
-   data = pd.DataFrame({'value': rand.randn(100).cumsum()},
-                       index=pd.date_range('2018', freq='D', periods=100))
+   data = pd.DataFrame(
+       {'value': rand.randn(100).cumsum()},
+       index=pd.date_range('2018', freq='D', periods=100)
+    )
    data.head()
 
 If you would like the index to be available to the chart, you can explicitly
-turn it into a column using the ``reset_index()`` method of pandas dataframes:
+turn it into a column using the ``reset_index()`` method of pandas dataframes.
+If the index object does not have a ``name`` attribute set, the resulting
+column will be called ``"index"``.
+More information is available in the
+`pandas documentation <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.reset_index.html>`_.
+
 
 .. altair-plot::
 
@@ -102,166 +186,40 @@ turn it into a column using the ``reset_index()`` method of pandas dataframes:
        y='value:Q'
    )
 
-If the index object does not have a ``name`` attribute set, the resulting
-column will be called ``"index"``.
-More information is available in the
-`pandas documentation <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.reset_index.html>`_.
-
-
-.. _data-long-vs-wide:
-
-Long-form vs. Wide-form Data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-There are two common conventions for storing data in a dataframe, sometimes called
-*long-form* and *wide-form*. Both are sensible patterns for storing data in
-a tabular format; briefly, the difference is this:
-
-- **wide-form data** has one row per *independent variable*, with metadata
-  recorded in the *row and column labels*.
-- **long-form data** has one row per *observation*, with metadata recorded
-  within the table as *values*.
-
-Altair's grammar works best with **long-form** data, in which each row
-corresponds to a single observation along with its metadata.
-
-A concrete example will help in making this distinction more clear.
-Consider a dataset consisting of stock prices of several companies over time.
-The wide-form version of the data might be arranged as follows:
-
-.. altair-plot::
-    :output: repr
-    :chart-var-name: wide_form
-
-    wide_form = pd.DataFrame({'Date': ['2007-10-01', '2007-11-01', '2007-12-01'],
-                              'AAPL': [189.95, 182.22, 198.08],
-                              'AMZN': [89.15, 90.56, 92.64],
-                              'GOOG': [707.00, 693.00, 691.48]})
-    print(wide_form)
-
-Notice that each row corresponds to a single time-stamp (here time is the
-independent variable), while metadata for each observation
-(i.e. company name) is stored within the column labels.
-
-The long-form version of the same data might look like this:
-
-.. altair-plot::
-    :output: repr
-    :chart-var-name: long_form
-
-    long_form = pd.DataFrame({'Date': ['2007-10-01', '2007-11-01', '2007-12-01',
-                                       '2007-10-01', '2007-11-01', '2007-12-01',
-                                       '2007-10-01', '2007-11-01', '2007-12-01'],
-                              'company': ['AAPL', 'AAPL', 'AAPL',
-                                          'AMZN', 'AMZN', 'AMZN',
-                                          'GOOG', 'GOOG', 'GOOG'],
-                              'price': [189.95, 182.22, 198.08,
-                                         89.15,  90.56,  92.64,
-                                        707.00, 693.00, 691.48]})
-    print(long_form)
-
-Notice here that each row contains a single observation (i.e. price), along
-with the metadata for this observation (the date and company name).
-Importantly, the column and index labels no longer contain any useful metadata.
-
-As mentioned above, Altair works best with this long-form data, because relevant
-data and metadata are stored within the table itself, rather than within the
-labels of rows and columns:
-
-.. altair-plot::
-
-    alt.Chart(long_form).mark_line().encode(
-      x='Date:T',
-      y='price:Q',
-      color='company:N'
-    )
-
-Wide-form data can be similarly visualized using e.g. layering
-(see :ref:`layer-chart`), but it is far less convenient within Altair's grammar.
-
-If you would like to convert data from wide-form to long-form, there are two possible
-approaches: it can be done as a preprocessing step using pandas, or as a transform
-step within the chart itself. We will detail to two approaches below.
-
-.. _data-converting-long-form:
-
-Converting with pandas
-""""""""""""""""""""""
-This sort of data manipulation can be done as a preprocessing step using pandas_,
-and is discussed in detail in the `Reshaping and Pivot Tables`_ section of the
-pandas documentation.
-
-For converting wide-form data to the long-form data used by Altair, the ``melt``
-method of dataframes can be used. The first argument to ``melt`` is the column
-or list of columns to treat as index variables; the remaining columns will
-be combined into an indicator variable and a value variable whose names can
-be optionally specified:
-
-.. altair-plot::
-    :output: repr
-
-    wide_form.melt('Date', var_name='company', value_name='price')
-
-For more information on the ``melt`` method, see the `pandas melt documentation`_.
-
-In case you would like to undo this operation and convert from long-form back
-to wide-form, the ``pivot`` method of dataframes is useful.
-
-.. altair-plot::
-    :output: repr
-
-    long_form.pivot(index='Date', columns='company', values='price').reset_index()
-
-For more information on the ``pivot`` method, see the `pandas pivot documentation`_.
-
-Converting with Fold Transform
-""""""""""""""""""""""""""""""
-
-If you would like to avoid data preprocessing, you can reshape your data using Altair's
-Fold Transform (see :ref:`user-guide-fold-transform` for a full discussion).
-With it, the above chart can be reproduced as follows:
-
-.. altair-plot::
-
-    alt.Chart(wide_form).transform_fold(
-        ['AAPL', 'AMZN', 'GOOG'],
-        as_=['company', 'price']
-    ).mark_line().encode(
-        x='Date:T',
-        y='price:Q',
-        color='company:N'
-    )
-
-Notice that unlike the pandas ``melt`` function we must explicitly specify the columns
-to be folded. The ``as_`` argument is optional, with the default being ``["key", "value"]``.
-
-
 .. _data-dictionary:
 
-Inline Dictionary Data
-~~~~~~~~~~~~~~~~~~~~~~
+Inline Data
+~~~~~~~~~~~
 
-A Python dictionary can supply data using Vega-Lite's inline ``values`` format.
-Each entry in the ``values`` list is a record containing named fields.
-Unlike a pandas DataFrame, a dictionary does not provide pandas dtype
-information to Altair, so use explicit encoding types.
+Here we create the same chart as above
+using inline data,
+which needs to be defined as a list of records/observations.
+We can specify inline data
+using the :class:`Data` helper class as we do here,
+but it is also possible to use a Python dictionary
+with a ``"values"`` key.
 
 .. altair-plot::
 
-   import altair as alt
-
-   source = {
-       "values": [
-           {"category": "A", "value": 5},
-           {"category": "B", "value": 3},
-           {"category": "C", "value": 7},
+   data = alt.Data(
+       values=[
+           {'x': 'A', 'y': 5},
+           {'x': 'B', 'y': 3},
+           {'x': 'C', 'y': 6},
+           {'x': 'D', 'y': 7},
+           {'x': 'E', 'y': 2}
        ]
-   }
-
-   alt.Chart(source).mark_bar().encode(
-       x="category:N",
-       y="value:Q",
+   )
+   alt.Chart(data).mark_bar().encode(
+       x='x:N',  # specify nominal data
+       y='y:Q',  # specify quantitative data
    )
 
+Notice the extra markup required in the encoding; because there is no underlying
+dataframe library providing the columns data type for each column,
+we must specify them manually
+(here we use :ref:`shorthand-description` to specify *nominal* (``N``) for ``x``
+and *quantitative* (``Q``) for ``y``; see :ref:`encoding-data-types`).
 
 .. _data-url:
 
@@ -275,7 +233,6 @@ Altair cannot infer field types from remote data, so specify them explicitly.
 
 .. altair-plot::
 
-   import altair as alt
    from altair.datasets import data
 
    source = data.cars.url
@@ -300,8 +257,6 @@ data, along with a :ref:`user-guide-calculate-transform` to compute *y* data.
 
 .. altair-plot::
 
-   import altair as alt
-
    # Note that the following generator is functionally similar to
    # data = pd.DataFrame({'x': np.arange(0, 10, 0.1)})
    data = alt.sequence(0, 10, 0.1, as_='x')
@@ -321,8 +276,6 @@ lines on a geographic visualization, known as a graticule. These can be created 
 
 .. altair-plot::
 
-   import altair as alt
-
    data = alt.graticule(step=[15, 15])
 
    alt.Chart(data).mark_geoshape(stroke='black').project(
@@ -338,8 +291,6 @@ created using Altair's :func:`sphere` generator function. Here is an example:
 
 .. altair-plot::
 
-   import altair as alt
-
    sphere_data = alt.sphere()
    grat_data = alt.graticule(step=[15, 15])
 
@@ -348,10 +299,6 @@ created using Altair's :func:`sphere` generator function. Here is an example:
 
    alt.layer(background, lines).project('naturalEarth1')
 
-.. _pandas: http://pandas.pydata.org/
-.. _pandas pivot documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.pivot.html
-.. _pandas melt documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.melt.html#pandas.DataFrame.melt
-.. _Reshaping and Pivot Tables: https://pandas.pydata.org/pandas-docs/stable/reshaping.html
 
 .. _spatial-data:
 
@@ -378,7 +325,6 @@ GeoDataFrame and visualize these using the ``mark_geoshape``.
 
    from shapely import geometry
    import geopandas as gpd
-   import altair as alt
 
    data_geoms = [
        {"color": "#F3C14F", "geometry": geometry.Polygon([[1.45, 3.75], [1.45, 0], [0, 0], [1.45, 3.75]])},
@@ -535,8 +481,6 @@ define the type of data as ``topjoson`` in the ``alt.DataFormat()`` object.
 .. altair-plot::
    :output: repr
 
-   from altair.datasets import data
-
    url_topojson = data.london_boroughs.url
 
    data_url_topojson = alt.Data(
@@ -578,8 +522,6 @@ Note: you have to explicitly define ``filled=False`` to draw multi(lines)
 without fill color.
 
 .. altair-plot::
-
-   from altair.datasets import data
 
    url_topojson = data.london_boroughs.url
 
