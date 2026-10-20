@@ -34,10 +34,11 @@ There are two common conventions for storing tabular data, sometimes called
 *long-form* and *wide-form*. Both are sensible patterns for storing data in
 a tabular format; briefly, the difference is this:
 
-- **wide-form data** has one row per *independent variable*, with some catecorical
-  labels recorded in the *row and column labels*.
-- **long-form data** has one row per *observation*, with categorical labels recorded
-  within the table as *values*.
+- **Wide-form data** stores each company’s prices in a separate column, with one row per date.  
+- **Long-form data** stores company names and prices in separate columns, with one row per date–company combination
+
+- **Wide-form data** stores related measurements in separate columns, with some data such as categorical labelsstored in the column names.
+- **Long-form data** stores those measurements in one or more value columns, with additional columns identifying the category, group, or measurement represented by each row, so that there is one row per observation.
 
 A concrete example will help in making this distinction more clear.
 Consider a dataset consisting of stock prices of several companies over time.
@@ -88,13 +89,13 @@ The long-form version of the same data would look like this:
     long_form
 
 Notice here that each row contains a single observation (i.e. price), along
-with the catergorical labels for this observation (the date and company name).
+with the categorical labels for this observation (the date and company name).
 Importantly, the column and index labels no longer contain any data,
 just the name of the variables.
 
 Altair's grammar works best with **long-form** data because all relevant
 data are stored within the table itself, rather than within the
-names of rows and columns:
+names of rows and columns.
 Wide-form data can be visualized using e.g. layering
 (see :ref:`layer-chart`), but it is far less convenient within Altair's grammar.
 
@@ -116,40 +117,43 @@ Altair uses the data type information
 provided by the dataframe library to automatically determine
 the data types required in the encoding.
 For example,
-here Altair automatically detects that the x-column
+here Altair automatically detects that the y-column
 should be visualized on a categorical (nominal) scale
-and that the y-column should be visualized on a quantitative scale
-for both pandas and polars dataframes:
+and that the x-column should be visualized on a quantitative scale
+from columns data types stored in the Polars dataframes:
 
 .. altair-plot::
 
    import altair as alt
-   import pandas as pd
+   import polars as pl
 
-   data = pd.DataFrame({
+   df = pl.DataFrame({
        'x': [5, 3, 6, 7, 2],
        'y': ['A', 'B', 'C', 'D', 'E']
    })
-   alt.Chart(data).mark_bar().encode(
+   alt.Chart(df).mark_bar().encode(
        x='x',
        y='y',
    )
 
-And here we do the same thing for polars:
+And here we do the same thing for pandas:
 
 .. altair-plot::
 
-   import polars as pl
+   import pandas as pd
 
-   data_pl = pl.DataFrame(data)
-   alt.Chart(data).mark_bar().encode(
+   df = pd.DataFrame({
+       'x': [5, 3, 6, 7, 2],
+       'y': ['A', 'B', 'C', 'D', 'E']
+   })
+   alt.Chart(df).mark_bar().encode(
        x='x',
        y='y',
    )
 
 By comparison,
-all other ways of specifying the data
-requires encoding types to be declared explicitly,
+for inline records, URL data, and named data,
+field encoding types generally need to be specified explicitly,
 as can be seen in the corresponding section further down.
 
 .. _data-in-index:
@@ -165,11 +169,11 @@ At times, relevant data appears in the index. For example:
    import numpy as np
    rand = np.random.RandomState(0)
 
-   data = pd.DataFrame(
+   df = pd.DataFrame(
        {'value': rand.randn(100).cumsum()},
        index=pd.date_range('2018', freq='D', periods=100)
     )
-   data.head()
+   df.head()
 
 If you would like the index to be available to the chart, you can explicitly
 turn it into a column using the ``reset_index()`` method of pandas dataframes.
@@ -181,7 +185,7 @@ More information is available in the
 
 .. altair-plot::
 
-   alt.Chart(data.reset_index()).mark_line().encode(
+   alt.Chart(df.reset_index()).mark_line().encode(
        x='index:T',
        y='value:Q'
    )
@@ -191,7 +195,7 @@ More information is available in the
 Inline Data
 ~~~~~~~~~~~
 
-Here we create the same chart as above
+Here we create the same bar chart shown in `DataFrames and Tables`_
 using inline data,
 which needs to be defined as a list of records/observations.
 We can specify inline data
@@ -235,8 +239,7 @@ Altair cannot infer field types from remote data, so specify them explicitly.
 
    from altair.datasets import data
 
-   source = data.cars.url
-   alt.Chart(source).mark_point().encode(
+   alt.Chart(data.cars.url).mark_point().encode(
        x="Horsepower:Q",
        y="Miles_per_Gallon:Q",
    )
@@ -259,9 +262,9 @@ data, along with a :ref:`user-guide-calculate-transform` to compute *y* data.
 
    # Note that the following generator is functionally similar to
    # data = pd.DataFrame({'x': np.arange(0, 10, 0.1)})
-   data = alt.sequence(0, 10, 0.1, as_='x')
+   seq_data = alt.sequence(0, 10, 0.1, as_='x')
 
-   alt.Chart(data).transform_calculate(
+   alt.Chart(seq_data).transform_calculate(
        y='sin(datum.x)'
    ).mark_line().encode(
        x='x:Q',
@@ -276,9 +279,9 @@ lines on a geographic visualization, known as a graticule. These can be created 
 
 .. altair-plot::
 
-   data = alt.graticule(step=[15, 15])
+   grat_data = alt.graticule(step=[15, 15])
 
-   alt.Chart(data).mark_geoshape(stroke='black').project(
+   alt.Chart(grat_data).mark_geoshape(stroke='black').project(
        'orthographic',
        rotate=[0, -45, 0]
    )
@@ -292,7 +295,6 @@ created using Altair's :func:`sphere` generator function. Here is an example:
 .. altair-plot::
 
    sphere_data = alt.sphere()
-   grat_data = alt.graticule(step=[15, 15])
 
    background = alt.Chart(sphere_data).mark_geoshape(fill='aliceblue')
    lines = alt.Chart(grat_data).mark_geoshape(stroke='lightgrey')
