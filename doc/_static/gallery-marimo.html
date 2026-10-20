@@ -23,10 +23,14 @@
         display: none !important;
       }
       #App .cm-editor {
-        background-color: #FAFBFC !important;
+        background-color: #FCFDFE !important;
       }
       #App .cm-gutters {
         background-color: #ECEFF2 !important;
+      }
+      #App .cm-editor.cm-focused .cm-activeLine:not(.cm-error-line),
+      #App .cm-editor.cm-focused .cm-activeLineGutter {
+        background-color: #F7FBFF !important;
       }
       /* Keep the cell's run/menu controls visible without hovering. */
       #App .marimo-cell .tray [role="toolbar"] {
