@@ -18,6 +18,7 @@ There are many different ways of specifying a dataset:
 - as a `pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
 - as a DataFrame that supports the DataFrame Interchange Protocol (contains a ``__dataframe__`` attribute), e.g. polars and pyarrow. This is experimental.
 - as a :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
+- as a Python dictionary with inline ``values`` records
 - as a url string pointing to a ``json`` or ``csv`` formatted text file
 - as a `geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_ or other objects that support the ``__geo_interface__``
 - as a generated dataset such as numerical sequences or geographic reference elements
@@ -65,18 +66,8 @@ the types within a :class:`Data` object, we must specify them manually
 (here we use :ref:`shorthand-description` to specify *nominal* (``N``) for ``x``
 and *quantitative* (``Q``) for ``y``; see :ref:`encoding-data-types`).
 
-Similarly, we must also specify the data type when referencing data by URL:
-
-.. altair-plot::
-
-    import altair as alt
-    from altair.datasets import data
-    url = data.cars.url
-
-    alt.Chart(url).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q'
-    )
+Similarly, we must specify data types when referencing data by URL.
+See :ref:`data-url` for a complete example.
 
 Encodings and their associated types are further discussed in :ref:`user-guide-encoding`.
 Below we go into more detail about the different ways of specifying data in an Altair chart.
@@ -242,6 +233,56 @@ With it, the above chart can be reproduced as follows:
 
 Notice that unlike the pandas ``melt`` function we must explicitly specify the columns
 to be folded. The ``as_`` argument is optional, with the default being ``["key", "value"]``.
+
+
+.. _data-dictionary:
+
+Inline Dictionary Data
+~~~~~~~~~~~~~~~~~~~~~~
+
+A Python dictionary can supply data using Vega-Lite's inline ``values`` format.
+Each entry in the ``values`` list is a record containing named fields.
+Unlike a pandas DataFrame, a dictionary does not provide pandas dtype
+information to Altair, so use explicit encoding types.
+
+.. altair-plot::
+
+   import altair as alt
+
+   source = {
+       "values": [
+           {"category": "A", "value": 5},
+           {"category": "B", "value": 3},
+           {"category": "C", "value": 7},
+       ]
+   }
+
+   alt.Chart(source).mark_bar().encode(
+       x="category:N",
+       y="value:Q",
+   )
+
+
+.. _data-url:
+
+Data by URL
+~~~~~~~~~~~
+
+A URL string pointing to a JSON or CSV dataset can be passed directly to
+:class:`Chart`. The URL is stored in the chart specification and resolved
+when the chart is rendered; the data is not embedded in the specification.
+Altair cannot infer field types from remote data, so specify them explicitly.
+
+.. altair-plot::
+
+   import altair as alt
+   from altair.datasets import data
+
+   source = data.cars.url
+   alt.Chart(source).mark_point().encode(
+       x="Horsepower:Q",
+       y="Miles_per_Gallon:Q",
+   )
 
 
 .. _data-generated:
