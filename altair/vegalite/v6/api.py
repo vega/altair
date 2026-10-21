@@ -4814,6 +4814,10 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         layer: Sequence[LayerType] = (),
         **kwargs: Any,
     ) -> None:
+        # Track which layers supplied their own data before deduplication.
+        # A subsequent '+' must not turn a data-less layer into a data-backed one.
+        explicit_data = data is not Undefined
+        layer_data_present = tuple(spec.data is not Undefined for spec in layer)
         # TODO: check for conflicting interaction
         for spec in layer:
             _check_if_valid_subspec(spec, "LayerChart")
@@ -4833,6 +4837,24 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         for prop in combined_dict:
             self[prop] = combined_dict[prop]
+
+        object.__setattr__(self, "_explicit_layer_data", explicit_data)
+        object.__setattr__(self, "_original_layer_data", layer_data_present)
+
+    def copy(
+        self, deep: bool | Iterable[Any] = True, ignore: list[str] | None = None
+    ) -> Self:
+        copy = super().copy(deep=deep, ignore=ignore)
+        object.__setattr__(copy, "_explicit_layer_data", self._explicit_layer_data)
+        object.__setattr__(copy, "_original_layer_data", self._original_layer_data)
+        return copy
+
+    def properties(self, **kwargs: Any) -> Self:
+        copy = super().properties(**kwargs)
+        if "data" in kwargs:
+            # Explicit shared data must also apply to subsequently added layers.
+            object.__setattr__(copy, "_explicit_layer_data", True)
+        return copy
 
     def transformed_data(
         self,
@@ -4864,7 +4886,33 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     def __iadd__(self, other: ChartType) -> Self:
         _check_if_valid_subspec(other, "LayerChart")
         _check_if_can_be_layered(other)
+
+        # Reconstruct original layer-level data before adding a data-less layer.
+        # Otherwise previously hoisted data would be inherited by the new layer,
+        # making '+' depend on the order of its operands.
+        if (
+            self.data is not Undefined
+            and not self._explicit_layer_data
+            and other.data is Undefined
+        ):
+            original_data = self.data
+            restored = []
+            for chart, had_data in zip(
+                self.layer, self._original_layer_data, strict=True
+            ):
+                if had_data and chart.data is Undefined:
+                    chart = chart.copy(deep=False)
+                    chart.data = original_data
+                restored.append(chart)
+            self.layer = restored
+            self.data = Undefined
+
         self.layer.append(other)
+        object.__setattr__(
+            self,
+            "_original_layer_data",
+            (*self._original_layer_data, other.data is not Undefined),
+        )
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
         return self
