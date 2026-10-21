@@ -31,7 +31,7 @@ highlight = bars.mark_bar(color="#e45755").encode(
     alt.datum.Value > threshold
 )
 
-rule = alt.Chart().mark_rule().encode(
+rule = alt.Chart(pd.DataFrame({"threshold": [threshold]})).mark_rule().encode(
     y=alt.Y(datum=threshold)
 )
 
