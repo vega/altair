@@ -379,15 +379,15 @@ ignore = [
 ]
 
 [tool.ty]
-# Some rules are suppressed until existing ty issues are resolved:
-# https://github.com/astral-sh/ty/issues/2520
-# https://github.com/astral-sh/ty/issues/4566
+# Some rules are suppressed based on existing ty issues:
+# - https://github.com/astral-sh/ty/issues/2520
+# - https://github.com/astral-sh/ty/issues/4566
 src.include = ["altair", "tests", "tools"]
 src.exclude = [
     "altair/datasets",  # to fix
     "altair/utils",  # to fix
     "altair/jupyter",  # match pyright
-    "tests/examples_arguments_syntax",  # ty-4566, ty-2520
+    "tests/examples_arguments_syntax",  # ty-4566
 ]
 analysis.allowed-unresolved-imports = ["polars_st"]  # match mypy
 
