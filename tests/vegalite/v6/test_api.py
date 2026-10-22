@@ -912,6 +912,18 @@ def test_save_html(basic_chart, inline):
         assert 'src="https://cdn.jsdelivr.net/npm/vega-embed@7' in content
 
 
+@pytest.mark.parametrize("format", ["json", "html"])
+def test_save_with_encoding(format, basic_chart, tmp_path):
+    fp = tmp_path / f"chart.{format}"
+    basic_chart.save(fp, format=format, encoding="utf-16")
+
+    content = fp.read_text(encoding="utf-16")
+    if format == "json":
+        assert "$schema" in json.loads(content)
+    else:
+        assert content.startswith("<!DOCTYPE html>")
+
+
 @skip_requires_vl_convert
 def test_to_url(basic_chart):
     share_url = basic_chart.to_url()
