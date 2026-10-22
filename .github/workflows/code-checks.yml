@@ -36,7 +36,8 @@ jobs:
         fi
     # Installing all dependencies and not just the linters as mypy needs them for type checking
     - name: Install dependencies
-      run: uv sync --all-extras
+      run: |
+        uv sync --all-extras
     - name: ruff check (lint)
       run: |
         uv run ruff check
@@ -48,4 +49,4 @@ jobs:
         uv run mypy altair tests tools
     - name: ty (type check)
       run: |
-        uv run ty check
+        uv check
