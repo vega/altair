@@ -4299,6 +4299,26 @@ def _check_if_valid_subspec(
             raise TypeError(msg)
 
 
+def _check_if_unit_chart_has_resolve(
+    spec: Any, action: Literal["layer", "facet"]
+) -> None:
+    """
+    Raise a `TypeError` if `spec` is a unit `Chart` with a `resolve` property.
+
+    `resolve` is only valid on single charts at the top level or inside a concat;
+    Vega-Lite does not allow it on a unit spec inside a layer or facet.
+    """
+    if isinstance(spec, Chart) and spec._get("resolve") is not Undefined:
+        verb = {"layer": "layered", "facet": "faceted"}[action]
+        target = {"layer": "charts", "facet": "chart"}[action]
+        msg = (
+            f"Charts with a 'resolve' property cannot be {verb}. "
+            f"Instead, {action} the {target} before calling `resolve_scale`, "
+            f"`resolve_axis` or `resolve_legend` on the {verb} chart."
+        )
+        raise TypeError(msg)
+
+
 def _check_if_can_be_layered(spec: LayerType) -> None:
     """Raise a `TypeError` if `spec` cannot be layered."""
 
@@ -4313,6 +4333,7 @@ def _check_if_can_be_layered(spec: LayerType) -> None:
             if encoding._get(channel) is not Undefined:
                 msg = f"Faceted {base_msg} faceting."
                 raise TypeError(msg)
+    _check_if_unit_chart_has_resolve(spec, "layer")
     if isinstance(spec, (Chart, LayerChart)):
         return
     elif is_chart_type(spec) or _get_any(
@@ -5015,6 +5036,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             msg = f"{type(self).__name__!r} requires a `spec`, but got: {spec!r}"
             raise TypeError(msg)
         _check_if_valid_subspec(spec, "FacetChart")
+        _check_if_unit_chart_has_resolve(spec, "facet")
         _spec_as_list = [spec]
         params, _spec_as_list = _combine_subchart_params(params, _spec_as_list)
         spec = _spec_as_list[0]
