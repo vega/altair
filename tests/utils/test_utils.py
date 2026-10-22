@@ -213,6 +213,12 @@ def test_sanitize_dataframe_timedelta():
         sanitize_pandas_dataframe(df)
 
 
+def test_sanitize_dataframe_period():
+    df = pd.DataFrame({"m": pd.PeriodIndex(["2011-07", None, "2011-09"], freq="M")})
+    df_clean = sanitize_pandas_dataframe(df)
+    assert list(df_clean["m"]) == ["2011-07-01T00:00:00", "", "2011-09-01T00:00:00"]
+
+
 def test_sanitize_dataframe_infs():
     df = pd.DataFrame({"x": [0, 1, 2, np.inf, -np.inf, np.nan]})
     df_clean = sanitize_pandas_dataframe(df)
