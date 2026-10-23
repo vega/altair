@@ -108,6 +108,9 @@ doc = [
 ]
 
 [dependency-groups]
+dev = [
+    "ty>=0.0.91",
+]
 geospatial = [
     "geopandas>=0.14.3",
     "polars-st>=0.1.0a27",
