@@ -615,6 +615,28 @@ def chart_error_example__invalid_value_type():
     )
 
 
+def chart_error_example__clash_inside_condition():
+    return (
+        alt.Chart("d.csv")
+        .mark_point()
+        .encode(
+            color={"condition": {"test": "x", "param": "p", "value": "r"}, "value": "b"}
+        )
+    )
+
+
+def chart_error_example__tooltip_in_list():
+    return alt.Chart("d.csv").mark_point().encode(tooltip=[alt.Tooltip("a:N", bogus=1)])
+
+
+def chart_error_example__value_together_with_datum():
+    return alt.Chart("d.csv").mark_point().encode(y=alt.Y(value=1, datum=2))
+
+
+def chart_error_example__shorthand_reported_as_field():
+    return alt.Chart("d.csv").mark_point().encode(y=alt.Y("a:Q", datum=1))
+
+
 def chart_error_example__wrong_tooltip_type_in_faceted_chart():
     # Error: Wrong data type to pass to tooltip
     return (
@@ -967,6 +989,43 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
     (
         chart_error_example__invalid_value_type,
         rf"""'1' is an invalid value for `value`. Valid values are of type {re.escape("`str | Mapping[str, Any] | None`")}.$""",
+    ),
+    (
+        chart_error_example__clash_inside_condition,
+        r"""`condition` does not accept 'param' and 'test' together
+
+                See the help for `Color` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__tooltip_in_list,
+        r"""`Tooltip` has no parameter named 'bogus'
+
+                Existing parameter names are:
+                aggregate\s+field\s+timeUnit\s*
+                bandPosition\s+format\s+title\s*
+                bin\s+formatType\s+type\s*
+
+                See the help for `Tooltip` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__value_together_with_datum,
+        r"""`Y` does not accept 'datum' and 'value' together
+
+                'datum' belongs to `YDatum`
+                'value' belongs to `YValue`
+
+                See the help for `Y` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__shorthand_reported_as_field,
+        r"""`YDatum` has no parameter named 'field' \(from shorthand 'a:Q'\)
+
+                Existing parameter names are:
+                datum\s+impute\s+title\s*
+                axis\s+scale\s+type\s*
+                bandPosition\s+stack\s*
+
+                See the help for `YDatum` to read the full description of these parameters$""",
     ),
     (
         chart_error_example__four_errors_hide_fourth,
