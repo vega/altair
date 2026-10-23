@@ -49,4 +49,4 @@ jobs:
         uv run mypy altair tests tools
     - name: ty (type check)
       run: |
-        uv check
+        ty check

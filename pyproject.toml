@@ -285,7 +285,7 @@ lint       = "ruff check"
 format     = "ruff format --diff --check"
 ruff-check = "task lint && task format"
 ruff-fix   = "task lint && ruff format"
-type-check = "mypy altair tests tools && uv check"
+type-check = "mypy altair tests tools && ty check"
 
 pytest-serial = "pytest -m \"no_xdist\" --numprocesses=1"
 pytest        = "pytest && task pytest-serial"
@@ -382,12 +382,12 @@ ignore = [
 # Some rules are suppressed based on existing ty issues:
 # - https://github.com/astral-sh/ty/issues/2520
 # - https://github.com/astral-sh/ty/issues/4566
-src.include = ["altair", "tests", "tools"]
 src.exclude = [
     "altair/datasets",  # to fix
     "altair/utils",  # to fix
     "altair/jupyter",  # match pyright
-    # "tests/examples_arguments_syntax",  # ty-4566
+    "sphinxext",  # match mypy
+    "tests/examples_arguments_syntax",  # ty-4566
 ]
 analysis.allowed-unresolved-imports = ["polars_st"]  # match mypy
 
