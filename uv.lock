@@ -100,6 +100,9 @@ save = [
 ]
 
 [package.dev-dependencies]
+dev = [
+    { name = "ty" },
+]
 geospatial = [
     { name = "geopandas" },
     { name = "polars-st" },
