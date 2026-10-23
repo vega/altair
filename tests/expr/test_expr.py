@@ -140,6 +140,22 @@ def test_json_reprs():
     assert repr(datum.xxx == np.int64(0)) == "(datum.xxx === 0)"
 
 
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        (np.True_, "true"),
+        (np.False_, "false"),
+        (float("nan"), "NaN"),
+        (np.float64("nan"), "NaN"),
+        (float("inf"), "(1/0)"),
+        (float("-inf"), "(-1/0)"),
+        (np.float64("inf"), "(1/0)"),
+    ],
+)
+def test_json_reprs_numpy_bool_and_nonfinite(value: Any, expected: str) -> None:
+    assert repr(expr.if_(datum.xxx, value, 0)) == f"if(datum.xxx,{expected},0)"
+
+
 def test_to_dict():
     ex = datum.xxx * 2 > datum.yyy
     assert ex.to_dict() == repr(ex)
