@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import math
 import sys
 from typing import TYPE_CHECKING, Any, Literal, Union
 
@@ -47,7 +48,12 @@ def _js_repr(val) -> str:
     elif isinstance(val, dt.date):
         return _from_date_datetime(val)
     elif _is_numpy_generic(val):
-        return repr(val.item())
+        return _js_repr(val.item())
+    elif isinstance(val, float) and not math.isfinite(val):
+        if math.isnan(val):
+            return "NaN"
+        # Vega expressions have no literal or constant for infinity
+        return "(1/0)" if val > 0 else "(-1/0)"
     else:
         return repr(val)
 
