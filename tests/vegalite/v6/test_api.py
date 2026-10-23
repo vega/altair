@@ -399,11 +399,11 @@ def test_when() -> None:
     assert when_constraint._condition["test"] == expected_constraint
     assert when_constraints._condition["test"] == expected_constraints
     with pytest.raises((NotImplementedError, TypeError), match="list"):
-        alt.when([1, 2, 3])  # type: ignore
+        alt.when([1, 2, 3])  # type: ignore[arg-type]
     with pytest.raises(TypeError, match="Undefined"):
         alt.when()
     with pytest.raises(TypeError, match="int"):
-        alt.when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore
+        alt.when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore[arg-type]
 
 
 def test_when_then() -> None:
@@ -420,7 +420,7 @@ def test_when_then() -> None:
         when.then(pathlib.Path("some"))  # type: ignore
 
     with pytest.raises(TypeError, match="float"):
-        when_then.when(select, alt.datum.Name != "Name_2", 86.123, empty=True)  # type: ignore
+        when_then.when(select, alt.datum.Name != "Name_2", 86.123, empty=True)  # type: ignore[arg-type]
 
 
 def test_when_then_only(basic_chart) -> None:
@@ -594,7 +594,7 @@ def test_when_labels_position_based_on_condition() -> None:
         param_width < 200, alt.value("red"), alt.value("black")
     )
     with pytest.raises(SchemaValidationError, match="invalid value for `expr`"):
-        alt.param(expr=fail_condition)  # type: ignore
+        alt.param(expr=fail_condition)  # type: ignore[arg-type]
 
 
 def test_when_expressions_inside_parameters() -> None:
@@ -1143,7 +1143,7 @@ def test_transforms():
     agg1 = alt.AggregatedFieldDef(op="mean", field="y", **{"as": "x1"})
     agg2 = alt.AggregatedFieldDef(op="median", field="z", **{"as": "x2"})
     chart = alt.Chart().transform_aggregate([agg1], ["foo"], x2="median(z)")
-    kwds = {"aggregate": [agg1, agg2], "groupby": ["foo"]}
+    kwds: dict[str, Any] = {"aggregate": [agg1, agg2], "groupby": ["foo"]}  # type: ignore[annotation-unchecked]
     assert chart.transform == [alt.AggregateTransform(**kwds)]
 
     # bin transform
@@ -1456,9 +1456,7 @@ def test_add_selection():
 def test_repeat_add_selections():
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
-    alt.Chart._counter = 0
     chart1 = base.add_params(selection).repeat(list("ABC"))
-    alt.Chart._counter = 0
     chart2 = base.repeat(list("ABC")).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
@@ -1466,9 +1464,7 @@ def test_repeat_add_selections():
 def test_facet_add_selections():
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
-    alt.Chart._counter = 0
     chart1 = base.add_params(selection).facet("val:Q")
-    alt.Chart._counter = 0
     chart2 = base.facet("val:Q").add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
@@ -1476,9 +1472,7 @@ def test_facet_add_selections():
 def test_layer_add_selection():
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
-    alt.Chart._counter = 0
     chart1 = alt.layer(base.add_params(selection), base)
-    alt.Chart._counter = 0
     chart2 = alt.layer(base, base).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
@@ -1487,9 +1481,7 @@ def test_layer_add_selection():
 def test_compound_add_selections(charttype):
     base = alt.Chart("data.csv").mark_point()
     selection = alt.selection_point()
-    alt.Chart._counter = 0
     chart1 = charttype(base.add_params(selection), base.add_params(selection))
-    alt.Chart._counter = 0
     chart2 = charttype(base, base).add_params(selection)
     assert chart1.to_dict() == chart2.to_dict()
 
@@ -2133,7 +2125,7 @@ def test_binding() -> None:
 
     # NOTE: Both type checkers can detect the issue on the new signature
     with pytest.raises(TypeError, match=MISSING_INPUT):
-        alt.binding(placeholder="Country", name="Search")  # type: ignore[call-arg]
+        alt.binding(placeholder="Country", name="Search")  # type: ignore
 
 
 def _view_name_of_concat_cell(cell: dict) -> str:

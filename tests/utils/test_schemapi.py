@@ -676,7 +676,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
 
     blue_bars = (
         alt.Chart(source)
-        .encode(alt.X("Day:O").scale(invalidOption=10), alt.Y("Value:Q"))  # pyright: ignore[reportCallIssue]
+        .encode(alt.X("Day:O").scale(invalidOption=10), alt.Y("Value:Q"))  # pyright: ignore  # ty: ignore
         .mark_bar()
     )
     red_bars = (
@@ -1234,7 +1234,7 @@ def test_to_dict_iterables(
 def test_to_dict_range(tp) -> None:
     expected = [0, 1, 2, 3, 4]
     x_dict = alt.X("x:O", sort=tp(0, 5)).to_dict()
-    actual = x_dict["sort"]  # type: ignore
+    actual = x_dict["sort"]  # type: ignore[call-overload]
     assert actual == expected
 
 
