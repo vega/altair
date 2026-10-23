@@ -269,6 +269,82 @@ def test_explicitly_named_parameters_error():
         alt.Chart().mark_point().add_params(param1, param2)
 
 
+@pytest.mark.parametrize("concat", [alt.concat, alt.hconcat, alt.vconcat])
+@pytest.mark.parametrize("selection", ["point", "interval", "scales"])
+def test_concat_add_params_shared_selection_does_not_warn(concat, selection):
+    if selection == "scales":
+        params = [
+            alt.selection_interval(bind="scales", encodings=[encoding])
+            for encoding in ["x", "y"]
+        ]
+    else:
+        params = [getattr(alt, f"selection_{selection}")()]
+
+    base = alt.Chart().mark_point()
+    chart = concat(base.properties(name="left"), base.properties(name="right"))
+    original = chart.to_dict()
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        result = chart.add_params(*params).to_dict()
+        assert alt.Chart.from_dict(result).to_dict() == result
+
+    expected = dict(original)
+    expected["params"] = [
+        {**param.param.to_dict(), "views": ["left", "right"]} for param in params
+    ]
+    assert result == expected
+    assert chart.to_dict() == original
+
+
+@pytest.mark.parametrize("concat", [alt.concat, alt.hconcat, alt.vconcat])
+def test_nested_concat_add_params_shared_selection_does_not_warn(concat):
+    base = alt.Chart().mark_point()
+    nested = alt.hconcat(base.properties(name="left"), base.properties(name="right"))
+    chart = concat(nested, base.properties(name="bottom"))
+    original = chart.to_dict()
+    brush = alt.selection_interval()
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        result = chart.add_params(brush).to_dict()
+
+    assert result["params"] == [
+        {**brush.param.to_dict(), "views": ["left", "right", "bottom"]}
+    ]
+    assert chart.to_dict() == original
+
+
+@pytest.mark.parametrize("concat", [alt.concat, alt.hconcat, alt.vconcat])
+@pytest.mark.parametrize("existing", [False, True])
+def test_concat_add_params_independent_identical_selections_warn(concat, existing):
+    base = alt.Chart().mark_point()
+    chart = concat(base, base)
+    first = alt.selection_interval()
+    second = alt.selection_interval()
+
+    if existing:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", UserWarning)
+            chart = chart.add_params(first)
+        params = [second]
+    else:
+        params = [first, second]
+
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        chart.add_params(*params)
+
+
+@pytest.mark.parametrize("concat", [alt.concat, alt.hconcat, alt.vconcat])
+def test_concat_independent_identical_selections_warn(concat):
+    base = alt.Chart().mark_point()
+    left = base.add_params(alt.selection_interval())
+    right = base.add_params(alt.selection_interval())
+
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        concat(left, right)
+
+
 def test_identical_hash_based_parameters_deduplication():
     """Test that identical parameters with hash-based names are deduplicated."""
     from altair.datasets import data

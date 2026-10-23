@@ -4578,7 +4578,9 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
             return self
         copy = self.copy()
         copy.concat = [chart.add_params(*params) for chart in copy.concat]
-        copy.params, copy.concat = _combine_subchart_params(copy.params, copy.concat)
+        copy.params, copy.concat = _combine_subchart_params(
+            copy.params, copy.concat, shared_params=params
+        )
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
@@ -4683,7 +4685,9 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
             return self
         copy = self.copy()
         copy.hconcat = [chart.add_params(*params) for chart in copy.hconcat]
-        copy.params, copy.hconcat = _combine_subchart_params(copy.params, copy.hconcat)
+        copy.params, copy.hconcat = _combine_subchart_params(
+            copy.params, copy.hconcat, shared_params=params
+        )
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
@@ -4790,7 +4794,9 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
             return self
         copy = self.copy()
         copy.vconcat = [chart.add_params(*params) for chart in copy.vconcat]
-        copy.params, copy.vconcat = _combine_subchart_params(copy.params, copy.vconcat)
+        copy.params, copy.vconcat = _combine_subchart_params(
+            copy.params, copy.vconcat, shared_params=params
+        )
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
@@ -5251,10 +5257,19 @@ def _view_names_for_param(subchart: ChartType, is_concat: bool) -> list[str]:
 
 
 def _combine_subchart_params(  # noqa: C901
-    params: Optional[Sequence[_Parameter]], subcharts: list[ChartType]
+    params: Optional[Sequence[_Parameter]],
+    subcharts: list[ChartType],
+    *,
+    shared_params: Sequence[Parameter] = (),
 ) -> tuple[Optional[Sequence[_Parameter]], list[ChartType]]:
     if utils.is_undefined(params):
         params = []
+
+    # A concat's add_params() intentionally shares each new parameter across children.
+    # Still warn about names repeated in that call or already present on the chart.
+    new_names = [param.name for param in shared_params]
+    shared_names = {name for name in new_names if new_names.count(name) == 1}
+
     # List of triples related to params, (param, dictionary minus views, views)
     param_info: list[tuple[_Parameter, dict[str, Any], list[str]]] = []
 
@@ -5269,7 +5284,9 @@ def _combine_subchart_params(  # noqa: C901
             if p.views
             else []
         )
-        param_info.append((p, _viewless_dict(p), views))
+        pd = _viewless_dict(p)
+        shared_names.discard(pd["name"])
+        param_info.append((p, pd, views))
 
     subcharts = [subchart.copy() for subchart in subcharts]
     is_concat = len(subcharts) > 1
@@ -5334,14 +5351,14 @@ def _combine_subchart_params(  # noqa: C901
                 new_views = [v for v in views_after if v not in old_views]
                 old_views += new_views
 
-                # Warn when parameters get deduplicated
-                warnings.warn(
-                    "Automatically deduplicated selection parameter with identical configuration. "
-                    "If you want independent parameters, explicitly name them differently (e.g., "
-                    "name='param1', name='param2'). See https://github.com/vega/altair/issues/3891",
-                    category=UserWarning,
-                    stacklevel=5,
-                )
+                if pd["name"] not in shared_names:
+                    warnings.warn(
+                        "Automatically deduplicated selection parameter with identical configuration. "
+                        "If you want independent parameters, explicitly name them differently (e.g., "
+                        "name='param1', name='param2'). See https://github.com/vega/altair/issues/3891",
+                        category=UserWarning,
+                        stacklevel=5,
+                    )
             else:
                 param_info.append((p, pd, views_after))
 
