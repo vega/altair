@@ -218,6 +218,8 @@ def test_parse_shorthand_all_timeunits():
         for typ in ["Single", "Multi"]:
             defn = loc + typ + "TimeUnit"
             timeUnits.extend(alt.Root._schema["definitions"][defn]["enum"])
+    timeUnits.extend(alt.Root._schema["definitions"]["BinnedTimeUnit"]["enum"])
+    assert set(core.TIMEUNITS) == set(timeUnits)
     for timeUnit in timeUnits:
         shorthand = f"{timeUnit}(field):Q"
         assert parse_shorthand(shorthand) == {
