@@ -75,3 +75,84 @@ def test_unrelated_layer_source_is_not_overwritten(layers):
     assert result["layer"][0]["data"] == result["layer"][1]["data"]
     assert result["layer"][2]["data"] != result["layer"][0]["data"]
     assert result["layer"][3]["data"] == {"name": "empty"}
+
+
+@pytest.mark.parametrize("operator", ["add", "iadd"])
+def test_filter_scope_survives_data_less_addition(layers, operator):
+    _, bars, ticks, datum_rule, _ = layers
+    filtered = (bars + ticks).transform_filter("datum.y > 10")
+    expected = alt.layer(filtered, datum_rule)
+
+    if operator == "iadd":
+        filtered += datum_rule
+        combined = filtered
+    else:
+        combined = filtered + datum_rule
+
+    assert combined.to_dict() == expected.to_dict()
+    # The filter applies to the nested original chart, not the annotation.
+    assert "transform" not in combined.to_dict()
+    assert combined.to_dict()["layer"][0]["transform"] == [{"filter": "datum.y > 10"}]
+
+
+def test_nested_deep_copy_preserves_data_ownership(layers):
+    _, bars, ticks, datum_rule, _ = layers
+    separate = (
+        alt.Chart(pd.DataFrame({"x": [1], "y": [1]}))
+        .mark_point()
+        .encode(x="x:O", y="y:Q")
+    )
+    outer = alt.layer(bars + ticks, separate)
+    original = outer.layer[0] + datum_rule
+    copied = outer.copy().layer[0] + datum_rule
+
+    assert copied.to_dict() == original.to_dict()
+    assert copied.to_dict() == alt.layer(bars, ticks, datum_rule).to_dict()
+
+
+@pytest.mark.parametrize("assignment", ["attribute", "getitem", "properties"])
+def test_explicit_data_assignment_is_inherited(layers, assignment):
+    data, bars, ticks, datum_rule, _ = layers
+    combined = bars + ticks
+
+    if assignment == "attribute":
+        combined.data = data
+    elif assignment == "getitem":
+        combined["data"] = data
+    else:
+        combined = combined.properties(data=data)
+
+    result = (combined + datum_rule).to_dict()
+    assert "data" in result
+    assert all("data" not in part for part in result["layer"])
+
+
+@pytest.mark.parametrize("mutation", ["append", "replace"])
+def test_manually_edited_layers_do_not_raise_zip_errors(layers, mutation):
+    _, bars, ticks, datum_rule, _ = layers
+    combined = bars + ticks
+    if mutation == "append":
+        combined.layer.append(ticks)
+    else:
+        combined.layer = [bars, ticks, bars]
+    result = combined + datum_rule
+    assert len(result.to_dict()["layer"]) == 2
+    assert result.to_dict()["layer"][-1]["mark"]["type"] == "rule"
+
+
+@pytest.mark.parametrize(
+    ("property_name", "value"), [("background", "white"), ("padding", 12)]
+)
+def test_filter_and_top_level_properties_stay_intact(layers, property_name, value):
+    _, bars, ticks, datum_rule, _ = layers
+    filtered = (
+        (bars + ticks)
+        .transform_filter("datum.y > 10")
+        .properties(**{property_name: value})
+    )
+
+    result = (filtered + datum_rule).to_dict()
+
+    assert result[property_name] == value
+    assert result["layer"][0]["transform"] == [{"filter": "datum.y > 10"}]
+    assert property_name not in result["layer"][0]

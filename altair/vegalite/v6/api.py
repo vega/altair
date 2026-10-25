@@ -34,7 +34,7 @@ from altair.utils._vegafusion_data import (
 from altair.utils._vegafusion_data import using_vegafusion as _using_vegafusion
 from altair.utils.data import DataType
 from altair.utils.data import is_data_type as _is_data_type
-from altair.utils.schemapi import ConditionLike, _TypeMap
+from altair.utils.schemapi import ConditionLike, _deep_copy, _TypeMap
 
 from .compiler import vegalite_compilers
 from .data import data_transformers
@@ -4849,6 +4849,24 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         object.__setattr__(copy, "_original_layer_data", self._original_layer_data)
         return copy
 
+    def __deepcopy__(self, _memo: Any) -> Self:
+        # Nested SchemaBase copies reconstruct LayerChart via __init__, which
+        # would misclassify deduplicated data as intentionally shared data.
+        copy = type(self)(**_deep_copy(self._kwds, set()))
+        object.__setattr__(copy, "_explicit_layer_data", self._explicit_layer_data)
+        object.__setattr__(copy, "_original_layer_data", self._original_layer_data)
+        return copy
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if name == "data" and "_original_layer_data" in self.__dict__:
+            object.__setattr__(self, "_explicit_layer_data", value is not Undefined)
+        super().__setattr__(name, value)
+
+    def __setitem__(self, name: str, value: Any) -> None:
+        if name == "data" and "_original_layer_data" in self.__dict__:
+            object.__setattr__(self, "_explicit_layer_data", value is not Undefined)
+        super().__setitem__(name, value)
+
     def properties(self, **kwargs: Any) -> Self:
         copy = super().properties(**kwargs)
         if "data" in kwargs:
@@ -4895,6 +4913,29 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
             and not self._explicit_layer_data
             and other.data is Undefined
         ):
+            if self.transform is not Undefined or len(self.layer) != len(
+                self._original_layer_data
+            ):
+                # Parent transforms must stay scoped to the original layers.
+                # Nesting also avoids assuming manually edited layer lists
+                # have still-matching ownership metadata.
+                original = self.copy(deep=True)
+                top_props = {
+                    prop: original._get(prop)
+                    for prop in TOPLEVEL_ONLY_KEYS
+                    if original._get(prop) is not Undefined
+                }
+                for prop in top_props:
+                    original[prop] = Undefined
+                nested = layer(original, other, **top_props)
+                object.__setattr__(self, "_kwds", nested._kwds)
+                object.__setattr__(
+                    self, "_explicit_layer_data", nested._explicit_layer_data
+                )
+                object.__setattr__(
+                    self, "_original_layer_data", nested._original_layer_data
+                )
+                return self
             original_data = self.data
             restored = []
             for chart, had_data in zip(
@@ -4905,7 +4946,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
                     chart.data = original_data
                 restored.append(chart)
             self.layer = restored
-            self.data = Undefined
+            super().__setattr__("data", Undefined)
 
         self.layer.append(other)
         object.__setattr__(
@@ -4913,7 +4954,8 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
             "_original_layer_data",
             (*self._original_layer_data, other.data is not Undefined),
         )
-        self.data, self.layer = _combine_subchart_data(self.data, self.layer)
+        combined_data, self.layer = _combine_subchart_data(self.data, self.layer)
+        super().__setattr__("data", combined_data)
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
         return self
 
