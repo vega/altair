@@ -77,7 +77,7 @@ def test_unrelated_layer_source_is_not_overwritten(layers):
     assert result["layer"][3]["data"] == {"name": "empty"}
 
 
-@pytest.mark.parametrize("operator", ["add", "iadd"])
+@pytest.mark.parametrize("operator", ["add", "iadd", "add_layers"])
 def test_filter_scope_survives_data_less_addition(layers, operator):
     _, bars, ticks, datum_rule, _ = layers
     filtered = (bars + ticks).transform_filter("datum.y > 10")
@@ -86,6 +86,8 @@ def test_filter_scope_survives_data_less_addition(layers, operator):
     if operator == "iadd":
         filtered += datum_rule
         combined = filtered
+    elif operator == "add_layers":
+        combined = filtered.add_layers(datum_rule)
     else:
         combined = filtered + datum_rule
 
