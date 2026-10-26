@@ -244,9 +244,7 @@ def test_aggregate_rule_requires_explicit_shared_data():
     import xml.etree.ElementTree as et
 
     vl_convert = pytest.importorskip("vl_convert")
-    source = pd.DataFrame(
-        {"category": ["A", "B", "C"], "value": [2, 5, 3]}
-    )
+    source = pd.DataFrame({"category": ["A", "B", "C"], "value": [2, 5, 3]})
     base = alt.Chart(source).encode(x="category:N", y="value:Q")
     bars = base.mark_bar()
     ticks = base.mark_tick()
@@ -264,7 +262,5 @@ def test_aggregate_rule_requires_explicit_shared_data():
     # Previously chained aggregation relied on accidentally inherited data.
     assert count_rules(bars + ticks + mean_rule) == 0
     # Both supported ways of explicitly sharing data draw exactly one rule.
-    assert count_rules(
-        (bars + ticks + mean_rule).properties(data=source)
-    ) == 1
+    assert count_rules((bars + ticks + mean_rule).properties(data=source)) == 1
     assert count_rules(alt.layer(bars, ticks, mean_rule, data=source)) == 1
