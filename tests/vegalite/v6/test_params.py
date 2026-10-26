@@ -304,9 +304,10 @@ def test_identical_hash_based_parameters_deduplication():
 
 def test_interactive_name_respected():
     import altair as alt
-    from altair.datasets import data
 
-    cars = data.cars.url
+    # A fixed URL, not ``data.cars.url``: the hash asserted below includes the
+    # data URL, so it must not change whenever the vega-datasets pin is bumped.
+    cars = "https://cdn.jsdelivr.net/npm/vega-datasets@v3.3.1/data/cars.json"
 
     chart = (
         alt.Chart(cars)
@@ -363,7 +364,7 @@ def test_interactive_name_respected():
     # This ensures the hash is deterministic across different runs/OS
     # Note: The hash includes the data URL, ensuring charts with different data sources
     # get different hashes (fix for issue #3981)
-    expected_base_name = "view_8d6d510abc951f94"
+    expected_base_name = "view_0b0ae4c8600ec959"
     assert base_name_0 == expected_base_name, (
         f"Expected base name {expected_base_name}, got {base_name_0}"
     )

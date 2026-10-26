@@ -1752,7 +1752,7 @@ VERSIONS: Mapping[
     ],
     str,
 ] = {
-    "vega-datasets": "v3.2.1",
+    "vega-datasets": "v3.3.1",
     "vega-embed": "v7.0.2",
     "vega-lite": "v6.4.1",
     "vegafusion": "2.0.3",
