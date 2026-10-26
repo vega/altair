@@ -185,3 +185,52 @@ def test_filter_scope_does_not_leak_to_a_new_data_backed_layer(layers, operator)
     assert actual["layer"][0]["transform"] == [{"filter": "datum.y > 10"}]
     assert "transform" not in actual["layer"][1]
     assert actual["layer"][1]["data"] != actual["layer"][0]["data"]
+
+
+@pytest.mark.parametrize("operation", ["add", "iadd", "add_layers"])
+@pytest.mark.parametrize("other_kind", ["datum_rule", "separate_data"])
+def test_rendered_filter_scope_matches_explicit_layer(layers, operation, other_kind):
+    """The actual Vega-Lite SVG must keep original marks filtered (#4182)."""
+    import xml.etree.ElementTree as et
+
+    vl_convert = pytest.importorskip("vl_convert")
+    _, bars, ticks, datum_rule, _ = layers
+    if other_kind == "datum_rule":
+        other = datum_rule
+    else:
+        other = (
+            alt.Chart(pd.DataFrame({"x": [0, 1, 2], "y": [1, 2, 3]}))
+            .mark_point(color="green")
+            .encode(x="x:O", y="y:Q")
+        )
+
+    def count_marks(chart):
+        root = et.fromstring(vl_convert.vegalite_to_svg(chart.to_dict()))
+        counts = []
+        for element in root.iter():
+            classes = element.get("class", "").split()
+            if "role-mark" in classes:
+                mark = next(
+                    (name.removeprefix("mark-") for name in classes
+                     if name.startswith("mark-")),
+                    None,
+                )
+                counts.append((mark, len(element)))
+        return counts
+
+    def filtered_base():
+        return (bars + ticks).transform_filter("datum.x < 4")
+
+    expected = count_marks(alt.layer(filtered_base(), other))
+    chart = filtered_base()
+    if operation == "add":
+        chart = chart + other
+    elif operation == "iadd":
+        chart += other
+    else:
+        chart = chart.add_layers(other)
+
+    actual = count_marks(chart)
+    assert actual == expected
+    expected_extra = ("rule", 1) if other_kind == "datum_rule" else ("symbol", 3)
+    assert actual == [("rect", 4), ("rect", 4), expected_extra]
