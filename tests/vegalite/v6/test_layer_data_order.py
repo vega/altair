@@ -237,3 +237,34 @@ def test_rendered_filter_scope_matches_explicit_layer(layers, operation, other_k
     assert actual == expected
     expected_extra = ("rule", 1) if other_kind == "datum_rule" else ("symbol", 3)
     assert actual == [("rect", 4), ("rect", 4), expected_extra]
+
+
+def test_aggregate_rule_requires_explicit_shared_data():
+    """An aggregate rule must opt into data shared by independent layers."""
+    import xml.etree.ElementTree as et
+
+    vl_convert = pytest.importorskip("vl_convert")
+    source = pd.DataFrame(
+        {"category": ["A", "B", "C"], "value": [2, 5, 3]}
+    )
+    base = alt.Chart(source).encode(x="category:N", y="value:Q")
+    bars = base.mark_bar()
+    ticks = base.mark_tick()
+    mean_rule = alt.Chart().mark_rule(color="red").encode(y="mean(value):Q")
+
+    def count_rules(chart):
+        root = et.fromstring(vl_convert.vegalite_to_svg(chart.to_dict()))
+        return sum(
+            len(group)
+            for group in root.iter()
+            if "role-mark" in group.get("class", "").split()
+            and "mark-rule" in group.get("class", "").split()
+        )
+
+    # Previously chained aggregation relied on accidentally inherited data.
+    assert count_rules(bars + ticks + mean_rule) == 0
+    # Both supported ways of explicitly sharing data draw exactly one rule.
+    assert count_rules(
+        (bars + ticks + mean_rule).properties(data=source)
+    ) == 1
+    assert count_rules(alt.layer(bars, ticks, mean_rule, data=source)) == 1
