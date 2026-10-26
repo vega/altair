@@ -4911,10 +4911,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         if (
             self.data is not Undefined
             and not self._explicit_layer_data
-            and (
-                other.data is Undefined
-                or self.transform is not Undefined
-            )
+            and (other.data is Undefined or self.transform is not Undefined)
         ):
             if self.transform is not Undefined or len(self.layer) != len(
                 self._original_layer_data
