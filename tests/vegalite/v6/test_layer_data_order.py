@@ -158,3 +158,29 @@ def test_filter_and_top_level_properties_stay_intact(layers, property_name, valu
     assert result[property_name] == value
     assert result["layer"][0]["transform"] == [{"filter": "datum.y > 10"}]
     assert property_name not in result["layer"][0]
+
+@pytest.mark.parametrize("operator", ["add", "iadd", "add_layers"])
+def test_filter_scope_does_not_leak_to_a_new_data_backed_layer(layers, operator):
+    """A new independent data source must not inherit the prior layer filter."""
+    _, bars, ticks, _, _ = layers
+    separate = (
+        alt.Chart(pd.DataFrame({"x": [0, 1, 2], "y": [0, 1, 2]}))
+        .mark_point()
+        .encode(x="x:O", y="y:Q")
+    )
+    filtered = (bars + ticks).transform_filter("datum.y > 10")
+    expected = alt.layer(filtered, separate).to_dict()
+
+    if operator == "iadd":
+        filtered += separate
+        actual = filtered.to_dict()
+    elif operator == "add_layers":
+        actual = filtered.add_layers(separate).to_dict()
+    else:
+        actual = (filtered + separate).to_dict()
+
+    assert actual == expected
+    assert "transform" not in actual
+    assert actual["layer"][0]["transform"] == [{"filter": "datum.y > 10"}]
+    assert "transform" not in actual["layer"][1]
+    assert actual["layer"][1]["data"] != actual["layer"][0]["data"]
