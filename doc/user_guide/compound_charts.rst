@@ -66,6 +66,44 @@ charts share identical ``row``, ``column``, or ``facet`` encoding channels, thos
 encodings are hoisted automatically and a :class:`FacetChart` is returned instead
 (see :ref:`layer-shared-facet`).
 
+Shared Data and Data-less Annotations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+A layered chart can combine layers with their own data sources and layers that
+deliberately share one data source. A chart created with ``alt.Chart()`` has
+no data of its own. Constant annotations such as ``alt.datum(5)`` do not
+require a data source, but aggregate encodings such as ``mean(value):Q``
+do.
+
+When combining charts with ``+``, an annotation without its own data does
+**not** implicitly inherit another layer's data. To use a common data source
+for every layer, set the data explicitly on the resulting layered chart:
+
+.. altair-plot::
+
+    import altair as alt
+    import pandas as pd
+
+    source = pd.DataFrame({
+        "category": ["A", "B", "C"],
+        "value": [2, 5, 3],
+    })
+    base = alt.Chart(source).encode(x="category:N", y="value:Q")
+    bars = base.mark_bar()
+    ticks = base.mark_tick()
+    mean_rule = alt.Chart().mark_rule(color="red").encode(y="mean(value):Q")
+
+    (bars + ticks + mean_rule).properties(data=source)
+
+The equivalent constructor form is
+``alt.layer(bars, ticks, mean_rule, data=source)``. Alternatively, if
+only the annotation needs the data, supply it directly with
+``alt.Chart(source).mark_rule(...)``. These explicit forms avoid
+depending on an accidental transfer of data from a preceding layer.
+
+This matters when updating an existing chart that adds an aggregate rule
+to layers containing data: without the explicitly shared source, the
+aggregate rule may have no rows to summarize and therefore draw no mark.
+
 Order of Layers
 ^^^^^^^^^^^^^^^
 In a layered chart, the order of layers is determined from the order in which
