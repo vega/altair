@@ -211,8 +211,11 @@ def test_rendered_filter_scope_matches_explicit_layer(layers, operation, other_k
             classes = element.get("class", "").split()
             if "role-mark" in classes:
                 mark = next(
-                    (name.removeprefix("mark-") for name in classes
-                     if name.startswith("mark-")),
+                    (
+                        name.removeprefix("mark-")
+                        for name in classes
+                        if name.startswith("mark-")
+                    ),
                     None,
                 )
                 counts.append((mark, len(element)))
