@@ -124,7 +124,7 @@ Examples
         >>> from altair.datasets import data
         >>> cars_url = data.cars.url
         >>> print(cars_url)
-        https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/cars.json
+        https://cdn.jsdelivr.net/npm/vega-datasets@v3.3.1/data/cars.json
         """
         return self._loader.url(self._name)
 
@@ -249,7 +249,7 @@ class DataObject:
     >>> # List available datasets
     >>> available_datasets = data.list_datasets()
     >>> print(f"Available datasets: {len(available_datasets)}")
-    Available datasets: 72
+    Available datasets: 74
     """
 
     def __init__(self, backend: _Backend = "pandas") -> None:
@@ -323,9 +323,9 @@ class DataObject:
         >>> from altair.datasets import data
         >>> datasets = data.list_datasets()
         >>> print(f"Available datasets: {len(datasets)}")
-        Available datasets: 72
+        Available datasets: 74
         >>> print(datasets[:5])  # First 5 datasets
-        ['airports', 'annual_precip', 'anscombe', 'barley', 'birdstrikes']
+        ['airports', 'annual_precip', 'anscombe', 'barley', 'bird_migration']
         """
         return self._get_dataset_names()
 

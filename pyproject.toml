@@ -115,7 +115,7 @@ geospatial = [
 
 [tool.altair.vega]
 # Minimum/exact versions, for projects under the `vega` organization
-vega-datasets = "v3.2.1" # https://github.com/vega/vega-datasets
+vega-datasets = "v3.3.1" # https://github.com/vega/vega-datasets
 vega-embed    = "v7.0.2"     # https://github.com/vega/vega-embed
 vega-lite     = "v6.4.1" # https://github.com/vega/vega-lite
 

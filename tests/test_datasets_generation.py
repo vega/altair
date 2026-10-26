@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 @pytest.mark.parametrize(
     ("tag", "base_url"),
     [
-        ("v3.2.1", "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/"),
+        ("v3.3.1", "https://cdn.jsdelivr.net/npm/vega-datasets@v3.3.1/data/"),
         ("main", "https://cdn.jsdelivr.net/gh/vega/vega-datasets@main/data/"),
     ],
     ids=["npm", "github"],
