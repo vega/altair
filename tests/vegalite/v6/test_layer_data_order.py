@@ -159,6 +159,7 @@ def test_filter_and_top_level_properties_stay_intact(layers, property_name, valu
     assert result["layer"][0]["transform"] == [{"filter": "datum.y > 10"}]
     assert property_name not in result["layer"][0]
 
+
 @pytest.mark.parametrize("operator", ["add", "iadd", "add_layers"])
 def test_filter_scope_does_not_leak_to_a_new_data_backed_layer(layers, operator):
     """A new independent data source must not inherit the prior layer filter."""
