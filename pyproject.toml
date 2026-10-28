@@ -391,8 +391,7 @@ src.exclude = [
     "altair/utils/data.py",  # to fix
     "altair/jupyter",  # match pyright
     "sphinxext",  # match mypy
-    "tests/examples_arguments_syntax",  # ty-4566, ty-2520
-    "tests/examples_methods_syntax",  # ty-2520
+    "tests/examples_arguments_syntax",  # standalone scripts
 ]
 analysis.allowed-unresolved-imports = ["polars_st"]  # match mypy
 
@@ -411,6 +410,7 @@ rules.unsupported-operator = "ignore"  # ty-2520
 include = [
     "tests/utils/test_schemapi.py",  # intentional type errors
     "tests/vegalite/v6/test_api.py",  # ty-2520
+    "tests/examples_methods_syntax",  # ty-2520
 ]
 rules.invalid-argument-type = "ignore"
 
