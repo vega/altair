@@ -12,7 +12,7 @@ def test_split_signature_tokens_handles_embedded_open_bracket() -> None:
 def test_parameters_handle_mistune_3_3_signature_tokens() -> None:
     expr_def = VegaExprDef(
         "quantileUniform",
-        (
+        (  # ty: ignore
             {TYPE: SOFTBREAK},
             {TYPE: TEXT, RAW: "quantileUniform"},
             {TYPE: TEXT, RAW: "(probability[, "},
