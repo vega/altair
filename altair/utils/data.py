@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import posixpath
 import random
 import sys
 from collections.abc import Callable, MutableMapping, Sequence
@@ -306,7 +307,7 @@ def _to_text(
     data_hash = _compute_data_hash(data)
     filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
     Path(filename).write_text(data, encoding="utf-8")
-    url = str(Path(urlpath, filename))
+    url = posixpath.join(urlpath, filename)
     return _ToFormatReturnUrlDict({"url": url, "format": format})
 
 
