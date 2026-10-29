@@ -602,6 +602,32 @@ def chart_error_example__value_on_latitude():
     return alt.Chart().mark_point().encode(latitude=alt.value(1))
 
 
+def chart_error_example__condition_with_param_and_test():
+    # Error: condition does not accept param and test together
+    return (
+        alt.Chart("d.csv")
+        .mark_point()
+        .encode(
+            color={"condition": {"test": "x", "param": "p", "value": "r"}, "value": "b"}
+        )
+    )
+
+
+def chart_error_example__tooltip_in_list_additional_argument():
+    # Error: bogus is not a valid argument to Tooltip in a list
+    return alt.Chart("d.csv").mark_point().encode(tooltip=[alt.Tooltip("a:N", bogus=1)])
+
+
+def chart_error_example__channel_with_datum_and_value():
+    # Error: datum and value cannot be used together
+    return alt.Chart("d.csv").mark_point().encode(y=alt.Y(value=1, datum=2))
+
+
+def chart_error_example__channel_with_shorthand_and_datum():
+    # Error: shorthand and datum cannot be used together
+    return alt.Chart("d.csv").mark_point().encode(y=alt.Y("a:Q", datum=1))
+
+
 def chart_error_example__invalid_value_type():
     # Error: Value cannot be an integer in this case
     return (
@@ -967,6 +993,41 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
     (
         chart_error_example__invalid_value_type,
         rf"""'1' is an invalid value for `value`. Valid values are of type {re.escape("`str | Mapping[str, Any] | None`")}.$""",
+    ),
+    (
+        chart_error_example__condition_with_param_and_test,
+        r"""`condition` does not accept 'param' and 'test' together
+
+                See the help for `condition` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__tooltip_in_list_additional_argument,
+        r"""`Tooltip` has no parameter named 'bogus'
+
+                Existing parameter names are:
+                aggregate      field        timeUnit   
+                bandPosition   format       title      
+                bin            formatType   type       
+
+                See the help for `Tooltip` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__channel_with_datum_and_value,
+        r"""`Y` does not accept 'datum' and 'value' together
+
+                'datum' belongs to `YDatum`
+                'value' belongs to `YValue`
+
+                See the help for `Y` to read the full description of these parameters$""",
+    ),
+    (
+        chart_error_example__channel_with_shorthand_and_datum,
+        r"""`Y` does not accept 'datum' and 'field' \(from shorthand 'a:Q'\) together
+
+                'datum' belongs to `YDatum`
+                'field' \(from shorthand 'a:Q'\) belongs to `Y`
+
+                See the help for `Y` to read the full description of these parameters$""",
     ),
     (
         chart_error_example__four_errors_hide_fourth,
