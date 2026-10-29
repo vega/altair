@@ -369,6 +369,23 @@ def test_interactive_name_respected():
     )
 
 
+@pytest.mark.parametrize("combine", [alt.concat, alt.hconcat, alt.vconcat])
+def test_concat_interactive_name_respected(combine):
+    """`name` passed to a concatenated chart's `interactive` names the parameter."""
+    data = alt.Data(values=[{"a": 1, "b": 2}])
+    first = alt.Chart(data).mark_point().encode(x="a:Q", y="b:Q")
+    second = alt.Chart(data).mark_point().encode(x="b:Q", y="a:Q")
+
+    # The scales parameter is shared by both views, so concatenation deduplicates
+    # it and warns; that happens on main too and is unrelated to the name.
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", UserWarning)
+        spec = combine(first, second).interactive(name="MY_ZOOM").to_dict()
+
+    param_names = [p["name"] for p in spec["params"]]
+    assert param_names == ["MY_ZOOM"], f"Expected ['MY_ZOOM'], got {param_names}"
+
+
 def test_vconcat_different_data_unique_names():
     # This tests that charts with the same spec but different data
     # get unique view names (issue #3981)
