@@ -67,7 +67,7 @@ encodings are hoisted automatically and a :class:`FacetChart` is returned instea
 (see :ref:`layer-shared-facet`).
 
 Shared Data and Data-less Annotations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 A layered chart can combine layers with their own data sources and layers that
 deliberately share one data source. A chart created with ``alt.Chart()`` has
 no data of its own. Constant annotations such as ``alt.datum(5)`` do not
@@ -103,6 +103,12 @@ depending on an accidental transfer of data from a preceding layer.
 This matters when updating an existing chart that adds an aggregate rule
 to layers containing data: without the explicitly shared source, the
 aggregate rule may have no rows to summarize and therefore draw no mark.
+
+Data-ownership tracking used by Python chart composition is not included in
+serialized Vega-Lite specifications. After round-tripping a layered chart
+through ``to_dict()``/``from_dict()`` or JSON, a subsequent ``+`` operation
+cannot recover the original per-layer ownership automatically. Specify shared
+data explicitly when reconstructing and extending a chart that depends on it.
 
 Order of Layers
 ^^^^^^^^^^^^^^^
