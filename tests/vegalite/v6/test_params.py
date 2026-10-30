@@ -202,6 +202,43 @@ def test_selection_interval_value_typing() -> None:
     assert b_c_d
 
 
+def test_selection_interval_value_validation() -> None:
+    """Ensure selection_interval raises a clear ValueError for non-2-element sequences (#3896)."""
+    # 3-element sequence raises informative ValueError
+    with pytest.raises(
+        ValueError,
+        match=r"Invalid value for 'y' in selection_interval: expected a 2-element sequence \[start, end\], but got 3 elements \['A', 'B', 'C'\]",
+    ):
+        alt.selection_interval(encodings=["y"], value={"y": ["A", "B", "C"]})
+
+    # 1-element sequence raises informative ValueError
+    with pytest.raises(
+        ValueError,
+        match=r"Invalid value for 'x' in selection_interval: expected a 2-element sequence \[start, end\], but got 1 elements \[55\]",
+    ):
+        alt.selection_interval(encodings=["x"], value={"x": [55]})
+
+    # Empty sequence raises informative ValueError
+    with pytest.raises(
+        ValueError,
+        match=r"Invalid value for 'x' in selection_interval: expected a 2-element sequence \[start, end\], but got 0 elements \[\]",
+    ):
+        alt.selection_interval(encodings=["x"], value={"x": []})
+
+    # alt.param(select="interval", ...) also validates
+    with pytest.raises(
+        ValueError,
+        match=r"Invalid value for 'y' in selection_interval",
+    ):
+        alt.param(select="interval", value={"y": ["A", "B", "C"]})
+
+    # Valid 2-element list works and generates valid Vega-Lite spec
+    brush = alt.selection_interval(encodings=["y"], value={"y": ["A", "C"]})
+    assert brush.to_dict() == {"param": brush.name}
+    assert isinstance(brush.param, alt.SelectionParameter)
+    assert brush.param.value == {"y": ["A", "C"]}
+
+
 def test_creation_views_params_layered_repeat_chart():
     import altair as alt
     from altair.datasets import data
