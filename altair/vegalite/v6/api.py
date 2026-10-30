@@ -1401,6 +1401,31 @@ def value(value: Any, **kwargs: Any) -> _Value:
     return _Value(value=value, **kwargs)  # type: ignore
 
 
+def _is_interval_select(select: Any) -> bool:
+    if select == "interval":
+        return True
+    if isinstance(select, Mapping) and select.get("type") == "interval":
+        return True
+    return bool(getattr(select, "type", None) == "interval")
+
+
+def _validate_selection_interval_value(value: Any) -> None:
+    if isinstance(value, Mapping):
+        for key, val in value.items():
+            if (
+                isinstance(val, (Sequence, tuple, list))
+                and not isinstance(val, (str, bytes, Mapping))
+                and len(val) != 2
+            ):
+                msg = (
+                    f"Invalid value for '{key}' in selection_interval: "
+                    f"expected a 2-element sequence [start, end], but got {len(val)} elements {val!r}. "
+                    "Interval selections require exactly two boundary values. "
+                    "To select multiple discrete categories, use alt.selection_point() instead."
+                )
+                raise ValueError(msg)
+
+
 def _make_param_obj(
     temp_name: str,
     value: Optional[Any],
@@ -1413,6 +1438,8 @@ def _make_param_obj(
 ]:
     if "select" in kwds:
         select = kwds.pop("select")
+        if _is_interval_select(select):
+            _validate_selection_interval_value(value)
         param_obj: (
             VariableParameter | TopLevelSelectionParameter | SelectionParameter
         ) = core.SelectionParameter(
@@ -1644,9 +1671,11 @@ def selection_interval(
     name : str (optional)
         The name of the parameter. If not specified, a unique name will be
         created.
-    value : Any (optional)
-        The default value of the parameter. If not specified, the parameter
-        will be created without a default value.
+    value : dict (optional)
+        A mapping from encoding channels (or fields) to 2-element sequences
+        ``[start, end]`` specifying the initial boundary extents of the interval.
+        To select multiple discrete categories rather than a continuous interval,
+        use :func:`selection_point`.
     bind : :class:`Binding`, str (optional)
         Binds the parameter to an external input element such as a slider,
         selection list or radio button group.
@@ -1716,6 +1745,7 @@ def selection_interval(
     parameter: Parameter
         The parameter object that can be used in chart creation.
     """
+    _validate_selection_interval_value(value)
     return _selection(
         type="interval",
         name=name,
