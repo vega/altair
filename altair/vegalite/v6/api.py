@@ -34,7 +34,7 @@ from altair.utils._vegafusion_data import (
 from altair.utils._vegafusion_data import using_vegafusion as _using_vegafusion
 from altair.utils.data import DataType
 from altair.utils.data import is_data_type as _is_data_type
-from altair.utils.schemapi import ConditionLike, _TypeMap
+from altair.utils.schemapi import ConditionLike, _deep_copy, _TypeMap
 
 from .compiler import vegalite_compilers
 from .data import data_transformers
@@ -4814,6 +4814,10 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         layer: Sequence[LayerType] = (),
         **kwargs: Any,
     ) -> None:
+        # Track which layers supplied their own data before deduplication.
+        # A subsequent '+' must not turn a data-less layer into a data-backed one.
+        explicit_data = data is not Undefined
+        layer_data_present = tuple(spec.data is not Undefined for spec in layer)
         # TODO: check for conflicting interaction
         for spec in layer:
             _check_if_valid_subspec(spec, "LayerChart")
@@ -4833,6 +4837,42 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
 
         for prop in combined_dict:
             self[prop] = combined_dict[prop]
+
+        object.__setattr__(self, "_explicit_layer_data", explicit_data)
+        object.__setattr__(self, "_original_layer_data", layer_data_present)
+
+    def copy(
+        self, deep: bool | Iterable[Any] = True, ignore: list[str] | None = None
+    ) -> Self:
+        copy = super().copy(deep=deep, ignore=ignore)
+        object.__setattr__(copy, "_explicit_layer_data", self._explicit_layer_data)
+        object.__setattr__(copy, "_original_layer_data", self._original_layer_data)
+        return copy
+
+    def __deepcopy__(self, _memo: Any) -> Self:
+        # Nested SchemaBase copies reconstruct LayerChart via __init__, which
+        # would misclassify deduplicated data as intentionally shared data.
+        copy = type(self)(**_deep_copy(self._kwds, set()))
+        object.__setattr__(copy, "_explicit_layer_data", self._explicit_layer_data)
+        object.__setattr__(copy, "_original_layer_data", self._original_layer_data)
+        return copy
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if name == "data" and "_original_layer_data" in self.__dict__:
+            object.__setattr__(self, "_explicit_layer_data", value is not Undefined)
+        super().__setattr__(name, value)
+
+    def __setitem__(self, name: str, value: Any) -> None:
+        if name == "data" and "_original_layer_data" in self.__dict__:
+            object.__setattr__(self, "_explicit_layer_data", value is not Undefined)
+        super().__setitem__(name, value)
+
+    def properties(self, **kwargs: Any) -> Self:
+        copy = super().properties(**kwargs)
+        if "data" in kwargs:
+            # Explicit shared data must also apply to subsequently added layers.
+            object.__setattr__(copy, "_explicit_layer_data", True)
+        return copy
 
     def transformed_data(
         self,
@@ -4864,8 +4904,58 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     def __iadd__(self, other: ChartType) -> Self:
         _check_if_valid_subspec(other, "LayerChart")
         _check_if_can_be_layered(other)
+
+        # Reconstruct original layer-level data before adding a data-less layer.
+        # Otherwise previously hoisted data would be inherited by the new layer,
+        # making '+' depend on the order of its operands.
+        if (
+            self.data is not Undefined
+            and not self._explicit_layer_data
+            and (other.data is Undefined or self.transform is not Undefined)
+        ):
+            if self.transform is not Undefined or len(self.layer) != len(
+                self._original_layer_data
+            ):
+                # Parent transforms must stay scoped to the original layers.
+                # Nesting also avoids assuming manually edited layer lists
+                # have still-matching ownership metadata.
+                original = self.copy(deep=True)
+                top_props = {
+                    prop: original._get(prop)
+                    for prop in TOPLEVEL_ONLY_KEYS
+                    if original._get(prop) is not Undefined
+                }
+                for prop in top_props:
+                    original[prop] = Undefined
+                nested = layer(original, other, **top_props)
+                object.__setattr__(self, "_kwds", nested._kwds)
+                object.__setattr__(
+                    self, "_explicit_layer_data", nested._explicit_layer_data
+                )
+                object.__setattr__(
+                    self, "_original_layer_data", nested._original_layer_data
+                )
+                return self
+            original_data = self.data
+            restored = []
+            for chart, had_data in zip(
+                self.layer, self._original_layer_data, strict=True
+            ):
+                if had_data and chart.data is Undefined:
+                    chart = chart.copy(deep=False)
+                    chart.data = original_data
+                restored.append(chart)
+            self.layer = restored
+            super().__setattr__("data", Undefined)
+
         self.layer.append(other)
-        self.data, self.layer = _combine_subchart_data(self.data, self.layer)
+        object.__setattr__(
+            self,
+            "_original_layer_data",
+            (*self._original_layer_data, other.data is not Undefined),
+        )
+        combined_data, self.layer = _combine_subchart_data(self.data, self.layer)
+        super().__setattr__("data", combined_data)
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
         return self
 
