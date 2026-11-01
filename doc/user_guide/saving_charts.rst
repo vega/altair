@@ -7,7 +7,7 @@ Saving Altair Charts
 Altair chart objects have a :meth:`Chart.save` method which allows charts
 to be saved in a variety of formats. 
 
-.. saving-json:
+.. _saving-json:
 
 JSON format
 ~~~~~~~~~~~
@@ -66,7 +66,7 @@ The contents of the resulting file will look something like this:
 
 This JSON can then be inserted into any web page using the vegaEmbed_ library.
 
-.. saving-html:
+.. _saving-html:
 
 HTML format
 ~~~~~~~~~~~
@@ -171,9 +171,10 @@ As an alternative, the ``inline=True`` keyword argument may be provided to ``cha
 
    Calling ``chart.save`` with ``inline=True`` requires :ref:`additional-dependencies`.
 
+.. _html-dashboard:
 
-Interactive dashboard in a single HTML file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Standalone dashboard as an HTML file
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can combine multiple charts and interactive controls into a standalone
 HTML dashboard. The following example includes a search box, a dropdown,
@@ -246,7 +247,7 @@ process or web server.
     dashboard.save("dashboard.html", inline=True)
 
 Open ``dashboard.html`` in a modern browser to use the controls and hover
-tooltips without a running Python process. The example uses an in-memory
+tooltips without the need to run a Python process. The example uses an in-memory
 DataFrame so that the chart data is embedded in the HTML output, not loaded
 from an external URL. You can view the generated offline example here:
 `dashboard.html </_static/dashboard.html>`_.
@@ -259,7 +260,6 @@ from an external URL. You can view the generated offline example here:
 These controls filter data in the browser. If your dashboard needs live
 database queries or Python callbacks, use a server-based dashboard framework
 instead (see :ref:`display_dashboards`).
-
 
 .. _saving-png:
 

@@ -36,7 +36,12 @@ Once you have worked through the subpages for the topics listed above,
 you might wish to look through the :ref:`gallery-category-Interactive Charts` section of the example gallery
 for ideas about how they can be applied to more interesting charts.
 
-If you are planning to use Altair charts together with Dashboard packages,
+The interactive charts you create with Altair can be shared as offline-compatible HTML files,
+so that the receiver can view them in a browser without the need to install anything;
+see the sections on :ref:`Saving HTML <saving-html>` for more details,
+including :ref:`Saving HTML dashboards <html-dashboard>`.
+
+If you are planning to use Altair charts together with a separate Dashboard package,
 see the section on :ref:`Dashboards <display_dashboards>`.
 
 .. toctree::
