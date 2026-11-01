@@ -30,6 +30,7 @@ from .utils import (
     create_generic_image,
     create_thumbnail,
     get_docstring_and_rest,
+    get_marimo_url,
     prev_this_next,
 )
 
@@ -185,7 +186,7 @@ EXAMPLE_TEMPLATE = jinja2.Template(
       type="button"
       class="gallery-marimo-toggle"
       title="Edit and run Python in your browser. Powered by marimo."
-      data-marimo-src="https://marimo.app/github/vega/altair/blob/main/tests/examples_arguments_syntax/{{ name }}.py?embed=true"
+      data-marimo-src="{{ marimo_url | e }}"
     >Try this example</button>
 
 .. container:: gallery-static-example
@@ -779,6 +780,9 @@ def main(app) -> None:
     src_dir = Path(app.builder.srcdir)
     target_dir: Path = src_dir / Path(app.builder.config.altair_gallery_dir)
     image_dir: Path = src_dir / "_images"
+    marimo_runtime_url = Path(
+        os.path.relpath(src_dir / "_static" / "gallery-marimo.html", target_dir)
+    ).as_posix()
 
     gallery_ref = app.builder.config.altair_gallery_ref
     gallery_title = app.builder.config.altair_gallery_title
@@ -834,7 +838,15 @@ def main(app) -> None:
         if next_ex:
             example["next_ref"] = "gallery_{name}".format(**next_ex)
         fp = target_dir / "".join((example["name"], ".rst"))
-        page_text = EXAMPLE_TEMPLATE.render(example)
+        # The syntax variants share script metadata; use the default method tab's code.
+        page_text = EXAMPLE_TEMPLATE.render(
+            example,
+            marimo_url=get_marimo_url(
+                example["filename"],
+                example["method_code"],
+                runtime_url=marimo_runtime_url,
+            ),
+        )
         if not fp.exists() or fp.read_text(encoding=encoding) != page_text:
             fp.write_text(page_text, encoding=encoding)
 

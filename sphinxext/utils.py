@@ -5,7 +5,9 @@ import hashlib
 import itertools
 import json
 import re
+import struct
 from pathlib import Path
+from textwrap import indent
 from typing import Any
 
 
@@ -168,6 +170,44 @@ def get_docstring_and_rest(
         )
         raise ValueError(msg)
     return docstring, category, rest, lineno, is_new
+
+
+def get_marimo_url(
+    filename: str | Path,
+    code: str,
+    /,
+    *,
+    runtime_url: str = "../_static/gallery-marimo.html",
+) -> str:
+    """Embed the example's clean code and script metadata in a marimo notebook."""
+    from lzstring import LZString  # type: ignore[import-untyped]
+
+    source = Path(filename).read_text(encoding="utf-8")
+    metadata = re.search(r"(?m)^# /// script\n(?:#.*\n)*?# ///$", source)
+    header = metadata[0] if metadata else ""
+    notebook = f"""{header}
+
+import marimo
+
+app = marimo.App(width="full")
+
+
+@app.cell
+def _():
+{indent(code.strip(), "    ")}
+    return
+
+
+if __name__ == "__main__":
+    app.run()
+""".lstrip()
+
+    # Match JavaScript's UTF-16 code units, including surrogate pairs for emoji.
+    utf16 = "".join(
+        chr(unit) for (unit,) in struct.iter_unpack("<H", notebook.encode("utf-16-le"))
+    )
+    compressed = LZString.compressToEncodedURIComponent(utf16)
+    return f"{runtime_url}?embed=true&show-chrome=false#code/{compressed}"
 
 
 def prev_this_next(
