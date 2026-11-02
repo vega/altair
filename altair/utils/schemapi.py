@@ -1106,7 +1106,9 @@ def _deep_copy(obj: _CopyImpl | Any, by_ref: set[str]) -> _CopyImpl | Any:
         args = (copy(arg) for arg in obj._args)
         kwds = {k: (copy(v) if k not in by_ref else v) for k, v in obj._kwds.items()}
         with debug_mode(False):
-            return obj.__class__(*args, **kwds)
+            result = obj.__class__(*args, **kwds)
+        object.__setattr__(result, "_metadata", copy(obj._metadata))
+        return result
     elif isinstance(obj, list):
         return [copy(v) for v in obj]
     elif isinstance(obj, dict):
@@ -1126,6 +1128,7 @@ class SchemaBase:
     _schema: ClassVar[dict[str, Any] | Any] = None
     _rootschema: ClassVar[dict[str, Any] | None] = None
     _class_is_valid_at_instantiation: ClassVar[bool] = True
+    _metadata: dict[str, Any]
 
     def __init__(self, *args: Any, **kwds: Any) -> None:
         # Two valid options for initialization, which should be handled by
@@ -1148,6 +1151,8 @@ class SchemaBase:
         # use object.__setattr__ because we override setattr below.
         object.__setattr__(self, "_args", args)
         object.__setattr__(self, "_kwds", kwds)
+        # Python-only state: preserved when copying, but excluded from the schema.
+        object.__setattr__(self, "_metadata", {})
 
         if DEBUG_MODE and self._class_is_valid_at_instantiation:
             self.to_dict(validate=True)
@@ -1173,6 +1178,7 @@ class SchemaBase:
             return _deep_copy(self, set(ignore) if ignore else set())  # type: ignore[return-value]
         with debug_mode(False):
             copy = self.__class__(*self._args, **self._kwds)
+        object.__setattr__(copy, "_metadata", self._metadata.copy())
         if _is_iterable(deep):
             for attr in deep:
                 copy[attr] = _shallow_copy(copy._get(attr))

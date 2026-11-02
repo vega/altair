@@ -1,5 +1,7 @@
 """Tests for variable parameters and selection parameters."""
 
+import copy
+import pickle
 import re
 import warnings
 
@@ -269,6 +271,193 @@ def test_explicitly_named_parameters_error():
         alt.Chart().mark_point().add_params(param1, param2)
 
 
+@pytest.mark.parametrize("concat", [alt.concat, alt.hconcat, alt.vconcat])
+@pytest.mark.parametrize("selection", ["point", "interval", "scales"])
+@pytest.mark.parametrize("add_before_concat", [False, True])
+def test_shared_selection_does_not_warn(concat, selection, add_before_concat):
+    if selection == "scales":
+        params = [
+            alt.selection_interval(bind="scales", encodings=[encoding])
+            for encoding in ["x", "y"]
+        ]
+    else:
+        params = [getattr(alt, f"selection_{selection}")(resolve="global")]
+
+    base = alt.Chart().mark_point().encode(y="y:Q").properties(width=250, height=250)
+    original = base.to_dict()
+    left = base.encode(x="x:Q").properties(name="left")
+    right = base.encode(x="y:Q").properties(name="right")
+    expected = concat(left, right).to_dict()
+    expected["params"] = [
+        {**param.param.to_dict(), "views": ["left", "right"]} for param in params
+    ]
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        if add_before_concat:
+            shared = base.add_params(*params)
+            chart = concat(
+                shared.encode(x="x:Q").properties(name="left"),
+                shared.encode(x="y:Q").properties(name="right"),
+            )
+        else:
+            chart = concat(left, right).add_params(*params)
+        result = chart.to_dict()
+        assert alt.Chart.from_dict(result).to_dict() == result
+
+    assert result == expected
+    assert base.to_dict() == original
+
+
+@pytest.mark.parametrize(
+    "copy_mode", ["shallow", "deep", "partial", "python", "python_deep", "pickle"]
+)
+def test_shared_selection_survives_copying(copy_mode):
+    brush = alt.selection_interval()
+    base = alt.Chart().mark_point().add_params(brush)
+    original = base.to_dict()
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        if copy_mode == "shallow":
+            cloned = base.copy(deep=False)
+        elif copy_mode == "deep":
+            cloned = base.copy()
+        elif copy_mode == "partial":
+            cloned = base.copy(deep=["params"])
+        elif copy_mode == "python":
+            cloned = copy.copy(base)
+        elif copy_mode == "python_deep":
+            cloned = copy.deepcopy(base)
+        else:
+            cloned = pickle.loads(pickle.dumps(base))
+        result = alt.hconcat(
+            base.properties(name="left"), cloned.properties(name="right")
+        ).to_dict()
+
+    assert result["params"] == [{**brush.param.to_dict(), "views": ["left", "right"]}]
+    assert base.to_dict() == original
+
+
+@pytest.mark.parametrize("nested_type", ["concat", "layer", "facet", "repeat"])
+@pytest.mark.parametrize("add_before_concat", [False, True])
+def test_nested_shared_selection_does_not_warn(nested_type, add_before_concat):
+    brush = alt.selection_interval()
+    base = (
+        alt.Chart(pd.DataFrame({"x": [1, 2], "y": [3, 4], "category": ["a", "b"]}))
+        .mark_point()
+        .encode(x="x:Q", y="y:Q")
+    )
+    original = base.to_dict()
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        selected = base.add_params(brush) if add_before_concat else base
+        if nested_type == "concat":
+            nested = alt.hconcat(selected, selected)
+        elif nested_type == "layer":
+            nested = alt.layer(selected, selected.mark_line())
+        elif nested_type == "facet":
+            nested = selected.facet(column="category:N")
+        else:
+            nested = selected.repeat(column=["x", "y"])
+        chart = alt.vconcat(nested, selected)
+        if not add_before_concat:
+            chart = chart.add_params(brush)
+        result = chart.to_dict()
+
+    assert len(result["params"]) == 1
+    assert result["params"][0]["name"] == brush.name
+    assert base.to_dict() == original
+
+
+@pytest.mark.parametrize("compose", [alt.concat, alt.hconcat, alt.vconcat, alt.layer])
+@pytest.mark.parametrize("placement", ["children", "one_call", "existing"])
+def test_independent_identical_selections_warn(compose, placement):
+    first = alt.selection_interval()
+    second = alt.selection_interval()
+    base = alt.Chart().mark_point()
+    original = base.to_dict()
+    build = {
+        "children": lambda: compose(base.add_params(first), base.add_params(second)),
+        "one_call": lambda: compose(base, base).add_params(first, second),
+        "existing": lambda: compose(base, base).add_params(first).add_params(second),
+    }[placement]
+
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        chart = build()
+
+    assert len(chart.to_dict()["params"]) == 1
+    assert base.to_dict() == original
+
+
+@pytest.mark.parametrize("existing", [False, True])
+def test_unit_selection_deduplication_retains_origins_without_mutating_source(existing):
+    first = alt.selection_point()
+    second = alt.selection_point()
+    base = alt.Chart().mark_point()
+    source = base.add_params(first)
+    original = source.to_dict()
+
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        merged = (
+            source.add_params(second) if existing else base.add_params(first, second)
+        )
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        result = alt.hconcat(merged, source, base.add_params(second)).to_dict()
+    assert len(result["params"]) == 1
+    assert source.to_dict() == original
+
+    # A merge must not teach its source chart that it already contains `second`.
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        alt.hconcat(source, base.add_params(second))
+
+
+def test_nested_merges_warn_for_new_origins_even_when_other_origins_overlap():
+    first, second, third = (alt.selection_interval() for _ in range(3))
+    base = alt.Chart().mark_point()
+    a, b, c = (base.add_params(brush) for brush in (first, second, third))
+
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        ab = alt.hconcat(a, b)
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        ac = alt.hconcat(a, c)
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        combined = alt.vconcat(ab, ac)
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        result = alt.vconcat(combined, combined.copy(), a, b, c).to_dict()
+    assert len(result["params"]) == 1
+
+
+@pytest.mark.parametrize("known_origin", ["left", "right", "neither"])
+def test_selection_without_origin_still_warns(known_origin):
+    brush = alt.selection_interval()
+    base = alt.Chart().mark_point().add_params(brush)
+    spec = base.to_dict()
+    spec.pop("$schema", None)
+    spec.pop("config", None)
+    restored = alt.Chart.from_dict(spec)
+    left = base if known_origin == "left" else restored
+    right = base if known_origin == "right" else restored
+
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        alt.hconcat(left, right)
+
+
+def test_selection_origin_does_not_affect_spec_or_hashes():
+    first, second = (alt.selection_interval() for _ in range(2))
+    base = alt.Chart().mark_point()
+    left, right = (base.add_params(brush) for brush in (first, second))
+
+    assert first.name == second.name
+    assert left == right
+    assert left.to_json() == right.to_json()
+    assert left._get_view_hash_name() == right._get_view_hash_name()
+
+
 def test_identical_hash_based_parameters_deduplication():
     """Test that identical parameters with hash-based names are deduplicated."""
     from altair.datasets import data
@@ -315,9 +504,8 @@ def test_interactive_name_respected():
         .interactive(name="MY_CHART")
     )
 
-    # Suppress warning since this deduplication is intentional (same chart concatenated)
     with warnings.catch_warnings():
-        warnings.simplefilter("ignore", UserWarning)
+        warnings.simplefilter("error", UserWarning)
         spec = (chart & chart).to_dict()
     # There should be a single parameter with the name 'MY_CHART'
     param_names = [p["name"] for p in spec["params"]]
