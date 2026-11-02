@@ -96,11 +96,3 @@ def import_pyarrow_interchange() -> ModuleType:
             f"ImportError: {err.args[0]}"
         )
         raise ImportError(msg) from err
-
-
-def pyarrow_available() -> bool:
-    try:
-        import_pyarrow_interchange()
-        return True
-    except (ImportError, RuntimeError):
-        return False

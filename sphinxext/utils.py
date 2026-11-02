@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import ast
-import hashlib
 import itertools
-import json
 import re
 import struct
 from pathlib import Path
@@ -222,15 +220,3 @@ def prev_this_next(
         itertools.chain(i3, [sentinel]),
         strict=False,
     )
-
-
-def dict_hash(dct: dict[Any, Any]) -> Any:
-    """Return a hash of the contents of a dictionary."""
-    serialized = json.dumps(dct, sort_keys=True)
-
-    try:
-        m = hashlib.sha256(serialized)[:32]  # pyright: ignore[reportArgumentType,reportIndexIssue]
-    except TypeError:
-        m = hashlib.sha256(serialized.encode())[:32]  # pyright: ignore[reportIndexIssue]
-
-    return m.hexdigest()
