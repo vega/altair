@@ -549,7 +549,7 @@ def to_eager_narwhals_dataframe(data: IntoDataFrame) -> nw.DataFrame[Any]:
         # use the interchange protocol to convert to a PyArrow Table.
         from altair.utils.data import arrow_table_from_dfi_dataframe
 
-        pa_table = arrow_table_from_dfi_dataframe(data)  # type: ignore[arg-type]
+        pa_table = arrow_table_from_dfi_dataframe(data)  # type: ignore
         data_nw = nw.from_native(pa_table, eager_only=True)
     return data_nw
 
