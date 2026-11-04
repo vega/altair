@@ -227,6 +227,12 @@ Some additional notes:
   format for any hyperlinks or text styling. In particular, be sure you include
   a title in the docstring underlined with `---`, and be sure that the size of
   the underline exactly matches the size of the title text.
+- The "Try this example" editor uses a notebook generated during the docs build
+  from the method-syntax example. The description and gallery tags
+  are omitted from the editable cell. PEP 723 script metadata, including
+  dependencies and marimo display settings, is preserved in the notebook header.
+  The editor shell is served with the documentation and runs in memory inside
+  a sandboxed iframe, so it does not require third-party browser storage.
 - If your example fits into a chart type but involves significant configuration
   it should be in the `Case Studies` category.
 - For consistency all data used for a visualization should be assigned to the

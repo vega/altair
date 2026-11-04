@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Live Altair example</title>
+    <!-- Keep these pinned frontend assets and the mount configuration together
+         when updating marimo. They use its single-file WASM export format. -->
+    <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/@marimo-team/frontend@0.25.1/dist/assets/cells-0PFKL3SH.css" />
+    <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/@marimo-team/frontend@0.25.1/dist/assets/index--sT8xf-8.css" />
+    <script type="module" crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/@marimo-team/frontend@0.25.1/dist/assets/index-DafnX1Xx.js"></script>
+    <style>
+      #save-button, #filename-input { display: none !important; }
+
+      /* Match the static code block's inset within the gallery article. */
+      #App[data-config-width="full"] > [class~="px-1"] {
+        padding-inline: 12px;
+      }
+      #App[data-config-width="full"] > [class~="px-1"] > .m-auto {
+        padding-right: 0;
+      }
+      #App .cm-foldGutter {
+        display: none !important;
+      }
+      #App .cm-editor {
+        --gallery-active-line-background: #EFF7FF;
+        --gallery-editor-end-padding: 24px;
+        padding-right: var(--gallery-editor-end-padding);
+        background-color: #FEFEFE !important;
+      }
+      #App .cm-gutters {
+        background-color: #F1F3F5 !important;
+      }
+      #App .cm-lineNumbers {
+        padding-inline-end: 8px;
+      }
+      #App .cm-editor.cm-focused .cm-activeLine:not(.cm-error-line),
+      #App .cm-editor.cm-focused .cm-activeLineGutter {
+        background-color: var(--gallery-active-line-background) !important;
+      }
+      #App .cm-editor.cm-focused .cm-activeLine:not(.cm-error-line) {
+        /* Paint through the editor's reserved right-side padding. */
+        box-shadow: var(--gallery-editor-end-padding) 0 0 var(--gallery-active-line-background);
+      }
+      #App .cm-editor.cm-focused .cm-lineNumbers .cm-activeLineGutter {
+        color: #1D4ED8 !important;
+        font-weight: 600;
+      }
+      /* Keep the cell's run/menu controls visible without hovering. */
+      #App .marimo-cell .tray [role="toolbar"] {
+        display: flex !important;
+      }
+      #App .marimo-cell .tray [role="toolbar"] .lucide-play {
+        fill: #08A8F4;
+        stroke: #08A8F4;
+      }
+      #App .marimo-cell .tray [role="toolbar"] .lucide-square {
+        fill: #FBBE30;
+        stroke: #FBBE30;
+      }
+    </style>
+  </head>
+  <body>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <marimo-version data-version="0.25.1" hidden></marimo-version>
+    <marimo-user-config data-config="{}" hidden></marimo-user-config>
+    <marimo-server-token data-token="unused" hidden></marimo-server-token>
+    <marimo-wasm hidden></marimo-wasm>
+    <div id="root"></div>
+    <script>
+      const config = {
+        display: { cell_output: "above", default_width: "full", code_editor_font_size: 15 },
+        runtime: { auto_instantiate: true, on_cell_change: "autorun" },
+        save: { autosave: "off" }
+      };
+      document.querySelector("marimo-user-config").dataset.config = JSON.stringify(config);
+      window.__MARIMO_MOUNT_CONFIG__ = {
+        filename: "notebook.py",
+        cwd: "",
+        lspWorkspace: null,
+        mode: "edit",
+        version: "0.25.1",
+        serverToken: "unused",
+        config,
+        configOverrides: {},
+        appConfig: { sql_output: "auto", width: "full" },
+        layout: null,
+        view: { showAppCode: true },
+        notebook: null,
+        session: null,
+        runtimeConfig: null
+      };
+    </script>
+  </body>
+</html>

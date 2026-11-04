@@ -57,9 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       iframe.src = button.dataset.marimoSrc;
       iframe.title = "Interactive marimo notebook";
+      // An opaque origin makes the WASM runtime use memory instead of IndexedDB.
       iframe.setAttribute(
         "sandbox",
-        "allow-scripts allow-same-origin allow-downloads allow-popups allow-forms"
+        "allow-scripts allow-downloads allow-popups allow-forms"
       );
       iframe.allow = "microphone";
       iframe.allowFullscreen = true;
