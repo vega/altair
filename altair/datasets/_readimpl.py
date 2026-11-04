@@ -399,10 +399,15 @@ def _pd_fix_dtypes_nw(
     df: pd.DataFrame, /, *, dtype_backend: Any = None, **kwds: Any
 ) -> nw.DataFrame[pd.DataFrame]:
     kwds = {"dtype_backend": dtype_backend} if dtype_backend else {}
-    return (
-        df.convert_dtypes(**kwds)
-        .pipe(nw.from_native, eager_only=True)
-        .with_columns(nw.selectors.by_dtype(nw.Object).cast(nw.String))
+    frame = nw.from_native(df.convert_dtypes(**kwds), eager_only=True)
+    # JSON arrays and objects also use pandas' object dtype; keep their values intact.
+    scalar_object_columns = [
+        name
+        for name in frame.select(nw.selectors.by_dtype(nw.Object)).columns
+        if not any(isinstance(value, (list, dict)) for value in df[name])
+    ]
+    return frame.with_columns(
+        nw.col(name).cast(nw.String) for name in scalar_object_columns
     )
 
 

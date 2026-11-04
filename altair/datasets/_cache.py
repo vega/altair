@@ -273,7 +273,7 @@ class SchemaCache(CompressedCache["_Dataset", "_FlSchema"]):
                         return {"convert_dates": cols}
                     elif suffix in {".csv", ".tsv"}:
                         return {"parse_dates": cols}
-            else:
+            elif suffix in {".csv", ".tsv", ".parquet"}:
                 schema = self.schema(name).to_arrow()
                 if suffix in {".csv", ".tsv"}:
                     from pyarrow.csv import ConvertOptions
