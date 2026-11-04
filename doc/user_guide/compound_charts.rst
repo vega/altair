@@ -107,8 +107,11 @@ aggregate rule may have no rows to summarize and therefore draw no mark.
 Data-ownership tracking used by Python chart composition is not included in
 serialized Vega-Lite specifications. After round-tripping a layered chart
 through ``to_dict()``/``from_dict()`` or JSON, a subsequent ``+`` operation
-cannot recover the original per-layer ownership automatically. Specify shared
-data explicitly when reconstructing and extending a chart that depends on it.
+cannot recover the original per-layer ownership automatically. For example, a
+constant ``alt.datum`` rule added to a chart rebuilt with
+``alt.LayerChart.from_dict(chart.to_dict())`` inherits the shared data again
+and is drawn once per row. Specify shared data explicitly when reconstructing
+and extending a chart that depends on it.
 
 Order of Layers
 ^^^^^^^^^^^^^^^
