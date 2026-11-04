@@ -388,32 +388,25 @@ ignore = [
 # - https://github.com/astral-sh/ty/issues/4083
 src.exclude = [
     "altair/datasets",  # 9 to fix
-    "altair/utils/core.py",  # 4 to fix
-    "altair/utils/data.py",  # 11 to fix
+    "altair/utils",  # 15 to fix
     "altair/jupyter",  # match pyright
     "sphinxext",  # match mypy
     "tests/examples_arguments_syntax",  # ty-4083
 ]
-analysis.allowed-unresolved-imports = ["polars_st"]  # match mypy
+# analysis.allowed-unresolved-imports = ["polars_st"]  # match mypy
 
 [[tool.ty.overrides]]
-include = ["altair/vegalite/v6/schema/channels.py"]
-rules.invalid-method-override = "ignore"  # match mypy
-rules.invalid-overload = "ignore"  # match mypy
+include = ["altair/vegalite/v6/schema/channels.py"]  # match mypy
+rules.invalid-method-override = "ignore"
+rules.invalid-overload = "ignore"
 
 [[tool.ty.overrides]]
-include = ["tests"]
-rules.invalid-key = "ignore"  # match mypy
-rules.unresolved-attribute = "ignore"  # ty-2520
-rules.unsupported-operator = "ignore"  # ty-2520
-
-[[tool.ty.overrides]]
-include = [
-    "tests/vegalite/v6/test_api.py",  # ty-2520
-    "tests/examples_methods_syntax",  # ty-2520
-]
+include = ["tests"]  # ty-2520
+rules.unresolved-attribute = "ignore"
+rules.unsupported-operator = "ignore"
 rules.invalid-argument-type = "ignore"
 rules.unused-type-ignore-comment = "ignore"
+rules.unused-ignore-comment = "ignore"
 
 [tool.uv]
 preview-features = true
