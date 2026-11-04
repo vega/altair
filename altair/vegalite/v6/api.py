@@ -4230,6 +4230,9 @@ class Chart(
 
         # Track existing parameter names
         existing_names = {param.name: i for i, param in enumerate(copy.params)}
+        known_groups = _selection_origin_groups(
+            [*copy.params, *(param.param for param in params)]
+        )
 
         for param in params:
             if param.name in existing_names:
@@ -4240,7 +4243,12 @@ class Chart(
                     ):
                         index = existing_names[param.name]
                         existing = copy.params[index].copy()
-                        _merge_selection_origins(existing, param.param, stacklevel=3)
+                        _merge_selection_origins(
+                            existing,
+                            param.param,
+                            known_groups=known_groups,
+                            stacklevel=3,
+                        )
                         copy.params[index] = existing
                     continue  # deduplicate hash-based
                 else:
@@ -5173,10 +5181,26 @@ _Parameter: TypeAlias = (
 )
 
 
+def _selection_origin_groups(
+    params: Iterable[Optional[_Parameter]],
+) -> list[frozenset[uuid.UUID]]:
+    """Snapshot the combinations already present before a collection starts merging."""
+    return [
+        origins
+        for param in params
+        if not utils.is_undefined(param)
+        and (origins := param._metadata.get("selection_origins")) is not None
+    ]
+
+
 def _merge_selection_origins(
-    param: _Parameter, other: _Parameter, *, stacklevel: int
+    param: _Parameter,
+    other: _Parameter,
+    *,
+    known_groups: Sequence[frozenset[uuid.UUID]],
+    stacklevel: int,
 ) -> None:
-    """Warn about independently created selections, retaining all merged origins."""
+    """Warn for new combinations of independent selections, retaining all origins."""
     origins = param._metadata.get("selection_origins")
     other_origins = other._metadata.get("selection_origins")
     if origins is None or other_origins is None:
@@ -5184,8 +5208,13 @@ def _merge_selection_origins(
         param._metadata.pop("selection_origins", None)
         warn = True
     else:
-        warn = bool(other_origins - origins)
-        param._metadata["selection_origins"] = origins | other_origins
+        merged = origins | other_origins
+        # Reusing `ab` with `a` or `b` is intentional in either order. Consider all
+        # original input groups so even `a, b, ab` does not repeat the warning.
+        warn = not any(
+            merged <= group for group in (origins, other_origins, *known_groups)
+        )
+        param._metadata["selection_origins"] = merged
 
     if warn:
         warnings.warn(
@@ -5232,6 +5261,9 @@ def _prepare_to_lift(param: _Parameter) -> _Parameter:
 
 def _remove_duplicate_params(layer: list[ChartType]) -> list[ChartType]:
     subcharts = [subchart.copy() for subchart in layer]
+    known_groups = _selection_origin_groups(
+        param for subchart in subcharts for param in subchart._get("params", [])
+    )
     found_params: list[tuple[_Parameter, dict[str, Any]]] = []
 
     for subchart in subcharts:
@@ -5251,7 +5283,9 @@ def _remove_duplicate_params(layer: list[ChartType]) -> list[ChartType]:
 
             for existing, existing_dict in found_params:
                 if pd == existing_dict:
-                    _merge_selection_origins(existing, p, stacklevel=5)
+                    _merge_selection_origins(
+                        existing, p, known_groups=known_groups, stacklevel=5
+                    )
                     break
             else:
                 params.append(p)
@@ -5298,6 +5332,11 @@ def _combine_subchart_params(  # noqa: C901
 ) -> tuple[Optional[Sequence[_Parameter]], list[ChartType]]:
     if utils.is_undefined(params):
         params = []
+    known_groups = _selection_origin_groups(
+        itertools.chain(
+            params, *(subchart._get("params", []) for subchart in subcharts)
+        )
+    )
     # List of triples related to params, (param, dictionary minus views, views)
     param_info: list[tuple[_Parameter, dict[str, Any], list[str]]] = []
 
@@ -5377,7 +5416,9 @@ def _combine_subchart_params(  # noqa: C901
                 new_views = [v for v in views_after if v not in old_views]
                 old_views += new_views
 
-                _merge_selection_origins(existing, p, stacklevel=6)
+                _merge_selection_origins(
+                    existing, p, known_groups=known_groups, stacklevel=6
+                )
             else:
                 param_info.append((p, pd, views_after))
 

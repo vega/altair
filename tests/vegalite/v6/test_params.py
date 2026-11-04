@@ -4,6 +4,7 @@ import copy
 import pickle
 import re
 import warnings
+from itertools import permutations
 
 import pandas as pd
 import pytest
@@ -414,7 +415,74 @@ def test_unit_selection_deduplication_retains_origins_without_mutating_source(ex
         alt.hconcat(source, base.add_params(second))
 
 
-def test_nested_merges_warn_for_new_origins_even_when_other_origins_overlap():
+@pytest.mark.parametrize("compose", [alt.concat, alt.hconcat, alt.vconcat, alt.layer])
+@pytest.mark.parametrize("component", ["a", "b"])
+@pytest.mark.parametrize("reverse", [False, True])
+def test_reusing_merged_selection_is_silent_in_both_orders(compose, component, reverse):
+    first, second = (alt.selection_interval() for _ in range(2))
+    base = alt.Chart().mark_point()
+    a, b = base.add_params(first), base.add_params(second)
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        ab = compose(a, b)
+    sources = [ab, {"a": a, "b": b}[component]]
+    originals = [chart.to_dict() for chart in sources]
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        result = compose(*(sources[::-1] if reverse else sources)).to_dict()
+    assert len(result["params"]) == 1
+    assert [chart.to_dict() for chart in sources] == originals
+
+
+@pytest.mark.parametrize("compose", [alt.concat, alt.hconcat, alt.vconcat, alt.layer])
+@pytest.mark.parametrize("order", list(permutations(("a", "b", "ab"))))
+def test_reusing_known_origin_group_is_silent_in_all_input_orders(compose, order):
+    first, second = (alt.selection_point() for _ in range(2))
+    base = alt.Chart().mark_point()
+    a, b = base.add_params(first), base.add_params(second)
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        ab = compose(a, b)
+    charts = {"a": a, "b": b, "ab": ab}
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        result = compose(*(charts[key] for key in order)).to_dict()
+    assert len(result["params"]) == 1
+
+
+@pytest.mark.parametrize("order", list(permutations(("a", "b", "ab"))))
+def test_unit_merge_considers_all_original_origin_groups(order):
+    first, second = (alt.selection_point() for _ in range(2))
+    base = alt.Chart().mark_point()
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        merged = base.add_params(first, second)
+    combined = alt.Parameter(param=merged.params[0].copy(), param_type="selection")
+    params = {"a": first, "b": second, "ab": combined}
+    assert first.name == second.name == combined.name
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        result = base.add_params(*(params[key] for key in order)).to_dict()
+    assert len(result["params"]) == 1
+
+
+@pytest.mark.parametrize("compose", [alt.concat, alt.hconcat, alt.vconcat, alt.layer])
+@pytest.mark.parametrize("order", list(permutations(("a", "ab", "c"))))
+def test_new_independent_origin_still_warns_in_all_input_orders(compose, order):
+    first, second, third = (alt.selection_interval() for _ in range(3))
+    base = alt.Chart().mark_point()
+    a, b, c = (base.add_params(param) for param in (first, second, third))
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        ab = compose(a, b)
+    charts = {"a": a, "ab": ab, "c": c}
+
+    with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+        result = compose(*(charts[key] for key in order)).to_dict()
+    assert len(result["params"]) == 1
+
+
+@pytest.mark.parametrize("reverse", [False, True])
+def test_nested_merges_warn_for_new_origins_even_when_other_origins_overlap(reverse):
     first, second, third = (alt.selection_interval() for _ in range(3))
     base = alt.Chart().mark_point()
     a, b, c = (base.add_params(brush) for brush in (first, second, third))
@@ -424,7 +492,7 @@ def test_nested_merges_warn_for_new_origins_even_when_other_origins_overlap():
     with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
         ac = alt.hconcat(a, c)
     with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
-        combined = alt.vconcat(ab, ac)
+        combined = alt.vconcat(*((ac, ab) if reverse else (ab, ac)))
 
     with warnings.catch_warnings():
         warnings.simplefilter("error", UserWarning)
@@ -433,9 +501,14 @@ def test_nested_merges_warn_for_new_origins_even_when_other_origins_overlap():
 
 
 @pytest.mark.parametrize("known_origin", ["left", "right", "neither"])
-def test_selection_without_origin_still_warns(known_origin):
+@pytest.mark.parametrize("aggregate", [False, True])
+def test_selection_without_origin_still_warns(known_origin, aggregate):
     brush = alt.selection_interval()
     base = alt.Chart().mark_point().add_params(brush)
+    if aggregate:
+        other = alt.Chart().mark_point().add_params(alt.selection_interval())
+        with pytest.warns(UserWarning, match="Automatically deduplicated selection"):
+            base = alt.hconcat(base, other)
     spec = base.to_dict()
     spec.pop("$schema", None)
     spec.pop("config", None)
