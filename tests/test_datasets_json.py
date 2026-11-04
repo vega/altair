@@ -116,11 +116,12 @@ def test_pandas_json_scalar_dtypes(dtype_backend: str | None) -> None:
     )
     result = _readimpl._pd_fix_dtypes_nw(source, dtype_backend=dtype_backend)
 
-    assert result.select("number", "text", "mixed").schema == {
+    assert result.select("number", "text").schema == {
         "number": nw.Int64,
         "text": nw.String,
-        "mixed": nw.String,
     }
+    # Older Narwhals versions report pandas' newer `str` dtype as Unknown.
+    assert pd.api.types.is_string_dtype(result.to_native()["mixed"].dtype)
     assert result.get_column("number").drop_nulls().to_list() == [1, 3]
     assert result.get_column("mixed").to_list() == ["1", "two", "3"]
     assert result.get_column("nested").to_list() == [None, [], ["sample"]]
