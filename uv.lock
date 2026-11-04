@@ -69,6 +69,7 @@ dev = [
     { name = "pandas" },
     { name = "pandas-stubs" },
     { name = "polars" },
+    { name = "polars-st" },
     { name = "pyarrow-stubs" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -98,12 +99,6 @@ doc = [
 ]
 save = [
     { name = "vl-convert-python" },
-]
-
-[package.dev-dependencies]
-geospatial = [
-    { name = "geopandas" },
-    { name = "polars-st" },
 ]
 
 [[package]]
