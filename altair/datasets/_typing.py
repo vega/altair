@@ -19,6 +19,7 @@ Dataset: TypeAlias = Literal[
     "annual_precip",
     "anscombe",
     "barley",
+    "bird_migration",
     "birdstrikes",
     "budget",
     "budgets",
@@ -42,6 +43,7 @@ Dataset: TypeAlias = Literal[
     "flights_5k",
     "flights_airport",
     "football",
+    "gallery_examples",
     "gapminder",
     "gapminder_health_income",
     "gimp",
@@ -147,22 +149,22 @@ class Metadata(TypedDict, total=False):
     ``Metadata`` keywords form constraints to filter a table like the below sample:
 
     ```
-    shape: (73, 13)
+    shape: (75, 13)
     ┌────────────────┬────────┬────────────────┬───┬───────────────┬───────────────┐
     │ dataset_name   ┆ suffix ┆ file_name      ┆ … ┆ sha           ┆ url           │
     │ ---            ┆ ---    ┆ ---            ┆   ┆ ---           ┆ ---           │
     │ str            ┆ str    ┆ str            ┆   ┆ str           ┆ str           │
     ╞════════════════╪════════╪════════════════╪═══╪═══════════════╪═══════════════╡
-    │ airports       ┆ .csv   ┆ airports.csv   ┆ … ┆ 608ba6d51fa70 ┆ https://cdn.j │
-    │                ┆        ┆                ┆   ┆ 584c3fa1d31e… ┆ sdelivr.net/… │
+    │ airports       ┆ .csv   ┆ airports.csv   ┆ … ┆ 114c202bcc678 ┆ https://cdn.j │
+    │                ┆        ┆                ┆   ┆ 4c8358b54f9e… ┆ sdelivr.net/… │
     │ annual_precip  ┆ .json  ┆ annual-precip. ┆ … ┆ 719e73406cfc0 ┆ https://cdn.j │
     │                ┆        ┆ json           ┆   ┆ 8f16dda65151… ┆ sdelivr.net/… │
     │ anscombe       ┆ .json  ┆ anscombe.json  ┆ … ┆ 11ae97090b626 ┆ https://cdn.j │
     │                ┆        ┆                ┆   ┆ 3bdf0c866115… ┆ sdelivr.net/… │
     │ barley         ┆ .json  ┆ barley.json    ┆ … ┆ 8dc50de2509b6 ┆ https://cdn.j │
     │                ┆        ┆                ┆   ┆ e197ce95c24c… ┆ sdelivr.net/… │
-    │ birdstrikes    ┆ .csv   ┆ birdstrikes.cs ┆ … ┆ 1b8b190c9bc02 ┆ https://cdn.j │
-    │                ┆        ┆ v              ┆   ┆ ef7bcbfe5a8a… ┆ sdelivr.net/… │
+    │ bird_migration ┆ .csv   ┆ bird-migration ┆ … ┆ 0ab41c7f87c61 ┆ https://cdn.j │
+    │                ┆        ┆ .csv           ┆   ┆ 2c36d85eabc8… ┆ sdelivr.net/… │
     │ …              ┆ …      ┆ …              ┆ … ┆ …             ┆ …             │
     │ weekly_weather ┆ .json  ┆ weekly-weather ┆ … ┆ bd42a3e2403e7 ┆ https://cdn.j │
     │                ┆        ┆ .json          ┆   ┆ ccd6baaa89f9… ┆ sdelivr.net/… │

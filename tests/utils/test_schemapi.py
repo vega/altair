@@ -1240,7 +1240,7 @@ def test_to_dict_range(tp) -> None:
 
 @pytest.fixture
 def stocks() -> alt.Chart:
-    source = "https://cdn.jsdelivr.net/npm/vega-datasets@v3.2.1/data/sp500.csv"
+    source = "https://cdn.jsdelivr.net/npm/vega-datasets@v3.3.1/data/sp500.csv"
     return alt.Chart(source).mark_area().encode(x="date:T", y="price:Q")
 
 
