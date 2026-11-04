@@ -89,6 +89,7 @@ dev = [
     "types-setuptools",
     "geopandas>=0.14.3",
     "polars>=0.20.3",
+    "polars-st>=0.1.0a27",
     "taskipy>=1.14.1",
 ]
 doc = [
@@ -106,12 +107,6 @@ doc = [
     "scipy",
     "scipy-stubs",
     "sphinx-autobuild",
-]
-
-[dependency-groups]
-geospatial = [
-    "geopandas>=0.14.3",
-    "polars-st>=0.1.0a27",
 ]
 
 [tool.altair.vega]
@@ -384,13 +379,12 @@ ignore = [
 # - https://github.com/astral-sh/ty/issues/2520
 # - https://github.com/astral-sh/ty/issues/4083
 src.exclude = [
-    "altair/datasets",  # 9 to fix
+    "altair/datasets",  # 10 to fix
     "altair/utils",  # 15 to fix
     "altair/jupyter",  # match pyright
     "sphinxext",  # match mypy
     "tests/examples_arguments_syntax",  # ty-4083
 ]
-# analysis.allowed-unresolved-imports = ["polars_st"]  # match mypy
 
 [[tool.ty.overrides]]
 include = ["altair/vegalite/v6/schema/channels.py"]  # match mypy
