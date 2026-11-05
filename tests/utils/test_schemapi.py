@@ -392,6 +392,30 @@ def test_copy_module(dct):
     assert myschema.to_dict() == dct
 
 
+@pytest.mark.parametrize("deep", [True, False, ["a"]])
+def test_copy_preserves_nonserialized_metadata(dct, deep):
+    myschema = MySchema.from_dict(dct)
+    myschema._metadata["origins"] = frozenset({"original"})
+
+    cloned = myschema.copy(deep=deep)
+    assert cloned._metadata == myschema._metadata
+    assert cloned.to_dict() == dct
+    assert cloned == myschema
+
+    cloned._metadata["origins"] |= {"another"}
+    assert myschema._metadata["origins"] == frozenset({"original"})
+
+
+def test_deep_copy_preserves_nested_metadata(dct):
+    myschema = MySchema.from_dict(dct)
+    myschema._metadata["nested"] = {"values": [1]}
+    cloned = myschema.copy()
+
+    cloned._metadata["nested"]["values"].append(2)
+    assert myschema._metadata["nested"]["values"] == [1]
+    assert cloned.to_dict() == dct
+
+
 def test_attribute_error():
     m = MySchema()
     invalid_attr = "invalid_attribute"

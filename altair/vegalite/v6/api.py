@@ -8,6 +8,7 @@ import json
 import operator
 import sys
 import typing as t
+import uuid
 import warnings
 from collections.abc import Mapping, Sequence
 from copy import deepcopy as _deepcopy
@@ -439,6 +440,10 @@ class Parameter(_expr_core.OperatorMixin):
         # Update the underlying param object's name to match
         if self.param is not None and not utils.is_undefined(self.param):
             self.param.name = self.name
+            if param_type == "selection":
+                self.param._metadata.setdefault(
+                    "selection_origins", frozenset({uuid.uuid4()})
+                )
 
     @utils.deprecated(
         version="5.0.0",
@@ -4224,18 +4229,34 @@ class Chart(
             copy.params = []
 
         # Track existing parameter names
-        existing_names = {param.name for param in copy.params}
+        existing_names = {param.name: i for i, param in enumerate(copy.params)}
+        known_groups = _selection_origin_groups(
+            [*copy.params, *(param.param for param in params)]
+        )
 
         for param in params:
             if param.name in existing_names:
                 if param._name_is_hashed:
+                    if isinstance(
+                        param.param,
+                        (core.SelectionParameter, core.TopLevelSelectionParameter),
+                    ):
+                        index = existing_names[param.name]
+                        existing = copy.params[index].copy()
+                        _merge_selection_origins(
+                            existing,
+                            param.param,
+                            known_groups=known_groups,
+                            stacklevel=3,
+                        )
+                        copy.params[index] = existing
                     continue  # deduplicate hash-based
                 else:
                     # If we see a duplicate explicit name, raise
                     msg = f"Duplicate explicit parameter name: {param.name}"
                     raise ValueError(msg)
             copy.params.append(param.param)
-            existing_names.add(param.name)
+            existing_names[param.name] = len(copy.params) - 1
         return copy
 
     @utils.deprecated(version="5.0.0", alternative="add_params")
@@ -5160,6 +5181,51 @@ _Parameter: TypeAlias = (
 )
 
 
+def _selection_origin_groups(
+    params: Iterable[Optional[_Parameter]],
+) -> list[frozenset[uuid.UUID]]:
+    """Snapshot the combinations already present before a collection starts merging."""
+    return [
+        origins
+        for param in params
+        if not utils.is_undefined(param)
+        and (origins := param._metadata.get("selection_origins")) is not None
+    ]
+
+
+def _merge_selection_origins(
+    param: _Parameter,
+    other: _Parameter,
+    *,
+    known_groups: Sequence[frozenset[uuid.UUID]],
+    stacklevel: int,
+) -> None:
+    """Warn for new combinations of independent selections, retaining all origins."""
+    origins = param._metadata.get("selection_origins")
+    other_origins = other._metadata.get("selection_origins")
+    if origins is None or other_origins is None:
+        # Serialized specifications cannot tell us whether sharing was intentional.
+        param._metadata.pop("selection_origins", None)
+        warn = True
+    else:
+        merged = origins | other_origins
+        # Reusing `ab` with `a` or `b` is intentional in either order. Consider all
+        # original input groups so even `a, b, ab` does not repeat the warning.
+        warn = not any(
+            merged <= group for group in (origins, other_origins, *known_groups)
+        )
+        param._metadata["selection_origins"] = merged
+
+    if warn:
+        warnings.warn(
+            "Automatically deduplicated selection parameter with identical configuration. "
+            "If you want independent parameters, explicitly name them differently (e.g., "
+            "name='param1', name='param2'). See https://github.com/vega/altair/issues/3891",
+            category=UserWarning,
+            stacklevel=stacklevel,
+        )
+
+
 def _viewless_dict(param: _Parameter) -> dict[str, Any]:
     d = param.to_dict()
     d.pop("views", None)
@@ -5183,7 +5249,9 @@ def _prepare_to_lift(param: _Parameter) -> _Parameter:
         return param
 
     if isinstance(param, core.SelectionParameter):
-        return core.TopLevelSelectionParameter(**param.to_dict(), views=[])
+        lifted = core.TopLevelSelectionParameter(**param.to_dict(), views=[])
+        lifted._metadata.update(param._metadata)
+        return lifted
 
     if param.views is Undefined:
         param.views = []
@@ -5193,7 +5261,10 @@ def _prepare_to_lift(param: _Parameter) -> _Parameter:
 
 def _remove_duplicate_params(layer: list[ChartType]) -> list[ChartType]:
     subcharts = [subchart.copy() for subchart in layer]
-    found_params = []
+    known_groups = _selection_origin_groups(
+        param for subchart in subcharts for param in subchart._get("params", [])
+    )
+    found_params: list[tuple[_Parameter, dict[str, Any]]] = []
 
     for subchart in subcharts:
         if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
@@ -5210,9 +5281,15 @@ def _remove_duplicate_params(layer: list[ChartType]) -> list[ChartType]:
             p = param.copy()
             pd = _viewless_dict(p)
 
-            if pd not in found_params:
+            for existing, existing_dict in found_params:
+                if pd == existing_dict:
+                    _merge_selection_origins(
+                        existing, p, known_groups=known_groups, stacklevel=5
+                    )
+                    break
+            else:
                 params.append(p)
-                found_params.append(pd)
+                found_params.append((p, pd))
 
         if len(params) == 0:
             subchart.params = Undefined
@@ -5255,6 +5332,11 @@ def _combine_subchart_params(  # noqa: C901
 ) -> tuple[Optional[Sequence[_Parameter]], list[ChartType]]:
     if utils.is_undefined(params):
         params = []
+    known_groups = _selection_origin_groups(
+        itertools.chain(
+            params, *(subchart._get("params", []) for subchart in subcharts)
+        )
+    )
     # List of triples related to params, (param, dictionary minus views, views)
     param_info: list[tuple[_Parameter, dict[str, Any], list[str]]] = []
 
@@ -5330,17 +5412,12 @@ def _combine_subchart_params(  # noqa: C901
 
             if found:
                 merge_idx = dlist.index(pd)
-                _, _, old_views = param_info[merge_idx]
+                existing, _, old_views = param_info[merge_idx]
                 new_views = [v for v in views_after if v not in old_views]
                 old_views += new_views
 
-                # Warn when parameters get deduplicated
-                warnings.warn(
-                    "Automatically deduplicated selection parameter with identical configuration. "
-                    "If you want independent parameters, explicitly name them differently (e.g., "
-                    "name='param1', name='param2'). See https://github.com/vega/altair/issues/3891",
-                    category=UserWarning,
-                    stacklevel=5,
+                _merge_selection_origins(
+                    existing, p, known_groups=known_groups, stacklevel=6
                 )
             else:
                 param_info.append((p, pd, views_after))
