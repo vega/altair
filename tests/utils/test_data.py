@@ -16,6 +16,7 @@ from altair.utils.data import (
     to_json,
     to_values,
 )
+from tests import skip_requires_pyarrow
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -80,6 +81,40 @@ def test_sample():
     result = sample(pl.DataFrame(data), n=10)
     assert isinstance(result, pl.DataFrame)
     assert len(result) == 10
+
+
+@pytest.mark.parametrize("rows", [0, 4])
+@pytest.mark.parametrize("curried", [False, True])
+@pytest.mark.parametrize("kwargs", [{"n": 0}, {"frac": 0}])
+def test_sample_empty_dict(rows, curried, kwargs):
+    data = _create_data_with_values(rows)
+    result = sample(**kwargs)(data) if curried else sample(data, **kwargs)
+    assert result == {"values": []}
+    assert len(data["values"]) == rows
+
+
+@pytest.mark.parametrize(
+    "backend",
+    ["pandas", "polars", pytest.param("pyarrow", marks=skip_requires_pyarrow())],
+)
+@pytest.mark.parametrize("rows", [0, 4])
+@pytest.mark.parametrize("curried", [False, True])
+@pytest.mark.parametrize("kwargs", [{"n": 0}, {"frac": 0}])
+def test_sample_empty_dataframe(backend, rows, curried, kwargs):
+    if backend == "pyarrow":
+        import pyarrow as pa
+
+        tp = pa.table
+    else:
+        tp = pd.DataFrame if backend == "pandas" else pl.DataFrame
+    data = _create_dataframe(rows, tp=tp)
+    result = sample(**kwargs)(data) if curried else sample(data, **kwargs)
+    assert type(result) is type(data)
+    result_nw = nw.from_native(result, eager_only=True)
+    data_nw = nw.from_native(data, eager_only=True)
+    assert result_nw.shape == (0, 2)
+    assert result_nw.schema == data_nw.schema
+    assert len(data_nw) == rows
 
 
 def test_to_values():
