@@ -150,6 +150,9 @@ def test_json_reprs():
         (float("inf"), "(1/0)"),
         (float("-inf"), "(-1/0)"),
         (np.float64("inf"), "(1/0)"),
+        (np.longdouble(1), "1.0"),
+        (np.longdouble("nan"), "NaN"),
+        (np.longdouble("-inf"), "(-1/0)"),
     ],
 )
 def test_json_reprs_numpy_bool_and_nonfinite(value: Any, expected: str) -> None:

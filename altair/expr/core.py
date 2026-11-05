@@ -48,7 +48,7 @@ def _js_repr(val) -> str:
     elif isinstance(val, dt.date):
         return _from_date_datetime(val)
     elif _is_numpy_generic(val):
-        return _js_repr(val.item())
+        return _js_repr_numpy(val)
     elif isinstance(val, float) and not math.isfinite(val):
         if math.isnan(val):
             return "NaN"
@@ -56,6 +56,16 @@ def _js_repr(val) -> str:
         return "(1/0)" if val > 0 else "(-1/0)"
     else:
         return repr(val)
+
+
+def _js_repr_numpy(val) -> str:
+    unwrapped = val.item()
+    if _is_numpy_generic(unwrapped):
+        # Extended-precision floats have no equivalent Python scalar.
+        if unwrapped.dtype.kind == "f":
+            return _js_repr(float(unwrapped))
+        return repr(unwrapped)
+    return _js_repr(unwrapped)
 
 
 def _from_date_datetime(obj: dt.date | dt.datetime, /) -> str:
