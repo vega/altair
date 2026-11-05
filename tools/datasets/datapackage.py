@@ -203,20 +203,6 @@ class DataPackage:
         yield from guards
 
 
-def path_stem(column: str | pl.Expr, /) -> pl.Expr:
-    """
-    The final path component, minus its last suffix.
-
-    Needed since `Resource.name`_ must be lowercase.
-
-    .. _Resource.name:
-        https://specs.frictionlessdata.io/data-resource/#name
-    """
-    path = col(column) if isinstance(column, str) else column
-    rfind = (path.str.len_bytes() - 1) - path.str.reverse().str.find(r"\.")
-    return path.str.head(rfind)
-
-
 def path_suffix(column: str | pl.Expr, /) -> pl.Expr:
     """
     The final component's last suffix.

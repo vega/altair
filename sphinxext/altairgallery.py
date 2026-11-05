@@ -40,7 +40,6 @@ if TYPE_CHECKING:
     from sphinx.environment import BuildEnvironment
 
 
-EXAMPLE_MODULE = "altair.examples"
 EXAMPLES_INDEX = Path(__file__).parents[1] / "_data" / "examples.json"
 GALLERY_NAME = "altair"
 GALLERY_REPOSITORY = "https://github.com/vega/altair"
