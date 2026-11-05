@@ -1940,6 +1940,45 @@ def test_resolve(chart_type):
     }
 
 
+def test_resolve_on_unit_chart_layer_facet_errors():
+    # https://github.com/vega/altair/issues/3502
+    chart = (
+        alt.Chart("data.csv")
+        .mark_point()
+        .encode(x="x:Q", y="y:Q", color="c:N")
+        .resolve_scale(color="independent")
+    )
+    simple_chart = alt.Chart("data.csv").mark_point()
+
+    # A unit chart with `resolve` still works on its own and in concat.
+    chart.to_dict()
+    alt.concat(chart).to_dict()
+
+    layer_msg = (
+        r"Charts with a .resolve. property cannot be layered.+layer the charts before"
+    )
+    with pytest.raises(TypeError, match=layer_msg):
+        alt.layer(chart)
+    with pytest.raises(TypeError, match=layer_msg):
+        chart + simple_chart
+    with pytest.raises(TypeError, match=layer_msg):
+        alt.layer(simple_chart) + chart
+
+    facet_msg = (
+        r"Charts with a .resolve. property cannot be faceted.+facet the chart before"
+    )
+    with pytest.raises(TypeError, match=facet_msg):
+        chart.facet("c:N")
+    with pytest.raises(TypeError, match=facet_msg):
+        alt.FacetChart(data="data.csv", spec=chart, facet=alt.Facet("c:N"))
+
+    # Resolving after layering / faceting is the supported way.
+    (simple_chart + simple_chart).resolve_scale(color="independent").to_dict()
+    simple_chart.encode(color="c:N").facet("c:N").resolve_scale(
+        color="independent"
+    ).to_dict()
+
+
 # TODO: test vconcat, hconcat, concat, facet_encoding when schema allows them.
 # This is blocked by https://github.com/vega/vega-lite/issues/5261
 @pytest.mark.parametrize("chart_type", ["chart", "layer"])
