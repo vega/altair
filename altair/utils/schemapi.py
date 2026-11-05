@@ -558,7 +558,28 @@ def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
     .. _more specific:
         https://github.com/vega/altair/issues/2913#issuecomment-2571762700
     """
-    return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
+    if not _is_channel(spec):
+        return tp
+    channels = list(_iter_channels(tp, spec))
+    return channels[0] if len(channels) == 1 else tp
+
+
+def _channel_class_for_def(altair_cls: Any, def_name: str | None) -> str | None:
+    """Map a schema definition name (e.g. 'PositionDatumDef') to a channel variant (e.g. 'YDatum')."""
+    if not def_name or not hasattr(altair_cls, "_encoding_name"):
+        return None
+    from altair import vegalite
+
+    base_name = altair_cls.__name__
+    if base_name.endswith(("Datum", "Value")):
+        base_name = base_name[:-5]
+
+    for variant in (base_name, f"{base_name}Datum", f"{base_name}Value"):
+        if (cls := getattr(vegalite, variant, None)) and hasattr(cls, "_schema"):
+            ref = cls._schema.get("$ref", "")
+            if ref.endswith(f"/{def_name}") or ref == def_name:
+                return variant
+    return None
 
 
 def _union_forms(
@@ -718,7 +739,9 @@ class SchemaValidationError(jsonschema.ValidationError):
         # Names every form may share cannot pick one, only its selecting keys can.
         picked = [f for f in forms if score(f)[0] == best[0]]
         if len(picked) > 1 and instance.keys() <= known:
-            return self._combined_names_message(altair_cls, instance, forms)
+            return self._combined_names_message(
+                altair_cls, instance, forms, picked=picked, error=error
+            )
         unexpected = sorted(
             instance.keys() - set().union(*(props for _, props, _ in closest))
         )
@@ -727,12 +750,18 @@ class SchemaValidationError(jsonschema.ValidationError):
         # e.g. `Legend` for the `LegendConfig` under `config.legend`.
         accepted = [props for _, props, _ in forms]
         own = _union_forms(altair_cls._schema, rootschema)
-        if not all(props in accepted for _, props, _ in own):
-            altair_cls = _definition_class(context, rootschema) or altair_cls
+        table_cls = altair_cls
+        if not all(props in accepted for _, props, _ in own) and (
+            def_cls := _definition_class(context, rootschema)
+        ):
+            table_cls = def_cls
+            if not hasattr(altair_cls, "_encoding_name"):
+                altair_cls = def_cls
         # A union names the one form its selecting keys picked, e.g.
         # `GraticuleGenerator` for `Data` given `graticule`.
         if len(picked) == 1 and len(_union_forms(altair_cls._schema, rootschema)) > 1:
             altair_cls = _public_class(picked[0][0]) or altair_cls
+            table_cls = altair_cls
         if not unexpected:
             # Extract "unknown" from messages shaped like:
             # "Additional properties are not allowed ('unknown' was unexpected)"
@@ -741,12 +770,31 @@ class SchemaValidationError(jsonschema.ValidationError):
         # A union class has no written signature, only `(*args, **kwds)`.
         params = [
             name
-            for name in inspect.signature(altair_cls).parameters
+            for name in inspect.signature(table_cls).parameters
             if name not in {"args", "kwds", "self"}
         ]
         param_names_table = self._format_params_as_table(params or sorted(known))
         parameter_text = "parameter" if len(unexpected) == 1 else "parameters"
-        formatted = ", ".join(map(repr, unexpected))
+
+        # Check if unexpected properties were expanded from shorthand
+        shorthand = self._get_shorthand_for_error(error)
+        if shorthand and any(u in {"field", "type"} for u in unexpected):
+            shorthand_unexp = [u for u in unexpected if u in {"field", "type"}]
+            if len(shorthand_unexp) == len(unexpected):
+                formatted = (
+                    f"{', '.join(map(repr, unexpected))} (from shorthand {shorthand!r})"
+                )
+            else:
+                formatted_items = [
+                    f"{u!r} (from shorthand {shorthand!r})"
+                    if u in {"field", "type"}
+                    else repr(u)
+                    for u in unexpected
+                ]
+                formatted = ", ".join(formatted_items)
+        else:
+            formatted = ", ".join(map(repr, unexpected))
+
         return f"""\
 `{altair_cls.__name__}` has no {parameter_text} named {formatted}
 
@@ -760,22 +808,48 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         instance: Any,
         forms: list[tuple[str | None, set[str], set[str]]],
         /,
+        *,
+        picked: list[tuple[str | None, set[str], set[str]]] | None = None,
+        error: jsonschema.exceptions.ValidationError | None = None,
     ) -> str:
         """Every name exists, but not in this combination - only a union can do that."""
         from altair import vegalite
 
+        if (
+            hasattr(altair_cls, "_encoding_name")
+            and altair_cls.__name__.endswith(("Datum", "Value"))
+            and (base_cls := getattr(vegalite, altair_cls.__name__[:-5], None))
+        ):
+            altair_cls = base_cls
+
         belongs = []
         for name in sorted(instance):
-            owners = [f for f, props, _ in forms if f and name in props]
+            owners = []
+            for f, props, _ in forms:
+                if f and name in props:
+                    mapped = _channel_class_for_def(altair_cls, f) or f
+                    owners.append(mapped)
             # A name every form accepts says nothing about the clash, and a form
             # without a public class, e.g. `ConcatSpec<...>`, cannot be looked up.
             shown = [f"`{f}`" for f in owners if hasattr(vegalite, f)]
+            shown = list(dict.fromkeys(shown))
             if shown and len(owners) < len(forms):
                 belongs.append(f"{name!r} belongs to {_join(shown, 'or')}")
+
         # A name every form accepts plays no part in the clash.
-        clashing = [n for n in sorted(instance) if not all(n in p for _, p, _ in forms)]
+        eval_forms = picked or forms
+        clashing = [
+            n for n in sorted(instance) if not all(n in p for _, p, _ in eval_forms)
+        ]
         names = _join([repr(n) for n in clashing or sorted(instance)], "and")
-        parts = [f"`{altair_cls.__name__}` does not accept {names} together"]
+
+        # When the clash is inside a nested property like `condition`, name that property.
+        if error and error.absolute_path and error.absolute_path[-1] == "condition":
+            subject = "`condition`"
+        else:
+            subject = f"`{altair_cls.__name__}`"
+
+        parts = [f"{subject} does not accept {names} together"]
         if belongs:
             parts.append("\n".join(belongs))
         parts.append(
@@ -783,6 +857,29 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
             " to read the full description of these parameters"
         )
         return "\n\n".join(parts)
+
+    def _get_shorthand_for_error(
+        self, error: jsonschema.exceptions.ValidationError
+    ) -> str | None:
+        """Find the shorthand argument if the error location originated from one."""
+        curr: Any = self.obj
+        for p in error.absolute_path:
+            if isinstance(p, str) and hasattr(curr, p):
+                curr = getattr(curr, p)
+            elif isinstance(p, int) and isinstance(curr, (list, tuple)):
+                if 0 <= p < len(curr):
+                    curr = curr[p]
+                else:
+                    return None
+            elif isinstance(curr, Mapping) and p in curr:
+                curr = curr[p]
+            else:
+                return None
+        if hasattr(curr, "_kwds"):
+            sh = curr._kwds.get("shorthand")
+            if isinstance(sh, str):
+                return sh
+        return None
 
     def _get_altair_class_for_error(
         self, error: jsonschema.exceptions.ValidationError
@@ -797,12 +894,17 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
         """
         from altair import vegalite
 
-        for prop_name in reversed(error.absolute_path):
+        path = list(error.absolute_path)
+        for i, prop_name in enumerate(reversed(path)):
             # Check if str as e.g. first item can be a 0
             if isinstance(prop_name, str):
                 candidate = prop_name[0].upper() + prop_name[1:]
                 if tp := getattr(vegalite, candidate, None):
-                    return _maybe_channel(tp, self.instance)
+                    # Only narrow channel if prop_name is the leaf of error.absolute_path
+                    # (otherwise self.instance belongs to a nested property, e.g. condition)
+                    if all(isinstance(p, int) for p in path[len(path) - i :]):
+                        return _maybe_channel(tp, self.instance)
+                    return tp
         return type(self.obj)
 
     @staticmethod
