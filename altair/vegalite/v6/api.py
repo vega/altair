@@ -4305,8 +4305,8 @@ def _check_if_unit_chart_has_resolve(
     """
     Raise a `TypeError` if `spec` is a unit `Chart` with a `resolve` property.
 
-    `resolve` is only valid on single charts at the top level or inside a concat;
-    Vega-Lite does not allow it on a unit spec inside a layer or facet.
+    `resolve` is valid on single charts at the top level, or inside concat and repeat.
+    Vega-Lite does not allow it on a unit spec nested inside layer or facet.
     """
     if isinstance(spec, Chart) and spec._get("resolve") is not Undefined:
         verb = {"layer": "layered", "facet": "faceted"}[action]
