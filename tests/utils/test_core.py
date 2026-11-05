@@ -214,11 +214,14 @@ def test_parse_shorthand_all_aggregates():
 
 def test_parse_shorthand_all_timeunits():
     timeUnits = []
-    for loc in ["Local", "Utc"]:
-        for typ in ["Single", "Multi"]:
-            defn = loc + typ + "TimeUnit"
-            timeUnits.extend(alt.Root._schema["definitions"][defn]["enum"])
-    timeUnits.extend(alt.Root._schema["definitions"]["BinnedTimeUnit"]["enum"])
+    for defn in [
+        "LocalSingleTimeUnit",
+        "LocalMultiTimeUnit",
+        "UtcSingleTimeUnit",
+        "UtcMultiTimeUnit",
+        "BinnedTimeUnit",
+    ]:
+        timeUnits.extend(alt.Root._schema["definitions"][defn]["enum"])
     assert set(core.TIMEUNITS) == set(timeUnits)
     for timeUnit in timeUnits:
         shorthand = f"{timeUnit}(field):Q"
