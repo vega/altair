@@ -1389,6 +1389,27 @@ def test_property_setter_rejects_positional_and_keyword_arguments(setter: str) -
         method(["M", "F"], domain=["M", "F"])
 
 
+def test_property_setter_title_doc_uses_field_schema() -> None:
+    # ``X.title`` accepts only ``Text``, so its documentation must not be
+    # borrowed from the chart-title class (``TitleParams``), whose parameters
+    # (e.g. ``subtitle``, ``color``) are not valid for a field title.
+    title = X("date:T").title
+    assert title.__doc__ is not None
+    assert title.__doc__.startswith("A title for the field")
+    signature = getattr(title, "__signature__", None)
+    params = list(signature.parameters) if signature is not None else []
+    assert "subtitle" not in params
+    assert "color" not in params
+
+
+def test_property_setter_doc_borrowed_when_schema_references_class() -> None:
+    # ``X.axis`` does accept ``Axis`` parameters, so the helper class
+    # documentation and signature are still borrowed for it.
+    axis = X("date:T").axis
+    assert axis.__signature__ is not None
+    assert "titleColor" in axis.__signature__.parameters
+
+
 def test_to_dict_datetime_typing() -> None:
     """
     Enumerating various places that need updated annotations.
