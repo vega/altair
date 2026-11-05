@@ -10,6 +10,7 @@ import sys
 import typing as t
 import uuid
 import warnings
+from collections import Counter
 from collections.abc import Mapping, Sequence
 from copy import deepcopy as _deepcopy
 from typing import (
@@ -2525,6 +2526,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         copy = _top_schema_base(self).copy(deep=False)
         for key, val in kwargs.items():
+            if key == "name":
+                copy._metadata.pop("view_name", None)
             if key == "selection" and isinstance(val, Parameter):
                 # TODO: Can this be removed
                 # For backward compatibility with old selection interface.
@@ -5299,13 +5302,124 @@ def _remove_duplicate_params(layer: list[ChartType]) -> list[ChartType]:
     return subcharts
 
 
-def _view_base_for_chart(obj: Any) -> str:
-    """Return a base view name for a chart/layer (for building position-based names)."""
-    name = obj.name
-    parts = name.rsplit("_", 1)
-    if len(parts) == 2 and parts[1].isdigit():
-        return parts[0] or name
-    return name
+def _view_name_info(chart: ChartType) -> tuple[str, bool]:
+    """Return the original name and whether Altair generated it."""
+    info = chart._metadata.get("view_name")
+    return (
+        info[1:] if info is not None and info[0] == chart.name else (chart.name, False)
+    )
+
+
+def _set_view_name(chart: ChartType, name: str, base: str, generated: bool) -> None:
+    chart.name = name
+    chart._metadata["view_name"] = (name, base, generated)
+
+
+def _rename_view_references(  # noqa: C901
+    params: Optional[Sequence[_Parameter]],
+    targets: list[tuple[ChartType, str]],
+    *,
+    existing: bool = False,
+) -> None:
+    """Update references in their original subtree, before parameters are lifted."""
+    if utils.is_undefined(params):
+        return
+    renames: dict[str, list[str]] = {}
+    for chart, old in targets:
+        renames.setdefault(old, []).append(chart.name)
+    if existing:
+        renames = {old: names[:1] for old, names in renames.items()}
+
+    def replacements(view: str) -> list[str]:
+        # Repeat views add a compiler-generated prefix or suffix to the unit name.
+        for old in sorted(renames, key=len, reverse=True):
+            if view == old:
+                return renames[old]
+            if view.startswith(old + "_child__"):
+                return [name + view[len(old) :] for name in renames[old]]
+            if view.startswith("child__") and view.endswith("_" + old):
+                return [view[: -len(old)] + name for name in renames[old]]
+        return [view]
+
+    for param in params:
+        if isinstance(
+            param, core.TopLevelSelectionParameter
+        ) and not utils.is_undefined(param.views):
+            param.views = list(
+                dict.fromkeys(
+                    name for view in param.views for name in replacements(view)
+                )
+            )
+
+
+def _allocate_view_names(  # noqa: C901
+    params: Sequence[_Parameter], subcharts: list[ChartType]
+) -> None:
+    """Preserve explicit names and allocate collision-free names across a composition."""
+    entries: list[tuple[ChartType, int, str, str, bool]] = []
+    scopes: list[tuple[ChartType, list[tuple[ChartType, str]]]] = []
+
+    def collect(chart: ChartType, position: int) -> list[tuple[ChartType, str]]:
+        targets: list[tuple[ChartType, str]] = []
+        if (
+            isinstance(chart, Chart)
+            and not utils.is_undefined(chart.params)
+            and _needs_name(chart)
+        ):
+            base = chart._get_view_hash_name()
+            _set_view_name(chart, f"{base}_{position}", base, True)
+        if chart.name is not Undefined:
+            base, generated = _view_name_info(chart)
+            entries.append((chart, position, chart.name, base, generated))
+            targets.append((chart, chart.name))
+        if not isinstance(chart, Chart):
+            for key in ("layer", "concat", "hconcat", "vconcat", "spec"):
+                children = chart._get(key)
+                if utils.is_undefined(children):
+                    continue
+                for child in children if isinstance(children, list) else [children]:
+                    targets.extend(collect(child, position))
+        scopes.append((chart, targets))
+        return targets
+
+    targets = [
+        target for i, chart in enumerate(subcharts) for target in collect(chart, i)
+    ]
+    counts = Counter(name for _, _, name, _, _ in entries)
+    explicit = Counter(name for _, _, name, _, generated in entries if not generated)
+    preserved = {
+        name
+        for _, _, name, _, generated in entries
+        if (counts[name] == 1 if generated else explicit[name] == 1)
+    }
+    used = set(preserved)
+    renamed: dict[str, list[str]] = {}
+    for chart, position, old, base, generated in entries:
+        if old in preserved and (not generated or counts[old] == 1):
+            continue
+        name = f"{base}_{position}"
+        while name in used:
+            position += 1
+            name = f"{base}_{position}"
+        used.add(name)
+        _set_view_name(chart, name, base, generated)
+        if not generated and name != old:
+            renamed.setdefault(old, []).append(name)
+
+    for old, names in renamed.items():
+        warnings.warn(
+            f"Chart name {old!r} was automatically renamed to {names!r} to avoid "
+            "view name collisions in the composed chart. Give the views distinct "
+            "name= values to preserve their names.",
+            UserWarning,
+            stacklevel=5,
+        )
+
+    for scope, scope_targets in scopes:
+        _rename_view_references(scope._get("params"), scope_targets)
+    # Existing parent parameters refer to the earlier panels, not an appended sibling
+    # that happens to reuse one of those panels' names.
+    _rename_view_references(params, targets, existing=True)
 
 
 def _view_names_for_param(subchart: ChartType, is_concat: bool) -> list[str]:
@@ -5337,13 +5451,15 @@ def _combine_subchart_params(  # noqa: C901
             params, *(subchart._get("params", []) for subchart in subcharts)
         )
     )
+    params = [_prepare_to_lift(param) for param in params]
+    subcharts = [subchart.copy() for subchart in subcharts]
+    _allocate_view_names(params, subcharts)
     # List of triples related to params, (param, dictionary minus views, views)
     param_info: list[tuple[_Parameter, dict[str, Any], list[str]]] = []
 
     # Put parameters already found into `param_info`. Copy each param's views so we can
     # mutate the list in the MERGE branch and so no two entries share the same list.
-    for param in params:
-        p = _prepare_to_lift(param)
+    for p in params:
         views = (
             []
             if isinstance(p, core.VariableParameter)
@@ -5353,37 +5469,11 @@ def _combine_subchart_params(  # noqa: C901
         )
         param_info.append((p, _viewless_dict(p), views))
 
-    subcharts = [subchart.copy() for subchart in subcharts]
     is_concat = len(subcharts) > 1
 
-    if is_concat:
-        for i, subchart in enumerate(subcharts):
-            if not (isinstance(subchart, LayerChart) and subchart.layer):
-                continue
-            subchart.layer = [layer.copy() for layer in subchart.layer]
-            for layer in subchart.layer:
-                if isinstance(layer, Chart) and layer.name is not Undefined:
-                    layer.name = f"{_view_base_for_chart(layer)}_{i}"
-
-    for i, subchart in enumerate(subcharts):
+    for subchart in subcharts:
         if (not hasattr(subchart, "params")) or (utils.is_undefined(subchart.params)):
             continue
-
-        if _needs_name(subchart):
-            # For concatenated charts, we need unique names even for identical charts
-            # Use the hash as a base but append the position to ensure uniqueness
-            base_name = subchart._get_view_hash_name()
-            subchart.name = f"{base_name}_{i}"
-
-        # In concat, FacetCharts get the same content-hash view name; disambiguate by position.
-        if is_concat and isinstance(subchart, FacetChart):
-            spec = subchart.spec
-            subchart.spec = spec.copy(deep=True)
-            spec = subchart.spec
-            if isinstance(spec, LayerChart) and spec.layer:
-                spec.layer[0].name = f"{_view_base_for_chart(spec.layer[0])}_{i}"
-            elif isinstance(spec, Chart):
-                spec.name = f"{_view_base_for_chart(spec)}_{i}"
 
         for param in subchart.params:
             p = _prepare_to_lift(param)
@@ -5400,15 +5490,9 @@ def _combine_subchart_params(  # noqa: C901
                 continue
 
             # At this stage in the loop, p must be a TopLevelSelectionParameter.
-            # Get this subchart's view names from the subchart only (not p.views: params can share lists).
-            views_to_add = _view_names_for_param(subchart, is_concat)
-            # MERGE (found=True): start from p.views to accumulate all views for this param.
-            # APPEND (found=False, views_to_add set): start from [] to avoid pulling in sibling views.
-            # COMPOUND (found=False, no views_to_add): subchart already aggregated views into p.views; preserve them.
-            views_after = list(p.views or []) if (found or not views_to_add) else []
-            for view_to_add in views_to_add:
-                if view_to_add not in views_after:
-                    views_after.append(view_to_add)
+            # Lifted selections already carry their scoped, renamed view references.
+            # Only a newly lifted unit selection needs a view assigned here.
+            views_after = list(p.views or _view_names_for_param(subchart, is_concat))
 
             if found:
                 merge_idx = dlist.index(pd)
