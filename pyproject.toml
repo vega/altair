@@ -112,7 +112,7 @@ doc = [
 [tool.altair.vega]
 # Minimum/exact versions, for projects under the `vega` organization
 vega-datasets = "v3.3.1" # https://github.com/vega/vega-datasets
-vega-embed    = "v7.0.2"     # https://github.com/vega/vega-embed
+vega-embed    = "v7.0.2" # https://github.com/vega/vega-embed
 vega-lite     = "v6.4.1" # https://github.com/vega/vega-lite
 
 [tool.hatch]
@@ -375,24 +375,22 @@ ignore = [
 ]
 
 [tool.ty]
-# Some rules are suppressed due to pending issues:
-# - https://github.com/astral-sh/ty/issues/2520
-# - https://github.com/astral-sh/ty/issues/4083
 src.exclude = [
-    "altair/datasets",  # 10 to fix
-    "altair/utils",  # 15 to fix
+    "altair/datasets", # 10 to fix
+    "altair/utils",    # 15 to fix
     "altair/jupyter",  # match pyright
-    "sphinxext",  # match mypy
-    "tests/examples_arguments_syntax",  # ty-4083
+    "sphinxext",       # match mypy
 ]
 
 [[tool.ty.overrides]]
-include = ["altair/vegalite/v6/schema/channels.py"]  # match mypy
+# match mypy suppressions: no-overload-impl, empty-body, misc
+include = ["altair/vegalite/v6/schema/channels.py"]
 rules.invalid-method-override = "ignore"
 rules.invalid-overload = "ignore"
 
 [[tool.ty.overrides]]
-include = ["tests"]  # ty-2520
+# Suppress `T@__call__` errors (https://github.com/astral-sh/ty/issues/2520)
+include = ["tests"]
 rules.unresolved-attribute = "ignore"
 rules.unsupported-operator = "ignore"
 rules.invalid-argument-type = "ignore"
