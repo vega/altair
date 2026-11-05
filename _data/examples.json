@@ -395,6 +395,30 @@
       }
     },
     {
+      "name": "bar_chart_with_signed_labels",
+      "title": "Horizontal Bar Chart with Signed Value Labels.",
+      "url": "https://altair-viz.github.io/gallery/bar_chart_with_signed_labels.html",
+      "path": "tests/examples_arguments_syntax/bar_chart_with_signed_labels.py",
+      "description": "Place a label to the left of a negative bar, or to the right of a\nnon-negative bar, without placing text inside the bars.",
+      "categories": [
+        "bar charts"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/marks/text",
+          "user_guide/transform/filter",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#sort-option",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
       "name": "bar_chart_with_single_threshold",
       "title": "Bar Chart Highlighting Values beyond a Threshold",
       "url": "https://altair-viz.github.io/gallery/bar_chart_with_single_threshold.html",
