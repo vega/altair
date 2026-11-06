@@ -287,11 +287,11 @@ def test_simple_type():
 
 def test_simple_array():
     assert SimpleArray([4, 5, "six"]).to_dict() == [4, 5, "six"]
-    assert SimpleArray.from_dict(list("abc")).to_dict() == list("abc")  # pyright: ignore
+    assert SimpleArray.from_dict(list("abc")).to_dict() == list("abc")  # pyright: ignore[reportArgumentType]
 
 
 def test_definition_union():
-    obj = DefinitionUnion.from_dict("A")  # pyright: ignore
+    obj = DefinitionUnion.from_dict("A")  # pyright: ignore[reportArgumentType]
     assert isinstance(obj, Bar)
     assert obj.to_dict() == "A"
 
@@ -503,7 +503,7 @@ def chart_error_example__hconcat():
         alt.Chart(source)
         .mark_text()
         .encode(
-            alt.Text("Horsepower:N", title={"text": "Horsepower", "align": "right"})  # pyright: ignore
+            alt.Text("Horsepower:N", title={"text": "Horsepower", "align": "right"})  # pyright: ignore[reportArgumentType]
         )
     )
 
@@ -518,7 +518,7 @@ def chart_error_example__invalid_y_option_value_unknown_x_option():
         .mark_bar()
         .encode(
             x=alt.X("variety", unknown=2),
-            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore
+            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore[reportArgumentType]
         )
     )
 
@@ -530,7 +530,7 @@ def chart_error_example__invalid_y_option_value():
         .mark_bar()
         .encode(
             x=alt.X("variety"),
-            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore
+            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore[reportArgumentType]
         )
     )
 
@@ -544,7 +544,7 @@ def chart_error_example__invalid_y_option_value_with_condition():
         .mark_bar()
         .encode(
             x="variety",
-            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore
+            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore[reportArgumentType]
             opacity=alt.condition("datum.yield > 0", alt.value(1), alt.value(0.2)),
         )
     )
@@ -552,7 +552,7 @@ def chart_error_example__invalid_y_option_value_with_condition():
 
 def chart_error_example__invalid_timeunit_value():
     # Error: Invalid value for Angle.timeUnit
-    return alt.Chart().encode(alt.Angle().timeUnit("invalid_value"))  # pyright: ignore
+    return alt.Chart().encode(alt.Angle().timeUnit("invalid_value"))  # pyright: ignore[reportArgumentType]
 
 
 def chart_error_example__invalid_sort_value():
@@ -565,13 +565,13 @@ def chart_error_example__invalid_bandposition_value():
     return (
         alt.Chart(data.cars())
         .mark_text(align="right")
-        .encode(alt.Text("Horsepower:N", bandPosition="4"))  # pyright: ignore
+        .encode(alt.Text("Horsepower:N", bandPosition="4"))  # pyright: ignore[reportArgumentType]
     )
 
 
 def chart_error_example__invalid_type():
     # Error: Invalid value for type
-    return alt.Chart().encode(alt.X(type="unknown"))  # pyright: ignore
+    return alt.Chart().encode(alt.X(type="unknown"))  # pyright: ignore[reportArgumentType]
 
 
 def chart_error_example__additional_datum_argument():
@@ -740,7 +740,7 @@ def chart_error_example__four_errors_hide_fourth():
         .mark_bar()
         .encode(
             x=alt.X("variety", unknown=2),
-            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore
+            y=alt.Y("sum(yield)", stack="asdf"),  # pyright: ignore[reportArgumentType]
             color=alt.Color("variety", another_unknown=2),
             opacity=alt.Opacity("variety", fourth_error=1),
         )
