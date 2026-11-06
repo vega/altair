@@ -88,6 +88,8 @@ dev = [
     "types-jsonschema",
     "types-setuptools",
     "geopandas>=0.14.3",
+    "types-geopandas",
+    "types-pyyaml",
     "polars>=0.20.3",
     "polars-st>=0.1.0a27",
     "taskipy>=1.14.1",
@@ -335,22 +337,22 @@ filterwarnings = [
 warn_unused_ignores = true
 pretty = true
 
-[[tool.mypy.overrides]]
-module = [
-    "pyarrow.*",
-    "yaml.*",
-    "pandas.lib.*",
-    "geopandas.*",
-    "nbformat.*",
-    "ipykernel.*",
-    "ibis.*",
-    "vegafusion.*",
-    "scipy.*",
-    "polars_st.*",
-    "duckdb.*",
-]
-ignore_missing_imports = true
-disable_error_code = ["import-untyped"]
+# [[tool.mypy.overrides]]
+# module = [
+#     "pyarrow.*",
+#     "yaml.*",
+#     "pandas.lib.*",
+#     "geopandas.*",
+#     "nbformat.*",
+#     "ipykernel.*",
+#     "ibis.*",
+#     "vegafusion.*",
+#     "scipy.*",
+#     "polars_st.*",
+#     "duckdb.*",
+# ]
+# ignore_missing_imports = true
+# disable_error_code = ["import-untyped"]
 
 [[tool.mypy.overrides]]
 module = [
