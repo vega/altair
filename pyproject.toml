@@ -383,19 +383,17 @@ src.exclude = [
 ]
 
 [[tool.ty.overrides]]
-# match mypy suppressions: no-overload-impl, empty-body, misc
+# match mypy suppressions (no-overload-impl, empty-body, misc)
 include = ["altair/vegalite/v6/schema/channels.py"]
 rules.invalid-method-override = "ignore"
 rules.invalid-overload = "ignore"
 
 [[tool.ty.overrides]]
-# Suppress `T@__call__` errors (https://github.com/astral-sh/ty/issues/2520)
+# Suppress `T@__call__` errors (see ty issue 2520)
 include = ["tests"]
 rules.unresolved-attribute = "ignore"
 rules.unsupported-operator = "ignore"
 rules.invalid-argument-type = "ignore"
-rules.unused-type-ignore-comment = "ignore"
-rules.unused-ignore-comment = "ignore"
 
 [tool.uv]
 preview-features = true
