@@ -1002,7 +1002,7 @@ def husky_theme() -> ThemeConfig:
                 "binSpacing": 1,
                 "continuousBandSize": 10,
                 "fill": PURPLE,
-                "stroke": False,  # type: ignore
+                "stroke": False,  # type: ignore[typeddict-item]
             },
             "tick": {"color": PURPLE},
         },
