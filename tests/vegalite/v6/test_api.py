@@ -399,11 +399,11 @@ def test_when() -> None:
     assert when_constraint._condition["test"] == expected_constraint
     assert when_constraints._condition["test"] == expected_constraints
     with pytest.raises((NotImplementedError, TypeError), match="list"):
-        alt.when([1, 2, 3])  # type: ignore
+        alt.when([1, 2, 3])  # type: ignore[arg-type]
     with pytest.raises(TypeError, match="Undefined"):
         alt.when()
     with pytest.raises(TypeError, match="int"):
-        alt.when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore
+        alt.when(select, alt.datum.Name == "Name_1", 99, TestCon=5.901)  # type: ignore[arg-type]
 
 
 def test_when_then() -> None:
@@ -420,7 +420,7 @@ def test_when_then() -> None:
         when.then(pathlib.Path("some"))  # type: ignore
 
     with pytest.raises(TypeError, match="float"):
-        when_then.when(select, alt.datum.Name != "Name_2", 86.123, empty=True)  # type: ignore
+        when_then.when(select, alt.datum.Name != "Name_2", 86.123, empty=True)  # type: ignore[arg-type]
 
 
 def test_when_then_only(basic_chart) -> None:
@@ -594,7 +594,7 @@ def test_when_labels_position_based_on_condition() -> None:
         param_width < 200, alt.value("red"), alt.value("black")
     )
     with pytest.raises(SchemaValidationError, match="invalid value for `expr`"):
-        alt.param(expr=fail_condition)  # type: ignore
+        alt.param(expr=fail_condition)  # type: ignore[arg-type]
 
 
 def test_when_expressions_inside_parameters() -> None:
@@ -622,7 +622,7 @@ def test_when_expressions_inside_parameters() -> None:
     text_conditioned = bar.mark_text(
         align="left",
         baseline="middle",
-        dx=alt.expr(actual),  # type: ignore
+        dx=alt.expr(actual),  # type: ignore[arg-type]
     ).encode(text="b")
 
     chart = bar + text_conditioned
@@ -703,8 +703,8 @@ def test_when_typing(cars) -> None:
         # The latter fails validation since it does not have a default `value`
         chart.encode(
             color=then,
-            x=alt.X("Cylinders:N").axis(labelColor=then),  # type: ignore
-            y=alt.Y("Origin:N", axis=alt.Axis(labelColor=then)),  # type: ignore
+            x=alt.X("Cylinders:N").axis(labelColor=then),  # type: ignore[call-overload]
+            y=alt.Y("Origin:N", axis=alt.Axis(labelColor=then)),  # type: ignore[arg-type]
         )
 
     # NOTE: Passing validation then requires an `.otherwise()` **only** for the property cases

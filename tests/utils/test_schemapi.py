@@ -1258,7 +1258,7 @@ def test_to_dict_iterables(
 def test_to_dict_range(tp) -> None:
     expected = [0, 1, 2, 3, 4]
     x_dict = alt.X("x:O", sort=tp(0, 5)).to_dict()
-    actual = x_dict["sort"]  # type: ignore
+    actual = x_dict["sort"]  # type: ignore[call-overload]
     assert actual == expected
 
 
