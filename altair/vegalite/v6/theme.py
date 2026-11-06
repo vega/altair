@@ -27,7 +27,7 @@ class ThemeRegistry(PluginRegistry[Plugin[ThemeConfig], ThemeConfig]):
         self,
         name: LiteralString | AltairThemes | VegaThemes | None = None,
         **options: Any,
-    ) -> PluginEnabler[Plugin[ThemeConfig], ThemeConfig]:
+    ) -> PluginEnabler[Plugin[ThemeConfig], ThemeConfig]:  # ty: ignore
         """
         Enable a theme by name.
 

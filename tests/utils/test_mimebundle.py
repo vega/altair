@@ -191,7 +191,7 @@ def test_spec_to_vegalite_mimebundle(vegalite_spec):
 def test_spec_to_vega_mimebundle(vega_spec):
     # ValueError: mode must be 'vega-lite'
     with pytest.raises(ValueError):  # noqa: PT011
-        spec_to_mimebundle(  # pyright: ignore[reportCallIssue]
+        spec_to_mimebundle(  # pyright: ignore  # ty: ignore
             spec=vega_spec,
             mode="vega",  # pyright: ignore[reportArgumentType]
             format="vega",

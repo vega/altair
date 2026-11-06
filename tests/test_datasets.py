@@ -787,7 +787,7 @@ class TestDataObject:
             AttributeError, match="Dataset 'nonexistent_dataset' not found"
         ):
             # NOTE: Needing a type ignore here is a good thing
-            _ = data.nonexistent_dataset  # pyright: ignore[reportArgumentType]
+            _ = data.nonexistent_dataset  # pyright: ignore  # ty: ignore
 
 
 class TestDataAPIIntegration:
@@ -816,4 +816,4 @@ def test_unsupported_engine():
 
     with pytest.raises(TypeError, match="Unknown backend"):
         # NOTE: Needing a type ignore here is a good thing
-        data.cars(engine="unsupported_engine")  # pyright: ignore[reportArgumentType, reportCallIssue]
+        data.cars(engine="unsupported_engine")  # pyright: ignore  # ty: ignore
