@@ -375,11 +375,11 @@ ignore = [
 ]
 
 [tool.ty]
+src.include = ["altair", "tests", "tools"]
 src.exclude = [
-    "altair/datasets", # 10 to fix
-    "altair/utils",    # 15 to fix
+    "altair/datasets",  # to fix
+    "altair/utils",  # to fix
     "altair/jupyter",  # match pyright
-    "sphinxext",       # match mypy
 ]
 
 [[tool.ty.overrides]]
@@ -391,9 +391,6 @@ rules.invalid-overload = "ignore"
 [[tool.ty.overrides]]
 # Suppress `T@__call__` errors (see ty issue 2520)
 include = ["tests"]
+rules.invalid-argument-type = "ignore"
 rules.unresolved-attribute = "ignore"
 rules.unsupported-operator = "ignore"
-rules.invalid-argument-type = "ignore"
-
-[tool.uv]
-preview-features = true

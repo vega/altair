@@ -101,6 +101,58 @@ save = [
     { name = "vl-convert-python" },
 ]
 
+[package.metadata]
+requires-dist = [
+    { name = "altair-tiles", marker = "extra == 'all'", specifier = ">=0.3.0" },
+    { name = "anywidget", marker = "extra == 'all'", specifier = ">=0.9.0" },
+    { name = "docutils", marker = "extra == 'doc'" },
+    { name = "duckdb", marker = "extra == 'dev'", specifier = ">=1.0" },
+    { name = "geopandas", marker = "extra == 'dev'", specifier = ">=0.14.3" },
+    { name = "hatch", marker = "extra == 'dev'", specifier = ">=1.13.0" },
+    { name = "ipykernel", marker = "extra == 'dev'" },
+    { name = "ipython", marker = "extra == 'dev'" },
+    { name = "jinja2" },
+    { name = "jinja2", marker = "extra == 'doc'" },
+    { name = "jsonschema", specifier = ">=4.18.0" },
+    { name = "lzstring", marker = "extra == 'doc'", specifier = ">=1.0.4" },
+    { name = "mistune", marker = "extra == 'dev'" },
+    { name = "mypy", marker = "extra == 'dev'" },
+    { name = "myst-parser", marker = "extra == 'doc'" },
+    { name = "narwhals", specifier = ">=2.4.0" },
+    { name = "numpy", marker = "extra == 'all'" },
+    { name = "numpydoc", marker = "extra == 'doc'" },
+    { name = "packaging" },
+    { name = "pandas", marker = "extra == 'all'", specifier = ">=1.5.3" },
+    { name = "pandas", marker = "extra == 'dev'", specifier = ">=1.5.3" },
+    { name = "pandas-stubs", marker = "extra == 'dev'", specifier = ">=3.0.3.260530" },
+    { name = "pillow", marker = "extra == 'doc'" },
+    { name = "polars", marker = "extra == 'dev'", specifier = ">=0.20.3" },
+    { name = "polars-st", marker = "extra == 'dev'", specifier = ">=0.1.0a27" },
+    { name = "pyarrow", marker = "extra == 'all'", specifier = ">=11" },
+    { name = "pyarrow-stubs", marker = "extra == 'dev'" },
+    { name = "pydata-sphinx-theme", marker = "extra == 'doc'", specifier = ">=0.14.1" },
+    { name = "pytest", marker = "extra == 'dev'" },
+    { name = "pytest-cov", marker = "extra == 'dev'" },
+    { name = "pytest-xdist", extras = ["psutil"], marker = "extra == 'dev'", specifier = "~=3.5" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.9.5" },
+    { name = "scipy", marker = "extra == 'doc'" },
+    { name = "scipy-stubs", marker = "extra == 'doc'" },
+    { name = "sphinx", marker = "extra == 'doc'" },
+    { name = "sphinx-autobuild", marker = "extra == 'doc'" },
+    { name = "sphinx-copybutton", marker = "extra == 'doc'" },
+    { name = "sphinx-design", marker = "extra == 'doc'" },
+    { name = "sphinxext-altair", marker = "extra == 'doc'" },
+    { name = "taskipy", marker = "extra == 'dev'", specifier = ">=1.14.1" },
+    { name = "ty", marker = "extra == 'dev'" },
+    { name = "types-jsonschema", marker = "extra == 'dev'" },
+    { name = "types-setuptools", marker = "extra == 'dev'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.15'", specifier = ">=4.12.0" },
+    { name = "vegafusion", marker = "extra == 'all'", specifier = ">=2.0.3" },
+    { name = "vl-convert-python", marker = "extra == 'all'", specifier = ">=1.9.0" },
+    { name = "vl-convert-python", marker = "extra == 'save'", specifier = ">=1.9.0" },
+]
+provides-extras = ["all", "dev", "doc", "save"]
+
 [[package]]
 name = "altair-tiles"
 version = "0.4.0"
