@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 from typing import overload as _overload
 
+from altair.utils.plugin_registry import PluginRegistry as _PluginRegistry
 from altair.vegalite.v6.schema._config import (
     AreaConfigKwds,
     AutoSizeParamsKwds,
@@ -296,7 +297,8 @@ def _register(
     name: LiteralString, fn: Plugin[ThemeConfig] | None, /
 ) -> Plugin[ThemeConfig] | None:
     if fn is None:
-        return _themes._plugins.pop(name, None)
+        # Bypass `ThemeRegistry.register`, which is deprecated for public use
+        return _PluginRegistry.register(_themes, name, None)
     elif _themes.plugin_type(fn):
         _themes._plugins[name] = fn
         return fn

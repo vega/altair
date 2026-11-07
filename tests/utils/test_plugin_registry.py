@@ -46,6 +46,41 @@ def test_plugin_registry():
     )
 
 
+def test_plugin_registry_unregister_active():
+    # https://github.com/vega/altair/issues/3619
+    plugins = TypedCallableRegistry()
+    plugins.register("new_plugin", lambda x: x**2)
+    plugins.register("other_plugin", lambda x: x + 1)
+    plugins.enable("new_plugin")
+
+    # Unregistering an inactive plugin leaves the active plugin untouched
+    plugins.register("other_plugin", None)
+    assert plugins.active == "new_plugin"
+
+    # Without a "default" plugin, no plugin is active afterwards
+    plugins.register("new_plugin", None)
+    assert plugins.names() == []
+    assert plugins.active == ""
+    assert plugins.options == {}
+    assert plugins.get() is None
+
+
+def test_plugin_registry_unregister_active_resets_default():
+    # https://github.com/vega/altair/issues/3619
+    plugins = TypedCallableRegistry()
+    plugins.register("default", lambda x: x)
+    plugins.register("new_plugin", lambda x, p=2: x**p)
+    plugins.enable("new_plugin", p=3)
+
+    plugins.register("new_plugin", None)
+    assert plugins.names() == ["default"]
+    assert plugins.active == "default"
+    assert plugins.options == {}
+    fn = plugins.get()
+    assert fn is not None
+    assert fn(3) == 3
+
+
 def test_plugin_registry_extra_options():
     plugins = GeneralCallableRegistry()
 

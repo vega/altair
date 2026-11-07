@@ -162,15 +162,32 @@ class PluginRegistry(Generic[PluginT, R]):
         -------
         plugin: PluginType or None
             The plugin that was registered or unregistered.
+
+        Notes
+        -----
+        Unregistering the currently active plugin re-enables the ``"default"``
+        plugin when one is registered, otherwise no plugin will be active.
         """
         if value is None:
-            return self._plugins.pop(name, None)
+            plugin = self._plugins.pop(name, None)
+            if plugin is not None and name == self._active_name:
+                self._reset_active()
+            return plugin
         elif self.plugin_type(value):
             self._plugins[name] = value
             return value
         else:
             msg = f"{type(value).__name__!r} is not compatible with {type(self).__name__!r}"
             raise TypeError(msg)
+
+    def _reset_active(self) -> None:
+        """Fall back to the ``"default"`` plugin, or clear the active plugin."""
+        if "default" in self._plugins:
+            self._enable("default")
+        else:
+            self._active = None
+            self._active_name = ""
+            self._options = {}
 
     def names(self) -> list[str]:
         """List the names of the registered and entry points plugins."""
