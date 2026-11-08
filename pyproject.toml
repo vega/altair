@@ -310,8 +310,7 @@ publish = "task build && uv publish"
 
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.
-# They contain examples which are being executed by the
-# test_examples tests.
+# They contain examples which are being executed by the test_examples tests.
 norecursedirs = [
     "tests/examples_arguments_syntax",
     "tests/examples_methods_syntax"
@@ -336,23 +335,6 @@ filterwarnings = [
 [tool.mypy]
 warn_unused_ignores = true
 pretty = true
-
-# [[tool.mypy.overrides]]
-# module = [
-#     "pyarrow.*",
-#     "yaml.*",
-#     "pandas.lib.*",
-#     "geopandas.*",
-#     "nbformat.*",
-#     "ipykernel.*",
-#     "ibis.*",
-#     "vegafusion.*",
-#     "scipy.*",
-#     "polars_st.*",
-#     "duckdb.*",
-# ]
-# ignore_missing_imports = true
-# disable_error_code = ["import-untyped"]
 
 [[tool.mypy.overrides]]
 module = [
@@ -391,7 +373,7 @@ rules.invalid-method-override = "ignore"
 rules.invalid-overload = "ignore"
 
 [[tool.ty.overrides]]
-# Suppress `T@__call__` errors (see ty issue 2520)
+# suppress `T@__call__` errors (see ty issue 2520)
 include = ["tests"]
 rules.invalid-argument-type = "ignore"
 rules.unresolved-attribute = "ignore"
