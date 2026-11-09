@@ -716,7 +716,7 @@ def chart_error_example__two_errors_with_one_in_nested_layered_chart():
         .mark_bar()
     )
 
-    bars = blue_bars + red_bars
+    bars = blue_bars + red_bars  # ty: ignore
 
     base = alt.Chart().encode(y=alt.datum(300))
 

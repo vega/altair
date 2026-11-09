@@ -145,9 +145,9 @@ matrix   = [{ python = ["3.11", "3.12", "3.13", "3.14"] }]
 
 [tool.ruff]
 extend-exclude = [
-    ".git",
-    "__pycache__",
-    "build",
+    # ".git",
+    # "__pycache__",
+    # "build",
     "tests/examples_arguments_syntax",
     "tests/examples_methods_syntax",
     "README.md",
@@ -364,17 +364,23 @@ src.exclude = [
     "altair/datasets",  # to fix
     "altair/utils",  # to fix
     "altair/jupyter",  # match pyright
+    "tests/test_jupyter_chart.py",  # match pyright
 ]
 
 [[tool.ty.overrides]]
 # match mypy suppressions (no-overload-impl, empty-body, misc)
 include = ["altair/vegalite/v6/schema/channels.py"]
-rules.invalid-method-override = "ignore"
-rules.invalid-overload = "ignore"
+rules.incompatible-method-override = "ignore"
+rules.missing-overload-implementation = "ignore"
+rules.single-overload = "ignore"
 
 [[tool.ty.overrides]]
-# suppress `T@__call__` errors (see ty issue 2520)
+# suppress `T@__call__` errors (https://github.com/astral-sh/ty/issues/2520)
 include = ["tests"]
 rules.invalid-argument-type = "ignore"
-rules.unresolved-attribute = "ignore"
-rules.unsupported-operator = "ignore"
+rules.missing-attribute = "ignore"
+
+[[tool.ty.overrides]]
+include = ["tests/vegalite/v6"]
+rules.missing-union-attribute = "ignore"  # to fix
+rules.unsupported-operator = "ignore"  # ty-2520
