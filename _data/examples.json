@@ -2389,6 +2389,26 @@
       }
     },
     {
+      "name": "linked_zoom",
+      "title": "Linked Zoom",
+      "url": "https://altair-viz.github.io/gallery/linked_zoom.html",
+      "path": "tests/examples_arguments_syntax/linked_zoom.py",
+      "description": "This example shows how to link the x-axes of multiple charts so that\nzooming or panning in one chart zooms or pans the other as well.\n\nCalling ``.interactive()`` on each chart would create a separate,\nindependent selection for each chart. Instead, a single interval\nselection bound to the scales is created once and attached to both\ncharts with ``add_params``. Because the same selection object is\nshared, changing it in either chart updates the scales of both charts.\n\nThe selection is restricted to the ``x`` encoding, so only the shared\n``Horsepower`` axis is linked; each chart keeps its own independent\ny-axis. Note that with layered charts the shared selection should be\nattached to only one layer in each chart, otherwise Vega-Lite reports\nduplicate signal names.",
+      "categories": [
+        "interactive charts"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/point",
+          "user_guide/interactions/index"
+        ]
+      }
+    },
+    {
       "name": "london_tube",
       "title": "London Tube Lines",
       "url": "https://altair-viz.github.io/gallery/london_tube.html",
