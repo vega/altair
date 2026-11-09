@@ -22,4 +22,4 @@ base = alt.Chart(source).encode(
     y="year:O",
     text='wheat'
 )
-base.mark_bar() + base.mark_text(align='left', dx=2)
+base.mark_bar() + base.mark_text(align='left', dx=2)  # ty: ignore
