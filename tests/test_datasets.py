@@ -318,7 +318,7 @@ def test_dataset_not_found(backend: _Backend) -> None:
             re.DOTALL,
         ),
     ):
-        load.url(real_name, unsupported_suffix)  # type: ignore[arg-type]
+        load.url(real_name, unsupported_suffix)  # type: ignore
     with pytest.raises(
         ERR_NO_RESULT,
         match=re.compile(

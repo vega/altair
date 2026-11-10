@@ -374,13 +374,15 @@ rules.incompatible-method-override = "ignore"
 rules.missing-overload-implementation = "ignore"
 rules.single-overload = "ignore"
 
-[[tool.ty.overrides]]
-# suppress `T@__call__` errors (https://github.com/astral-sh/ty/issues/2520)
-include = ["tests"]
-rules.invalid-argument-type = "ignore"
-rules.missing-attribute = "ignore"
+# Override some rules due to known ty issues:
+# - https://github.com/astral-sh/ty/issues/2520
 
 [[tool.ty.overrides]]
-include = ["tests/vegalite/v6"]
+include = ["tests"]
+rules.missing-attribute = "ignore"  # ty-2520
+
+[[tool.ty.overrides]]
+include = ["tests/examples_*", "tests/vegalite/v6"]
 rules.missing-union-attribute = "ignore"  # to fix
+rules.invalid-argument-type = "ignore"  # ty-2520
 rules.unsupported-operator = "ignore"  # ty-2520
