@@ -393,3 +393,49 @@ def test_rendered_shared_encoding_and_round_trip_draw_one_rule(layers):
             and "role-mark" in group.get("class", "").split()
         )
         assert rules == 1
+
+
+def test_repeated_independent_annotations_do_not_accumulate_nesting(layers):
+    _, bars, ticks, rule, _ = layers
+    chart = bars + ticks
+    for _ in range(20):
+        chart += rule
+    result = chart.to_dict()
+    assert len(result["layer"]) == 21
+    assert len(result["layer"][0]["layer"]) == 2
+    assert all("layer" not in part for part in result["layer"][1:])
+
+
+@pytest.mark.parametrize("scale", ["shared", "independent"])
+@pytest.mark.parametrize("construction", ["constructor", "addition"])
+def test_faceted_explicit_shared_data_renders_one_annotation_per_panel(
+    scale, construction
+):
+    import xml.etree.ElementTree as et
+
+    vl_convert = pytest.importorskip("vl_convert")
+    data = pd.DataFrame(
+        {"group": ["A", "A", "B", "B"], "x": [1, 2, 1, 2], "y": [2, 4, 3, 5]}
+    )
+    base = alt.Chart().encode(x="x:O", y="y:Q")
+    bars, ticks = base.mark_bar(), base.mark_tick()
+    rule = alt.Chart(alt.InlineData(values=[{}])).mark_rule().encode(y=alt.datum(3))
+    if construction == "constructor":
+        chart = alt.layer(bars, ticks, rule, data=data)
+    else:
+        chart = (bars + ticks + rule).properties(data=data)
+    faceted = chart.facet(column="group:N").resolve_scale(y=scale)
+    spec = faceted.to_dict()
+    assert spec["resolve"]["scale"]["y"] == scale
+    root = et.fromstring(vl_convert.vegalite_to_svg(spec))
+    rule_counts = []
+    bar_counts = []
+    for group in root.iter():
+        classes = group.get("class", "").split()
+        if "role-mark" in classes:
+            if "mark-rule" in classes:
+                rule_counts.append(len(group))
+            elif "mark-rect" in classes:
+                bar_counts.append(len(group))
+    assert rule_counts == [1, 1]
+    assert bar_counts == [2, 2, 2, 2]
