@@ -406,6 +406,20 @@ def test_repeated_independent_annotations_do_not_accumulate_nesting(layers):
     assert all("layer" not in part for part in result["layer"][1:])
 
 
+@pytest.mark.parametrize("reconstruct", [False, True])
+def test_transformed_view_names_keep_nested_unit_views(layers, reconstruct):
+    from altair.utils._transformed_data import name_views
+
+    _, bars, ticks, rule, _ = layers
+    chart = bars + ticks + rule.properties(name="annotation")
+    if reconstruct:
+        chart = alt.Chart.from_dict(chart.to_dict())
+    names = name_views(chart, exclude=["annotation"])
+    assert len(names) == 2
+    assert len(set(names)) == 2
+    assert names == [part.name for part in chart.layer[0].layer]
+
+
 @pytest.mark.parametrize("scale", ["shared", "independent"])
 @pytest.mark.parametrize("construction", ["constructor", "addition"])
 def test_faceted_explicit_shared_data_renders_one_annotation_per_panel(

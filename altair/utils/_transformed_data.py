@@ -226,8 +226,15 @@ def name_views(
     """
     exclude = set(exclude) if exclude is not None else set()
 
-    # Handle simple charts (Chart and FacetChart)
-    if isinstance(
+    # LayerSpec is also a NonNormalizedSpec. Prefer the composite variants
+    # before the broad unit-spec mapping, including after reconstruction.
+    composite_types = (
+        _chart_class_mapping[LayerChart],
+        _chart_class_mapping[ConcatChart],
+        _chart_class_mapping[HConcatChart],
+        _chart_class_mapping[VConcatChart],
+    )
+    if not isinstance(chart, composite_types) and isinstance(
         chart, (_chart_class_mapping[Chart], _chart_class_mapping[FacetChart])
     ):
         if chart.name not in exclude:
