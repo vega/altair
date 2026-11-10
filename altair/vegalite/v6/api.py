@@ -4906,6 +4906,31 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     def __iadd__(self, other: ChartType) -> Self:
         _check_if_valid_subspec(other, "LayerChart")
         _check_if_can_be_layered(other)
+
+        # Root data, encodings, transforms and resolution belong to the existing
+        # chart. Preserve that scope instead of undoing earlier data hoisting.
+        root_only = TOPLEVEL_ONLY_KEYS | {"usermeta", "datasets"}
+        scope = {
+            key
+            for key, value in self._kwds.items()
+            if key != "layer" and key not in root_only and value is not Undefined
+        }
+        # Identical source objects can still share a flat data-only container.
+        # No transform, encoding or resolution may leak onto the incoming layer.
+        shared_source = scope == {"data"} and other.data is self.data
+        if scope and not shared_source:
+            original = self.copy(deep=["layer"])
+            top_props = {
+                prop: original._get(prop)
+                for prop in root_only
+                if original._get(prop) is not Undefined
+            }
+            for prop in top_props:
+                original[prop] = Undefined
+            nested = layer(original, other, **top_props)
+            object.__setattr__(self, "_kwds", nested._kwds)
+            return self
+
         self.layer.append(other)
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
         self.params, self.layer = _combine_subchart_params(self.params, self.layer)
