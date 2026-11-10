@@ -22,7 +22,7 @@ def test_add_data_less_layer_matches_layer_constructor(layers, rule_index):
     rule = (datum_rule, aggregate_rule)[rule_index - 2]
 
     combined = bars + ticks + rule
-    expected = alt.layer(bars, ticks, rule)
+    expected = alt.layer(bars + ticks, rule)
     assert combined.to_dict() == expected.to_dict()
     assert "data" not in combined.to_dict()
     assert combined.to_dict()["layer"][-1]["data"] == {"name": "empty"}
@@ -49,11 +49,11 @@ def test_add_preserves_data_less_layer_with_layerchart_methods(layers, method):
     else:
         combined = combined.copy(deep=["layer"]) + datum_rule
 
-    assert combined.to_dict() == alt.layer(bars, ticks, datum_rule).to_dict()
+    assert combined.to_dict() == alt.layer(bars + ticks, datum_rule).to_dict()
 
 
 @pytest.mark.parametrize("set_data", ["constructor", "properties"])
-def test_explicit_shared_data_is_inherited_by_new_layers(layers, set_data):
+def test_explicit_shared_data_stays_in_existing_scope(layers, set_data):
     data, bars, ticks, datum_rule, _ = layers
 
     if set_data == "constructor":
@@ -62,8 +62,9 @@ def test_explicit_shared_data_is_inherited_by_new_layers(layers, set_data):
         combined = (bars + ticks).properties(data=data)
 
     result = (combined + datum_rule).to_dict()
-    assert "data" in result
-    assert all("data" not in part for part in result["layer"])
+    assert "data" not in result
+    assert "data" in result["layer"][0]
+    assert result["layer"][-1]["data"] == {"name": "empty"}
 
 
 def test_unrelated_layer_source_is_not_overwritten(layers):
@@ -72,9 +73,9 @@ def test_unrelated_layer_source_is_not_overwritten(layers):
     result = (bars + ticks + separate + datum_rule).to_dict()
 
     assert "data" not in result
-    assert result["layer"][0]["data"] == result["layer"][1]["data"]
-    assert result["layer"][2]["data"] != result["layer"][0]["data"]
-    assert result["layer"][3]["data"] == {"name": "empty"}
+    assert result["layer"][0]["data"] != result["layer"][1]["data"]
+    assert len(result["layer"][0]["layer"]) == 2
+    assert result["layer"][2]["data"] == {"name": "empty"}
 
 
 @pytest.mark.parametrize("operator", ["add", "iadd", "add_layers"])
@@ -109,11 +110,11 @@ def test_nested_deep_copy_preserves_data_ownership(layers):
     copied = outer.copy().layer[0] + datum_rule
 
     assert copied.to_dict() == original.to_dict()
-    assert copied.to_dict() == alt.layer(bars, ticks, datum_rule).to_dict()
+    assert copied.to_dict() == alt.layer(bars + ticks, datum_rule).to_dict()
 
 
 @pytest.mark.parametrize("assignment", ["attribute", "getitem", "properties"])
-def test_explicit_data_assignment_is_inherited(layers, assignment):
+def test_explicit_data_assignment_preserves_scope(layers, assignment):
     data, bars, ticks, datum_rule, _ = layers
     combined = bars + ticks
 
@@ -125,8 +126,9 @@ def test_explicit_data_assignment_is_inherited(layers, assignment):
         combined = combined.properties(data=data)
 
     result = (combined + datum_rule).to_dict()
-    assert "data" in result
-    assert all("data" not in part for part in result["layer"])
+    assert "data" not in result
+    assert "data" in result["layer"][0]
+    assert result["layer"][-1]["data"] == {"name": "empty"}
 
 
 @pytest.mark.parametrize("mutation", ["append", "replace"])
@@ -264,3 +266,130 @@ def test_aggregate_rule_requires_explicit_shared_data():
     # Both supported ways of explicitly sharing data draw exactly one rule.
     assert count_rules((bars + ticks + mean_rule).properties(data=source)) == 1
     assert count_rules(alt.layer(bars, ticks, mean_rule, data=source)) == 1
+
+
+def compose(chart, other, operation):
+    if operation == "add":
+        return chart + other
+    if operation == "iadd":
+        chart += other
+        return chart
+    return chart.add_layers(other)
+
+
+@pytest.mark.parametrize("operation", ["add", "iadd", "add_layers"])
+@pytest.mark.parametrize("encoding", ["y", "y:Q"])
+def test_shared_encoding_keeps_its_data_for_type_inference(layers, operation, encoding):
+    _, bars, ticks, rule, _ = layers
+    shared = (bars + ticks).encode(color=encoding)
+    expected = alt.layer(shared, rule).to_dict()
+    result = compose(shared, rule, operation).to_dict()
+    assert result == expected
+    assert result["layer"][0]["encoding"]["color"]["type"] == "quantitative"
+    assert result["layer"][1]["data"] == {"name": "empty"}
+
+
+@pytest.mark.parametrize("operation", ["add", "iadd", "add_layers"])
+@pytest.mark.parametrize(
+    ("property_name", "value"),
+    [("usermeta", {"note": "example"}), ("datasets", {"extra": [{"x": 1}]})],
+)
+def test_root_only_metadata_moves_out_of_nested_scope(
+    layers, operation, property_name, value
+):
+    _, bars, ticks, rule, _ = layers
+    shared = (bars + ticks).transform_filter("datum.y > 10")
+    shared = shared.properties(**{property_name: value})
+    result = compose(shared, rule, operation).to_dict()
+    if property_name == "datasets":
+        assert result[property_name]["extra"] == value["extra"]
+    else:
+        assert result[property_name] == value
+    assert property_name not in result["layer"][0]
+
+
+@pytest.mark.parametrize("field", ["data", "usermeta"])
+def test_copy_ignore_preserves_root_references(field):
+    source = {"values": [{"x": 1}, {"x": 2}]}
+    base = alt.Chart(source)
+    chart = (base.mark_point() + base.mark_bar()).properties(usermeta={"note": []})
+    copied = chart.copy(ignore=[field])
+    assert copied[field] is chart[field]
+
+
+@pytest.mark.parametrize("operation", ["add", "iadd", "add_layers"])
+@pytest.mark.parametrize("round_trip", ["dict", "json"])
+def test_round_trip_preserves_independent_annotation(layers, operation, round_trip):
+    _, bars, ticks, rule, _ = layers
+    chart = bars + ticks
+    if round_trip == "dict":
+        restored = alt.LayerChart.from_dict(chart.to_dict())
+    else:
+        restored = alt.LayerChart.from_json(chart.to_json())
+    before = restored.to_dict()
+    result = compose(restored, rule, operation).to_dict()
+    assert result["layer"][0]["layer"] == before["layer"]
+    assert result["layer"][0]["data"] == before["data"]
+    assert result["config"] == before["config"]
+    assert "config" not in result["layer"][0]
+    assert result["layer"][-1]["data"] == {"name": "empty"}
+
+
+@pytest.mark.parametrize("assignment", ["attribute", "getitem", "properties"])
+def test_clearing_data_uses_one_consistent_scope(layers, assignment):
+    _, bars, ticks, rule, _ = layers
+    chart = alt.LayerChart()
+    if assignment == "attribute":
+        chart.data = alt.Undefined
+    elif assignment == "getitem":
+        chart["data"] = alt.Undefined
+    else:
+        chart = chart.properties(data=alt.Undefined)
+    chart += bars
+    chart += ticks
+    assert (chart + rule).to_dict() == alt.layer(bars + ticks, rule).to_dict()
+
+
+def test_same_length_replacement_never_restores_stale_data(layers):
+    _, bars, ticks, rule, _ = layers
+    chart = bars + ticks
+    chart.layer[1] = rule
+    result = (chart + rule).to_dict()
+    # The replacement inherits its current parent data; adding another layer
+    # must preserve that existing scope, without replaying old ownership flags.
+    assert result == alt.layer(chart, rule).to_dict()
+    assert result["layer"][-1]["data"] == {"name": "empty"}
+
+
+def test_identical_source_chain_stays_flat(layers):
+    _, bars, ticks, _, _ = layers
+    result = (bars + ticks + bars.mark_line()).to_dict()
+    assert len(result["layer"]) == 3
+    assert all("layer" not in part for part in result["layer"])
+
+
+@pytest.mark.parametrize("operation", ["add", "iadd", "add_layers"])
+def test_resolve_scope_does_not_leak(layers, operation):
+    _, bars, ticks, rule, _ = layers
+    chart = (bars + ticks).resolve_scale(y="independent")
+    expected = alt.layer(chart, rule).to_dict()
+    assert compose(chart, rule, operation).to_dict() == expected
+
+
+def test_rendered_shared_encoding_and_round_trip_draw_one_rule(layers):
+    import xml.etree.ElementTree as et
+
+    vl_convert = pytest.importorskip("vl_convert")
+    _, bars, ticks, rule, _ = layers
+    chart = (bars + ticks).encode(color="y")
+    restored = alt.LayerChart.from_dict(chart.to_dict())
+    for source in [chart, restored]:
+        svg = vl_convert.vegalite_to_svg((source + rule).to_dict())
+        root = et.fromstring(svg)
+        rules = sum(
+            len(group)
+            for group in root.iter()
+            if "mark-rule" in group.get("class", "").split()
+            and "role-mark" in group.get("class", "").split()
+        )
+        assert rules == 1

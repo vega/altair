@@ -92,10 +92,9 @@ for every layer, set the data explicitly on the resulting layered chart:
     ticks = base.mark_tick()
     mean_rule = alt.Chart().mark_rule(color="red").encode(y="mean(value):Q")
 
-    (bars + ticks + mean_rule).properties(data=source)
+    alt.layer(bars, ticks, mean_rule, data=source)
 
-The equivalent constructor form is
-``alt.layer(bars, ticks, mean_rule, data=source)``. Alternatively, if
+Alternatively, if
 only the annotation needs the data, supply it directly with
 ``alt.Chart(source).mark_rule(...)``. These explicit forms avoid
 depending on an accidental transfer of data from a preceding layer.
@@ -104,14 +103,19 @@ This matters when updating an existing chart that adds an aggregate rule
 to layers containing data: without the explicitly shared source, the
 aggregate rule may have no rows to summarize and therefore draw no mark.
 
-Data-ownership tracking used by Python chart composition is not included in
-serialized Vega-Lite specifications. After round-tripping a layered chart
-through ``to_dict()``/``from_dict()`` or JSON, a subsequent ``+`` operation
-cannot recover the original per-layer ownership automatically. For example, a
-constant ``alt.datum`` rule added to a chart rebuilt with
-``alt.LayerChart.from_dict(chart.to_dict())`` inherits the shared data again
-and is drawn once per row. Specify shared data explicitly when reconstructing
-and extending a chart that depends on it.
+Adding a layer preserves the existing chart's data, transforms, encodings,
+and scale resolution inside its own scope. In particular,
+``alt.layer(bars, ticks, data=source) + mean_rule`` combines independently
+scoped charts; the new rule does not inherit ``source``. Use the explicit
+constructor above to put all three layers in one shared-data container.
+The ``+``, ``+=``, and ``add_layers()`` operations use the same rule.
+
+This behavior depends only on the chart specification and also applies after
+``to_dict()``/``from_dict()`` or JSON round trips. A constant annotation added
+after reconstruction is still independent. To draw a constant annotation
+exactly once inside an explicitly shared-data container, give it a one-row
+source, for example ``alt.Chart(alt.InlineData(values=[{}]))``. Explicitly
+sharing the multi-row source with that annotation would repeat it per row.
 
 Order of Layers
 ^^^^^^^^^^^^^^^
