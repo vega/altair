@@ -24,7 +24,8 @@ highlight = bars.mark_bar(color="#e45755").encode(
     alt.datum.Value > threshold
 )
 
-rule = alt.Chart().mark_rule().encode(
+# A constant annotation needs one row, independently of the bar data.
+rule = alt.Chart(alt.InlineData(values=[{}])).mark_rule().encode(
     y=alt.Y(datum=threshold)
 )
 
