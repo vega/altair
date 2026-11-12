@@ -3253,7 +3253,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             structure, ideally with the same length.
             If the lengths of parallel arrays do not match,
             the longest array will be used with ``null`` values added for missing entries.
-        as : List(string)
+        as_ : List(string)
             The output field names for extracted array values.
             **Default value:** The field name of the corresponding array field
 
@@ -3282,7 +3282,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ----------
         fold : List(string)
             An array of data fields indicating the properties to fold.
-        as : [string, string]
+        as_ : [string, string]
             The output field names for the key and value properties produced by the fold
             transform. Default: ``["key", "value"]``
 
@@ -3457,7 +3457,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ----------
         quantile : str
             The data field for which to perform quantile estimation.
-        as : [str, str]
+        as_ : [str, str]
             The output field names for the probability and quantile values.
         groupby : List(str)
             The data fields to group by. If not specified, a single group containing all data
