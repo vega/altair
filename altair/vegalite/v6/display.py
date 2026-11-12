@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+import logging
 from pathlib import Path
-from typing import TYPE_CHECKING, Final
+from typing import TYPE_CHECKING, Any, Final
 
+from packaging.version import Version
+
+from altair.utils._importers import import_vl_convert, vl_version_for_vl_convert
+from altair.utils._vegafusion_data import using_vegafusion
 from altair.utils.mimebundle import spec_to_mimebundle
 from altair.vegalite.display import (
     Displayable,
@@ -127,13 +132,39 @@ def browser_renderer(
     return {}
 
 
-html_renderer = HTMLRenderer(
+_html_renderer = HTMLRenderer(
     mode="vega-lite",
     template="universal",
     vega_version=VEGA_VERSION,
     vegaembed_version=VEGAEMBED_VERSION,
     vegalite_version=VEGALITE_VERSION,
 )
+
+
+def html_renderer(spec: dict, show_warnings: bool = True, **metadata) -> dict[str, str]:
+    """Render HTML, using vl-convert when available to surface compile warnings."""
+    vegafusion = using_vegafusion()
+    if show_warnings and not vegafusion:
+        try:
+            vlc = import_vl_convert()
+        except (ImportError, RuntimeError):
+            pass
+        else:
+            kwargs: dict[str, Any] = {"vl_version": vl_version_for_vl_convert()}
+            if Version(vlc.__version__).major < 2:
+                kwargs["show_warnings"] = True
+            vlc.vegalite_to_vega(spec, **kwargs)
+
+    if not show_warnings and vegafusion:
+        logger = logging.getLogger("vl_convert")
+        logger_disabled = logger.disabled
+        logger.disabled = True
+        try:
+            return _html_renderer(spec, **metadata)
+        finally:
+            logger.disabled = logger_disabled
+
+    return _html_renderer(spec, **metadata)
 
 
 olli_renderer = HTMLRenderer(
