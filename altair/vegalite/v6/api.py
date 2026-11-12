@@ -4612,7 +4612,9 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
             encodings.append("x")
         if bind_y:
             encodings.append("y")
-        return self.add_params(selection_interval(bind="scales", encodings=encodings))
+        return self.add_params(
+            selection_interval(name=name, bind="scales", encodings=encodings)
+        )
 
     def add_params(self, *params: Parameter) -> Self:
         """Add one or more parameters to the chart."""
@@ -4717,7 +4719,9 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
             encodings.append("x")
         if bind_y:
             encodings.append("y")
-        return self.add_params(selection_interval(bind="scales", encodings=encodings))
+        return self.add_params(
+            selection_interval(name=name, bind="scales", encodings=encodings)
+        )
 
     def add_params(self, *params: Parameter) -> Self:
         """Add one or more parameters to the chart."""
@@ -4824,7 +4828,9 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
             encodings.append("x")
         if bind_y:
             encodings.append("y")
-        return self.add_params(selection_interval(bind="scales", encodings=encodings))
+        return self.add_params(
+            selection_interval(name=name, bind="scales", encodings=encodings)
+        )
 
     def add_params(self, *params: Parameter) -> Self:
         """Add one or more parameters to the chart."""
