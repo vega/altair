@@ -482,15 +482,19 @@ The format of the ``value`` parameter depends on the encodings used in the selec
 - For selections with `y` encoding: ``value={'y': [min, max]}``
 - For selections with both: ``value={'x': [xmin, xmax], 'y': [ymin, ymax]}``
 
-You can also set initial values of a selection with categorical data. In this case the list/tuple specifies the exact categories to be selection rather than a range of categories. For example, to initially select only cars with 4 or 6 cylinders:
+You can also set initial values of an interval selection with categorical data using a 2-element sequence specifying the boundary categories of the interval:
 
 .. altair-plot::
 
     cylinder_select = alt.selection_interval(
         encodings=['x'],
-        value={"x": [4, 6]}  # Select 4 and 6 (but not 5) cylinder cars
+        value={"x": [4, 6]}
     )
     make_example(cylinder_select)
+
+.. note::
+
+    Interval selections always require a 2-element sequence ``[start, end]`` specifying the boundary extents. If you want to select a discrete set of individual categories (or more than two categories) rather than an interval range, use :func:`selection_point` instead.
 
 
 Point Selections
