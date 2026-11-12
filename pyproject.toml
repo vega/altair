@@ -374,8 +374,9 @@ rules.incompatible-method-override = "ignore"
 rules.missing-overload-implementation = "ignore"
 rules.single-overload = "ignore"
 
-# Override some rules due to known ty issues:
+# Override some rules due to known issues:
 # - https://github.com/astral-sh/ty/issues/2520
+# - https://github.com/vega/altair/issues/4212
 
 [[tool.ty.overrides]]
 include = ["tests"]
@@ -383,6 +384,6 @@ rules.missing-attribute = "ignore"  # ty-2520
 
 [[tool.ty.overrides]]
 include = ["tests/examples_*", "tests/vegalite/v6"]
-rules.missing-union-attribute = "ignore"  # to fix
+rules.missing-union-attribute = "ignore"  # altair-4212
 rules.invalid-argument-type = "ignore"  # ty-2520
 rules.unsupported-operator = "ignore"  # ty-2520
