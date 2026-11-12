@@ -542,6 +542,20 @@ def _is_channel(obj: Any) -> TypeIs[dict[str, Any]]:
     )
 
 
+def _live_node(obj: Any, path: Sequence[Any], /) -> Any:
+    """The object `obj` holds at `path`, if reachable."""
+    node = obj
+    for key in path:
+        try:
+            if isinstance(key, int) or isinstance(node, Mapping):
+                node = node[key]
+            else:
+                node = getattr(node, key)
+        except (AttributeError, KeyError, IndexError, TypeError):
+            return None
+    return node
+
+
 def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
     """
     Replace a channel type with a `more specific`_ one or passthrough unchanged.
@@ -556,7 +570,12 @@ def _maybe_channel(tp: type[Any], spec: Any, /) -> type[Any]:
     .. _more specific:
         https://github.com/vega/altair/issues/2913#issuecomment-2571762700
     """
-    return next(_iter_channels(tp, spec), tp) if _is_channel(spec) else tp
+    if not _is_channel(spec):
+        return tp
+    if "field" in spec:
+        return tp
+    narrowers = list(_iter_channels(tp, spec))
+    return narrowers[0] if len(narrowers) == 1 else tp
 
 
 def _union_forms(
@@ -608,6 +627,21 @@ def _definition_class(schema: Any, rootschema: Any, /) -> Any:
     definitions = rootschema.get("definitions", {})
     name = next((n for n, d in definitions.items() if d is schema), None)
     return getattr(vegalite, name, None) if name else None
+
+
+def _channel_owner(
+    target_name: str, form_name: str | None, props: set[str], /
+) -> str | None:
+    """The public class representing a form of a channel."""
+    from altair import vegalite
+
+    if "datum" in props and hasattr(vegalite, f"{target_name}Datum"):
+        return f"{target_name}Datum"
+    if "value" in props and hasattr(vegalite, f"{target_name}Value"):
+        return f"{target_name}Value"
+    if "field" in props and hasattr(vegalite, target_name):
+        return target_name
+    return form_name if (form_name and hasattr(vegalite, form_name)) else None
 
 
 class SchemaValidationError(jsonschema.ValidationError):
@@ -704,11 +738,19 @@ class SchemaValidationError(jsonschema.ValidationError):
         context = _context_schema(error)
         forms = _union_forms(context, rootschema)
 
+        target: Any = (
+            "condition"
+            if (error.absolute_path and error.absolute_path[-1] == "condition")
+            else altair_cls
+        )
+
         def score(form: tuple[Any, set[str], set[str]]) -> tuple[int, int]:
             # Keys that pick a form, e.g. `value` for `YValue`, outweigh the rest.
             _, props, required = form
             accepted = instance.keys() & props
-            return len(accepted & (required | {"datum", "value"})), len(accepted)
+            return len(accepted & (required | {"datum", "value", "field"})), len(
+                accepted
+            )
 
         best = max(map(score, forms), default=(0, 0))
         closest = [f for f in forms if score(f) == best]
@@ -716,7 +758,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         # Names every form may share cannot pick one, only its selecting keys can.
         picked = [f for f in forms if score(f)[0] == best[0]]
         if len(picked) > 1 and instance.keys() <= known:
-            return self._combined_names_message(altair_cls, instance, forms)
+            return self._combined_names_message(target, instance, forms, picked, error)
         unexpected = sorted(
             instance.keys() - set().union(*(props for _, props, _ in closest))
         )
@@ -725,7 +767,10 @@ class SchemaValidationError(jsonschema.ValidationError):
         # e.g. `Legend` for the `LegendConfig` under `config.legend`.
         accepted = [props for _, props, _ in forms]
         own = _union_forms(altair_cls._schema, rootschema)
-        if not all(props in accepted for _, props, _ in own):
+        is_channel_cls = hasattr(
+            altair_cls, "__module__"
+        ) and altair_cls.__module__.endswith(".channels")
+        if not is_channel_cls and not all(props in accepted for _, props, _ in own):
             altair_cls = _definition_class(context, rootschema) or altair_cls
         # A union names the one form its selecting keys picked, e.g.
         # `GraticuleGenerator` for `Data` given `graticule`.
@@ -736,48 +781,86 @@ class SchemaValidationError(jsonschema.ValidationError):
             # "Additional properties are not allowed ('unknown' was unexpected)"
             unexpected = [error.message.split("('")[-1].split("'")[0]]
 
+        target_name = target if isinstance(target, str) else altair_cls.__name__
+
         # A union class has no written signature, only `(*args, **kwds)`.
         params = [
             name
             for name in inspect.signature(altair_cls).parameters
             if name not in {"args", "kwds", "self"}
         ]
-        param_names_table = self._format_params_as_table(params or sorted(known))
+        if is_channel_cls and known and known < set(params):
+            param_names = sorted(known)
+        else:
+            param_names = params or sorted(known)
+        param_names_table = self._format_params_as_table(param_names)
         parameter_text = "parameter" if len(unexpected) == 1 else "parameters"
         formatted = ", ".join(map(repr, unexpected))
         return f"""\
-`{altair_cls.__name__}` has no {parameter_text} named {formatted}
+`{target_name}` has no {parameter_text} named {formatted}
 
 Existing parameter names are:
 {param_names_table}
-See the help for `{altair_cls.__name__}` to read the full description of these parameters"""
+See the help for `{target_name}` to read the full description of these parameters"""
 
     def _combined_names_message(
         self,
-        altair_cls: Any,
+        target: Any,
         instance: Any,
         forms: list[tuple[str | None, set[str], set[str]]],
+        picked: list[tuple[str | None, set[str], set[str]]],
+        error: jsonschema.exceptions.ValidationError,
         /,
     ) -> str:
         """Every name exists, but not in this combination - only a union can do that."""
         from altair import vegalite
 
+        target_name = target if isinstance(target, str) else target.__name__
+        is_channel = hasattr(target, "__module__") and target.__module__.endswith(
+            ".channels"
+        )
+
+        node = _live_node(self.obj, error.absolute_path)
+        shorthand = (
+            getattr(node, "_kwds", {}).get("shorthand") if node is not None else None
+        )
+        has_shorthand = shorthand is not None and shorthand is not Undefined
+
+        def param_label(name: str) -> str:
+            if name == "field" and has_shorthand:
+                return f"{name!r} (from shorthand {shorthand!r})"
+            return repr(name)
+
+        # A name every picked form accepts plays no part in the clash.
+        clashing = [
+            n for n in sorted(instance) if not all(n in p for _, p, _ in picked)
+        ]
+        names = _join([param_label(n) for n in clashing or sorted(instance)], "and")
+
         belongs = []
-        for name in sorted(instance):
+        for name in sorted(clashing or instance):
             owners = [f for f, props, _ in forms if f and name in props]
-            # A name every form accepts says nothing about the clash, and a form
-            # without a public class, e.g. `ConcatSpec<...>`, cannot be looked up.
-            shown = [f"`{f}`" for f in owners if hasattr(vegalite, f)]
+            shown = [
+                f"`{owner}`"
+                for f, props, _ in forms
+                if f and name in props
+                if (
+                    owner := (
+                        _channel_owner(target_name, f, props)
+                        if is_channel
+                        else (f if hasattr(vegalite, f) else None)
+                    )
+                )
+            ]
+            shown = list(dict.fromkeys(shown))
             if shown and len(owners) < len(forms):
-                belongs.append(f"{name!r} belongs to {_join(shown, 'or')}")
-        # A name every form accepts plays no part in the clash.
-        clashing = [n for n in sorted(instance) if not all(n in p for _, p, _ in forms)]
-        names = _join([repr(n) for n in clashing or sorted(instance)], "and")
-        parts = [f"`{altair_cls.__name__}` does not accept {names} together"]
+                belongs.append(f"{param_label(name)} belongs to {_join(shown, 'or')}")
+
+        parts = [f"`{target_name}` does not accept {names} together"]
         if belongs:
             parts.append("\n".join(belongs))
         parts.append(
-            f"See the help for `{altair_cls.__name__}`"
+            f"See the help for `{target_name}`"
             " to read the full description of these parameters"
         )
         return "\n\n".join(parts)
