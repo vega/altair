@@ -73,7 +73,12 @@ class PluginEnabler(Generic[PluginT, R]):
     def __enter__(self) -> PluginEnabler[PluginT, R]:
         return self
 
-    def __exit__(self, typ: type, value: Exception, traceback: TracebackType) -> None:
+    def __exit__(
+        self,
+        typ: type | None,
+        value: Exception | None,
+        traceback: TracebackType | None,
+    ) -> None:
         self.registry._set_state(self.original_state)
 
     def __repr__(self) -> str:

@@ -13,7 +13,7 @@ try:
     import anywidget
 
 except ImportError:
-    anywidget = None  # type: ignore
+    anywidget = None  # type: ignore[assignment]
 
 
 skip_requires_anywidget = pytest.mark.skipif(

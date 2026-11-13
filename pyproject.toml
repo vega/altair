@@ -88,7 +88,10 @@ dev = [
     "types-jsonschema",
     "types-setuptools",
     "geopandas>=0.14.3",
+    "types-geopandas",
+    "types-pyyaml",
     "polars>=0.20.3",
+    "polars-st>=0.1.0a27",
     "taskipy>=1.14.1",
 ]
 doc = [
@@ -108,16 +111,10 @@ doc = [
     "sphinx-autobuild",
 ]
 
-[dependency-groups]
-geospatial = [
-    "geopandas>=0.14.3",
-    "polars-st>=0.1.0a27",
-]
-
 [tool.altair.vega]
 # Minimum/exact versions, for projects under the `vega` organization
 vega-datasets = "v3.3.1" # https://github.com/vega/vega-datasets
-vega-embed    = "v7.0.2"     # https://github.com/vega/vega-embed
+vega-embed    = "v7.0.2" # https://github.com/vega/vega-embed
 vega-lite     = "v6.4.1" # https://github.com/vega/vega-lite
 
 [tool.hatch]
@@ -148,9 +145,9 @@ matrix   = [{ python = ["3.11", "3.12", "3.13", "3.14"] }]
 
 [tool.ruff]
 extend-exclude = [
-    ".git",
-    "__pycache__",
-    "build",
+    # ".git",
+    # "__pycache__",
+    # "build",
     "tests/examples_arguments_syntax",
     "tests/examples_methods_syntax",
     "README.md",
@@ -313,8 +310,7 @@ publish = "task build && uv publish"
 
 [tool.pytest.ini_options]
 # Pytest does not need to search these folders for test functions.
-# They contain examples which are being executed by the
-# test_examples tests.
+# They contain examples which are being executed by the test_examples tests.
 norecursedirs = [
     "tests/examples_arguments_syntax",
     "tests/examples_methods_syntax"
@@ -342,23 +338,6 @@ pretty = true
 
 [[tool.mypy.overrides]]
 module = [
-    "pyarrow.*",
-    "yaml.*",
-    "pandas.lib.*",
-    "geopandas.*",
-    "nbformat.*",
-    "ipykernel.*",
-    "ibis.*",
-    "vegafusion.*",
-    "scipy.*",
-    "polars_st.*",
-    "duckdb.*",
-]
-ignore_missing_imports = true
-disable_error_code = ["import-untyped"]
-
-[[tool.mypy.overrides]]
-module = [
     "tests/examples_arguments_syntax.*",
     "tests/examples_methods_syntax.*",
 ]
@@ -374,22 +353,37 @@ reportUnusedExpression = "none"
 reportUnsupportedDunderAll = "none"
 include = ["altair", "doc", "tests", "tools", "sphinxext"]
 ignore = [
-    "./altair/vegalite/v6/schema/channels.py",  # 716 warns
+    "./altair/vegalite/v6/schema/channels.py",  # 734 warns
     "./altair/jupyter/",                        # Mostly untyped
     "./tests/test_jupyter_chart.py",            # Based on untyped module
 ]
 
 [tool.ty]
-src.include = [
-    "altair",
-    "tools",
-]
+src.include = ["altair", "tests", "tools"]
 src.exclude = [
-    "altair/datasets",
-    "altair/jupyter",
-    "altair/utils",
+    "altair/datasets",  # to fix
+    "altair/utils",  # to fix
+    "altair/jupyter",  # match pyright
+    "tests/test_jupyter_chart.py",  # match pyright
 ]
 
-[tool.ty.rules]
-invalid-method-override = "ignore"  # 46 errors, mostly in channels.py
-invalid-overload = "ignore"  # 727 errors, all in channels.py
+[[tool.ty.overrides]]
+# match mypy suppressions (no-overload-impl, empty-body, misc)
+include = ["altair/vegalite/v6/schema/channels.py"]
+rules.incompatible-method-override = "ignore"
+rules.missing-overload-implementation = "ignore"
+rules.single-overload = "ignore"
+
+# Override some rules due to known issues:
+# - https://github.com/astral-sh/ty/issues/2520
+# - https://github.com/vega/altair/issues/4212
+
+[[tool.ty.overrides]]
+include = ["tests"]
+rules.missing-attribute = "ignore"  # ty-2520
+
+[[tool.ty.overrides]]
+include = ["tests/examples_*", "tests/vegalite/v6"]
+rules.missing-union-attribute = "ignore"  # altair-4212
+rules.invalid-argument-type = "ignore"  # ty-2520
+rules.unsupported-operator = "ignore"  # ty-2520

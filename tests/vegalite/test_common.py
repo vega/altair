@@ -88,7 +88,7 @@ def test_theme_enable(alt, basic_spec):
         assert dct == basic_spec
     finally:
         # reset the theme to its initial value
-        _themes.enable(active_theme)  # pyright: ignore[reportArgumentType]
+        _themes.enable(active_theme)  # pyright: ignore  # ty: ignore
 
 
 @pytest.mark.parametrize("alt", [v6])
