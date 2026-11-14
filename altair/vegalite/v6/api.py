@@ -372,6 +372,7 @@ class Parameter(_expr_core.OperatorMixin):
     """A Parameter object."""
 
     _schema: t.ClassVar[_TypeMap[Literal["object"]]] = {"type": "object"}
+    param: VariableParameter | TopLevelSelectionParameter | SelectionParameter
 
     def _compute_hash(self) -> str:
         """
@@ -425,7 +426,11 @@ class Parameter(_expr_core.OperatorMixin):
     ) -> None:
         # Set attributes first
         self.empty = empty
-        self.param = param
+        self.param = (
+            core.VariableParameter(name=name or "")
+            if utils.is_undefined(param)
+            else param
+        )
         self.param_type = param_type
 
         # Generate name after attributes are set
@@ -438,12 +443,11 @@ class Parameter(_expr_core.OperatorMixin):
         self.name = name
 
         # Update the underlying param object's name to match
-        if self.param is not None and not utils.is_undefined(self.param):
-            self.param.name = self.name
-            if param_type == "selection":
-                self.param._metadata.setdefault(
-                    "selection_origins", frozenset({uuid.uuid4()})
-                )
+        self.param.name = self.name
+        if param_type == "selection":
+            self.param._metadata.setdefault(
+                "selection_origins", frozenset({uuid.uuid4()})
+            )
 
     @utils.deprecated(
         version="5.0.0",
@@ -1502,23 +1506,13 @@ def param(
     # Set the final name on both Parameter and underlying param object
     if name is not None:
         parameter.name = str(name)
-        if parameter.param is not Undefined:
-            param_obj = t.cast(
-                "VariableParameter | TopLevelSelectionParameter | SelectionParameter",
-                parameter.param,
-            )
-            param_obj.name = str(name)
+        parameter.param.name = str(name)
     else:
         # Compute hash-based name
         hash_name = parameter._get_param_hash_name()
         parameter.name = hash_name
         parameter._name_is_hashed = True
-        if parameter.param is not Undefined:
-            param_obj = t.cast(
-                "VariableParameter | TopLevelSelectionParameter | SelectionParameter",
-                parameter.param,
-            )
-            param_obj.name = hash_name
+        parameter.param.name = hash_name
 
     return parameter
 
