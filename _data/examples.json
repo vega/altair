@@ -1342,6 +1342,33 @@
       }
     },
     {
+      "name": "histogram_relative_frequency",
+      "title": "Relative Frequency Histogram",
+      "url": "https://altair-viz.github.io/gallery/histogram_relative_frequency.html",
+      "path": "tests/examples_arguments_syntax/histogram_relative_frequency.py",
+      "description": "This example shows a histogram of car horsepower where the height of each bar is the\nshare of all cars in that bin, instead of the number of cars. Cars without a horsepower\nvalue are filtered out first, so the bars add up to 100%. The data is then binned and\ncounted, the total count is added to every row with a joinaggregate transform, and the\nrelative frequency is each bin's count divided by the total.\n\nAdapted from `Relative Frequency Histogram <https://vega.github.io/vega-lite/examples/histogram_rel_freq.html>`_.",
+      "categories": [
+        "distributions"
+      ],
+      "datasets": [
+        "cars"
+      ],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/bar",
+          "user_guide/transform/aggregate",
+          "user_guide/transform/bin",
+          "user_guide/transform/calculate",
+          "user_guide/transform/filter",
+          "user_guide/transform/joinaggregate",
+          "user_guide/transform/index#accessing-transformed-data",
+          "user_guide/encodings/index#encoding-aggregates",
+          "user_guide/encodings/index#encoding-data-types"
+        ]
+      }
+    },
+    {
       "name": "histogram_responsive",
       "title": "Histogram with Responsive Bins",
       "url": "https://altair-viz.github.io/gallery/histogram_responsive.html",
