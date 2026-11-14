@@ -102,10 +102,18 @@ def test_selection_deprecation():
             c.add_selection(brush)
 
 
-def test_parameter_naming():
+def test_parameter_naming() -> None:
     # test explicit naming
     prm = alt.param(name="some_name")
     assert prm.param.name == "some_name"
+
+    direct = alt.Parameter("direct_name")
+    assert isinstance(direct.param, alt.VariableParameter)
+    assert direct.param.name == "direct_name"
+
+    unnamed = alt.Parameter()
+    assert isinstance(unnamed.param, alt.VariableParameter)
+    assert re.match(r"param_([0-9a-f]{16})", unnamed.param.name)
 
     # test automatic naming which now uses hash-based naming
     prm0, prm1, prm2 = (alt.param() for _ in range(3))
