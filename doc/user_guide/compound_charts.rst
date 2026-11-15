@@ -109,6 +109,24 @@ and will be obscured by the heatmap marks:
 If you do not see the expected output when creating a layered chart, make certain
 that you are ordering the layers appropriately.
 
+If an earlier layer shows through a later one, check the later mark's
+``opacity``. For example, circle marks can be partially transparent by default.
+Set ``opacity=1`` on the circles to cover the line where they overlap.
+
+.. altair-plot::
+
+    import altair as alt
+
+    source = alt.Data(values=[{"x": 1, "y": 1}, {"x": 2, "y": 2}, {"x": 3, "y": 3}])
+    base = alt.Chart(source).encode(x="x:Q", y="y:Q")
+
+    base.mark_line(color="black") + base.mark_circle(color="red", size=200, opacity=1)
+
+``fillOpacity`` applies to the fill. If both ``fillOpacity`` and ``opacity`` are
+set, both affect the fill. The ``blend`` option controls how the mark's colors
+combine with the content already drawn underneath it, including earlier layers
+and the chart background.
+
 
 .. _hconcat-chart:
 
