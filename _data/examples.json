@@ -1346,7 +1346,7 @@
       "title": "Relative Frequency Histogram",
       "url": "https://altair-viz.github.io/gallery/histogram_relative_frequency.html",
       "path": "tests/examples_arguments_syntax/histogram_relative_frequency.py",
-      "description": "This example shows a histogram of car horsepower where the height of each bar is the\nshare of all cars in that bin, instead of the number of cars. Cars without a horsepower\nvalue are filtered out first, so the bars add up to 100%. The data is then binned and\ncounted, the total count is added to every row with a joinaggregate transform, and the\nrelative frequency is each bin's count divided by the total.\n\nAdapted from `Relative Frequency Histogram <https://vega.github.io/vega-lite/examples/histogram_rel_freq.html>`_.",
+      "description": "This example shows a histogram of car horsepower where the height of each bar is the\nshare of all cars in that bin, instead of the number of cars. Each car gets a weight of\n1 divided by the total number of cars (added to every row with a joinaggregate\ntransform), and each bar is the sum of the weights in its bin. Cars without a horsepower\nvalue are filtered out first, so the bars add up to 100%.\n\nAdapted from `Relative Frequency Histogram <https://vega.github.io/vega-lite/examples/histogram_rel_freq.html>`_.",
       "categories": [
         "distributions"
       ],
@@ -1357,8 +1357,6 @@
         "explicit": [],
         "inferred": [
           "user_guide/marks/bar",
-          "user_guide/transform/aggregate",
-          "user_guide/transform/bin",
           "user_guide/transform/calculate",
           "user_guide/transform/filter",
           "user_guide/transform/joinaggregate",
