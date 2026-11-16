@@ -84,6 +84,8 @@ dev = [
     "mistune",
     "mypy",
     "pandas-stubs>=3.0.3.260530",
+    "scipy",
+    "scipy-stubs",
     "ty",
     "types-jsonschema",
     "types-setuptools",
@@ -106,8 +108,6 @@ doc = [
     "myst-parser",
     "sphinx_copybutton",
     "sphinx-design",
-    "scipy",
-    "scipy-stubs",
     "sphinx-autobuild",
 ]
 
