@@ -895,7 +895,16 @@ See the help for `{altair_cls.__name__}` to read the full description of these p
                 f"one of {val}" for val in _validator_values(errs_enum)
             )
         if errs_type := errors_by_validator.get("type", None):
-            bullet_points.append(self._format_type_reprs(errs_type))
+            if errs_enum:
+                # The values of an enum are already listed above. Its type
+                # (e.g. `str`) would suggest that any value of that type is valid.
+                errs_type = [
+                    err
+                    for err in errs_type
+                    if not (isinstance(err.schema, dict) and "enum" in err.schema)
+                ]
+            if errs_type:
+                bullet_points.append(self._format_type_reprs(errs_type))
 
         # It should not matter which error is specifically used as they are all
         # about the same offending instance (i.e. invalid value), so we can just

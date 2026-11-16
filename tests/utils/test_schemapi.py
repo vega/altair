@@ -560,6 +560,32 @@ def chart_error_example__invalid_sort_value():
     return alt.Chart().encode(alt.Angle().sort("invalid_value"))
 
 
+def chart_error_example__invalid_sort_value_type():
+    # Error: Invalid value for Angle.sort which is not a string
+    return alt.Chart().encode(alt.Angle().sort(b"invalid_value"))  # pyright: ignore[reportArgumentType]
+
+
+def chart_error_example__invalid_y_option_value_type():
+    # Error: Invalid Y option value 1 which is not a string
+    return alt.Chart().mark_bar().encode(y=alt.Y("a:Q", stack=1))  # pyright: ignore[reportArgumentType]
+
+
+def chart_error_example__invalid_type_value_type():
+    # Error: Invalid value for X.type which is not a string
+    return alt.Chart().encode(alt.X("a", type=5))  # pyright: ignore[reportArgumentType]
+
+
+def chart_error_example__invalid_color_value_type():
+    # Error: Invalid value for color which is not a string.
+    # Strings outside the color names are valid, so `str` stays listed
+    return alt.Chart(mark="point", config={"mark": {"color": 5}})
+
+
+def chart_error_example__invalid_fontweight_value_type():
+    # Error: Invalid value for fontWeight, whose enum schema has a list of types
+    return alt.Chart(mark="text", config={"mark": {"fontWeight": True}})
+
+
 def chart_error_example__invalid_bandposition_value():
     # Error: Invalid value for Text.bandPosition
     return (
@@ -904,6 +930,40 @@ chart_funcs_error_message: list[tuple[Callable[..., Any], str]] = [
                 - One of \['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'\]
                 - One of \['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'\]
                 - Of type {re.escape("`Sequence | Mapping[str, Any] | None`")}$""",
+    ),
+    (
+        chart_error_example__invalid_sort_value_type,
+        rf"""'b'invalid_value'' is an invalid value for `sort`. Valid values are:
+
+                - One of \['ascending', 'descending'\]
+                - One of \['x', 'y', 'color', 'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity', 'text'\]
+                - One of \['-x', '-y', '-color', '-fill', '-stroke', '-strokeWidth', '-size', '-shape', '-fillOpacity', '-strokeOpacity', '-opacity', '-text'\]
+                - Of type {re.escape("`Sequence | Mapping[str, Any] | None`")}$""",
+    ),
+    (
+        chart_error_example__invalid_y_option_value_type,
+        rf"""'1' is an invalid value for `stack`. Valid values are:
+
+                - One of \['zero', 'center', 'normalize'\]
+                - Of type {re.escape("`bool | None`")}$""",
+    ),
+    (
+        chart_error_example__invalid_type_value_type,
+        r"""'5' is an invalid value for `type`. Valid values are one of \['quantitative', 'ordinal', 'temporal', 'nominal', 'geojson'\].$""",
+    ),
+    (
+        chart_error_example__invalid_color_value_type,
+        rf"""'5' is an invalid value for `color`. Valid values are:
+
+                - One of \['black', 'silver', .*, 'rebeccapurple'\]
+                - Of type {re.escape("`str | Mapping[str, Any]`")}$""",
+    ),
+    (
+        chart_error_example__invalid_fontweight_value_type,
+        rf"""'True' is an invalid value for `fontWeight`. Valid values are:
+
+                - One of \['normal', 'bold', 'lighter', 'bolder', 100, 200, 300, 400, 500, 600, 700, 800, 900\]
+                - Of type {re.escape("`Mapping[str, Any]`")}$""",
     ),
     (
         chart_error_example__invalid_bandposition_value,
