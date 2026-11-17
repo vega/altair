@@ -113,7 +113,7 @@ schema, using the ``generate_schema_wrapper.py`` script that you can find in
 `Altair's repository <https://github.com/vega/altair/blob/main/tools/generate_schema_wrapper.py>`_.
 This auto-generation of code propagates descriptions from the vega-lite schema
 into the Python class docstrings, from which the
-`API Reference <http://altair-viz.github.io/user_guide/API.html>`_
+`API Reference <https://altair-viz.github.io/user_guide/api.html>`_
 within Altair's documentation are in turn automatically generated.
 This means that as the Vega-Lite schema evolves, Altair can very quickly be brought
 up-to-date, and only the higher-level chart methods need to be updated by hand.
