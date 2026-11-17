@@ -84,8 +84,8 @@ INPUT_ANNOTATION: LiteralString = "IntoExpression"
 NONE: Literal[r"None"] = r"None"
 STAR_ARGS: Literal["*args"] = "*args"
 DECORATOR: LiteralString = r"@classmethod"
-IGNORE_OVERRIDE: LiteralString = r"# type: ignore[override]"
-IGNORE_MISC: LiteralString = r"# type: ignore[misc]"
+IGNORE_OVERRIDE: LiteralString = r"# type: ignore"
+IGNORE_MISC: LiteralString = r"# type: ignore"
 
 MODULE_PRE = '''\
 {header}

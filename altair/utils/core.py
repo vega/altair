@@ -356,7 +356,7 @@ def numpy_is_subtype(dtype: Any, subtype: Any) -> bool:
     import numpy as np
 
     try:
-        return cast("bool", np.issubdtype(dtype, subtype))
+        return np.issubdtype(dtype, subtype)
     except (NotImplementedError, TypeError):
         return False
 
@@ -384,7 +384,7 @@ def sanitize_pandas_dataframe(df: _PandasDataFrameT) -> _PandasDataFrameT:  # no
     import numpy as np
     import pandas as pd
 
-    df = cast("_PandasDataFrameT", df.copy())
+    df = df.copy()
 
     if isinstance(df.columns, pd.RangeIndex):
         df.columns = df.columns.astype(str)
@@ -549,7 +549,7 @@ def to_eager_narwhals_dataframe(data: IntoDataFrame) -> nw.DataFrame[Any]:
         # use the interchange protocol to convert to a PyArrow Table.
         from altair.utils.data import arrow_table_from_dfi_dataframe
 
-        pa_table = arrow_table_from_dfi_dataframe(data)  # type: ignore[arg-type]
+        pa_table = arrow_table_from_dfi_dataframe(data)  # type: ignore
         data_nw = nw.from_native(pa_table, eager_only=True)
     return data_nw
 
@@ -687,7 +687,7 @@ def parse_shorthand(  # noqa: C901
         attrs = shorthand
     else:
         attrs = next(
-            exp.match(shorthand).groupdict()  # type: ignore[union-attr]
+            exp.match(shorthand).groupdict()  # type: ignore
             for exp in regexps
             if exp.match(shorthand) is not None
         )
