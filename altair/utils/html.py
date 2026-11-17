@@ -65,27 +65,34 @@ requirejs.config({
         }
     });
     {% endif %}
-    {% if requirejs -%}
-    require(['vega-embed'],
-    {%- else -%}
-    (
-    {%- endif -%}
-    function(vegaEmbed) {
-      var spec = {{ spec }};
-      var embedOpt = {{ embed_options }};
-
-      function showError(el, error){
-          el.innerHTML = ('<div style="color:red;">'
-                          + '<p>JavaScript Error: ' + error.message + '</p>'
-                          + "<p>This usually means there's a typo in your chart specification. "
-                          + "See the javascript console for the full traceback.</p>"
-                          + '</div>');
-          throw error;
+    (function() {
+      // Use the div right before this script, so that several charts exported
+      // with the same output_div can be shown on one page.
+      let el = document.currentScript && document.currentScript.previousElementSibling;
+      if (!el || el.id !== "{{ output_div }}") {
+        el = document.getElementById("{{ output_div }}");
       }
-      const el = document.getElementById('{{ output_div }}');
-      vegaEmbed("#{{ output_div }}", spec, embedOpt)
-        .catch(error => showError(el, error));
-    }){% if not requirejs %}(vegaEmbed){% endif %};
+      {% if requirejs -%}
+      require(['vega-embed'],
+      {%- else -%}
+      (
+      {%- endif -%}
+      function(vegaEmbed) {
+        var spec = {{ spec }};
+        var embedOpt = {{ embed_options }};
+
+        function showError(el, error){
+            el.innerHTML = ('<div style="color:red;">'
+                            + '<p>JavaScript Error: ' + error.message + '</p>'
+                            + "<p>This usually means there's a typo in your chart specification. "
+                            + "See the javascript console for the full traceback.</p>"
+                            + '</div>');
+            throw error;
+        }
+        vegaEmbed(el, spec, embedOpt)
+          .catch(error => showError(el, error));
+      }){% if not requirejs %}(vegaEmbed){% endif %};
+    })();
 
   </script>
 {%- if fullhtml %}
