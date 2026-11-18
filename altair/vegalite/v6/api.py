@@ -4556,6 +4556,8 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         return self
 
     def __or__(self, other: ChartType) -> Self:
+        if self.transform is not Undefined:
+            return t.cast("Self", concat(self, other))
         copy = self.copy(deep=["concat"])
         copy |= other
         return copy
@@ -4661,6 +4663,8 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         return self
 
     def __or__(self, other: ChartType) -> Self:
+        if self.transform is not Undefined:
+            return t.cast("Self", hconcat(self, other))
         copy = self.copy(deep=["hconcat"])
         copy |= other
         return copy
@@ -4766,6 +4770,8 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         return self
 
     def __and__(self, other: ChartType) -> Self:
+        if self.transform is not Undefined:
+            return t.cast("Self", vconcat(self, other))
         copy = self.copy(deep=["vconcat"])
         copy &= other
         return copy
@@ -4912,6 +4918,8 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         return self
 
     def __add__(self, other: ChartType) -> Self:
+        if self.transform is not Undefined:
+            return t.cast("Self", layer(self, other))
         copy = self.copy(deep=["layer"])
         copy += other
         return copy
