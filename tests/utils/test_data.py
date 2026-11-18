@@ -128,15 +128,8 @@ def test_to_values():
 
 def test_to_values_pandas_object_dates():
     """Python dates in an object column are written as ISO timestamps."""
-    data = pd.DataFrame(
-        {
-            "when": [
-                datetime.date(2020, 5, 1),
-                datetime.datetime(2020, 5, 3, 12, 30),
-                None,
-            ]
-        }
-    )
+    when = [datetime.date(2020, 5, 1), datetime.datetime(2020, 5, 3, 12, 30), None]
+    data = pd.DataFrame({"when": pd.Series(when, dtype=object)})
     assert data["when"].dtype == object
     result = _pipe(data, to_values)
     assert result == {
