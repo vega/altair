@@ -1682,6 +1682,21 @@ class _FromDict:
             return target_tp(dct)
 
 
+def _referenced_definitions(schema: Any) -> set[str]:
+    """Collect the names of the ``#/definitions/`` a schema (fragment) references."""
+    refs: set[str] = set()
+    if isinstance(schema, dict):
+        ref = schema.get("$ref")
+        if isinstance(ref, str) and ref.startswith("#/definitions/"):
+            refs.add(ref.rsplit("/", 1)[-1])
+        for value in schema.values():
+            refs.update(_referenced_definitions(value))
+    elif isinstance(schema, list):
+        for item in schema:
+            refs.update(_referenced_definitions(item))
+    return refs
+
+
 class _PropertySetter:
     def __init__(self, prop: str, schema: dict[str, Any]) -> None:
         self.prop = prop
@@ -1696,7 +1711,18 @@ class _PropertySetter:
         # etc); this provides a general description of the parameter.
         self.__doc__ = self.schema["description"].replace("__", "**")
         property_name = f"{self.prop}"[0].upper() + f"{self.prop}"[1:]
-        if altair_prop := getattr(vegalite, property_name, None):
+        altair_prop = getattr(vegalite, property_name, None)
+        if altair_prop is not None:
+            # The name-matched class is not always valid for this property:
+            # a field definition's ``title`` accepts only ``Text``, but the
+            # name lookup finds the chart-title class (``TitleParams``).
+            # Borrow its documentation only when the class wraps a definition
+            # that this property's schema actually references.
+            prop_refs = _referenced_definitions(self.schema)
+            helper_refs = _referenced_definitions(getattr(altair_prop, "_schema", {}))
+            if prop_refs and helper_refs and prop_refs.isdisjoint(helper_refs):
+                altair_prop = None
+        if altair_prop:
             # Add the docstring from the helper class (e.g. `BinParams`) so
             # that all the parameter names of the helper class are included in
             # the final docstring
