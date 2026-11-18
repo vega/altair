@@ -10,7 +10,7 @@ Other optimization ideas
 Cache the calls to `compile` in `altair.utils.execeval`
 - The each file has every expression compiled 3x times
 - Would immediately reduce to 1x
-- Possible there are overlapping expressions between `examples_arguments_syntax` and `examples_methods_syntax`
+- Possible there are overlapping expressions between `examples/arguments_syntax` and `examples/methods_syntax`
     - Could lead to further performance gains
 - All of the tests only call `eval_block` to operate on the finished chart
     - The need to execute the code is not what is being tested

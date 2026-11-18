@@ -10,7 +10,7 @@ on:
       - "_data/**"
       - "pyproject.toml"
       - "sphinxext/**"
-      - "tests/examples_*/**"
+      - "examples/**"
       - "tools/**"
       - "uv.lock"
   pull_request:
