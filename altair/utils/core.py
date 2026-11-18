@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import itertools
 import json
 import re
@@ -407,6 +408,12 @@ def sanitize_pandas_dataframe(df: _PandasDataFrameT) -> _PandasDataFrameT:  # no
     def to_list_if_array(val):
         if isinstance(val, np.ndarray):
             return val.tolist()
+        elif isinstance(val, dt.date):
+            # ``datetime.datetime`` is a subclass of ``datetime.date``.
+            # Use a full ISO string with time, as for datetime columns above.
+            if not isinstance(val, dt.datetime):
+                val = dt.datetime(val.year, val.month, val.day)
+            return val.isoformat()
         else:
             return val
 
@@ -486,9 +493,9 @@ def sanitize_pandas_dataframe(df: _PandasDataFrameT) -> _PandasDataFrameT:  # no
             bad_values = col.isnull() | np.isinf(col)
             df[col_name] = col.astype(object).where(~bad_values, None)
         elif dtype == object:  # noqa: E721
-            # Convert numpy arrays saved as objects to lists
-            # Arrays are not JSON serializable
-            col = df[col_name].astype(object).apply(to_list_if_array)
+            # Convert numpy arrays saved as objects to lists and Python dates
+            # to ISO strings. Neither is JSON serializable
+            col = df[col_name].astype(object).apply(to_list_if_array).astype(object)
             df[col_name] = col.where(col.notnull(), None)
     return df
 
