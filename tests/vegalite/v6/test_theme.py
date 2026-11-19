@@ -210,17 +210,17 @@ def carbonwhite_theme() -> ThemeConfig:
             },
             "rect": {"fill": "#6929c4"},
             "style": {
-                "guide-label": {
+                "guide-label": {  # type: ignore
                     "fill": "#525252",
                     "font": 'IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,".sfnstext-regular",sans-serif',
                     "fontWeight": 400,
                 },
-                "guide-title": {
+                "guide-title": {  # ty: ignore
                     "fill": "#525252",
                     "font": 'IBM Plex Sans,system-ui,-apple-system,BlinkMacSystemFont,".sfnstext-regular",sans-serif',
                     "fontWeight": 400,
                 },
-            },  # type: ignore[typeddict-unknown-key]
+            },
             "title": {
                 "anchor": "start",
                 "color": "#161616",
@@ -240,9 +240,9 @@ def dark_theme() -> ThemeConfig:
             axis={"domainColor": "#fff", "gridColor": "#888", "tickColor": "#fff"},
             background="#333",
             style={
-                "guide-label": {"fill": "#fff"},
-                "guide-title": {"fill": "#fff"},
-            },  # type: ignore[typeddict-unknown-key]
+                "guide-label": {"fill": "#fff"},  # type: ignore
+                "guide-title": {"fill": "#fff"},  # ty: ignore
+            },
             title={"color": "#fff", "subtitleColor": "#fff"},
             view={"stroke": "#888"},
         )
@@ -443,10 +443,10 @@ def googlecharts_theme() -> ThemeConfig:
             },
             "rect": {"fill": "#3366CC"},
             "style": {
-                "group-title": {"font": "Arial, sans-serif", "fontSize": 12},
-                "guide-label": {"font": "Arial, sans-serif", "fontSize": 12},
-                "guide-title": {"font": "Arial, sans-serif", "fontSize": 12},
-            },  # type: ignore[typeddict-unknown-key]
+                "group-title": {"font": "Arial, sans-serif", "fontSize": 12},  # type: ignore
+                "guide-label": {"font": "Arial, sans-serif", "fontSize": 12},  # ty: ignore
+                "guide-title": {"font": "Arial, sans-serif", "fontSize": 12},  # ty: ignore
+            },
             "title": {
                 "anchor": "start",
                 "dy": -3,
@@ -455,7 +455,7 @@ def googlecharts_theme() -> ThemeConfig:
                 "fontWeight": "bold",
             },
         }
-    }
+    }  # ty: ignore
 
 
 def latimes_theme() -> ThemeConfig:
@@ -985,10 +985,10 @@ def husky_theme() -> ThemeConfig:
                 "strokeWidth": 0,
                 "size": 1,
             },
-            "path": {
+            "path": {  # type: ignore
                 "stroke": PURPLE,
                 "strokeWidth": 0.5,
-            },  # type: ignore[typeddict-unknown-key]
+            },
             "point": {"color": PURPLE, "size": 40},
             "text": {
                 "font": BODY_FONT,

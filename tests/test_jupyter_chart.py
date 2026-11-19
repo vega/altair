@@ -18,7 +18,7 @@ except ImportError:
 if has_anywidget:
     from altair.jupyter import jupyter_chart
 else:
-    jupyter_chart = None  # type: ignore
+    jupyter_chart = None  # type: ignore[assignment]
 
 skip_requires_anywidget = pytest.mark.skipif(
     not has_anywidget, reason="anywidget not importable"
