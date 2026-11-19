@@ -199,8 +199,8 @@ your idea has not already been implemented.
 When contributing to the gallery, there are a few guidelines each example should follow:
 
 - Have an `arguments_syntax` and `methods_syntax` implementation. Each implementation
-  must be saved as a standalone script in the `tests/examples_arguments_syntax`
-  and `tests/examples_methods_syntax` directories.
+  must be saved as a standalone script in the `examples/arguments_syntax`
+  and `examples/methods_syntax` directories.
 - Have a descriptive docstring, which will eventually be extracted for the
   documentation website.
 - Contain a `# :new:` tag followed by a `# category ...` tag on a separate line.
@@ -245,7 +245,7 @@ Some additional notes:
   `source = data.movies.url`.
 - If VlConvert does not support PNG export of the chart (e.g. in the case of emoji),
   then add the name of the example to the `SVG_EXAMPLES` set in 
-  `tests/examples_arguments_syntax/__init__.py` and `tests/examples_methods_syntax/__init__.py`
+  `examples/arguments_syntax/__init__.py` and `examples/methods_syntax/__init__.py`
 
 ### Building the Documentation Locally
 

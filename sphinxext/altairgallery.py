@@ -23,8 +23,8 @@ from sphinx import addnodes
 from sphinx.util.nodes import nested_parse_with_titles
 
 from altair.utils.execeval import eval_block
-from tests.examples_arguments_syntax import iter_examples_arguments_syntax
-from tests.examples_methods_syntax import iter_examples_methods_syntax
+from examples.arguments_syntax import iter_examples_arguments_syntax
+from examples.methods_syntax import iter_examples_methods_syntax
 
 from .utils import (
     create_generic_image,

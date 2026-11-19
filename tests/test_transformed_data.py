@@ -11,12 +11,8 @@ from packaging.version import Version
 import altair as alt
 from altair.datasets import data
 from altair.utils.execeval import eval_block
-from tests import (
-    examples_methods_syntax,
-    ignore_DataFrameGroupBy,
-    skip_requires_vegafusion,
-    slow,
-)
+from examples import methods_syntax
+from tests import ignore_DataFrameGroupBy, skip_requires_vegafusion, slow
 
 XDIST_ENABLED: bool = "xdist" in sys.modules
 """Use as an `xfail` condition, if running in parallel may cause the test to fail."""
@@ -84,7 +80,7 @@ xfail_vegafusion_2: pytest.MarkDecorator = pytest.mark.xfail(
 @pytest.mark.parametrize("to_reconstruct", [True, False])
 def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
     # fmt: on
-    source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
+    source = pkgutil.get_data(methods_syntax.__name__, filename)
     chart = eval_block(source, strict=True)
     if to_reconstruct:
         # When reconstructing a Chart, Altair uses different classes
@@ -142,7 +138,7 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
 @pytest.mark.parametrize("to_reconstruct", [True, False])
 def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
     # fmt: on
-    source = pkgutil.get_data(examples_methods_syntax.__name__, filename)
+    source = pkgutil.get_data(methods_syntax.__name__, filename)
     chart = eval_block(source, strict=True)
     if to_reconstruct:
         # When reconstructing a Chart, Altair uses different classes

@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, overload
 
 import pytest
 
-from tests import examples_arguments_syntax, examples_methods_syntax
+from examples import arguments_syntax, methods_syntax
 
 if TYPE_CHECKING:
     from collections.abc import Collection, Iterator, Mapping
@@ -226,10 +226,10 @@ def _distributed_examples(
 
         The **first** match (if any) will be inserted into ``marks``.
     """
-    RE_NAME: Pattern[str] = re.compile(r"^tests\.(.*)")
+    RE_NAME: Pattern[str] = re.compile(r"^examples\.(.*)")
     mark_specs = _wrap_mark_specs(marks) if marks else {}
 
-    for pkg in [examples_arguments_syntax, examples_methods_syntax]:
+    for pkg in [arguments_syntax, methods_syntax]:
         pkg_name = pkg.__name__
         if match := RE_NAME.match(pkg_name):
             pkg_name_unqual: str = match.group(1)

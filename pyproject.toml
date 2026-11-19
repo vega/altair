@@ -144,14 +144,7 @@ features = ["all", "dev", "doc"]
 matrix   = [{ python = ["3.11", "3.12", "3.13", "3.14"] }]
 
 [tool.ruff]
-extend-exclude = [
-    # ".git",
-    # "__pycache__",
-    # "build",
-    "tests/examples_arguments_syntax",
-    "tests/examples_methods_syntax",
-    "README.md",
-]
+extend-exclude = ["examples", "README.md"]
 indent-width = 4
 line-length = 88
 target-version = "py311"
@@ -283,7 +276,7 @@ lint       = "ruff check"
 format     = "ruff format --diff --check"
 ruff-check = "task lint && task format"
 ruff-fix   = "task lint && ruff format"
-type-check = "mypy altair tests tools && ty check"
+type-check = "mypy altair examples tests tools && ty check"
 
 pytest-serial = "pytest -m \"no_xdist\" --numprocesses=1"
 pytest        = "pytest && task pytest-serial"
@@ -309,12 +302,8 @@ build   = "task clean && uv build"
 publish = "task build && uv publish"
 
 [tool.pytest.ini_options]
-# Pytest does not need to search these folders for test functions.
-# They contain examples which are being executed by the test_examples tests.
-norecursedirs = [
-    "tests/examples_arguments_syntax",
-    "tests/examples_methods_syntax"
-]
+# Pytest does not need to search the "examples" folder for test functions.
+# It contains scripts that are executed by the "test_examples" tests.
 testpaths = ["tests","altair","tools"]
 addopts = [
     "--numprocesses=logical",
@@ -337,10 +326,7 @@ warn_unused_ignores = true
 pretty = true
 
 [[tool.mypy.overrides]]
-module = [
-    "tests/examples_arguments_syntax.*",
-    "tests/examples_methods_syntax.*",
-]
+module = ["examples.*"]
 disable_error_code = ["annotation-unchecked"]
 
 [tool.pyright]
@@ -351,7 +337,7 @@ reportTypedDictNotRequiredAccess = "none"
 reportIncompatibleMethodOverride = "none"
 reportUnusedExpression = "none"
 reportUnsupportedDunderAll = "none"
-include = ["altair", "doc", "tests", "tools", "sphinxext"]
+include = ["altair", "doc", "examples", "tests", "tools", "sphinxext"]
 ignore = [
     "./altair/vegalite/v6/schema/channels.py",  # 734 warns
     "./altair/jupyter/",                        # Mostly untyped
@@ -359,7 +345,7 @@ ignore = [
 ]
 
 [tool.ty]
-src.include = ["altair", "tests", "tools"]
+src.include = ["altair", "examples", "tests", "tools"]
 src.exclude = [
     "altair/datasets",  # to fix
     "altair/utils",  # to fix
@@ -379,11 +365,11 @@ rules.single-overload = "ignore"
 # - https://github.com/vega/altair/issues/4212
 
 [[tool.ty.overrides]]
-include = ["tests"]
+include = ["examples", "tests"]
 rules.missing-attribute = "ignore"  # ty-2520
 
 [[tool.ty.overrides]]
-include = ["tests/examples_*", "tests/vegalite/v6"]
+include = ["examples", "tests/vegalite/v6"]
 rules.missing-union-attribute = "ignore"  # altair-4212
 rules.invalid-argument-type = "ignore"  # ty-2520
 rules.unsupported-operator = "ignore"  # ty-2520
