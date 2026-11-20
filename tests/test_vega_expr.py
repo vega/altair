@@ -21,7 +21,7 @@ def test_parameters_handle_mistune_3_3_signature_tokens() -> None:
             {TYPE: TEXT, RAW: "max"},
             {TYPE: TEXT, RAW: "]) "},
             {TYPE: SOFTBREAK},
-        ),
+        ),  # ty: ignore
     ).with_parameters()
 
     assert [(p.name, p.required) for p in expr_def.parameters] == [

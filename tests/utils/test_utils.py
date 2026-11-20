@@ -51,10 +51,10 @@ def test_sanitize_dataframe():
     )
 
     # add some nulls
-    df.iloc[0, df.columns.get_loc("s")] = None
-    df.iloc[0, df.columns.get_loc("f")] = np.nan
-    df.iloc[0, df.columns.get_loc("d")] = pd.NaT
-    df.iloc[0, df.columns.get_loc("o")] = np.array(np.nan)
+    df.loc[0, "s"] = None
+    df.loc[0, "f"] = np.nan
+    df.loc[0, "d"] = pd.NaT
+    df.loc[0, "o"] = np.array(np.nan)
 
     # JSON serialize. This will fail on non-sanitized dataframes
     print(df[["s", "c2"]])
@@ -71,7 +71,7 @@ def test_sanitize_dataframe():
     df2 = df2[df.columns]
 
     # pandas doesn't properly recognize np.array(np.nan); use float64 so df matches read_json
-    df.iloc[0, df.columns.get_loc("o")] = np.nan
+    df.loc[0, "o"] = np.nan
     df["o"] = df["o"].astype(np.float64)
 
     # Re-apply original types

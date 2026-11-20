@@ -2,6 +2,7 @@ import pkgutil
 import sys
 from importlib.metadata import version
 from importlib.util import find_spec
+from typing import cast
 
 import narwhals.stable.v1 as nw
 import pytest
@@ -92,7 +93,7 @@ def test_primitive_chart_examples(filename, rows, cols, to_reconstruct):
         chart = alt.Chart.from_dict(chart.to_dict())
     df = chart.transformed_data()
     assert df is not None
-    nw_df = nw.from_native(df, eager_only=True)
+    nw_df = cast("nw.DataFrame", nw.from_native(df, eager_only=True))
 
     assert len(nw_df) == rows
     assert set(cols).issubset(set(nw_df.columns))
@@ -157,7 +158,7 @@ def test_compound_chart_examples(filename, all_rows, all_cols, to_reconstruct):
         # is that for some charts, the original chart contained duplicated datasets
         # which disappear when reconstructing the chart.
 
-        nw_dfs = (nw.from_native(d, eager_only=True) for d in dfs)
+        nw_dfs = (cast("nw.DataFrame", nw.from_native(d, eager_only=True)) for d in dfs)
         assert len(dfs) == len(all_rows)
         for df, rows, cols in zip(nw_dfs, all_rows, all_cols, strict=False):
             assert len(df) == rows
@@ -185,7 +186,9 @@ def test_transformed_data_exclude(to_reconstruct):
     assert isinstance(chart, alt.LayerChart)
     datasets = chart.transformed_data(exclude=["some_annotation"])
 
-    _datasets = [nw.from_native(d, eager_only=True) for d in datasets]
+    _datasets = [
+        cast("nw.DataFrame", nw.from_native(d, eager_only=True)) for d in datasets
+    ]
     assert len(datasets) == len(_datasets)
     assert len(_datasets) == 2
     assert len(_datasets[0]) == 52

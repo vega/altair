@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from tools.datasets import PathMap
     from tools.datasets.datapackage import DataPackage
 
-    BranchOrTag: TypeAlias = 'Literal["main"] | LiteralString'
+    BranchOrTag: TypeAlias = "str"
 
 
 __all__ = ["Npm"]
@@ -46,10 +46,10 @@ class Npm:
             GH=f"https://cdn.{jsdelivr}.net/gh/vega/{package}@",
         )
 
-    def _prefix(self, version: BranchOrTag, /) -> LiteralString:
+    def _prefix(self, version: BranchOrTag, /) -> str:
         return f"{self.url.GH if is_branch(version) else self.url.CDN}{version}/"
 
-    def dataset_base_url(self, version: BranchOrTag, /) -> LiteralString:
+    def dataset_base_url(self, version: BranchOrTag, /) -> str:
         """Common url prefix for all datasets derived from ``version``."""
         return f"{self._prefix(version)}data/"
 
@@ -93,7 +93,7 @@ class Npm:
         with self._opener.open(req) as response:
             return read_fn(response)
 
-    def datapackage(self, *, tag: LiteralString) -> DataPackage:
+    def datapackage(self, *, tag: BranchOrTag) -> DataPackage:
         return datapackage.DataPackage(
             self.file(tag, "datapackage.json"),
             self.dataset_base_url(tag),
