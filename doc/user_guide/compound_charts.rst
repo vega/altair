@@ -109,6 +109,89 @@ and will be obscured by the heatmap marks:
 If you do not see the expected output when creating a layered chart, make certain
 that you are ordering the layers appropriately.
 
+Opacity and Blending
+^^^^^^^^^^^^^^^^^^^^
+Layer order determines which marks are drawn first. Opacity and blending
+determine how their colors combine where they overlap.
+
+Circle marks have a default opacity of 0.7 in non-aggregate plots, so a line
+drawn underneath can show through them. Set ``opacity=1`` to make the circles
+opaque. The following panels compare the default with an opaque fill and a
+translucent fill.
+
+.. altair-plot::
+
+    import altair as alt
+
+    source = alt.Data(values=[{"x": 1, "y": 1}, {"x": 2, "y": 1}, {"x": 3, "y": 1}])
+    base = alt.Chart(source).encode(
+        x=alt.X("x:Q").scale(domain=[0, 4]).axis(None),
+        y=alt.Y("y:Q").scale(domain=[0, 2]).axis(None),
+    ).properties(width=180, height=100)
+    line = base.mark_line(color="black", strokeWidth=3)
+
+    alt.hconcat(
+        (line + base.mark_circle(color="red", size=900)).properties(title="Default opacity"),
+        (line + base.mark_circle(color="red", size=900, opacity=1)).properties(title="Opaque"),
+        (line + base.mark_circle(
+            color="red", size=900, opacity=1, fillOpacity=0.4
+        )).properties(title="Translucent fill"),
+    )
+
+``opacity`` affects the whole mark, while ``fillOpacity`` and ``strokeOpacity``
+affect its fill and outline separately. When both overall opacity and fill
+opacity are set, their values multiply. For example, ``opacity=0.5`` and
+``fillOpacity=0.4`` give the fill an effective opacity of 0.2.
+To control transparency explicitly, set ``opacity`` along with the fill or
+stroke opacity.
+
+The ``blend`` mark property selects how a mark's color combines with the
+content already drawn underneath it. With the default compositing behavior,
+an opaque mark covers earlier marks. Two other useful modes are
+``"multiply"``, which darkens overlapping colors, and ``"screen"``, which
+lightens them. These modes can reveal overlaps even when ``opacity=1``.
+
+.. altair-plot::
+
+    import altair as alt
+
+    source = alt.Data(values=[{"x": 1.5}, {"x": 2.5}])
+    base = alt.Chart(source).encode(
+        x=alt.X("x:Q").scale(domain=[0, 4]).axis(None),
+        y=alt.value(60),
+    ).properties(width=180, height=120)
+    left = base.transform_filter(alt.datum.x == 1.5)
+    right = base.transform_filter(alt.datum.x == 2.5)
+
+    panels = []
+    for mode in [None, "multiply", "screen"]:
+        first = left.mark_circle(color="#e76f51", size=6000, opacity=1)
+        second = right.mark_circle(
+            color="#457b9d", size=6000, opacity=1, blend=mode
+        )
+        panels.append(
+            (first + second).properties(title=mode or "Default")
+        )
+
+    alt.hconcat(*panels).configure_view(fill="#eeeeee", stroke=None)
+
+In the default panel, the blue circle covers the orange circle at the
+intersection. In the other panels, the blue circle blends with both the orange
+circle and the light gray view background. The background participates in the
+calculation even outside the intersection. Multiplying a color by white leaves
+it unchanged, while screening a color against black leaves it unchanged.
+Choose the background deliberately when comparing blend modes.
+
+Blending uses the content present when each mark is drawn, so layer order also
+matters. In this example, only the second circle has a blend mode. Moving it to
+the first layer makes it blend with the background before the opaque orange
+circle is drawn over it.
+
+Use ``alt.layer(line, points)`` or ``line + points`` to put points above a
+line. Vega's mark-level ``zindex`` property is not exposed by Altair's
+:class:`MarkDef`. Axis and legend ``zindex`` settings control those guides;
+the order of the charts passed to ``alt.layer`` controls the layers.
+
 
 .. _hconcat-chart:
 
