@@ -69,6 +69,9 @@ In addition, Altair includes the following renderers:
 - ``"svg"``: renderer that renders and converts the chart to an SVG image,
   outputting it using the ``"image/svg+xml"`` MIME type.
 - ``"olli"``: renderer that uses `Olli`_ to generate accessible text structures for screen reader users.
+  The chart's own ARIA attributes and descriptions are removed so that Olli is the only
+  structured representation. Olli announces any ``description`` you set.
+  Use ``.configure(aria=True)`` to turn the chart's ARIA attributes for marks and guides back on.
 - ``"json"``: renderer that outputs the raw JSON chart specification, using the
   ``"application/json"`` MIME type.
 
