@@ -184,7 +184,7 @@ if preview_tag := os.environ.get("ALTAIR_RELEASE_PREVIEW_TAG"):
         "</strong>"
     )
 
-html_context = {"default_mode": "light"}
+html_context = {"default_mode": "auto"}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
