@@ -276,7 +276,18 @@ HTML_TEMPLATE_OLLI = jinja2.Template(
         const { VegaLiteAdapter, looksLikeFips, enrichWithUSGeo } = adaptersModule;
         const { connectOlliToVegaLite, withExternalStateParam } = utilsModule;
 
-        const injectedSpec = withExternalStateParam(spec);
+        // Olli provides the accessible structure and announces the descriptions,
+        // so the chart drops its own ARIA and descriptions to avoid reading them twice.
+        function withoutDescriptions(view) {
+          const { description, ...rest } = view;
+          for (const key of ["layer", "concat", "hconcat", "vconcat"]) {
+            if (Array.isArray(rest[key])) rest[key] = rest[key].map(withoutDescriptions);
+          }
+          if (rest.spec) rest.spec = withoutDescriptions(rest.spec);
+          return rest;
+        }
+        const chartSpec = withoutDescriptions({...spec, config: {aria: false, ...spec.config}});
+        const injectedSpec = withExternalStateParam(chartSpec);
         vegaEmbed(outputDiv, injectedSpec, embedOpt)
           .then(async (result) => {
             for (const ds of (result.vgSpec || {}).data || []) {
