@@ -250,6 +250,15 @@ def test_sanitize_nullable_integers():
     }
 
 
+@pytest.mark.parametrize("dtype", ["Float32", "Float64"])
+def test_sanitize_nullable_float_infs(dtype: str) -> None:
+    df = pd.DataFrame({"x": pd.Series([1.0, np.inf, -np.inf, None], dtype=dtype)})
+    df_clean = sanitize_pandas_dataframe(df)
+    assert list(df_clean.dtypes) == [object]
+    assert list(df_clean["x"]) == [1.0, None, None, None]
+    json.dumps(df_clean.to_dict(orient="records"), allow_nan=False)
+
+
 @pytest.mark.skipif(
     not hasattr(pd, "StringDtype"),
     reason=f"dedicated String dtype not supported in pandas v{pd.__version__}",
