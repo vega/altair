@@ -22,6 +22,7 @@ Examples
 
 from __future__ import annotations
 
+import re
 import tomllib
 from collections import deque
 from itertools import chain
@@ -51,6 +52,11 @@ _REPO_ROOT: Path = Path(__file__).parent.parent
 _JUPYTER_INDEX = "altair/jupyter/js/index.js"
 _PYPROJECT: Literal["pyproject.toml"] = "pyproject.toml"
 _LOWER_BOUNDS = frozenset((">=", "==", "~=", "==="))
+_CDN_PROJECT_RE = re.compile(
+    r"(?P<prefix>https://cdn\.jsdelivr\.net/npm/)"
+    r"(?P<project>vega(?:-lite|-embed)?)@"
+    r"(?P<version>\d+(?:\.\d+)*)"
+)
 
 VegaProjectPy: TypeAlias = Literal["vegafusion", "vl-convert-python"]
 VegaProject: TypeAlias = Literal[
@@ -196,6 +202,8 @@ class _Versions:
         """Update all static version pins."""
         print("Updating Vega project pins")
         self.update_vega_embed()
+        self.update_display()
+        self.update_cdn_references()
 
     def update_vega_embed(self) -> None:
         """Updates the **Vega-Lite** version used in ``JupyterChart``."""
@@ -212,6 +220,64 @@ class _Versions:
         lines.appendleft(stmt)
         with fp.open("w", encoding="utf-8", newline="\n") as f:
             f.writelines(lines)
+
+    def update_display(self) -> None:
+        """Update versions and MIME types used by the current display module."""
+        vegalite = parse_version(self["vega-lite"].lstrip("v")).major
+        vega = parse_version(self.vlc_vega).major
+        vega_embed = parse_version(self["vega-embed"].lstrip("v")).major
+        fp = _REPO_ROOT / f"altair/vegalite/v{vegalite}/display.py"
+        replacements = {
+            r'VEGA_VERSION: Final = "\d+(?:\.\d+)*"': (
+                f'VEGA_VERSION: Final = "{vega}"'
+            ),
+            r'VEGAEMBED_VERSION: Final = "\d+(?:\.\d+)*"': (
+                f'VEGAEMBED_VERSION: Final = "{vega_embed}"'
+            ),
+            r"application/vnd\.vegalite\.v\d+\.json": (
+                f"application/vnd.vegalite.v{vegalite}.json"
+            ),
+            r"application/vnd\.vega\.v\d+\.json": (
+                f"application/vnd.vega.v{vega}.json"
+            ),
+        }
+        self._replace_patterns(fp, replacements)
+
+    def update_cdn_references(self) -> None:
+        """Update CDN major versions in static docs and their regression test."""
+        vegalite = parse_version(self["vega-lite"].lstrip("v")).major
+        versions = {
+            "vega": parse_version(self.vlc_vega).major,
+            "vega-lite": vegalite,
+            "vega-embed": parse_version(self["vega-embed"].lstrip("v")).major,
+        }
+        paths = (
+            _REPO_ROOT / "doc/_static/chart.html",
+            _REPO_ROOT / "doc/user_guide/saving_charts.rst",
+            _REPO_ROOT / f"tests/vegalite/v{vegalite}/test_api.py",
+        )
+        for fp in paths:
+            source = fp.read_text("utf-8")
+
+            def replace(match: re.Match[str]) -> str:
+                project = match.group("project")
+                return f"{match.group('prefix')}{project}@{versions[project]}"
+
+            updated, count = _CDN_PROJECT_RE.subn(replace, source)
+            if count != 3:
+                msg = f"Expected 3 Vega CDN references in {fp}, found {count}"
+                raise ValueError(msg)
+            fp.write_text(updated, "utf-8", newline="\n")
+
+    @staticmethod
+    def _replace_patterns(fp: Path, replacements: Mapping[str, str]) -> None:
+        source = fp.read_text("utf-8")
+        for pattern, replacement in replacements.items():
+            source, count = re.subn(pattern, replacement, source)
+            if count != 1:
+                msg = f"Expected one match for {pattern!r} in {fp}, found {count}"
+                raise ValueError(msg)
+        fp.write_text(source, "utf-8", newline="\n")
 
     def _iter_py_deps_versions(
         self, dep_groups: dict[str, Sequence[str]], /
