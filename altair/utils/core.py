@@ -374,6 +374,7 @@ def sanitize_pandas_dataframe(df: _PandasDataFrameT) -> _PandasDataFrameT:  # no
     * Convert np.int dtypes to Python int objects
     * Convert floats to objects and replace NaNs/infs with None.
     * Convert DateTime dtypes into appropriate string representations
+    * Convert Period dtypes into the string representation of their start time
     * Convert Nullable integers to objects and replace NaN with None
     * Convert Nullable boolean to objects and replace NaN with None
     * convert dedicated string column to objects and replace NaN with None
@@ -445,6 +446,14 @@ def sanitize_pandas_dataframe(df: _PandasDataFrameT) -> _PandasDataFrameT:  # no
             # (see https://github.com/vega/altair/issues/1027)
             df[col_name] = (
                 df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
+            )
+        elif dtype_name.startswith("period"):
+            # A Period spans an interval, but Vega-Lite has no equivalent type.
+            # Serialize it as the ISO string of the timestamp where the period starts.
+            df[col_name] = (
+                df[col_name]
+                .dt.start_time.apply(lambda x: x.isoformat())
+                .replace("NaT", "")
             )
         elif dtype_name.startswith("timedelta"):
             msg = (

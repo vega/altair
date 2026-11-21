@@ -213,6 +213,21 @@ def test_sanitize_dataframe_timedelta():
         sanitize_pandas_dataframe(df)
 
 
+def test_sanitize_dataframe_period():
+    df = pd.DataFrame(
+        {"p": pd.period_range("2020", periods=3, freq="Y").insert(1, pd.NaT)}
+    )
+    df_clean = sanitize_pandas_dataframe(df)
+    assert list(df_clean["p"]) == [
+        "2020-01-01T00:00:00",
+        "",
+        "2021-01-01T00:00:00",
+        "2022-01-01T00:00:00",
+    ]
+    # The sanitized frame must be JSON serializable
+    json.dumps(df_clean.to_dict(orient="records"))
+
+
 def test_sanitize_dataframe_infs():
     df = pd.DataFrame({"x": [0, 1, 2, np.inf, -np.inf, np.nan]})
     df_clean = sanitize_pandas_dataframe(df)
