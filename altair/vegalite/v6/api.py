@@ -426,11 +426,13 @@ class Parameter(_expr_core.OperatorMixin):
     ) -> None:
         # Set attributes first
         self.empty = empty
-        self.param = (
-            core.VariableParameter(name=name or "")
-            if utils.is_undefined(param)
-            else param
-        )
+        if utils.is_undefined(param):
+            if param_type == "selection":
+                msg = "'param' must be provided when 'param_type' is 'selection'."
+                raise ValueError(msg)
+            self.param = core.VariableParameter(name=name or "")
+        else:
+            self.param = param
         self.param_type = param_type
 
         # Generate name after attributes are set
@@ -568,7 +570,7 @@ class SelectionExpression(_expr_core.OperatorMixin):
 
 def check_fields_and_encodings(parameter: Parameter, field_name: str) -> bool:
     param = parameter.param
-    if utils.is_undefined(param) or isinstance(param, core.VariableParameter):
+    if isinstance(param, core.VariableParameter):
         return False
     for prop in ["fields", "encodings"]:
         try:
