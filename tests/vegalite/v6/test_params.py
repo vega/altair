@@ -115,6 +115,12 @@ def test_parameter_naming() -> None:
     assert isinstance(unnamed.param, alt.VariableParameter)
     assert re.match(r"param_([0-9a-f]{16})", unnamed.param.name)
 
+    with pytest.raises(
+        ValueError,
+        match="'param' must be provided when 'param_type' is 'selection'",
+    ):
+        alt.Parameter(param_type="selection")
+
     # test automatic naming which now uses hash-based naming
     prm0, prm1, prm2 = (alt.param() for _ in range(3))
 
