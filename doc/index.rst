@@ -34,6 +34,13 @@ Vega-Altair: Declarative Visualization in Python
 
       Check out the User Guides for in-depth information on the key concepts of Vega-Altair.
 
+   .. grid-item-card:: Conceptual Guide
+      :link: conceptual-guide
+      :link-type: ref
+      :link-alt: Conceptual guide
+
+      Learn why chart and encoding choices affect what readers notice.
+
    .. grid-item-card:: Examples
       :link: example-gallery
       :link-type: ref
@@ -57,6 +64,7 @@ Vega-Altair: Declarative Visualization in Python
 
    Getting Started <getting_started/overview>
    User Guide <user_guide/data>
+   Conceptual Guide <conceptual_guide>
    Examples <gallery/index>
    API <user_guide/api>
    Release Notes <https://github.com/vega/altair/releases>
