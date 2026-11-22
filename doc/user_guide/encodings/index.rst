@@ -627,6 +627,59 @@ One caution is that ``alt.datum`` and ``alt.value`` do not possess the (newly in
 
 If you were to instead use ``y=alt.datum(220).scale(domain=(0,500))``, an ``AttributeError`` would be raised, due to the fact that ``alt.datum(220)`` simply returns a Python dictionary and does not possess a ``scale`` attribute.  If you insisted on producing the preceding example using ``alt.datum``, one option would be to use ``y=alt.datum(220, scale={"domain": (0,500)})``.  Nevertheless, the ``alt.YDatum`` approach is strongly preferred to this "by-hand" approach of supplying a dictionary to ``scale``.  As one benefit, tab-completions are available using the ``alt.YDatum`` approach.  For example, typing ``alt.YDatum(220).scale(do`` and hitting ``tab`` in an environment such as JupyterLab will offer ``domain``, ``domainMax``, ``domainMid``, and ``domainMin`` as possible completions.
 
+``alt.value`` and the ``*Value`` helper classes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The same distinction applies to ``value``: besides the generic
+:func:`alt.value`, there is one channel-specific helper class per
+encoding channel, such as :class:`ColorValue`, :class:`ShapeValue`,
+:class:`XValue` and :class:`TextValue`. Vega-Lite itself only knows
+``value``, so the two spellings produce exactly the same chart
+specification when they are used as keyword arguments to
+:meth:`Chart.encode` -- for example, ``color=alt.value("red")`` and
+``color=alt.ColorValue("red")`` both produce
+``{"color": {"value": "red"}}``. The helper classes exist because
+``alt.value`` returns a plain dictionary, ``{"value": ...}``, which
+carries no information about which encoding channel it belongs to,
+while each helper class is tied to a single channel.
+
+That difference matters in two situations. First, the helper classes
+offer the method-based syntax described in
+:ref:`method-based-attribute-setting` for the options a value
+definition supports: the mark-property helpers such as
+:class:`ColorValue` and :class:`ShapeValue` accept a ``condition``,
+so ``alt.ColorValue("red").condition(...)`` works, whereas
+``alt.value("red")`` has no such methods and a ``condition`` can only
+be passed to it as a keyword argument. (There is no ``scale`` or
+``axis`` to set on a value: those options belong to field
+definitions, not to constant values.) Second, a value encoding can
+only be passed *positionally* to :meth:`Chart.encode` through a
+helper class. Altair can only work out which channel a positional
+argument belongs to from its class, so passing ``alt.value(...)``
+positionally raises a ``NotImplementedError``, while the equivalent
+helper works:
+
+.. altair-plot::
+
+    import altair as alt
+    import pandas as pd
+
+    source = pd.DataFrame({"x": [1, 2], "y": [3, 4]})
+
+    alt.Chart(source).mark_point().encode(
+        alt.X("x"),
+        alt.Y("y"),
+        alt.ShapeValue("circle"),
+    )
+
+This is why the `isotype grid example <https://altair-viz.github.io/gallery/isotype_grid.html>`_
+uses ``alt.ShapeValue`` for its custom SVG-path marker instead of
+``alt.value``. In short: use :func:`alt.value` for the common case of
+a constant value passed as a keyword argument, and reach for the
+``*Value`` helper of the channel in question when you need
+``condition`` as a method or when you pass the value encoding
+positionally.
+
 .. toctree::
    :hidden:
 
