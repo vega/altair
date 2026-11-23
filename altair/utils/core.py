@@ -475,7 +475,13 @@ def sanitize_pandas_dataframe(df: _PandasDataFrameT) -> _PandasDataFrameT:  # no
         ):  # nullable integer datatypes (since 24.0) and nullable float datatypes (since 1.2.0)
             # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
             col = df[col_name].astype(object)
-            df[col_name] = col.where(col.notnull(), None)
+            bad_values = col.isnull()
+            if dtype_name in {"Float32", "Float64"}:
+                # Also convert inf values to null, as in the numpy float branch below
+                bad_values |= ~np.isfinite(
+                    df[col_name].to_numpy(dtype="float64", na_value=np.nan)
+                )
+            df[col_name] = col.where(~bad_values, None)
         elif numpy_is_subtype(dtype, np.integer):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)
