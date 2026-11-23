@@ -54,6 +54,8 @@ def _js_repr(val) -> str:
             return "NaN"
         # Vega expressions have no literal or constant for infinity
         return "(1/0)" if val > 0 else "(-1/0)"
+    elif isinstance(val, (list, tuple)):
+        return "[" + ", ".join(_js_repr(v) for v in val) + "]"
     else:
         return repr(val)
 

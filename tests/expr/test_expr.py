@@ -159,6 +159,21 @@ def test_json_reprs_numpy_bool_and_nonfinite(value: Any, expected: str) -> None:
     assert repr(expr.if_(datum.xxx, value, 0)) == f"if(datum.xxx,{expected},0)"
 
 
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        ([0, float("nan")], "[0, NaN]"),
+        ([float("-inf"), float("inf")], "[(-1/0), (1/0)]"),
+        ((np.float64("nan"), 1), "[NaN, 1]"),
+        ([True, None, datum.yyy], "[true, null, datum.yyy]"),
+        ([[0, float("nan")]], "[[0, NaN]]"),
+        (["a", 1.5], "['a', 1.5]"),
+    ],
+)
+def test_json_reprs_list_elements(value: Any, expected: str) -> None:
+    assert repr(expr.inrange(datum.xxx, value)) == f"inrange(datum.xxx,{expected})"
+
+
 def test_to_dict():
     ex = datum.xxx * 2 > datum.yyy
     assert ex.to_dict() == repr(ex)
