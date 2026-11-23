@@ -539,6 +539,40 @@ we can use the ``reverse`` parameter to reverse the color scheme:
         color=alt.Color('Acceleration').scale(scheme="lightgreyred", reverse=True)
     )
 
+Diverging schemes such as ``blueorange`` suit data with a meaningful midpoint,
+such as differences from a target where zero means the target was met. In the
+first chart below, the differences run from -4 to +12, and the neutral middle
+color lands halfway along that range, at +4, so +2 is drawn blue although it is
+above target. Setting ``domainMid=0`` makes zero the neutral color, with blue below
+target and orange above it:
+
+.. altair-plot::
+
+    import altair as alt
+    import pandas as pd
+
+    source = pd.DataFrame({"difference": [-4, -2, 0, 2, 4, 12]})
+
+    base = alt.Chart(source, width=288, height=34).mark_rect().encode(
+        alt.X("difference:O").axis(title=None, labelAngle=0)
+    )
+    color = alt.Color("difference:Q").legend(None)
+
+    before = base.encode(color.scale(scheme="blueorange")).properties(
+        title="Midpoint at +4 (default)"
+    )
+    after = base.encode(color.scale(scheme="blueorange", domainMid=0)).properties(
+        title="Midpoint at 0 (domainMid=0)"
+    )
+
+    alt.vconcat(before, after).resolve_scale(color="independent")
+
+The ends of the domain do not move, so the blue half of the scheme covers 4 units
+and the orange half covers 12: -4 gets the darkest blue, just as +12 gets the
+darkest orange. If values equally far from zero should sit at mirrored points
+of the scheme, also make the domain symmetric, for example
+``domain=[-12, 12]``.
+
 Color Domain and Range
 ~~~~~~~~~~~~~~~~~~~~~~
 
