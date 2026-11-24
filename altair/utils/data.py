@@ -329,13 +329,9 @@ def to_values(data: DataType) -> ToValuesReturnType:
             msg = "values expected in data dict, but not present."
             raise KeyError(msg)
         return data_native
-    elif isinstance(data, nw.DataFrame):
-        data = sanitize_narwhals_dataframe(data)
-        return {"values": data.rows(named=True)}
     else:
-        # Should never reach this state as tested by check_data_type
-        msg = f"Unrecognized data type: {type(data)}"
-        raise ValueError(msg)
+        data_nw = sanitize_narwhals_dataframe(to_eager_narwhals_dataframe(data_native))
+        return {"values": data_nw.rows(named=True)}
 
 
 def check_data_type(data: DataType) -> None:

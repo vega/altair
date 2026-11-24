@@ -124,6 +124,28 @@ def test_to_values():
     assert result == {"values": data.to_dict(orient="records")}
 
 
+@pytest.mark.parametrize(
+    "backend",
+    ["pandas", "polars", pytest.param("pyarrow", marks=skip_requires_pyarrow())],
+)
+@pytest.mark.parametrize("sampled", [False, True])
+def test_to_values_native_dataframe(backend, sampled):
+    """`to_values` accepts the native frame returned by `sample`, not only `limit_rows`."""
+    if backend == "pyarrow":
+        import pyarrow as pa
+
+        tp = pa.table
+    else:
+        tp = pd.DataFrame if backend == "pandas" else pl.DataFrame
+    data = _create_dataframe(4, tp=tp)
+    expected = [{"x": i, "y": i} for i in range(4)]
+    if sampled:
+        result = _pipe(data, sample(n=4), to_values)
+        assert sorted(result["values"], key=lambda row: row["x"]) == expected
+    else:
+        assert to_values(data) == {"values": expected}
+
+
 def test_type_error():
     """Ensure that TypeError is raised for types other than dict/DataFrame."""
     for f in (sample, limit_rows, to_values):
