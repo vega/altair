@@ -71,3 +71,6 @@ def test_spec_to_html_olli(spec):
     assert "looksLikeFips" in html
     assert "enrichWithUSGeo" in html
     assert "olli-adapters@" not in html
+    assert (
+        "withoutDescriptions({...spec, config: {aria: false, ...spec.config}})" in html
+    )
