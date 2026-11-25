@@ -1683,6 +1683,28 @@
       }
     },
     {
+      "name": "interactive_pie_chart",
+      "title": "Interactive Pie Chart",
+      "url": "https://altair-viz.github.io/gallery/interactive_pie_chart.html",
+      "path": "tests/examples_arguments_syntax/interactive_pie_chart.py",
+      "description": "This example shows how to highlight a pie slice by selecting its category in the\nlegend. Hover over a slice to see its value.",
+      "categories": [
+        "circular plots"
+      ],
+      "datasets": [],
+      "related_docs": {
+        "explicit": [],
+        "inferred": [
+          "user_guide/marks/arc",
+          "user_guide/marks/text",
+          "user_guide/encodings/index#encoding-data-types",
+          "user_guide/encodings/index#datum-and-value",
+          "user_guide/interactions/index",
+          "user_guide/interactions/parameters#understanding-when"
+        ]
+      }
+    },
+    {
       "name": "interactive_reorder_stacked_bars",
       "title": "Reorder stacked bar segments",
       "url": "https://altair-viz.github.io/gallery/interactive_reorder_stacked_bars.html",
