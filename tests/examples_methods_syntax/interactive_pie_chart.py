@@ -24,15 +24,17 @@ source = pd.DataFrame(
     }
 )
 
-selection = alt.selection_point(fields=["category"]).bind("legend")
+selection = alt.selection_point(fields=["category"], bind="legend")
+
+opacity = alt.when(selection).then(alt.value(1)).otherwise(alt.value(0.2))
 
 base = alt.Chart(source).encode(
     alt.Theta("value:Q").stack(True),
     alt.Color("category:N").legend(alt.Legend(title="Expense")),
-    alt.when(selection).then(alt.value(1)).otherwise(alt.value(0.2)).opacity(),
     alt.Tooltip("category:N").title("Expense"),
     alt.Tooltip("value:Q").title("Monthly amount").format(","),
-)
+).encode(opacity=opacity)
+
 
 pie = base.mark_arc(outerRadius=110)
 labels = base.mark_text(radius=132, size=13).encode(alt.Text("category:N"))
