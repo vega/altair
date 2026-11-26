@@ -92,7 +92,7 @@ def test_read_nested_json(
     }
 
     result = load(name)
-    assert nw.from_native(result).to_dict(as_series=False) == {
+    assert nw.from_native(result).to_dict(as_series=False) == {  # ty: ignore
         key: [row[key] for row in rows] for key in rows[0]
     }
     if nw_dep.is_pandas_dataframe(result):

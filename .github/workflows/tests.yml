@@ -49,11 +49,11 @@ jobs:
           uv pip uninstall pyarrow vegafusion vl-convert-python anywidget
       - name: Maybe install lowest supported pandas version
         # We install the lowest supported pandas version for one job to test that
-        # it still works. Downgrade to the oldest versions of pandas and numpy that include
-        # Python 3.11 wheels, so only run this job for Python 3.11
+        # it still works. Downgrade to the oldest versions of pandas, numpy and scipy
+        # that include Python 3.11 wheels, so only run this job for Python 3.11
         if: ${{ matrix.python-version == '3.11' }}
         run: |
-          uv pip install pandas==1.5.3 numpy==1.23.5
+          uv pip install pandas==1.5.3 numpy==1.23.5 scipy==1.9.2
       - name: Test that schema generation has no effect
         run: |
           uv pip install vl-convert-python
