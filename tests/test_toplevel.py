@@ -1,4 +1,9 @@
+import pytest
+
 import altair as alt
+
+# `tools` depends on vl-convert-python at import time
+pytest.importorskip("vl_convert")
 from tools import update_init_file
 
 
