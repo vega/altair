@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 from datetime import datetime
+from decimal import Decimal
 from typing import TYPE_CHECKING
 
 import narwhals.stable.v1 as nw
@@ -79,6 +80,53 @@ def test_nonfinite_float_columns(
     chart = alt.Chart(data).mark_point().encode(x="value:Q")
     spec = json.loads(chart.to_json(allow_nan=False))
     assert next(iter(spec["datasets"].values())) == expected_records
+
+
+@pytest.mark.parametrize(
+    "backend",
+    [
+        "pandas",
+        pytest.param("pandas-arrow", marks=skip_requires_pyarrow()),
+        pytest.param("polars", marks=skip_requires_polars),
+        pytest.param("pyarrow", marks=skip_requires_pyarrow()),
+        pytest.param("pyarrow-decimal256", marks=skip_requires_pyarrow()),
+    ],
+)
+def test_decimal_columns(backend: str) -> None:
+    data = {"price": [Decimal("1.50"), None, Decimal("-2.25")]}
+    frame: Any
+    if backend == "pandas":
+        frame = pd.DataFrame(data)
+    elif backend == "polars":
+        import polars as pl
+
+        frame = pl.DataFrame(data)
+    else:
+        import pyarrow as pa
+
+        dtype = (
+            pa.decimal256(50, 2)
+            if backend == "pyarrow-decimal256"
+            else pa.decimal128(5, 2)
+        )
+        frame = pa.table(data, schema=pa.schema([("price", dtype)]))
+        if backend == "pandas-arrow":
+            frame = frame.to_pandas(types_mapper=pd.ArrowDtype)
+
+    chart = alt.Chart(frame).mark_point().encode(x="price")
+    spec = json.loads(chart.to_json(allow_nan=False))
+    assert spec["encoding"]["x"]["type"] == "quantitative"
+    assert spec["datasets"][spec["data"]["name"]] == [
+        {"price": 1.5},
+        {"price": None},
+        {"price": -2.25},
+    ]
+
+
+def test_pandas_nonfinite_decimals() -> None:
+    values = [Decimal("NaN"), Decimal("sNaN"), Decimal("Infinity"), Decimal("1e400")]
+    frame = pd.DataFrame({"price": values})
+    assert to_values(frame) == {"values": [{"price": None}] * len(values)}
 
 
 @skip_requires_pyarrow(requires_tzdata=True)
