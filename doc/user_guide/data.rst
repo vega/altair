@@ -153,6 +153,10 @@ for inline records, URL data, and named data,
 field encoding types generally need to be specified explicitly,
 as can be seen in `Inline Data`_ and `Data by URL`_.
 
+Decimal columns become double-precision numbers in the chart, so values with
+many significant digits can be rounded. To show the exact decimal in a tooltip,
+keep a string copy of the column and use that field for the tooltip.
+
 .. _data-in-index:
 
 Including Pandas Index Data
